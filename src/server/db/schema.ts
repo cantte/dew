@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import {
   index,
   int,
+  float,
   mysqlTableCreator,
   primaryKey,
   text,
@@ -90,3 +91,31 @@ export const verificationTokens = mysqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
 );
+
+export const products = mysqlTable(
+  "product",
+  {
+    id: varchar("id", { length: 255 }).notNull().primaryKey(),
+    name: varchar("name", { length: 255 }),
+    description: text("description"),
+    purchasePrice: float("purchasePrice").notNull(),
+    salePrice: float("salePrice").notNull(),
+    stock: int("stock").notNull(),
+    createdBy: varchar("createdBy", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updatedAt").onUpdateNow(),
+  },
+  (product) => ({
+    idIdx: index("id_idx").on(product.id),
+    createdByIdx: index("createdBy_idx").on(product.createdBy),
+  }),
+);
+
+export const productsRelations = relations(products, ({ one }) => ({
+  user: one(users, {
+    fields: [products.createdBy],
+    references: [users.id],
+  }),
+}));
