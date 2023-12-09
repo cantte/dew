@@ -12,17 +12,24 @@ export default async function Home() {
         <div className="flex items-center gap-3">
           <span className="text-lg font-semibold">dew</span>
           <Badge>alfa</Badge>
+
+          <ul className="flex gap-2">
+            {session !== null && (
+              <li className="inline-flex items-center justify-center">
+                <NextLink href="/products/create">
+                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-neutral-700 outline-none hover:bg-black/10 hover:text-neutral-800 focus:bg-black/10">
+                    Crear producto
+                  </span>
+                </NextLink>
+              </li>
+            )}
+          </ul>
         </div>
 
         <nav className="flex items-center gap-3">
           <ul className="flex gap-2">
             {session !== null && (
               <>
-                <li className="inline-flex items-center justify-center">
-                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-neutral-700 outline-none hover:bg-black/10 hover:text-neutral-800 focus:bg-black/10">
-                    {session.user.name}
-                  </span>
-                </li>
                 <li className="inline-flex items-center justify-center">
                   <NextLink
                     href="/api/auth/signout"
