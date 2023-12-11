@@ -16,9 +16,9 @@ export default async function Home() {
           <ul className="flex gap-2">
             {session !== null && (
               <li className="inline-flex items-center justify-center">
-                <NextLink href="/products/create">
+                <NextLink href="/dashboard">
                   <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-neutral-700 outline-none hover:bg-black/10 hover:text-neutral-800 focus:bg-black/10">
-                    Crear producto
+                    Panel de control
                   </span>
                 </NextLink>
               </li>
