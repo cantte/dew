@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import CreateProductForm from "~/app/(dashboard)/products/create/form";
 import NextLink from "next/link";
+import BackButton from "~/components/back-button";
 
 export default async function CreateProductPage() {
   const session = await getServerAuthSession();
@@ -24,12 +25,7 @@ export default async function CreateProductPage() {
 
       <section className="mb-4">
         <div className="mb-4 mt-4 md:mt-0">
-          <NextLink href="/">
-            <Button variant="ghost">
-              <ChevronLeftIcon className="mr-2 h-4 w-4" />
-              Volver
-            </Button>
-          </NextLink>
+          <BackButton />
         </div>
 
         <section className="flex flex-col gap-4">
