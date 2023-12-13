@@ -116,8 +116,8 @@ devDependencies:
     specifier: ^6.11.0
     version: 6.11.0(eslint@8.54.0)(typescript@5.1.6)
   autoprefixer:
-    specifier: ^10.4.14
-    version: 10.4.14(postcss@8.4.32)
+    specifier: ^10.4.16
+    version: 10.4.16(postcss@8.4.32)
   dotenv-cli:
     specifier: ^7.3.0
     version: 7.3.0
@@ -1998,8 +1998,8 @@ packages:
       printable-characters: 1.0.42
     dev: true
 
-  /autoprefixer@10.4.14(postcss@8.4.32):
-    resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
+  /autoprefixer@10.4.16(postcss@8.4.32):
+    resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
