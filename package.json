@@ -12,7 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^0.3.10",
+    "@auth/drizzle-adapter": "^0.3.11",
     "@hookform/resolvers": "^3.3.2",
     "@planetscale/database": "^1.11.0",
     "@radix-ui/react-dialog": "^1.0.5",
