@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@auth/drizzle-adapter':
-    specifier: ^0.3.10
-    version: 0.3.10
+    specifier: ^0.3.11
+    version: 0.3.11
   '@hookform/resolvers':
     specifier: ^3.3.2
     version: 3.3.2(react-hook-form@7.49.0)
@@ -157,8 +157,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  /@auth/core@0.18.5:
-    resolution: {integrity: sha512-Ql8YobXp57mbXqHNaaroIAgBopKaxWI+3Tlu1rGcXW5KPzXdfTqijZ4HOuZvWKqmhbMWQ9xS9r8uG4fMonZYwg==}
+  /@auth/core@0.18.6:
+    resolution: {integrity: sha512-AI7tnyNOg5zVS2elA44O03MWS6jyp69S8habJts63IyiCIoSkhqcZX4EcEJ0287m0hxzOltPCV9Zq2aqXbrNSA==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -174,10 +174,10 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/drizzle-adapter@0.3.10:
-    resolution: {integrity: sha512-Zs41T+GZBDotkuWdWx8of9jChF9GXJ+EGfm+4tee8oYkOb6pswLh0Pu8a8lK6Ka5HgPVmqO53ZsJjP4e47mHHw==}
+  /@auth/drizzle-adapter@0.3.11:
+    resolution: {integrity: sha512-pJQiujXjIWENaEHi+j4OcYluoFpjq1WLPVyIPMzbpasothCVeu2p9aH+SiZFPa8TJdKrXo8ItTlq2xJ7xITnHQ==}
     dependencies:
-      '@auth/core': 0.18.5
+      '@auth/core': 0.18.6
     transitivePeerDependencies:
       - nodemailer
     dev: false
