@@ -1,10 +1,7 @@
 import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import CreateProductForm from "~/app/(dashboard)/products/create/form";
-import NextLink from "next/link";
 import BackButton from "~/components/back-button";
 
 export default async function CreateProductPage() {
