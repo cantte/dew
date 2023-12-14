@@ -8,6 +8,8 @@ import NextLink from "next/link";
 import MobileNav from "~/components/mobile-nav";
 import { dashboardConfig } from "~/config/dashboard";
 import { ThemeToggle } from "~/components/theme-toggle";
+import { Separator } from "~/components/ui/separator";
+import { Button } from "~/components/ui/button";
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -30,7 +32,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
             <MobileNav />
 
-            <ul className="flex hidden gap-2 md:block">
+            <ul className="hidden gap-2 md:flex">
               <li className="inline-flex items-center justify-center">
                 <NextLink href="/products/create">
                   <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-foreground hover:text-muted-foreground">
@@ -43,19 +45,25 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
           <nav className="flex items-center gap-3">
             <ul className="flex gap-2">
+              <li>
+                <ThemeToggle />
+              </li>
+
+              <li>
+                <Separator orientation="vertical" />
+              </li>
+
               <li className="inline-flex items-center justify-center">
-                <NextLink
-                  href="/api/auth/signout"
-                  className="text-sm font-semibold"
-                >
-                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-muted-foreground hover:text-muted-foreground/80">
+                <Button asChild variant="outline" size="sm">
+                  <NextLink
+                    href="/api/auth/signout"
+                    className="text-sm font-semibold"
+                  >
                     Cerrar sesión
-                  </span>
-                </NextLink>
+                  </NextLink>
+                </Button>
               </li>
             </ul>
-
-            <ThemeToggle />
           </nav>
         </div>
       </header>
