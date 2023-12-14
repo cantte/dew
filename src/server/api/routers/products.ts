@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { products } from "~/server/db/schema";
 import { createProductInput } from "~/server/api/schemas/products";
 import { desc, eq } from "drizzle-orm";
+import { z } from "zod";
 
 export const productsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -19,4 +20,14 @@ export const productsRouter = createTRPCRouter({
       where: eq(products.createdBy, ctx.session.user.id),
     });
   }),
+  exists: protectedProcedure
+    .input(z.object({ id: z.string().min(1).max(255) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.products.findFirst({
+        columns: {
+          id: true,
+        },
+        where: eq(products.id, input.id),
+      });
+    }),
 });

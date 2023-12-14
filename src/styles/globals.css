@@ -91,5 +91,5 @@
     border-radius: 9999px;
     width: calc(100% - 2px);
     height: calc(32px - 2px);
-    background-color: white;
+    @apply bg-background;
 }

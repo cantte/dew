@@ -3,12 +3,13 @@ import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
-import { type SidebarNavItem } from "~/types/nav";
 import { Badge } from "~/components/ui/badge";
 import NextLink from "next/link";
-import { Button } from "~/components/ui/button";
 import MobileNav from "~/components/mobile-nav";
 import { dashboardConfig } from "~/config/dashboard";
+import { ThemeToggle } from "~/components/theme-toggle";
+import { Separator } from "~/components/ui/separator";
+import { Button } from "~/components/ui/button";
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -31,10 +32,10 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
             <MobileNav />
 
-            <ul className="flex hidden gap-2 md:block">
+            <ul className="hidden gap-2 md:flex">
               <li className="inline-flex items-center justify-center">
                 <NextLink href="/products/create">
-                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-neutral-700 outline-none hover:bg-black/10 hover:text-neutral-800 focus:bg-black/10">
+                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-foreground hover:text-muted-foreground">
                     Crear producto
                   </span>
                 </NextLink>
@@ -44,15 +45,23 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
           <nav className="flex items-center gap-3">
             <ul className="flex gap-2">
+              <li>
+                <ThemeToggle />
+              </li>
+
+              <li>
+                <Separator orientation="vertical" />
+              </li>
+
               <li className="inline-flex items-center justify-center">
-                <NextLink
-                  href="/api/auth/signout"
-                  className="text-sm font-semibold"
-                >
-                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-neutral-700 outline-none hover:bg-black/10 hover:text-neutral-800 focus:bg-black/10">
+                <Button asChild variant="outline" size="sm">
+                  <NextLink
+                    href="/api/auth/signout"
+                    className="text-sm font-semibold"
+                  >
                     Cerrar sesión
-                  </span>
-                </NextLink>
+                  </NextLink>
+                </Button>
               </li>
             </ul>
           </nav>

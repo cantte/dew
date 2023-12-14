@@ -101,6 +101,7 @@ export const products = mysqlTable(
     purchasePrice: float("purchasePrice").notNull(),
     salePrice: float("salePrice").notNull(),
     stock: int("stock").notNull(),
+    quantity: int("quantity").notNull().default(0),
     createdBy: varchar("createdBy", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)

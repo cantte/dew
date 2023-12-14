@@ -2,11 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDebounce } from "@uidotdev/usehooks";
+
 import { type z } from "zod";
 
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,6 +21,7 @@ import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/trpc/react";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { useEffect } from "react";
 
 type CreateProductFormValues = z.infer<typeof createProductInput>;
 
@@ -36,6 +40,30 @@ const CreateProductForm = () => {
     createProduct.mutate(data);
   };
 
+  const id = useDebounce(form.watch("id"), 1000);
+  const { data: exists, error } = api.product.exists.useQuery(
+    { id: id },
+    {
+      enabled: id !== "",
+    },
+  );
+
+  useEffect(() => {
+    if (error) {
+      if (error.message.includes("undefined")) {
+        form.clearErrors("id");
+        return;
+      }
+    }
+
+    if (exists !== undefined && exists.id === id) {
+      form.setError("id", {
+        type: "manual",
+        message: "El código ya existe",
+      });
+    }
+  }, [exists, error]);
+
   return (
     <Form {...form}>
       <form
@@ -49,8 +77,13 @@ const CreateProductForm = () => {
             <FormItem>
               <FormLabel>Código</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input autoFocus {...field} />
               </FormControl>
+
+              <FormDescription>
+                Puedes usar el código de barras del producto. Escanéalo con un
+                lector de códigos de barras.
+              </FormDescription>
 
               <FormMessage />
             </FormItem>
@@ -129,6 +162,21 @@ const CreateProductForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Stock</FormLabel>
+              <FormControl>
+                <Input type="number" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Existencia</FormLabel>
               <FormControl>
                 <Input type="number" {...field} />
               </FormControl>

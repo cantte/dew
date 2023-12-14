@@ -7,4 +7,5 @@ export const createProductInput = z.object({
   purchasePrice: z.coerce.number().min(0),
   salePrice: z.coerce.number().min(0),
   stock: z.coerce.number().min(0),
+  quantity: z.coerce.number().min(0),
 });

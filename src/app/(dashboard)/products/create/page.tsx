@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
 import CreateProductForm from "~/app/(dashboard)/products/create/form";
 import BackButton from "~/components/back-button";
+import Footer from "~/components/footer";
 
 export default async function CreateProductPage() {
   const session = await getServerAuthSession();
@@ -32,21 +33,7 @@ export default async function CreateProductPage() {
         </section>
       </section>
 
-      <footer className="flex h-[80px] flex-col items-center justify-center text-center">
-        <span className="inline-flex items-center gap-2 text-sm font-normal text-neutral-400">
-          {new Date().getFullYear()} © dew
-        </span>
-        <span className="inline-flex items-center gap-2 text-sm font-normal text-neutral-400">
-          Creado con <span className="text-red-500">❤</span> por
-          <a
-            href="https://github.com/cantte"
-            target="_blank"
-            className="text-black transition-colors duration-200 hover:text-black/80"
-          >
-            cantte
-          </a>
-        </span>
-      </footer>
+      <Footer />
     </main>
   );
 }
