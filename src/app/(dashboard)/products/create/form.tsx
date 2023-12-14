@@ -30,11 +30,13 @@ const CreateProductForm = () => {
     resolver: zodResolver(createProductInput),
   });
 
-  const createProduct = api.product.create.useMutation({
-    onSuccess: () => {
+  const createProduct = api.product.create.useMutation();
+
+  useEffect(() => {
+    if (createProduct.isSuccess) {
       form.reset();
-    },
-  });
+    }
+  }, [createProduct.isSuccess])
 
   const onSubmit = (data: CreateProductFormValues) => {
     createProduct.mutate(data);
