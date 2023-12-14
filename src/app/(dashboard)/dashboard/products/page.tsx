@@ -14,7 +14,7 @@ const DashboardPage = async () => {
           Productos
         </h3>
 
-        <Button asChild variant="outline">
+        <Button asChild variant="secondary">
           <Link href="/products/create">Crear producto</Link>
         </Button>
       </div>
