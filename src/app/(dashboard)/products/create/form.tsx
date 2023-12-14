@@ -138,6 +138,21 @@ const CreateProductForm = () => {
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Existencia</FormLabel>
+              <FormControl>
+                <Input type="number" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button type="submit" disabled={createProduct.isLoading}>
           {createProduct.isLoading && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
