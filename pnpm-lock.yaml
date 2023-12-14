@@ -67,7 +67,7 @@ dependencies:
     version: 2.0.0
   drizzle-orm:
     specifier: ^0.28.5
-    version: 0.28.5(@planetscale/database@1.11.0)(mysql2@3.6.1)
+    version: 0.28.5(@planetscale/database@1.11.0)(mysql2@3.6.5)
   next:
     specifier: ^14.0.4
     version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -137,8 +137,8 @@ devDependencies:
     specifier: ^8.54.0
     version: 8.54.0
   mysql2:
-    specifier: ^3.6.1
-    version: 3.6.1
+    specifier: ^3.6.5
+    version: 3.6.5
   postcss:
     specifier: ^8.4.32
     version: 8.4.32
@@ -2459,7 +2459,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /drizzle-orm@0.28.5(@planetscale/database@1.11.0)(mysql2@3.6.1):
+  /drizzle-orm@0.28.5(@planetscale/database@1.11.0)(mysql2@3.6.5):
     resolution: {integrity: sha512-6r6Iw4c38NAmW6TiKH3TUpGUQ1YdlEoLJOQptn8XPx3Z63+vFNKfAiANqrIiYZiMjKR9+NYAL219nFrmo1duXA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -2522,7 +2522,7 @@ packages:
         optional: true
     dependencies:
       '@planetscale/database': 1.11.0
-      mysql2: 3.6.1
+      mysql2: 3.6.5
     dev: false
 
   /electron-to-chromium@1.4.608:
@@ -3286,8 +3286,8 @@ packages:
     hasBin: true
     dev: true
 
-  /mysql2@3.6.1:
-    resolution: {integrity: sha512-O7FXjLtNkjcMBpLURwkXIhyVbX9i4lq4nNRCykPNOXfceq94kJ0miagmTEGCZieuO8JtwtXaZ41U6KT4eF9y3g==}
+  /mysql2@3.6.5:
+    resolution: {integrity: sha512-pS/KqIb0xlXmtmqEuTvBXTmLoQ5LmAz5NW/r8UyQ1ldvnprNEj3P9GbmuQQ2J0A4LO+ynotGi6TbscPa8OUb+w==}
     engines: {node: '>= 8.0'}
     dependencies:
       denque: 2.1.0
