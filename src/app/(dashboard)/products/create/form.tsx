@@ -7,6 +7,7 @@ import { type z } from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -49,8 +50,13 @@ const CreateProductForm = () => {
             <FormItem>
               <FormLabel>Código</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input autoFocus {...field} />
               </FormControl>
+
+              <FormDescription>
+                Puedes usar el código de barras del producto. Escanéalo con un
+                lector de códigos de barras.
+              </FormDescription>
 
               <FormMessage />
             </FormItem>
