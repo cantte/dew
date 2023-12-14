@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { TRPCReactProvider } from "~/trpc/react";
 import { type ReactNode } from "react";
 import { ThemeProvider } from "~/components/theme-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </TRPCReactProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
