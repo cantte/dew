@@ -28,6 +28,10 @@ export const columns: ColumnDef<Product>[] = [
     header: "Stock",
   },
   {
+    accessorKey: "quantity",
+    header: "Existencia",
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       return (
