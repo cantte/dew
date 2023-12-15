@@ -144,7 +144,6 @@ export const sales = mysqlTable(
   "sale",
   {
     code: varchar("code", { length: 32 }).notNull().primaryKey(),
-    id: int("id").notNull().autoincrement(),
     customerId: varchar("customer_id", { length: 32 }).notNull(),
     amount: float("amount").notNull(),
     paymentMethod: varchar("payment_method", { length: 32 })
@@ -158,7 +157,6 @@ export const sales = mysqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
   },
   (sale) => ({
-    idIdx: index("id_idx").on(sale.id),
     customerIdIdx: index("customer_id_idx").on(sale.customerId),
     createdByIdx: index("created_by_idx").on(sale.createdBy),
   }),
