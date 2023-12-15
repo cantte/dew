@@ -1,9 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
+import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,21 +14,23 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
 import { createCustomerInput } from "~/server/api/schemas/customers";
 import { api } from "~/trpc/react";
-import { Input } from "~/components/ui/input";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { Button } from "~/components/ui/button";
 
 type CreateCustomerFormProps = {
+  id?: string;
   onCreate: () => void;
 };
 
 type CreateCustomerFormValues = z.infer<typeof createCustomerInput>;
 
-const CreateCustomerForm = ({ onCreate }: CreateCustomerFormProps) => {
+const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
   const form = useForm<CreateCustomerFormValues>({
     resolver: zodResolver(createCustomerInput),
+    defaultValues: {
+      id,
+    },
   });
 
   const createCustomer = api.customer.create.useMutation();

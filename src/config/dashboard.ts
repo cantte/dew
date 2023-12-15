@@ -25,15 +25,8 @@ export const dashboardConfig: DashboardConfig = {
       title: "Ventas",
       items: [
         {
-          title: "Venta simple (Próximamente)",
-          href: "/dashboard/sales/simple",
-          disabled: true,
-          items: [],
-        },
-        {
-          title: "Listado (Próximamente)",
-          href: "/dashboard/sales",
-          disabled: true,
+          title: "Crear",
+          href: "/sales/create",
           items: [],
         },
       ],
