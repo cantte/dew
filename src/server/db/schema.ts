@@ -1,8 +1,8 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  float,
   index,
   int,
-  float,
   mysqlTableCreator,
   primaryKey,
   text,
@@ -88,7 +88,7 @@ export const verificationTokens = mysqlTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
 );
 
@@ -139,3 +139,66 @@ export const customers = mysqlTable(
     createdByIdx: index("createdBy_idx").on(customer.createdBy),
   }),
 );
+
+export const sales = mysqlTable(
+  "sale",
+  {
+    code: varchar("code", { length: 32 }).notNull().primaryKey(),
+    id: int("id").notNull().autoincrement(),
+    customerId: varchar("customer_id", { length: 32 }).notNull(),
+    amount: float("amount").notNull(),
+    paymentMethod: varchar("payment_method", { length: 32 })
+      .notNull()
+      .default("cash"),
+    payment: float("payment").notNull(),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+  },
+  (sale) => ({
+    idIdx: index("id_idx").on(sale.id),
+    customerIdIdx: index("customer_id_idx").on(sale.customerId),
+    createdByIdx: index("created_by_idx").on(sale.createdBy),
+  }),
+);
+
+export const salesRelations = relations(sales, ({ one }) => ({
+  customer: one(customers, {
+    fields: [sales.customerId],
+    references: [customers.id],
+  }),
+}));
+
+export const saleItems = mysqlTable(
+  "sale_item",
+  {
+    id: varchar("id", { length: 32 }).notNull().primaryKey(),
+    saleCode: varchar("sale_code", { length: 32 }).notNull(),
+    productId: varchar("product_id", { length: 255 }).notNull(),
+    quantity: int("quantity").notNull(),
+    purchasePrice: float("purchase_price").notNull(),
+    salePrice: float("sale_price").notNull(),
+    profit: float("profit").notNull(),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+  },
+  (saleItem) => ({
+    idIdx: index("id_idx").on(saleItem.id),
+    saleIdIdx: index("sale_code_idx").on(saleItem.saleCode),
+    productIdIdx: index("product_id_idx").on(saleItem.productId),
+    createdByIdx: index("created_by_idx").on(saleItem.createdBy),
+  }),
+);
+
+export const saleItemsRelations = relations(saleItems, ({ one }) => ({
+  sale: one(sales, { fields: [saleItems.saleCode], references: [sales.code] }),
+  product: one(products, {
+    fields: [saleItems.productId],
+    references: [products.id],
+  }),
+}));
