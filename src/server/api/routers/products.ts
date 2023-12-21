@@ -30,4 +30,11 @@ export const productsRouter = createTRPCRouter({
         where: eq(products.id, input.id),
       });
     }),
+  find: protectedProcedure
+    .input(z.object({ id: z.string().min(1).max(255) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.products.findFirst({
+        where: eq(products.id, input.id),
+      });
+    }),
 });
