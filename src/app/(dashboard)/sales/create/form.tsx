@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -18,12 +19,19 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { ScrollArea } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { api } from "~/trpc/react";
 
-type CreateSaleFormValues = z.infer<typeof createSaleInput>;
+export type CreateSaleFormValues = z.infer<typeof createSaleInput>;
 
 const CreateSaleForm = () => {
   const form = useForm<CreateSaleFormValues>({
@@ -111,27 +119,31 @@ const CreateSaleForm = () => {
       }
     }
 
-    if (product && productSelected) {
-      const items = form.getValues("items");
+    const canAddProduct =
+      product !== undefined && productSelected && product.quantity > 0;
 
-      const exists = items.find((item) => item.productId === product.id);
-      if (exists) {
-        exists.quantity += 1;
-        resetProduct();
-        return;
-      }
-
-      items.push({
-        productId: product.id,
-        quantity: 1,
-        salePrice: product.salePrice,
-        purchasePrice: product.purchasePrice,
-        profit: product.salePrice - product.purchasePrice,
-      });
-
-      resetProduct();
-      form.setValue("items", items);
+    if (!canAddProduct) {
+      return;
     }
+
+    const items = form.getValues("items");
+    const exists = items.find((item) => item.productId === product.id);
+    if (exists) {
+      exists.quantity += 1;
+      resetProduct();
+      return;
+    }
+
+    items.push({
+      productId: product.id,
+      quantity: 1,
+      salePrice: product.salePrice,
+      purchasePrice: product.purchasePrice,
+      profit: product.salePrice - product.purchasePrice,
+    });
+
+    resetProduct();
+    form.setValue("items", items);
   }, [product, findProductError, productSelected]);
 
   return (
@@ -213,32 +225,82 @@ const CreateSaleForm = () => {
 
             <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
               <div className="rounded border p-4 md:col-span-2">
-                <ScrollArea>
-                  {form.watch("items").map((item, index) => (
-                    <div
-                      key={item.productId}
-                      className="mb-2 flex items-center justify-between space-x-4"
-                    >
-                      <span>{item.productId}</span>
-                      <span>{item.quantity}</span>
-                      <span>{item.salePrice}</span>
-                      <span>{item.purchasePrice}</span>
-                      <span>{item.profit}</span>
-                      <span>{item.salePrice * item.quantity}</span>
-                      <Button
-                        variant="outline"
-                        type="button"
-                        onClick={() => {
-                          const items = form.getValues("items");
-                          items.splice(index, 1);
-                          form.setValue("items", items);
-                        }}
-                      >
-                        Eliminar
-                      </Button>
-                    </div>
-                  ))}
-                </ScrollArea>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Producto</TableHead>
+                      <TableHead>Cantidad</TableHead>
+                      <TableHead>Precio de venta</TableHead>
+                      <TableHead>Total</TableHead>
+                    </TableRow>
+                  </TableHeader>
+
+                  <TableBody>
+                    {form.watch("items").map((item, index) => (
+                      <TableRow key={item.productId}>
+                        <TableCell>{item.productId}</TableCell>
+                        <TableCell className="flex items-center space-x-3">
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            type="button"
+                            disabled={item.quantity === 1}
+                            onClick={() => {
+                              const items = form.getValues("items");
+                              items[index]!.quantity -= 1;
+                              form.setValue("items", items);
+                            }}
+                          >
+                            <MinusIcon className="h-4 w-4" />
+                          </Button>
+
+                          <span>
+                            {Intl.NumberFormat("es-CO").format(item.quantity)}
+                          </span>
+
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            type="button"
+                            onClick={() => {
+                              const items = form.getValues("items");
+                              items[index]!.quantity += 1;
+                              form.setValue("items", items);
+                            }}
+                          >
+                            <PlusIcon className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                        <TableCell>
+                          {Intl.NumberFormat("es-CO", {
+                            style: "currency",
+                            currency: "COP",
+                          }).format(item.salePrice)}
+                        </TableCell>
+                        <TableCell>
+                          {Intl.NumberFormat("es-CO", {
+                            style: "currency",
+                            currency: "COP",
+                          }).format(item.quantity * item.salePrice)}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            type="button"
+                            onClick={() => {
+                              const items = form.getValues("items");
+                              items.splice(index, 1);
+                              form.setValue("items", items);
+                            }}
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
 
               <div className="flex flex-col justify-between gap-4 rounded border p-4">
@@ -258,19 +320,26 @@ const CreateSaleForm = () => {
                     </h4>
                     <p className="text-muted-foreground">
                       Productos vendidos:{" "}
-                      {form
-                        .watch("items")
-                        .reduce((acc, item) => acc + item.quantity, 0)}
+                      {Intl.NumberFormat("es-CO").format(
+                        form
+                          .watch("items")
+                          .reduce((acc, item) => acc + item.quantity, 0),
+                      )}
                     </p>
 
                     <p className="text-muted-foreground">
-                      Total:{" $"}
-                      {form
-                        .watch("items")
-                        .reduce(
-                          (acc, item) => acc + item.salePrice * item.quantity,
-                          0,
-                        )}
+                      Total:{" "}
+                      {Intl.NumberFormat("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                      }).format(
+                        form
+                          .watch("items")
+                          .reduce(
+                            (acc, item) => acc + item.salePrice * item.quantity,
+                            0,
+                          ),
+                      )}
                     </p>
                   </div>
                 </div>
