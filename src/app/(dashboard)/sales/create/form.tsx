@@ -1,7 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
+import {
+  MinusIcon,
+  PlusIcon,
+  ReloadIcon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { useToast } from "~/components/ui/use-toast";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { api } from "~/trpc/react";
 
@@ -157,8 +163,14 @@ const CreateSaleForm = () => {
     calculateAmount();
   }, [product, findProductError, productSelected]);
 
+  const { toast } = useToast();
   useEffect(() => {
     if (createSale.isSuccess) {
+      toast({
+        title: "Venta creada",
+        description: "La venta se ha creado correctamente",
+      });
+
       form.reset();
       resetProduct();
       setCustomerSelected(false);
@@ -360,7 +372,12 @@ const CreateSaleForm = () => {
                   </div>
                 </div>
 
-                <Button type="submit">Crear venta</Button>
+                <Button type="submit" disabled={createSale.isLoading}>
+                  {createSale.isLoading && (
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Crear venta
+                </Button>
               </div>
             </div>
           </>
