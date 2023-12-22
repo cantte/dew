@@ -9,7 +9,6 @@ export const createSaleItemInput = z.object({
 });
 
 export const createSaleInput = z.object({
-  code: z.string().min(1).max(32),
   customerId: z.string().min(1).max(32),
   amount: z.coerce.number().min(0),
   paymentMethod: z.string().max(32).optional(),

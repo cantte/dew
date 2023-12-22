@@ -143,7 +143,7 @@ export const customers = mysqlTable(
 export const sales = mysqlTable(
   "sale",
   {
-    code: varchar("code", { length: 32 }).notNull().primaryKey(),
+    code: varchar("code", { length: 36 }).notNull().primaryKey(),
     customerId: varchar("customer_id", { length: 32 }).notNull(),
     amount: float("amount").notNull(),
     paymentMethod: varchar("payment_method", { length: 32 })
@@ -172,8 +172,8 @@ export const salesRelations = relations(sales, ({ one }) => ({
 export const saleItems = mysqlTable(
   "sale_item",
   {
-    id: varchar("id", { length: 32 }).notNull().primaryKey(),
-    saleCode: varchar("sale_code", { length: 32 }).notNull(),
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    saleCode: varchar("sale_code", { length: 36 }).notNull(),
     productId: varchar("product_id", { length: 255 }).notNull(),
     quantity: int("quantity").notNull(),
     purchasePrice: float("purchase_price").notNull(),

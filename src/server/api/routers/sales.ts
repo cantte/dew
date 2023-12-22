@@ -1,22 +1,25 @@
+import { eq } from "drizzle-orm";
+import { v4 as uuid } from "uuid";
+import { createSaleInput } from "~/server/api/schemas/sales";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { products, saleItems, sales } from "~/server/db/schema";
-import { createSaleInput } from "~/server/api/schemas/sales";
-import { eq } from "drizzle-orm";
 
 export const salesProcedure = createTRPCRouter({
   create: protectedProcedure
     .input(createSaleInput)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
+        const code = uuid();
         await tx.insert(sales).values({
           ...input,
+          code: code,
           createdBy: ctx.session.user.id,
         });
 
-        const saleCode = input.code;
+        const saleCode = code;
         const items = input.items.map((item) => ({
           ...item,
-          id: "",
+          id: uuid(),
           saleCode,
           createdBy: ctx.session.user.id,
         }));

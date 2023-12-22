@@ -41,8 +41,17 @@ const CreateSaleForm = () => {
     },
   });
 
-  const createSale = api.sale.create.useMutation();
+  const calculateAmount = () => {
+    const items = form.getValues("items");
+    const amount = items.reduce(
+      (acc, item) => acc + item.quantity * item.salePrice,
+      0,
+    );
+    form.setValue("amount", amount);
+    form.setValue("payment", amount);
+  };
 
+  const createSale = api.sale.create.useMutation();
   const onSubmit = (data: CreateSaleFormValues) => {
     createSale.mutate(data);
   };
@@ -131,6 +140,7 @@ const CreateSaleForm = () => {
     if (exists) {
       exists.quantity += 1;
       resetProduct();
+      calculateAmount();
       return;
     }
 
@@ -144,7 +154,16 @@ const CreateSaleForm = () => {
 
     resetProduct();
     form.setValue("items", items);
+    calculateAmount();
   }, [product, findProductError, productSelected]);
+
+  useEffect(() => {
+    if (createSale.isSuccess) {
+      form.reset();
+      resetProduct();
+      setCustomerSelected(false);
+    }
+  }, [createSale.isSuccess]);
 
   return (
     <Form {...form}>
@@ -209,6 +228,8 @@ const CreateSaleForm = () => {
                 onChange={(e) => setProductId(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.stopPropagation();
                     setProductSelected(true);
                   }
                 }}
@@ -249,6 +270,7 @@ const CreateSaleForm = () => {
                               const items = form.getValues("items");
                               items[index]!.quantity -= 1;
                               form.setValue("items", items);
+                              calculateAmount();
                             }}
                           >
                             <MinusIcon className="h-4 w-4" />
@@ -266,6 +288,7 @@ const CreateSaleForm = () => {
                               const items = form.getValues("items");
                               items[index]!.quantity += 1;
                               form.setValue("items", items);
+                              calculateAmount();
                             }}
                           >
                             <PlusIcon className="h-4 w-4" />
@@ -332,21 +355,12 @@ const CreateSaleForm = () => {
                       {Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
-                      }).format(
-                        form
-                          .watch("items")
-                          .reduce(
-                            (acc, item) => acc + item.salePrice * item.quantity,
-                            0,
-                          ),
-                      )}
+                      }).format(form.watch("amount"))}
                     </p>
                   </div>
                 </div>
 
-                <Button type="button" disabled>
-                  Crear venta
-                </Button>
+                <Button type="submit">Crear venta</Button>
               </div>
             </div>
           </>
