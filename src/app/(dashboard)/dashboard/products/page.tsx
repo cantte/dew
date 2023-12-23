@@ -2,7 +2,7 @@ import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { api } from "~/trpc/server";
 import { columns } from "~/app/(dashboard)/dashboard/products/columns";
-import DataTable from "~/app/(dashboard)/dashboard/products/data-table";
+import DataTable from "~/components/data-table";
 
 const DashboardPage = async () => {
   const products = await api.product.list.query();
