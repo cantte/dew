@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -58,4 +58,10 @@ export const salesProcedure = createTRPCRouter({
         }
       });
     }),
+  list: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.sales.findMany({
+      orderBy: [desc(sales.createdAt)],
+      where: eq(sales.createdBy, ctx.session.user.id),
+    });
+  }),
 });

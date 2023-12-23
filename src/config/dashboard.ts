@@ -29,6 +29,11 @@ export const dashboardConfig: DashboardConfig = {
           href: "/sales/create",
           items: [],
         },
+        {
+          title: "Listado",
+          href: "/dashboard/sales",
+          items: [],
+        },
       ],
     },
   ],
