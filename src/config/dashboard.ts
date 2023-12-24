@@ -7,6 +7,17 @@ type DashboardConfig = {
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
+      title: "Panel de control",
+      href: "/dashboard",
+      items: [
+        {
+          title: "Inicio",
+          href: "/dashboard",
+          items: [],
+        },
+      ],
+    },
+    {
       title: "Productos",
       items: [
         {
