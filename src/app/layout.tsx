@@ -1,12 +1,13 @@
 import "~/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
-
-import { TRPCReactProvider } from "~/trpc/react";
 import { type ReactNode } from "react";
 import { ThemeProvider } from "~/components/theme-provider";
-import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "~/components/ui/toaster";
+
+import { TRPCReactProvider } from "~/trpc/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </TRPCReactProvider>
         </ThemeProvider>
         <Analytics />
+        <Toaster />
       </body>
     </html>
   );

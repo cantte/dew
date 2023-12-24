@@ -7,6 +7,17 @@ type DashboardConfig = {
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
+      title: "Panel de control",
+      href: "/dashboard",
+      items: [
+        {
+          title: "Inicio",
+          href: "/dashboard",
+          items: [],
+        },
+      ],
+    },
+    {
       title: "Productos",
       items: [
         {
@@ -25,15 +36,13 @@ export const dashboardConfig: DashboardConfig = {
       title: "Ventas",
       items: [
         {
-          title: "Venta simple (Próximamente)",
-          href: "/dashboard/sales/simple",
-          disabled: true,
+          title: "Crear",
+          href: "/sales/create",
           items: [],
         },
         {
-          title: "Listado (Próximamente)",
+          title: "Listado",
           href: "/dashboard/sales",
-          disabled: true,
           items: [],
         },
       ],
