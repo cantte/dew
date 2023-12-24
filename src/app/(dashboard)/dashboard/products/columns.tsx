@@ -2,14 +2,6 @@
 
 import { type ColumnDef } from "@tanstack/react-table";
 import { type RouterOutputs } from "~/trpc/shared";
-import { Button } from "~/components/ui/button";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
 import DataTableRowActions from "~/app/(dashboard)/dashboard/products/data-table-row-actions";
 
 export type Product = RouterOutputs["product"]["list"][number];
