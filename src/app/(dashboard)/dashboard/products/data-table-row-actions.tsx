@@ -10,14 +10,13 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import UpdateQuantityModal from "~/components/products/update-quantity-modal";
 
 type DataTableRowActionsProps = {
   row: Row<Product>;
 };
 
 const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
-  console.log(row);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,7 +32,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem disabled>Editar</DropdownMenuItem>
         <DropdownMenuItem disabled>Eliminar</DropdownMenuItem>
-        <DropdownMenuItem disabled>Agregar existencia</DropdownMenuItem>
+        <UpdateQuantityModal product={row.original} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
