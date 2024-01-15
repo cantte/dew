@@ -62,7 +62,7 @@
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.12",
     "eslint": "^8.56.0",
-    "mysql2": "^3.6.5",
+    "mysql2": "^3.7.0",
     "postcss": "^8.4.33",
     "prettier": "^3.2.2",
     "prettier-plugin-tailwindcss": "^0.5.11",
