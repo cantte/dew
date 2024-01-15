@@ -60,6 +60,12 @@ export const salesProcedure = createTRPCRouter({
     }),
   list: protectedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.sales.findMany({
+      with: {
+        customer: {
+          id: true,
+          name: true,
+        },
+      },
       orderBy: [desc(sales.createdAt)],
       where: eq(sales.createdBy, ctx.session.user.id),
     });
