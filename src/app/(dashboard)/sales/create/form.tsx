@@ -104,12 +104,12 @@ const CreateSaleForm = () => {
     void context.customer.find.invalidate();
   }, [isOpenCreateCustomerModal, context]);
 
-  const [productId, setProductId] = useState("");
-  const finalProductId = useDebounce(productId, 1000);
+  const [productCode, setProductCode] = useState("");
+  const finalProductCode = useDebounce(productCode, 1000);
   const [productSelected, setProductSelected] = useState(false);
 
   const resetProduct = () => {
-    setProductId("");
+    setProductCode("");
     setProductSelected(false);
   };
 
@@ -118,11 +118,11 @@ const CreateSaleForm = () => {
     error: findProductError,
     isFetching: isFindingProduct,
   } = api.product.find.useQuery(
-    { id: finalProductId },
+    { code: finalProductCode },
     {
       enabled:
-        finalProductId !== undefined &&
-        finalProductId !== "" &&
+        finalProductCode !== undefined &&
+        finalProductCode !== "" &&
         productSelected,
     },
   );
@@ -236,8 +236,8 @@ const CreateSaleForm = () => {
                 type="text"
                 id="productId"
                 autoFocus
-                value={productId}
-                onChange={(e) => setProductId(e.target.value)}
+                value={productCode}
+                onChange={(e) => setProductCode(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();

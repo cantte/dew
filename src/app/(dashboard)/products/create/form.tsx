@@ -1,10 +1,13 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useDebounce } from "@uidotdev/usehooks";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 import { type z } from "zod";
+import { Button } from "~/components/ui/button";
 
 import {
   Form,
@@ -15,13 +18,10 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { createProductInput } from "~/server/api/schemas/products";
 import { Input } from "~/components/ui/input";
-import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
+import { createProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useEffect } from "react";
 
 type CreateProductFormValues = z.infer<typeof createProductInput>;
 
@@ -36,30 +36,30 @@ const CreateProductForm = () => {
     if (createProduct.isSuccess) {
       form.reset();
     }
-  }, [createProduct.isSuccess])
+  }, [createProduct.isSuccess]);
 
   const onSubmit = (data: CreateProductFormValues) => {
     createProduct.mutate(data);
   };
 
-  const id = useDebounce(form.watch("id"), 1000);
+  const code = useDebounce(form.watch("code"), 1000);
   const { data: exists, error } = api.product.exists.useQuery(
-    { id: id },
+    { code: code },
     {
-      enabled: id !== "",
+      enabled: code !== "",
     },
   );
 
   useEffect(() => {
     if (error) {
       if (error.message.includes("undefined")) {
-        form.clearErrors("id");
+        form.clearErrors("code");
         return;
       }
     }
 
-    if (exists !== undefined && exists.id === id) {
-      form.setError("id", {
+    if (exists !== undefined && exists.code === code) {
+      form.setError("code", {
         type: "manual",
         message: "El código ya existe",
       });
@@ -74,7 +74,7 @@ const CreateProductForm = () => {
       >
         <FormField
           control={form.control}
-          name="id"
+          name="code"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Código</FormLabel>
