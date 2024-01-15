@@ -62,8 +62,10 @@ export const salesProcedure = createTRPCRouter({
     return ctx.db.query.sales.findMany({
       with: {
         customer: {
-          id: true,
-          name: true,
+          columns: {
+            id: true,
+            name: true,
+          },
         },
       },
       orderBy: [desc(sales.createdAt)],
