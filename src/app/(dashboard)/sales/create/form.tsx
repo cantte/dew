@@ -36,8 +36,10 @@ import {
 import { useToast } from "~/components/ui/use-toast";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { api } from "~/trpc/react";
+import { RouterOutputs } from "~/trpc/shared";
 
 export type CreateSaleFormValues = z.infer<typeof createSaleInput>;
+type Product = RouterOutputs["product"]["find"];
 
 const CreateSaleForm = () => {
   const form = useForm<CreateSaleFormValues>({
@@ -126,6 +128,7 @@ const CreateSaleForm = () => {
         productSelected,
     },
   );
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     if (findProductError) {
@@ -157,6 +160,7 @@ const CreateSaleForm = () => {
       purchasePrice: product.purchasePrice,
       profit: product.salePrice - product.purchasePrice,
     });
+    setSelectedProducts([...selectedProducts, product]);
 
     resetProduct();
     form.setValue("items", items);
@@ -176,6 +180,11 @@ const CreateSaleForm = () => {
       setCustomerSelected(false);
     }
   }, [createSale.isSuccess]);
+
+  const getProductName = (productId: string) => {
+    const product = selectedProducts.find((p) => p?.id === productId);
+    return product?.name || "Error";
+  };
 
   return (
     <Form {...form}>
@@ -271,7 +280,7 @@ const CreateSaleForm = () => {
                   <TableBody>
                     {form.watch("items").map((item, index) => (
                       <TableRow key={item.productId}>
-                        <TableCell>{item.productId}</TableCell>
+                        <TableCell>{getProductName(item.productId)}</TableCell>
                         <TableCell className="flex items-center space-x-3">
                           <Button
                             size="icon"
