@@ -183,7 +183,7 @@ const CreateSaleForm = () => {
 
   const getProductName = (productId: string) => {
     const product = selectedProducts.find((p) => p?.id === productId);
-    return product?.name || "Error";
+    return product?.name ?? "Error";
   };
 
   return (
