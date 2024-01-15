@@ -1,4 +1,5 @@
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
+import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
 import { createProductInput } from "~/server/api/schemas/products";
@@ -11,6 +12,7 @@ export const productsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(products).values({
         ...input,
+        id: uuid(),
         createdBy: ctx.session.user.id,
       });
     }),
@@ -21,20 +23,26 @@ export const productsRouter = createTRPCRouter({
     });
   }),
   exists: protectedProcedure
-    .input(z.object({ id: z.string().min(1).max(255) }))
+    .input(z.object({ code: z.string().min(1).max(255) }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.products.findFirst({
         columns: {
-          id: true,
+          code: true,
         },
-        where: eq(products.id, input.id),
+        where: and(
+          eq(products.code, input.code),
+          eq(products.createdBy, ctx.session.user.id),
+        ),
       });
     }),
   find: protectedProcedure
-    .input(z.object({ id: z.string().min(1).max(255) }))
+    .input(z.object({ code: z.string().min(1).max(255) }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.products.findFirst({
-        where: eq(products.id, input.id),
+        where: and(
+          eq(products.code, input.code),
+          eq(products.createdBy, ctx.session.user.id),
+        ),
       });
     }),
 });

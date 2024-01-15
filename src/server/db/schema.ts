@@ -96,6 +96,7 @@ export const products = mysqlTable(
   "product",
   {
     id: varchar("id", { length: 255 }).notNull().primaryKey(),
+    code: varchar("code", { length: 255 }).notNull(),
     name: varchar("name", { length: 255 }),
     description: text("description"),
     purchasePrice: float("purchasePrice").notNull(),

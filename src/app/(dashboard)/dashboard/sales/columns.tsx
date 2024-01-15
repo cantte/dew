@@ -7,12 +7,15 @@ export type Sale = RouterOutputs["sale"]["list"][number];
 
 export const columns: ColumnDef<Sale>[] = [
   {
-    accessorKey: "code",
-    header: "Código",
-  },
-  {
-    accessorKey: "customerId",
+    id: "customer",
     header: "Cliente",
+    cell: ({ row }) => {
+      return (
+        <span>
+          {row.original.customer.id}, {row.original.customer.name}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "amount",
@@ -24,6 +27,17 @@ export const columns: ColumnDef<Sale>[] = [
             style: "currency",
             currency: "COP",
           }).format(row.original.amount)}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "paymentMethod",
+    header: "Método de pago",
+    cell: ({ row }) => {
+      return (
+        <span>
+          {row.original.paymentMethod === "cash" ? "Efectivo" : "Desconocido"}
         </span>
       );
     },
