@@ -15,6 +15,7 @@ import { useState } from "react";
 import SalesDataTableToolbar from "~/app/(dashboard)/dashboard/sales/data-table-toolbar";
 import DataTable from "~/components/data-table";
 import DataTablePagination from "~/components/data-table-pagination";
+import { api } from "~/trpc/react";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -28,8 +29,12 @@ const SalesDataTable = <TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
+  const { data: sales } = api.sale.list.useQuery(undefined, {
+    initialData: data,
+  });
+
   const table = useReactTable({
-    data,
+    data: sales,
     columns,
     state: {
       sorting,
