@@ -1,8 +1,6 @@
-import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
-import { columns } from "~/app/(dashboard)/dashboard/products/columns";
-import DataTable from "~/components/data-table";
 
 const DashboardPage = async () => {
   const products = await api.product.list.query();
@@ -19,9 +17,7 @@ const DashboardPage = async () => {
         </Button>
       </div>
 
-      <div className="mt-4">
-        <DataTable columns={columns} data={products} />
-      </div>
+      <div className="mt-4">En construcción</div>
     </div>
   );
 };
