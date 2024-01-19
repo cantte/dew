@@ -1,12 +1,16 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import { type RouterOutputs } from "~/trpc/shared";
 import DataTableRowActions from "~/app/(dashboard)/dashboard/products/data-table-row-actions";
+import { type RouterOutputs } from "~/trpc/shared";
 
 export type Product = RouterOutputs["product"]["list"][number];
 
 export const columns: ColumnDef<Product>[] = [
+  {
+    accessorKey: "code",
+    header: "Código",
+  },
   {
     accessorKey: "name",
     header: "Nombre",

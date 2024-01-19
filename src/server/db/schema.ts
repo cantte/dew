@@ -163,11 +163,12 @@ export const sales = mysqlTable(
   }),
 );
 
-export const salesRelations = relations(sales, ({ one }) => ({
+export const salesRelations = relations(sales, ({ one, many }) => ({
   customer: one(customers, {
     fields: [sales.customerId],
     references: [customers.id],
   }),
+  saleItems: many(saleItems),
 }));
 
 export const saleItems = mysqlTable(
