@@ -12,20 +12,18 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
+import { type Sale } from "~/app/(dashboard)/dashboard/sales/columns";
 import SalesDataTableToolbar from "~/app/(dashboard)/dashboard/sales/data-table-toolbar";
 import DataTable from "~/components/data-table";
 import DataTablePagination from "~/components/data-table-pagination";
 import { api } from "~/trpc/react";
 
-type DataTableProps<TData, TValue> = {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+type DataTableProps<TValue> = {
+  columns: ColumnDef<Sale, TValue>[];
+  data: Sale[];
 };
 
-const SalesDataTable = <TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) => {
+const SalesDataTable = <TValue,>({ columns, data }: DataTableProps<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -33,7 +31,7 @@ const SalesDataTable = <TData, TValue>({
     initialData: data,
   });
 
-  const table = useReactTable({
+  const table = useReactTable<Sale>({
     data: sales,
     columns,
     state: {
