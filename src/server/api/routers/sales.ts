@@ -1,5 +1,6 @@
 import { count, desc, eq, sum } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
+import { z } from "zod";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { products, saleItems, sales } from "~/server/db/schema";
@@ -110,4 +111,29 @@ export const salesProcedure = createTRPCRouter({
       products: productsCount?.productsCount ?? 0,
     };
   }),
+  find: protectedProcedure
+    .input(z.object({ code: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.sales.findFirst({
+        with: {
+          customer: {
+            columns: {
+              id: true,
+              name: true,
+            },
+          },
+          saleItems: {
+            with: {
+              product: {
+                columns: {
+                  code: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+        where: eq(sales.code, input.code),
+      });
+    }),
 });
