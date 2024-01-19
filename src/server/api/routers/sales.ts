@@ -136,4 +136,20 @@ export const salesProcedure = createTRPCRouter({
         where: eq(sales.code, input.code),
       });
     }),
+  mostSoldProducts: protectedProcedure.query(async ({ ctx }) => {
+    // Return the 3 most sold products
+    return ctx.db
+      .select({
+        id: products.id,
+        name: products.name,
+        quantity: sum(saleItems.quantity),
+        amount: sum(saleItems.salePrice),
+        profit: sum(saleItems.profit),
+      })
+      .from(products)
+      .innerJoin(saleItems, eq(products.id, saleItems.productId))
+      .groupBy(products.id)
+      .orderBy(desc(sum(saleItems.quantity)))
+      .limit(3);
+  }),
 });

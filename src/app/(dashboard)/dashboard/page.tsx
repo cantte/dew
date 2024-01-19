@@ -1,9 +1,23 @@
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { ArchiveIcon } from "@radix-ui/react-icons";
+import { Badge } from "~/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { api } from "~/trpc/server";
 
 const DashboardPage = async () => {
   const overview = await api.sale.overview.query();
+  const mostSoldProducts = await api.sale.mostSoldProducts.query();
 
   return (
     <div className="space-y-4">
@@ -99,6 +113,62 @@ const DashboardPage = async () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="flex flex-col space-y-4">
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+          Productos más vendidos
+        </h3>
+        <div>
+          {mostSoldProducts.length > 0 ? (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+              {mostSoldProducts.map((product) => (
+                <Card key={product.id}>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      {product.name}
+                    </CardTitle>
+                    <CardDescription className="text-sm text-muted-foreground">
+                      {Intl.NumberFormat("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                      }).format(+product.amount! * +product.quantity!)}{" "}
+                      Generados
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">
+                      {Intl.NumberFormat("es-CO").format(
+                        +product.quantity! ?? 0,
+                      )}
+                    </div>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge className="mt-2 bg-green-700 hover:bg-green-700/80 dark:bg-green-500 dark:hover:bg-green-500/80">
+                            +
+                            {Intl.NumberFormat("es-CO", {
+                              style: "currency",
+                              currency: "COP",
+                            }).format(+product.profit!)}
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <div>Ganancias</div>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center">
+              <h3 className="text-2xl font-semibold">No hay productos</h3>
+              <p className="text-gray-500">No se han vendido productos aún</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
