@@ -18,6 +18,7 @@ import { api } from "~/trpc/server";
 const DashboardPage = async () => {
   const overview = await api.sale.overview.query();
   const mostSoldProducts = await api.sale.mostSoldProducts.query();
+  const lowStockProducts = await api.product.lowStock.query();
 
   return (
     <div className="space-y-4">
@@ -133,7 +134,7 @@ const DashboardPage = async () => {
                         style: "currency",
                         currency: "COP",
                       }).format(+product.amount! * +product.quantity!)}{" "}
-                      Generados
+                      generados
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -170,6 +171,24 @@ const DashboardPage = async () => {
           )}
         </div>
       </div>
+
+      {lowStockProducts.length > 0 && (
+        <div className="flex flex-col space-y-4 rounded border border-dashed p-4">
+          <p className="text-sm text-muted-foreground">
+            Productos con poco stock
+          </p>
+          <div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+              {lowStockProducts.map((product) => (
+                <Badge key={product.id} variant="destructive">
+                  {product.name}, {product.quantity} unidades restantes en
+                  stock, mínimo {product.stock} unidades.
+                </Badge>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

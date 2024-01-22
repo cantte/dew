@@ -1,4 +1,4 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, lt } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
@@ -45,4 +45,13 @@ export const productsRouter = createTRPCRouter({
         ),
       });
     }),
+  lowStock: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.products.findMany({
+      where: and(
+        eq(products.createdBy, ctx.session.user.id),
+        lt(products.quantity, products.stock),
+      ),
+      limit: 10,
+    });
+  }),
 });
