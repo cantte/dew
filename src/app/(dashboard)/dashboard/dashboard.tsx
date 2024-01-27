@@ -1,9 +1,11 @@
 "use client";
 
-import { ArchiveIcon } from "@radix-ui/react-icons";
+import { ArchiveIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { addDays, startOfMonth, startOfWeek } from "date-fns";
+import NextLink from "next/link";
 import { useState } from "react";
 import DateRange from "~/components/date-range";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -19,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
@@ -60,8 +63,25 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
     });
   };
 
+  const { isLoading: isLoadingStore, data: store } = api.store.find.useQuery();
+  const notFound = !isLoadingStore && store === undefined;
+
   return (
     <div className="space-y-4">
+      {notFound && (
+        <Alert>
+          <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
+          <AlertTitle>Acción requerida</AlertTitle>
+          <AlertDescription>
+            No ha registrado una tienda, por favor cree una tienda para poder
+            continuar.
+            <br />
+            <Button asChild size="sm" className="mt-2">
+              <NextLink href={`/stores/create`}>Crear tienda</NextLink>
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="flex flex-col justify-between space-y-2 md:flex-row md:items-center md:space-x-2 md:space-y-0">
         <DateRange
           className="w-[300px]"
