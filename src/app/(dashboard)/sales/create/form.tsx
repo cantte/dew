@@ -36,7 +36,7 @@ import {
 import { useToast } from "~/components/ui/use-toast";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { api } from "~/trpc/react";
-import { RouterOutputs } from "~/trpc/shared";
+import { type RouterOutputs } from "~/trpc/shared";
 
 export type CreateSaleFormValues = z.infer<typeof createSaleInput>;
 type Product = RouterOutputs["product"]["find"];

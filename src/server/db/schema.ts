@@ -202,3 +202,29 @@ export const saleItemsRelations = relations(saleItems, ({ one }) => ({
     references: [products.id],
   }),
 }));
+
+export const stores = mysqlTable(
+  "store",
+  {
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    name: varchar("name", { length: 128 }).notNull(),
+    address: text("address"),
+    phone: varchar("phone", { length: 32 }),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+  },
+  (store) => ({
+    idIdx: index("id_idx").on(store.id),
+    createdByIdx: index("created_by_idx").on(store.createdBy),
+  }),
+);
+
+export const storeRelations = relations(stores, ({ one }) => ({
+  user: one(users, {
+    fields: [stores.createdBy],
+    references: [users.id],
+  }),
+}));
