@@ -68,6 +68,10 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between space-x-2">
+        <h1 className="text-3xl font-semibold">Panel de control</h1>
+        {store && <Badge>{store.name}</Badge>}
+      </div>
       {notFound && (
         <Alert>
           <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />

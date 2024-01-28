@@ -206,7 +206,7 @@ export const saleItemsRelations = relations(saleItems, ({ one }) => ({
 export const stores = mysqlTable(
   "store",
   {
-    id: varchar("id", { length: 32 }).notNull().primaryKey(),
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
     name: varchar("name", { length: 128 }).notNull(),
     address: text("address"),
     phone: varchar("phone", { length: 32 }),

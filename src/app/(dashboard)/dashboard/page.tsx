@@ -7,15 +7,13 @@ const DashboardPage = async () => {
   const lowStockProducts = await api.product.lowStock.query();
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-3xl font-semibold">Panel de control</h1>
-
+    <main>
       <Dashboard
         overview={overview}
         mostSoldProducts={mostSoldProducts}
         lowStockProducts={lowStockProducts}
       />
-    </div>
+    </main>
   );
 };
 
