@@ -1,7 +1,13 @@
 "use client";
 
 import { ArchiveIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import { addDays, startOfMonth, startOfWeek } from "date-fns";
+import {
+  addDays,
+  endOfDay,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+} from "date-fns";
 import NextLink from "next/link";
 import { useState } from "react";
 import DateRange from "~/components/date-range";
@@ -31,20 +37,29 @@ type Props = {
 };
 
 const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
+  const today = new Date();
   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: new Date(),
+    from: startOfDay(today),
+    to: endOfDay(today),
   });
+  const { data } = api.sale.overview.useQuery(
+    {
+      from: date?.from ?? today,
+      to: date?.to ?? today,
+    },
+    {
+      initialData: overview,
+    },
+  );
 
   const setToday = () => {
     setDate({
-      from: new Date(),
-      to: new Date(),
+      from: startOfDay(today),
+      to: endOfDay(today),
     });
   };
 
   const setThisWeek = () => {
-    const today = new Date();
     const start = startOfWeek(today, { weekStartsOn: 1 });
 
     setDate({
@@ -54,7 +69,6 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
   };
 
   const setThisMonth = () => {
-    const today = new Date();
     const start = startOfMonth(today);
 
     setDate({
@@ -142,14 +156,16 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
               {Intl.NumberFormat("es-CO", {
                 style: "currency",
                 currency: "COP",
-              }).format(+overview.revenue)}
+              }).format(+data.revenue)}
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Clientes</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Clientes atendidos
+            </CardTitle>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -168,14 +184,16 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {Intl.NumberFormat("es-CO").format(+overview.customers)}
+              {Intl.NumberFormat("es-CO").format(+data.customers)}
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ventas</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Ventas realizadas
+            </CardTitle>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -193,20 +211,22 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {Intl.NumberFormat("es-CO").format(+overview.sales)}
+              {Intl.NumberFormat("es-CO").format(+data.sales)}
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Productos</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Productos vendidos
+            </CardTitle>
 
             <ArchiveIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {Intl.NumberFormat("es-CO").format(+overview.products)}
+              {Intl.NumberFormat("es-CO").format(+data.products)}
             </div>
           </CardContent>
         </Card>
