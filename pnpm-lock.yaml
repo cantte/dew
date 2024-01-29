@@ -85,7 +85,7 @@ dependencies:
     version: 3.3.1
   drizzle-orm:
     specifier: ^0.29.3
-    version: 0.29.3(@planetscale/database@1.14.0)(@types/react@18.2.48)(mysql2@3.9.0)(react@18.2.0)
+    version: 0.29.3(@planetscale/database@1.14.0)(@types/react@18.2.48)(mysql2@3.9.1)(react@18.2.0)
   next:
     specifier: ^14.1.0
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -134,8 +134,8 @@ devDependencies:
     specifier: ^8.56.2
     version: 8.56.2
   '@types/node':
-    specifier: ^20.11.9
-    version: 20.11.9
+    specifier: ^20.11.10
+    version: 20.11.10
   '@types/react':
     specifier: ^18.2.48
     version: 18.2.48
@@ -164,8 +164,8 @@ devDependencies:
     specifier: ^8.56.0
     version: 8.56.0
   mysql2:
-    specifier: ^3.9.0
-    version: 3.9.0
+    specifier: ^3.9.1
+    version: 3.9.1
   postcss:
     specifier: ^8.4.33
     version: 8.4.33
@@ -1803,8 +1803,8 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
-  /@types/node@20.11.9:
-    resolution: {integrity: sha512-CQXNuMoS/VcoAMISe5pm4JnEd1Br5jildbQEToEMQvutmv+EaQr90ry9raiudgpyDuqFiV9e4rnjSfLNq12M5w==}
+  /@types/node@20.11.10:
+    resolution: {integrity: sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -2371,7 +2371,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.3(@planetscale/database@1.14.0)(@types/react@18.2.48)(mysql2@3.9.0)(react@18.2.0):
+  /drizzle-orm@0.29.3(@planetscale/database@1.14.0)(@types/react@18.2.48)(mysql2@3.9.1)(react@18.2.0):
     resolution: {integrity: sha512-uSE027csliGSGYD0pqtM+SAQATMREb3eSM/U8s6r+Y0RFwTKwftnwwSkqx3oS65UBgqDOM0gMTl5UGNpt6lW0A==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -2444,7 +2444,7 @@ packages:
     dependencies:
       '@planetscale/database': 1.14.0
       '@types/react': 18.2.48
-      mysql2: 3.9.0
+      mysql2: 3.9.1
       react: 18.2.0
     dev: false
 
@@ -3177,8 +3177,8 @@ packages:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
     dev: true
 
-  /mysql2@3.9.0:
-    resolution: {integrity: sha512-yS7FtbnO9sYqUZbjaiUwflh1bJAENJ3DQ9aHEYj9G+Hi15+FP7UKaTDNe6SeXx/LpkU6coAQ6vIYQaAmsFA+qQ==}
+  /mysql2@3.9.1:
+    resolution: {integrity: sha512-3njoWAAhGBYy0tWBabqUQcLtczZUxrmmtc2vszQUekg3kTJyZ5/IeLC3Fo04u6y6Iy5Sba7pIIa2P/gs8D3ZeQ==}
     engines: {node: '>= 8.0'}
     dependencies:
       denque: 2.1.0
