@@ -9,3 +9,9 @@ export const createProductInput = z.object({
   stock: z.coerce.number().min(0),
   quantity: z.coerce.number().min(0),
 });
+
+export const updateProductQuantityInput = z.object({
+  id: z.string(),
+  quantity: z.coerce.number().min(1),
+  operation: z.enum(["add", "remove"]),
+});
