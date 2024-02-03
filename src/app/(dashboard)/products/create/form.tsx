@@ -46,7 +46,7 @@ const CreateProductForm = () => {
   const { data: exists, error } = api.product.exists.useQuery(
     { code: code },
     {
-      enabled: code !== "",
+      enabled: code !== "" && code !== undefined,
     },
   );
 
