@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import {
   createProductInput,
+  updateProductInput,
   updateProductQuantityInput,
 } from "~/server/api/schemas/products";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -48,6 +49,13 @@ export const productsRouter = createTRPCRouter({
         ),
       });
     }),
+  findById: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.products.findFirst({
+        where: eq(products.id, input.id),
+      });
+    }),
   lowStock: protectedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.products.findMany({
       where: and(
@@ -88,5 +96,10 @@ export const productsRouter = createTRPCRouter({
           })
           .where(eq(products.id, input.id));
       });
+    }),
+  update: protectedProcedure
+    .input(updateProductInput)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.update(products).set(input).where(eq(products.id, input.id));
     }),
 });
