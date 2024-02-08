@@ -261,7 +261,7 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
                     </div>
                     <TooltipProvider>
                       <Tooltip>
-                        <TooltipTrigger asChild>
+                        <TooltipTrigger>
                           <Badge className="mt-2 bg-green-700 hover:bg-green-700/80 dark:bg-green-500 dark:hover:bg-green-500/80">
                             +
                             {Intl.NumberFormat("es-CO", {

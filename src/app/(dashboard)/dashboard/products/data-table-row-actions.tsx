@@ -1,16 +1,17 @@
 "use client";
 
-import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { type Row } from "@tanstack/react-table";
+import NextLink from "next/link";
+import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
+import UpdateQuantityModal from "~/components/products/update-quantity-modal";
+import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Button } from "~/components/ui/button";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import UpdateQuantityModal from "~/components/products/update-quantity-modal";
 
 type DataTableRowActionsProps = {
   row: Row<Product>;
@@ -30,7 +31,9 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem disabled>Editar</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
+        </DropdownMenuItem>
         <DropdownMenuItem disabled>Eliminar</DropdownMenuItem>
         <UpdateQuantityModal product={row.original} />
       </DropdownMenuContent>

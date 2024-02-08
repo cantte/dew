@@ -2,17 +2,14 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { useDebounce } from "@uidotdev/usehooks";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
 import { Button } from "~/components/ui/button";
-
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,51 +17,40 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { createProductInput } from "~/server/api/schemas/products";
+import { updateProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
+import { type RouterOutputs } from "~/trpc/shared";
 
-type CreateProductFormValues = z.infer<typeof createProductInput>;
+type Props = {
+  product: RouterOutputs["product"]["findById"];
+};
 
-const CreateProductForm = () => {
-  const form = useForm<CreateProductFormValues>({
-    resolver: zodResolver(createProductInput),
-  });
+type FormValues = z.infer<typeof updateProductInput>;
 
-  const createProduct = api.product.create.useMutation();
-
-  useEffect(() => {
-    if (createProduct.isSuccess) {
-      form.reset();
-    }
-  }, [createProduct.isSuccess]);
-
-  const onSubmit = (data: CreateProductFormValues) => {
-    createProduct.mutate(data);
-  };
-
-  const code = useDebounce(form.watch("code"), 1000);
-  const { data: exists, error } = api.product.exists.useQuery(
-    { code: code },
-    {
-      enabled: code !== "" && code !== undefined,
+const EditProductForm = ({ product }: Props) => {
+  const form = useForm<FormValues>({
+    defaultValues: {
+      id: product!.id,
+      name: product!.name ?? undefined,
+      description: product!.description ?? undefined,
+      purchasePrice: product!.purchasePrice ?? undefined,
+      salePrice: product!.salePrice ?? undefined,
+      stock: product!.stock ?? undefined,
     },
-  );
+    resolver: zodResolver(updateProductInput),
+  });
+  const updateProduct = api.product.update.useMutation();
 
+  const router = useRouter();
   useEffect(() => {
-    if (error) {
-      if (error.message.includes("undefined")) {
-        form.clearErrors("code");
-        return;
-      }
+    if (updateProduct.isSuccess) {
+      router.back();
     }
+  }, [updateProduct.isSuccess]);
 
-    if (exists !== undefined && exists.code === code) {
-      form.setError("code", {
-        type: "manual",
-        message: "El código ya existe",
-      });
-    }
-  }, [exists, error]);
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    updateProduct.mutate(data);
+  };
 
   return (
     <Form {...form}>
@@ -72,26 +58,6 @@ const CreateProductForm = () => {
         className="flex flex-col space-y-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormField
-          control={form.control}
-          name="code"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Código</FormLabel>
-              <FormControl>
-                <Input autoFocus {...field} />
-              </FormControl>
-
-              <FormDescription>
-                Puedes usar el código de barras del producto. Escanéalo con un
-                lector de códigos de barras.
-              </FormDescription>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="name"
@@ -173,30 +139,15 @@ const CreateProductForm = () => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="quantity"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Existencia</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" disabled={createProduct.isLoading}>
-          {createProduct.isLoading && (
+        <Button type="submit" disabled={updateProduct.isLoading}>
+          {updateProduct.isLoading && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Crear
+          Actualizar
         </Button>
       </form>
     </Form>
   );
 };
 
-export default CreateProductForm;
+export default EditProductForm;
