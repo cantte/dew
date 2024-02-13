@@ -84,8 +84,14 @@ export const salesProcedure = createTRPCRouter({
             react: NewSale({
               name: customer.name,
               total: input.amount,
-              products: input.items.length,
+              products: input.items.reduce(
+                (acc, item) => item.quantity + acc,
+                0,
+              ),
               date: new Date(),
+              url: process.env.VERCEL_URL
+                ? `https://${process.env.VERCEL_URL}/sales/c/${code}`
+                : `http://localhost:3000/sales/c/${code}`,
             }),
           });
         }

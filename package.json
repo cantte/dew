@@ -10,7 +10,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "email": "dotenv \"email dev --dir src/emails\""
+    "email": "dotenv \"email dev --dir src/emails --port 3500\""
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^0.3.11",
