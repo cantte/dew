@@ -1,9 +1,12 @@
 import { and, between, count, desc, eq, sum } from "drizzle-orm";
+import * as process from "process";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
+import NewSale from "~/emails/new-sale";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { products, saleItems, sales } from "~/server/db/schema";
+import { customers, products, saleItems, sales } from "~/server/db/schema";
+import resend from "~/server/email/resend";
 
 export const salesProcedure = createTRPCRouter({
   create: protectedProcedure
@@ -56,6 +59,35 @@ export const salesProcedure = createTRPCRouter({
               quantity: product.quantity - soldProduct.quantity,
             })
             .where(eq(products.id, soldProduct.id));
+
+          // Send email
+          const [customer] = await tx
+            .select({
+              email: customers.email,
+              name: customers.name,
+            })
+            .from(customers)
+            .where(eq(customers.id, input.customerId));
+
+          if (customer === undefined) {
+            return;
+          }
+
+          if (customer.email === null) {
+            return;
+          }
+
+          await resend.emails.send({
+            from: process.env.RESEND_EMAIL!,
+            to: customer.email,
+            subject: "Nueva venta registrada",
+            react: NewSale({
+              name: customer.name,
+              total: input.amount,
+              products: input.items.length,
+              date: new Date(),
+            }),
+          });
         }
       });
     }),
