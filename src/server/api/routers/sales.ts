@@ -3,7 +3,11 @@ import { v4 as uuid } from "uuid";
 import { z } from "zod";
 import NewSale from "~/emails/new-sale";
 import { createSaleInput } from "~/server/api/schemas/sales";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { customers, products, saleItems, sales } from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
@@ -176,6 +180,31 @@ export const salesProcedure = createTRPCRouter({
       };
     }),
   find: protectedProcedure
+    .input(z.object({ code: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.sales.findFirst({
+        with: {
+          customer: {
+            columns: {
+              id: true,
+              name: true,
+            },
+          },
+          saleItems: {
+            with: {
+              product: {
+                columns: {
+                  code: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+        where: eq(sales.code, input.code),
+      });
+    }),
+  findPublic: publicProcedure
     .input(z.object({ code: z.string() }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.sales.findFirst({
