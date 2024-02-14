@@ -1,5 +1,4 @@
 import { and, between, count, desc, eq, sum } from "drizzle-orm";
-import * as process from "process";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 import NewSale from "~/emails/new-sale";
