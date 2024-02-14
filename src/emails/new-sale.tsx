@@ -10,13 +10,13 @@ import {
   Text,
 } from "@react-email/components";
 
-interface Props {
+type Props = {
   name: string;
   total: number;
   products: number;
   date: Date;
   url: string;
-}
+};
 
 const NewSaleCustomerEmail = ({ name, total, products, date, url }: Props) => {
   return (
