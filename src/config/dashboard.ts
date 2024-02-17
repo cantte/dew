@@ -47,5 +47,15 @@ export const dashboardConfig: DashboardConfig = {
         },
       ],
     },
+    {
+      title: "Caja",
+      items: [
+        {
+          title: "Inicio",
+          href: "/dashboard/cash",
+          items: [],
+        },
+      ],
+    },
   ],
 };
