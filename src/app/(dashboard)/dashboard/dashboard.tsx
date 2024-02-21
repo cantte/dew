@@ -10,7 +10,8 @@ import {
 } from "date-fns";
 import NextLink from "next/link";
 import { useState } from "react";
-import DateRange from "~/components/date-range";
+import type DateRange from "~/components/date-range";
+import DateRangeFilter from "~/components/date-range-filter";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -100,39 +101,9 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
           </AlertDescription>
         </Alert>
       )}
-      <div className="flex flex-col justify-between space-y-2 md:flex-row md:items-center md:space-x-2 md:space-y-0">
-        <DateRange
-          className="w-[300px]"
-          selected={date}
-          onSelectRange={setDate}
-        />
 
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            className="border-dashed"
-            onClick={setToday}
-          >
-            Hoy
-          </Button>
+      <DateRangeFilter selected={date} onSelectRange={setDate} />
 
-          <Button
-            variant="outline"
-            className="border-dashed"
-            onClick={setThisWeek}
-          >
-            Esta semana
-          </Button>
-
-          <Button
-            variant="outline"
-            className="border-dashed"
-            onClick={setThisMonth}
-          >
-            Este mes
-          </Button>
-        </div>
-      </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

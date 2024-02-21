@@ -228,3 +228,68 @@ export const storeRelations = relations(stores, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export const cashRegisters = mysqlTable(
+  "cash_register",
+  {
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    amount: float("amount").notNull(),
+    storeId: varchar("store_id", { length: 36 }).notNull(),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+  },
+  (cashRegister) => ({
+    idIdx: index("id_idx").on(cashRegister.id),
+    storeIdIdx: index("store_id_idx").on(cashRegister.storeId),
+    createdByIdx: index("created_by_idx").on(cashRegister.createdBy),
+  }),
+);
+
+export const cashRegisterRelations = relations(cashRegisters, ({ one }) => ({
+  store: one(stores, {
+    fields: [cashRegisters.storeId],
+    references: [stores.id],
+  }),
+  user: one(users, {
+    fields: [cashRegisters.createdBy],
+    references: [users.id],
+  }),
+}));
+
+export const cashRegisterTransactions = mysqlTable(
+  "cash_register_transaction",
+  {
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    amount: float("amount").notNull(),
+    type: varchar("type", { length: 32 }).notNull(),
+    cashRegisterId: varchar("cash_register_id", { length: 36 }).notNull(),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (cashRegisterTransaction) => ({
+    idIdx: index("id_idx").on(cashRegisterTransaction.id),
+    cashRegisterIdIdx: index("cash_register_id_idx").on(
+      cashRegisterTransaction.cashRegisterId,
+    ),
+    createdByIdx: index("created_by_idx").on(cashRegisterTransaction.createdBy),
+  }),
+);
+
+export const cashRegisterTransactionRelations = relations(
+  cashRegisterTransactions,
+  ({ one }) => ({
+    cashRegister: one(cashRegisters, {
+      fields: [cashRegisterTransactions.cashRegisterId],
+      references: [cashRegisters.id],
+    }),
+    user: one(users, {
+      fields: [cashRegisterTransactions.createdBy],
+      references: [users.id],
+    }),
+  }),
+);
