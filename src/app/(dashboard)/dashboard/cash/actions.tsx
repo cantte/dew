@@ -59,10 +59,12 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
+  const utils = api.useUtils();
   useEffect(() => {
     if (createCashRegisterTransaction.isSuccess) {
       setOpen(false);
       router.refresh();
+      void utils.cashRegister.transactions.list.invalidate();
       form.reset();
     }
   }, [createCashRegisterTransaction.isSuccess]);
