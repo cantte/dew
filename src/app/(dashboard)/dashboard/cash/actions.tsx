@@ -33,6 +33,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { useToast } from "~/components/ui/use-toast";
 import { createCashRegisterTransactionInput } from "~/server/api/schemas/cashRegisters";
 import { api } from "~/trpc/react";
 
@@ -60,12 +61,18 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
 
   const router = useRouter();
   const utils = api.useUtils();
+  const { toast } = useToast();
   useEffect(() => {
     if (createCashRegisterTransaction.isSuccess) {
       setOpen(false);
       router.refresh();
       void utils.cashRegister.transactions.list.invalidate();
       form.reset();
+
+      toast({
+        title: "Éxito",
+        description: "La transacción se realizó con éxito.",
+      });
     }
   }, [createCashRegisterTransaction.isSuccess]);
 
