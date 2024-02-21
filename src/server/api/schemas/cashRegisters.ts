@@ -6,6 +6,6 @@ export const createCashRegisterInput = z.object({
 
 export const createCashRegisterTransactionInput = z.object({
   cashRegisterId: z.string().min(1).max(36),
-  amount: z.number().min(0.01),
+  amount: z.coerce.number().min(1),
   type: z.enum(["IN", "OUT"]),
 });
