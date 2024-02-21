@@ -1,10 +1,11 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { endOfDay, startOfDay } from "date-fns";
 import NextLink from "next/link";
+import CashRegisterDetails from "~/app/(dashboard)/dashboard/cash/details";
 import EnableCash from "~/app/(dashboard)/dashboard/cash/enable-cash";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
 import { api } from "~/trpc/server";
 
 const CashRegisterPage = async () => {
@@ -53,8 +54,15 @@ const CashRegisterPage = async () => {
     );
   }
 
+  const today = new Date();
+  const transactions = await api.cashRegister.transactions.list.query({
+    cashRegisterId: cashRegister.id,
+    from: startOfDay(today),
+    to: endOfDay(today),
+  });
+
   return (
-    <div className="space-y-4">
+    <div className="flex h-[calc(100vh-5rem)] flex-col space-y-4">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
         Caja registradora
       </h3>
@@ -62,7 +70,7 @@ const CashRegisterPage = async () => {
       <Card className="border-dashed shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
-            Estado de la caja registradora
+            Saldo de la caja registradora
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -75,48 +83,10 @@ const CashRegisterPage = async () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ingresos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-700 dark:text-green-500">
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
-              }).format(+cashRegister.amount)}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Egresos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-destructive">
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
-              }).format(+cashRegister.amount)}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="flex justify-between">
-        <Button size="sm" className="text-sm">
-          Realizar ingreso
-        </Button>
-        <Button size="sm" className="text-sm" variant="outline">
-          Realizar egreso
-        </Button>
-      </div>
-
-      <Separator />
-
-      <h2 className="text-lg font-semibold tracking-tight">Movimientos</h2>
+      <CashRegisterDetails
+        transactions={transactions}
+        cashRegisterId={cashRegister.id}
+      />
     </div>
   );
 };
