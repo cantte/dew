@@ -233,7 +233,7 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <Badge className="mt-2 bg-green-700 hover:bg-green-700/80 dark:bg-green-500 dark:hover:bg-green-500/80">
+                          <Badge className="mt-2" variant="success">
                             +
                             {Intl.NumberFormat("es-CO", {
                               style: "currency",

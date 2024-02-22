@@ -33,10 +33,8 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
                 </CardTitle>
 
                 <Badge
-                  className={
-                    transaction.type === "IN"
-                      ? "bg-green-700 dark:bg-green-500"
-                      : "bg-destructive dark:bg-destructive"
+                  variant={
+                    transaction.type === "IN" ? "success" : "destructive"
                   }
                 >
                   {transaction.type === "IN" ? "Ingreso" : "Egreso"}
