@@ -108,8 +108,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
   react-email:
-    specifier: 2.1.0-canary.2
-    version: 2.1.0-canary.2(eslint@8.56.0)
+    specifier: 2.1.0
+    version: 2.1.0(eslint@8.56.0)
   react-hook-form:
     specifier: ^7.50.1
     version: 7.50.1(react@18.2.0)
@@ -2163,8 +2163,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/button@0.0.14-canary.0(react@18.2.0):
-    resolution: {integrity: sha512-sX65OUDTRp6dak1etVq8IM73WovaBwEcN/7+M1HD+hQaTe787R7arS06c8rXS7XFnh4ezl9ao3bCdvt3mHoj5w==}
+  /@react-email/button@0.0.14(react@18.2.0):
+    resolution: {integrity: sha512-SMk40moGcAvkHIALX4XercQlK0PNeeEIam6OXHw68ea9WtzzqVwiK4pzLY0iiMI9B4xWHcaS2lCPf3cKbQBf1Q==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
@@ -2182,8 +2182,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/code-block@0.0.3-canary.1(react@18.2.0):
-    resolution: {integrity: sha512-IO02GN2uEemlUhn0inKJ8GH9JRFwRwyxEjEdLNfoG5k9Mv+NpDX1GEweSpH42OtXWhvrwLgJsssMLwj2keEjDw==}
+  /@react-email/code-block@0.0.3(react@18.2.0):
+    resolution: {integrity: sha512-nxhl7WjjM2cOYtl0boBZfSObTrUCz2LbarcMyHkTVAsA9rbjbtWAQF7jmlefXJusk3Uol5l2c8hTh2lHLlHTRQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
@@ -2240,15 +2240,15 @@ packages:
       - '@types/react'
     dev: false
 
-  /@react-email/components@0.0.15-canary.2(@types/react@18.2.57)(react-email@2.1.0-canary.2)(react@18.2.0):
-    resolution: {integrity: sha512-Jt71FFg3me0yn0tj7kbaBN/I7wMO+SohomgIT0pb326vVgILptSTZE7nQUlfBWhfKzKTU3B9cqqA60QKVmmK4w==}
+  /@react-email/components@0.0.15(@types/react@18.2.57)(react-email@2.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-jXfKiuyi94JBYfPVptEUwF57nRCvhEZIfyl2LqbL53fKsMrGlcjlN921iNnx1z41GAJOqZ8LPogeix3Iid23zw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
     dependencies:
       '@react-email/body': 0.0.7(react@18.2.0)
-      '@react-email/button': 0.0.14-canary.0(react@18.2.0)
-      '@react-email/code-block': 0.0.3-canary.1(react@18.2.0)
+      '@react-email/button': 0.0.14(react@18.2.0)
+      '@react-email/code-block': 0.0.3(react@18.2.0)
       '@react-email/code-inline': 0.0.1(react@18.2.0)
       '@react-email/column': 0.0.9(react@18.2.0)
       '@react-email/container': 0.0.11(react@18.2.0)
@@ -2259,7 +2259,7 @@ packages:
       '@react-email/html': 0.0.7(react@18.2.0)
       '@react-email/img': 0.0.7(react@18.2.0)
       '@react-email/link': 0.0.7(react@18.2.0)
-      '@react-email/markdown': 0.0.8(react-email@2.1.0-canary.2)(react@18.2.0)
+      '@react-email/markdown': 0.0.8(react-email@2.1.0)(react@18.2.0)
       '@react-email/preview': 0.0.8(react@18.2.0)
       '@react-email/render': 0.0.12
       '@react-email/row': 0.0.7(react@18.2.0)
@@ -2346,13 +2346,13 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/markdown@0.0.8(react-email@2.1.0-canary.2)(react@18.2.0):
+  /@react-email/markdown@0.0.8(react-email@2.1.0)(react@18.2.0):
     resolution: {integrity: sha512-x/2iTWskE0XoM13Rx80ckwbWaWdS6koYvxW6PHkOJ/k88NPnDIm+TaYvvg2DYSFJAUI0gK/LmIwenbebgNDS+w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
     dependencies:
-      md-to-react-email: 4.1.0(react-email@2.1.0-canary.2)(react@18.2.0)
+      md-to-react-email: 4.1.0(react-email@2.1.0)(react@18.2.0)
       react: 18.2.0
     transitivePeerDependencies:
       - react-email
@@ -4706,7 +4706,7 @@ packages:
     hasBin: true
     dev: false
 
-  /md-to-react-email@4.1.0(react-email@2.1.0-canary.2)(react@18.2.0):
+  /md-to-react-email@4.1.0(react-email@2.1.0)(react@18.2.0):
     resolution: {integrity: sha512-aQvj4dCuy0wmBVvSB377qTErlpjN5Pl61+5v+B8Z76KoxOgKhbzvK3qnO94eOsuGSWwI+9n4zb3xD3/MypxM4w==}
     peerDependencies:
       react: 18.x
@@ -4714,7 +4714,7 @@ packages:
     dependencies:
       marked: 7.0.4
       react: 18.2.0
-      react-email: 2.1.0-canary.2(eslint@8.56.0)
+      react-email: 2.1.0(eslint@8.56.0)
     dev: false
 
   /memoizee@0.4.15:
@@ -5381,8 +5381,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-email@2.1.0-canary.2(eslint@8.56.0):
-    resolution: {integrity: sha512-/bdu46j2/pX62SPBH67ks43nzW2whS+9NWovrN7wl4xQc0prtgigPvgMqrLTSqzBZxBghB347T5kwnHpULcWhw==}
+  /react-email@2.1.0(eslint@8.56.0):
+    resolution: {integrity: sha512-fTt85ca1phsBu57iy32wn4LTR37rOzDZoY2AOWVq3JQYVwk6GlBdUuQWif2cudkwWINL9COf9kRMS4/QWtKtAQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
@@ -5392,7 +5392,7 @@ packages:
       '@radix-ui/react-slot': 1.0.2(@types/react@18.2.57)(react@18.2.0)
       '@radix-ui/react-toggle-group': 1.0.4(@types/react-dom@18.2.19)(@types/react@18.2.57)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-tooltip': 1.0.6(@types/react-dom@18.2.19)(@types/react@18.2.57)(react-dom@18.2.0)(react@18.2.0)
-      '@react-email/components': 0.0.15-canary.2(@types/react@18.2.57)(react-email@2.1.0-canary.2)(react@18.2.0)
+      '@react-email/components': 0.0.15(@types/react@18.2.57)(react-email@2.1.0)(react@18.2.0)
       '@react-email/render': 0.0.12
       '@swc/core': 1.3.101
       '@types/react': 18.2.57
