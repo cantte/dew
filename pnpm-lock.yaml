@@ -48,8 +48,8 @@ dependencies:
     specifier: ^1.0.7
     version: 1.0.7(@types/react-dom@18.2.19)(@types/react@18.2.57)(react-dom@18.2.0)(react@18.2.0)
   '@react-email/components':
-    specifier: 0.0.14
-    version: 0.0.14(@types/react@18.2.57)(react@18.2.0)
+    specifier: 0.0.15
+    version: 0.0.15(@types/react@18.2.57)(react-email@2.1.0-canary.2)(react@18.2.0)
   '@t3-oss/env-nextjs':
     specifier: ^0.9.2
     version: 0.9.2(typescript@5.3.3)(zod@3.22.4)
@@ -2154,8 +2154,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/button@0.0.13(react@18.2.0):
-    resolution: {integrity: sha512-e/y8u2odJ8fF83B+wvL2FXzVcbQSUh2Cn2JH2Ez4L6AuPELsh8s2JYo081IDsXc16IyFiYpObn0blOt7s/qp8g==}
+  /@react-email/button@0.0.14(react@18.2.0):
+    resolution: {integrity: sha512-SMk40moGcAvkHIALX4XercQlK0PNeeEIam6OXHw68ea9WtzzqVwiK4pzLY0iiMI9B4xWHcaS2lCPf3cKbQBf1Q==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
@@ -2172,8 +2172,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/code-block@0.0.2(react@18.2.0):
-    resolution: {integrity: sha512-bQApEmpsvIcVYXdPCXhJB9CGCyShhn/c1JdctE/6R1uIosLbWt40evvVfp2X9STdi02Dhsjxw/AcGuQE6zGZqw==}
+  /@react-email/code-block@0.0.3(react@18.2.0):
+    resolution: {integrity: sha512-nxhl7WjjM2cOYtl0boBZfSObTrUCz2LbarcMyHkTVAsA9rbjbtWAQF7jmlefXJusk3Uol5l2c8hTh2lHLlHTRQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
@@ -2210,15 +2210,15 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/components@0.0.14(@types/react@18.2.57)(react@18.2.0):
-    resolution: {integrity: sha512-t/sNj0R9Mx9Sx5degPQcSBeWotNs7eUwiv72KN8v6fxaf87XlnMo0CPcKI/1by2DHZr5S0258ZQOO7vEFrbcLw==}
+  /@react-email/components@0.0.15(@types/react@18.2.57)(react-email@2.1.0-canary.2)(react@18.2.0):
+    resolution: {integrity: sha512-jXfKiuyi94JBYfPVptEUwF57nRCvhEZIfyl2LqbL53fKsMrGlcjlN921iNnx1z41GAJOqZ8LPogeix3Iid23zw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: 18.2.0
     dependencies:
       '@react-email/body': 0.0.7(react@18.2.0)
-      '@react-email/button': 0.0.13(react@18.2.0)
-      '@react-email/code-block': 0.0.2(react@18.2.0)
+      '@react-email/button': 0.0.14(react@18.2.0)
+      '@react-email/code-block': 0.0.3(react@18.2.0)
       '@react-email/code-inline': 0.0.1(react@18.2.0)
       '@react-email/column': 0.0.9(react@18.2.0)
       '@react-email/container': 0.0.11(react@18.2.0)
@@ -2229,6 +2229,7 @@ packages:
       '@react-email/html': 0.0.7(react@18.2.0)
       '@react-email/img': 0.0.7(react@18.2.0)
       '@react-email/link': 0.0.7(react@18.2.0)
+      '@react-email/markdown': 0.0.8(react-email@2.1.0-canary.2)(react@18.2.0)
       '@react-email/preview': 0.0.8(react@18.2.0)
       '@react-email/render': 0.0.12
       '@react-email/row': 0.0.7(react@18.2.0)
@@ -2238,6 +2239,7 @@ packages:
       react: 18.2.0
     transitivePeerDependencies:
       - '@types/react'
+      - react-email
     dev: false
 
   /@react-email/components@0.0.15-canary.2(@types/react@18.2.57)(react-email@2.1.0-canary.2)(react@18.2.0):
