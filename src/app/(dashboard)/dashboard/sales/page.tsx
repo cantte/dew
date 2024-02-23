@@ -14,7 +14,7 @@ const SalesPage = async () => {
           Ventas
         </h3>
 
-        <Button asChild variant="secondary">
+        <Button asChild>
           <Link href="/sales/create">Crear venta</Link>
         </Button>
       </div>

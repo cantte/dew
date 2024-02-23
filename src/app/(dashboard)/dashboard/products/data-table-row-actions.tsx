@@ -4,6 +4,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { type Row } from "@tanstack/react-table";
 import NextLink from "next/link";
 import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
+import BarcodeModal from "~/components/products/barcode-modal";
 import UpdateQuantityModal from "~/components/products/update-quantity-modal";
 import { Button } from "~/components/ui/button";
 import {
@@ -36,6 +37,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
         </DropdownMenuItem>
         <DropdownMenuItem disabled>Eliminar</DropdownMenuItem>
         <UpdateQuantityModal product={row.original} />
+        <BarcodeModal product={row.original} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

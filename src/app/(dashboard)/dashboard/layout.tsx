@@ -1,15 +1,15 @@
-import { type ReactNode } from "react";
-import { redirect } from "next/navigation";
-import { getServerAuthSession } from "~/server/auth";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
-import { Badge } from "~/components/ui/badge";
 import NextLink from "next/link";
+import { redirect } from "next/navigation";
+import { type ReactNode } from "react";
+import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
 import MobileNav from "~/components/mobile-nav";
-import { dashboardConfig } from "~/config/dashboard";
+import SignOutButton from "~/components/signout-button";
 import { ThemeToggle } from "~/components/theme-toggle";
+import { Badge } from "~/components/ui/badge";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
-import { Button } from "~/components/ui/button";
+import { dashboardConfig } from "~/config/dashboard";
+import { getServerAuthSession } from "~/server/auth";
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -28,7 +28,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         <div className="flex h-14 w-full max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <span className="hidden text-lg font-semibold md:block">dew</span>
-            <Badge className="hidden md:block">alfa</Badge>
+            <Badge className="hidden md:block">beta</Badge>
 
             <MobileNav />
 
@@ -54,14 +54,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
               </li>
 
               <li className="inline-flex items-center justify-center">
-                <Button asChild variant="outline" size="sm">
-                  <NextLink
-                    href="/api/auth/signout"
-                    className="text-sm font-semibold"
-                  >
-                    Cerrar sesión
-                  </NextLink>
-                </Button>
+                <SignOutButton />
               </li>
             </ul>
           </nav>
