@@ -1,9 +1,9 @@
-import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
-import { Badge } from "~/components/ui/badge";
 import CreateProductForm from "~/app/(dashboard)/products/create/form";
 import BackButton from "~/components/back-button";
 import Footer from "~/components/footer";
+import { Badge } from "~/components/ui/badge";
+import { getServerAuthSession } from "~/server/auth";
 
 export default async function CreateProductPage() {
   const session = await getServerAuthSession();
@@ -17,7 +17,7 @@ export default async function CreateProductPage() {
       <header className="flex h-[80px] items-center justify-between md:h-[100px]">
         <div className="flex items-center gap-3">
           <span className="text-lg font-semibold">dew</span>
-          <Badge>alfa</Badge>
+          <Badge>beta</Badge>
         </div>
       </header>
 

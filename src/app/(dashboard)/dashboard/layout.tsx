@@ -28,7 +28,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         <div className="flex h-14 w-full max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <span className="hidden text-lg font-semibold md:block">dew</span>
-            <Badge className="hidden md:block">alfa</Badge>
+            <Badge className="hidden md:block">beta</Badge>
 
             <MobileNav />
 

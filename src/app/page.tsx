@@ -13,7 +13,7 @@ export default async function Home() {
       <header className="flex h-[80px] items-center justify-between md:h-[100px]">
         <div className="flex items-center gap-3">
           <span className="text-lg font-semibold">dew</span>
-          <Badge>alfa</Badge>
+          <Badge>beta</Badge>
 
           <ul className="flex gap-2">
             {session !== null && (
@@ -49,7 +49,7 @@ export default async function Home() {
 
       <div className="relative flex max-w-3xl flex-col justify-center md:mx-auto">
         <div className="max-w-[725px] text-center">
-          <h1 className="relative mb-8 text-[38px] font-bold leading-[46px] tracking-[-1.024px;] !text-foreground/80 md:text-[70px] md:leading-[85px]">
+          <h1 className="relative mb-8 text-[38px] leading-[46px] md:text-[70px] md:leading-[85px]">
             Software de facturación para pequeñas empresas
           </h1>
           <div className="sm:px-20">

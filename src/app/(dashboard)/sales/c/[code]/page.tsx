@@ -23,7 +23,7 @@ const CustomerSaleDetailPage = async ({ params }: Props) => {
     <main className="h-screen-ios relative z-20 mx-auto flex h-screen max-w-7xl flex-col justify-between overflow-x-hidden px-4">
       <header className="flex h-[80px] items-center justify-between md:h-[100px]">
         <div className="flex items-center gap-3">
-          <span className="text-lg font-semibold">dew</span>
+          <span className="text-lg font-semibold">beta</span>
           <Badge>alfa</Badge>
         </div>
       </header>

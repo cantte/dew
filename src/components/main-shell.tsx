@@ -16,7 +16,7 @@ const MainShell = ({ title, children }: Props) => {
       <header className="flex h-[80px] items-center justify-between md:h-[100px]">
         <div className="flex items-center gap-3">
           <span className="text-lg font-semibold">dew</span>
-          <Badge>alfa</Badge>
+          <Badge>beta</Badge>
         </div>
       </header>
 
