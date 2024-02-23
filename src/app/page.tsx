@@ -1,8 +1,9 @@
-import { getServerAuthSession } from "~/server/auth";
 import NextLink from "next/link";
-import { Button } from "~/components/ui/button";
-import { Badge } from "~/components/ui/badge";
 import Footer from "~/components/footer";
+import SignInButton from "~/components/signin-button";
+import SignOutButton from "~/components/signout-button";
+import { Badge } from "~/components/ui/badge";
+import { getServerAuthSession } from "~/server/auth";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -32,28 +33,14 @@ export default async function Home() {
             {session !== null && (
               <>
                 <li className="inline-flex items-center justify-center">
-                  <NextLink
-                    href="/api/auth/signout"
-                    className="text-sm font-semibold"
-                  >
-                    <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-muted-foreground hover:text-muted-foreground/80">
-                      Cerrar sesión
-                    </span>
-                  </NextLink>
+                  <SignOutButton />
                 </li>
               </>
             )}
 
             {session === null && (
               <li className="inline-flex items-center justify-center">
-                <Button asChild variant="ghost">
-                  <NextLink
-                    href="/api/auth/signin"
-                    className="text-sm font-semibold"
-                  >
-                    Iniciar sesión
-                  </NextLink>
-                </Button>
+                <SignInButton />
               </li>
             )}
           </ul>
@@ -78,9 +65,7 @@ export default async function Home() {
 
         {session === null && (
           <div className="mt-10 flex items-center justify-center gap-4">
-            <Button asChild size="lg">
-              <NextLink href="/api/auth/signin">Iniciar sesión</NextLink>
-            </Button>
+            <SignInButton />
           </div>
         )}
 
