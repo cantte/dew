@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { type Metadata } from "next";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
@@ -17,10 +18,30 @@ const inter = Inter({
   fallback: ["sans-serif"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "dew",
-  description: "Billing app",
+  description: "Sofware de gestión de ventas y facturación.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  keywords: [
+    "facturación",
+    "ventas",
+    "software",
+    "productos",
+    "clientes",
+    "inventario",
+    "compras",
+  ],
+  authors: [
+    {
+      name: "cantte",
+      url: "https://www.cantte.com/",
+    },
+  ],
+  creator: "cantte",
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
