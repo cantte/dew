@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import NextLink from "next/link";
 import Footer from "~/components/footer";
+import FeaturesSection from "~/components/home/features";
 import SignInButton from "~/components/signin-button";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -68,6 +69,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <FeaturesSection />
 
       <Footer />
     </main>
