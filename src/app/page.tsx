@@ -1,8 +1,8 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import NextLink from "next/link";
 import Footer from "~/components/footer";
+import FeaturesSection from "~/components/home/features";
 import SignInButton from "~/components/signin-button";
-import SignOutButton from "~/components/signout-button";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { getServerAuthSession } from "~/server/auth";
@@ -16,18 +16,6 @@ export default async function Home() {
         <div className="flex items-center gap-3">
           <span className="text-lg font-semibold">dew</span>
           <Badge>beta</Badge>
-
-          <ul className="flex gap-2">
-            {session !== null && (
-              <li className="inline-flex items-center justify-center">
-                <NextLink href="/dashboard">
-                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-foreground hover:text-muted-foreground">
-                    Panel de control
-                  </span>
-                </NextLink>
-              </li>
-            )}
-          </ul>
         </div>
 
         <nav className="flex items-center gap-3">
@@ -35,7 +23,11 @@ export default async function Home() {
             {session !== null && (
               <>
                 <li className="inline-flex items-center justify-center">
-                  <SignOutButton />
+                  <Button size="sm" asChild>
+                    <NextLink href="/dashboard">
+                      Ir al panel de control
+                    </NextLink>
+                  </Button>
                 </li>
               </>
             )}
@@ -64,22 +56,21 @@ export default async function Home() {
               </span>
             </div>
           </div>
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <Button size="lg" asChild>
+              <NextLink href="/dashboard">
+                Empezar ahora <ArrowRightIcon className="ml-2 h-4 w-4" />
+              </NextLink>
+            </Button>
 
-          {session === null && (
-            <div className="mt-10 flex items-center justify-center gap-4">
-              <Button size="lg" asChild>
-                <NextLink href="/dashboard">
-                  Empezar ahora <ArrowRightIcon className="ml-2 h-4 w-4" />
-                </NextLink>
-              </Button>
-
-              <Button size="lg" variant="outline" asChild>
-                <NextLink href="#features">Saber más</NextLink>
-              </Button>
-            </div>
-          )}
+            <Button size="lg" variant="outline" asChild>
+              <NextLink href="#features">Saber más</NextLink>
+            </Button>
+          </div>
         </div>
       </section>
+
+      <FeaturesSection />
 
       <Footer />
     </main>
