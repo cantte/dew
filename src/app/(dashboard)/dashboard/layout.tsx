@@ -1,15 +1,16 @@
-import NextLink from "next/link";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
 import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
 import MobileNav from "~/components/mobile-nav";
 import SignOutButton from "~/components/signout-button";
+import SelectStore from "~/components/stores/select-store";
 import { ThemeToggle } from "~/components/theme-toggle";
 import { Badge } from "~/components/ui/badge";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 import { dashboardConfig } from "~/config/dashboard";
 import { getServerAuthSession } from "~/server/auth";
+import { api } from "~/trpc/server";
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -22,6 +23,8 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     return redirect("/api/auth/signin");
   }
 
+  const store = await api.store.find.query();
+
   return (
     <main>
       <header className="flex w-full items-center justify-center border-b">
@@ -32,15 +35,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
             <MobileNav />
 
-            <ul className="hidden gap-2 md:flex">
-              <li className="inline-flex items-center justify-center">
-                <NextLink href="/products/create">
-                  <span className="inline-flex h-8 w-full items-center justify-center rounded-md px-2 text-sm text-foreground hover:text-muted-foreground">
-                    Crear producto
-                  </span>
-                </NextLink>
-              </li>
-            </ul>
+            {store !== undefined && <SelectStore store={store} />}
           </div>
 
           <nav className="flex items-center gap-3">
