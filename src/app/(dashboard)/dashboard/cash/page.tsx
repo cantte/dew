@@ -9,7 +9,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { api } from "~/trpc/server";
 
 const CashRegisterPage = async () => {
-  const store = await api.store.find.query();
+  const userPreferences = await api.userPreference.find.query();
+  const store =
+    userPreferences !== undefined
+      ? await api.store.find.query({ id: userPreferences.storeId })
+      : undefined;
+
   if (!store) {
     return (
       <div className="space-y-4">
@@ -45,7 +50,8 @@ const CashRegisterPage = async () => {
           <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
           <AlertTitle>Habilitar caja</AlertTitle>
           <AlertDescription>
-            Actualmente no tienes esta funcionalidad activa.
+            Actualmente no tienes esta funcionalidad activa para la tienda
+            actual.
             <br />
             <EnableCash storeId={store.id} />
           </AlertDescription>
