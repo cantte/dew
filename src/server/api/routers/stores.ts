@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
-import { createStoreInput } from "~/server/api/schemas/stores";
+import { createStoreInput, findStoreInput } from "~/server/api/schemas/stores";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { stores, userPreferences } from "~/server/db/schema";
 
@@ -27,8 +27,15 @@ export const storesProcedure = createTRPCRouter({
           },
         });
     }),
-  find: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.stores.findFirst({
+  find: protectedProcedure
+    .input(findStoreInput)
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.stores.findFirst({
+        where: eq(stores.id, input.id),
+      });
+    }),
+  list: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.stores.findMany({
       where: eq(stores.createdBy, ctx.session.user.id),
     });
   }),
