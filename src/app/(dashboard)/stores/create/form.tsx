@@ -21,7 +21,11 @@ import { api } from "~/trpc/react";
 
 export type CreateStoreFormProps = z.infer<typeof createStoreInput>;
 
-const CreateStoreForm = () => {
+type Props = {
+  onSuccess?: () => void;
+};
+
+const CreateStoreForm = ({ onSuccess }: Props) => {
   const form = useForm<CreateStoreFormProps>({
     resolver: zodResolver(createStoreInput),
   });
@@ -35,13 +39,14 @@ const CreateStoreForm = () => {
   useEffect(() => {
     if (createStore.isSuccess) {
       router.refresh();
+      onSuccess?.();
     }
   }, [createStore.isSuccess, router]);
 
   return (
     <Form {...form}>
       <form
-        className="flex min-h-[calc(100vh-20rem)] flex-col space-y-4"
+        className="flex flex-col space-y-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

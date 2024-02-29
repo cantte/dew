@@ -293,3 +293,14 @@ export const cashRegisterTransactionRelations = relations(
     }),
   }),
 );
+
+export const userPreferences = mysqlTable(
+  "user_preference",
+  {
+    userId: varchar("user_id", { length: 255 }).notNull().primaryKey(),
+    storeId: varchar("store_id", { length: 36 }).notNull(),
+  },
+  (userPreference) => ({
+    userIdIdx: index("user_id_idx").on(userPreference.userId),
+  }),
+);

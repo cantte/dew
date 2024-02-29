@@ -1,13 +1,7 @@
 "use client";
 
 import { ArchiveIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import {
-  addDays,
-  endOfDay,
-  startOfDay,
-  startOfMonth,
-  startOfWeek,
-} from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import NextLink from "next/link";
 import { useState } from "react";
 import type DateRange from "~/components/date-range";
@@ -35,9 +29,16 @@ type Props = {
   overview: RouterOutputs["sale"]["overview"];
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
   lowStockProducts: RouterOutputs["product"]["lowStock"];
+
+  userPreferences: RouterOutputs["userPreference"]["find"];
 };
 
-const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
+const Dashboard = ({
+  overview,
+  mostSoldProducts,
+  lowStockProducts,
+  userPreferences,
+}: Props) => {
   const today = new Date();
   const [date, setDate] = useState<DateRange | undefined>({
     from: startOfDay(today),
@@ -53,41 +54,12 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
     },
   );
 
-  const setToday = () => {
-    setDate({
-      from: startOfDay(today),
-      to: endOfDay(today),
-    });
-  };
-
-  const setThisWeek = () => {
-    const start = startOfWeek(today, { weekStartsOn: 1 });
-
-    setDate({
-      from: start,
-      to: addDays(start, 6),
-    });
-  };
-
-  const setThisMonth = () => {
-    const start = startOfMonth(today);
-
-    setDate({
-      from: start,
-      to: addDays(start, 30),
-    });
-  };
-
-  const { isLoading: isLoadingStore, data: store } = api.store.find.useQuery();
-  const notFound = !isLoadingStore && store === undefined;
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between space-x-2">
         <h1 className="text-3xl font-semibold">Panel de control</h1>
-        {store && <Badge>{store.name}</Badge>}
       </div>
-      {notFound && (
+      {userPreferences === undefined && (
         <Alert>
           <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
           <AlertTitle>Acción requerida</AlertTitle>
