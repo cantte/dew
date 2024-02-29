@@ -11,6 +11,7 @@ const DashboardPage = async () => {
   });
   const mostSoldProducts = await api.sale.mostSoldProducts.query();
   const lowStockProducts = await api.product.lowStock.query();
+  const userPreferences = await api.userPreference.find.query();
 
   return (
     <main>
@@ -18,6 +19,7 @@ const DashboardPage = async () => {
         overview={overview}
         mostSoldProducts={mostSoldProducts}
         lowStockProducts={lowStockProducts}
+        userPreferences={userPreferences}
       />
     </main>
   );

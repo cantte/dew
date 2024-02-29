@@ -23,7 +23,12 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     return redirect("/api/auth/signin");
   }
 
-  const store = await api.store.find.query();
+  const userPreferences = await api.userPreference.find.query();
+  const store =
+    userPreferences !== undefined
+      ? await api.store.find.query({ id: userPreferences.storeId })
+      : undefined;
+  const stores = await api.store.list.query();
 
   return (
     <main>
@@ -35,7 +40,9 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
             <MobileNav />
 
-            {store !== undefined && <SelectStore store={store} />}
+            {userPreferences !== undefined && (
+              <SelectStore currentStore={store} stores={stores} />
+            )}
           </div>
 
           <nav className="flex items-center gap-3">

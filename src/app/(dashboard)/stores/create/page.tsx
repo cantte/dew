@@ -7,7 +7,10 @@ import { Badge } from "~/components/ui/badge";
 import { api } from "~/trpc/server";
 
 const CreateStorePage = async () => {
-  const store = await api.store.find.query();
+  const userPreferences = await api.userPreference.find.query();
+  const store = await api.store.find.query({
+    id: userPreferences?.storeId ?? "0",
+  });
   if (store !== undefined) {
     return redirect("/dashboard");
   }

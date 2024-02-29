@@ -35,9 +35,16 @@ type Props = {
   overview: RouterOutputs["sale"]["overview"];
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
   lowStockProducts: RouterOutputs["product"]["lowStock"];
+
+  userPreferences: RouterOutputs["userPreference"]["find"];
 };
 
-const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
+const Dashboard = ({
+  overview,
+  mostSoldProducts,
+  lowStockProducts,
+  userPreferences,
+}: Props) => {
   const today = new Date();
   const [date, setDate] = useState<DateRange | undefined>({
     from: startOfDay(today),
@@ -78,7 +85,14 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
     });
   };
 
-  const { isLoading: isLoadingStore, data: store } = api.store.find.useQuery();
+  const { isLoading: isLoadingStore, data: store } = api.store.find.useQuery(
+    {
+      id: userPreferences?.storeId ?? "",
+    },
+    {
+      enabled: userPreferences !== undefined,
+    },
+  );
   const notFound = !isLoadingStore && store === undefined;
 
   return (
@@ -87,7 +101,7 @@ const Dashboard = ({ overview, mostSoldProducts, lowStockProducts }: Props) => {
         <h1 className="text-3xl font-semibold">Panel de control</h1>
         {store && <Badge>{store.name}</Badge>}
       </div>
-      {notFound && (
+      {(notFound || userPreferences === undefined) && (
         <Alert>
           <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
           <AlertTitle>Acción requerida</AlertTitle>
