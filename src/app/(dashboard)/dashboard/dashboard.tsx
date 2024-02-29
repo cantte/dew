@@ -1,13 +1,7 @@
 "use client";
 
 import { ArchiveIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import {
-  addDays,
-  endOfDay,
-  startOfDay,
-  startOfMonth,
-  startOfWeek,
-} from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import NextLink from "next/link";
 import { useState } from "react";
 import type DateRange from "~/components/date-range";
@@ -59,31 +53,6 @@ const Dashboard = ({
       initialData: overview,
     },
   );
-
-  const setToday = () => {
-    setDate({
-      from: startOfDay(today),
-      to: endOfDay(today),
-    });
-  };
-
-  const setThisWeek = () => {
-    const start = startOfWeek(today, { weekStartsOn: 1 });
-
-    setDate({
-      from: start,
-      to: addDays(start, 6),
-    });
-  };
-
-  const setThisMonth = () => {
-    const start = startOfMonth(today);
-
-    setDate({
-      from: start,
-      to: addDays(start, 30),
-    });
-  };
 
   const { isLoading: isLoadingStore, data: store } = api.store.find.useQuery(
     {
