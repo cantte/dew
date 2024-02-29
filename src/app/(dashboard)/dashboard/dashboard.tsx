@@ -54,23 +54,12 @@ const Dashboard = ({
     },
   );
 
-  const { isLoading: isLoadingStore, data: store } = api.store.find.useQuery(
-    {
-      id: userPreferences?.storeId ?? "",
-    },
-    {
-      enabled: userPreferences !== undefined,
-    },
-  );
-  const notFound = !isLoadingStore && store === undefined;
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between space-x-2">
         <h1 className="text-3xl font-semibold">Panel de control</h1>
-        {store && <Badge>{store.name}</Badge>}
       </div>
-      {(notFound || userPreferences === undefined) && (
+      {userPreferences === undefined && (
         <Alert>
           <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
           <AlertTitle>Acción requerida</AlertTitle>
