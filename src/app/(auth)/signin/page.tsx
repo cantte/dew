@@ -37,7 +37,7 @@ const SignInPage = async () => {
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">Bienvenido</h1>
           <p className="text-sm text-muted-foreground">
-            Inicia sesión para acceder a nustros servicios.
+            Inicia sesión para acceder a nuestros servicios.
           </p>
         </div>
 
