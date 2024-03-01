@@ -11,7 +11,7 @@ import MotionOnView from "~/components/motion-on-view";
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="flex flex-col space-y-8">
+    <section id="features" className="flex max-w-7xl flex-col space-y-8">
       <MotionOnView>
         <h2 className="text-center text-5xl font-semibold">
           Características destacadas
@@ -19,7 +19,7 @@ const FeaturesSection = () => {
       </MotionOnView>
 
       <MotionOnView>
-        <div className="flex items-center justify-center space-x-6">
+        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
           <span className="rounded-full bg-primary p-3">
             <Store className="h-8 w-8 text-primary-foreground" />
           </span>
@@ -42,7 +42,7 @@ const FeaturesSection = () => {
       </MotionOnView>
 
       <MotionOnView>
-        <div className="flex items-center justify-center space-x-6">
+        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
           <span className="rounded-full bg-primary p-3">
             <ShoppingBasket className="h-8 w-8 text-primary-foreground" />
           </span>
@@ -67,7 +67,7 @@ const FeaturesSection = () => {
       </MotionOnView>
 
       <MotionOnView>
-        <div className="flex items-center justify-center space-x-6">
+        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
           <span className="rounded-full bg-primary p-3">
             <ShoppingCart className="h-8 w-8 text-primary-foreground" />
           </span>
@@ -92,7 +92,7 @@ const FeaturesSection = () => {
       </MotionOnView>
 
       <MotionOnView>
-        <div className="flex items-center justify-center space-x-6">
+        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
           <span className="rounded-full bg-primary p-3">
             <UserRound className="h-8 w-8 text-primary-foreground" />
           </span>
@@ -118,7 +118,7 @@ const FeaturesSection = () => {
       </MotionOnView>
 
       <MotionOnView>
-        <div className="flex items-center justify-center space-x-6">
+        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
           <span className="rounded-full bg-primary p-3">
             <Coins className="h-8 w-8 text-primary-foreground" />
           </span>
@@ -145,7 +145,7 @@ const FeaturesSection = () => {
       </MotionOnView>
 
       <MotionOnView>
-        <div className="flex items-center justify-center space-x-6">
+        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
           <span className="rounded-full bg-primary p-3">
             <LineChart className="h-8 w-8 text-primary-foreground" />
           </span>
