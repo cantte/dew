@@ -2,8 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
 import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
+import AccountNav from "~/components/account-nav";
 import MobileNav from "~/components/mobile-nav";
-import SignOutButton from "~/components/signout-button";
 import SelectStore from "~/components/stores/select-store";
 import { ThemeToggle } from "~/components/theme-toggle";
 import { Badge } from "~/components/ui/badge";
@@ -37,7 +37,8 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
             <Link className="flex items-center gap-2 font-semibold" href="/">
-              <span className="">Dew</span>
+              <span className="hidden text-lg font-semibold md:block">dew</span>
+              <Badge className="hidden md:block">beta</Badge>
             </Link>
           </div>
           <div className="flex-1">
@@ -52,9 +53,6 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
       <div className="flex flex-col">
         <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
           <div className="flex items-center gap-3">
-            <span className="hidden text-lg font-semibold md:block">dew</span>
-            <Badge className="hidden md:block">beta</Badge>
-
             <MobileNav />
 
             {userPreferences !== undefined && (
@@ -73,7 +71,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
               </li>
 
               <li className="inline-flex items-center justify-center">
-                <SignOutButton />
+                <AccountNav user={session.user} />
               </li>
             </ul>
           </nav>

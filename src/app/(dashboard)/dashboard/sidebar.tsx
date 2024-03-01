@@ -1,9 +1,11 @@
 "use client";
 
-import { type SidebarNavItem } from "~/types/nav";
-import { usePathname } from "next/navigation";
-import { cn } from "~/lib/utils";
+import NextLink from "next/link";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
+import { type SidebarNavItem } from "~/types/nav";
 
 type DashboardSidebarProps = {
   items: SidebarNavItem[];
@@ -13,18 +15,39 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
   const pathname = usePathname();
 
   return items.length > 0 ? (
-    <div className="w-full">
-      {items.map((item, index) => (
-        <div key={index} className={cn("pb-4")}>
-          <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
-            {item.title}
-          </h4>
-          {item?.items?.length && (
-            <DashboardSidebarItem items={item.items} pathname={pathname} />
-          )}
-        </div>
-      ))}
-    </div>
+    <>
+      {items.map((item, index) => {
+        if (item.items === undefined && item.href !== undefined) {
+          return (
+            <Button
+              asChild
+              variant="ghost"
+              className={cn(
+                "flex w-full items-center justify-start gap-3 transition-all hover:bg-background",
+                pathname === item.href
+                  ? "bg-accent font-medium text-foreground hover:bg-accent"
+                  : "text-muted-foreground",
+              )}
+            >
+              <NextLink href={item.href}>
+                {item.icon && item.icon}
+                <span>{item.title}</span>
+              </NextLink>
+            </Button>
+          );
+        }
+        return (
+          <div key={index} className={cn("pb-4")}>
+            <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
+              {item.title}
+            </h4>
+            {item?.items?.length && (
+              <DashboardSidebarItem items={item.items} pathname={pathname} />
+            )}
+          </div>
+        );
+      })}
+    </>
   ) : null;
 };
 
