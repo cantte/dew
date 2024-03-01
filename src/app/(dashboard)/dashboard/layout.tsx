@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
 import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
@@ -31,9 +32,25 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
   const stores = await api.store.list.query();
 
   return (
-    <main>
-      <header className="flex w-full items-center justify-center border-b">
-        <div className="flex h-14 w-full max-w-7xl items-center justify-between px-4">
+    <div className="grid min-h-screen w-full overflow-hidden md:grid-cols-[280px_1fr]">
+      <div className="hidden border-r md:block">
+        <div className="flex flex-col gap-2">
+          <div className="flex h-[60px] items-center px-6">
+            <Link className="flex items-center gap-2 font-semibold" href="/">
+              <span className="">Dew</span>
+            </Link>
+          </div>
+          <div className="flex-1">
+            <nav className="grid items-start px-4 text-sm font-medium">
+              <ScrollArea>
+                <DashboardSidebar items={dashboardConfig.mainNav} />
+              </ScrollArea>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
           <div className="flex items-center gap-3">
             <span className="hidden text-lg font-semibold md:block">dew</span>
             <Badge className="hidden md:block">beta</Badge>
@@ -60,19 +77,12 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
               </li>
             </ul>
           </nav>
-        </div>
-      </header>
-      <div>
-        <div className="container mt-4 flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
-          <aside className="fixed top-14 z-30 -ml-2 hidden h-[calc(100vh-5rem)] w-full shrink-0 md:sticky md:block">
-            <ScrollArea>
-              <DashboardSidebar items={dashboardConfig.mainNav} />
-            </ScrollArea>
-          </aside>
+        </header>
+        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           {children}
-        </div>
+        </main>
       </div>
-    </main>
+    </div>
   );
 };
 
