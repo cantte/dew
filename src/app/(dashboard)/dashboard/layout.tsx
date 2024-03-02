@@ -36,9 +36,9 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
       <div className="hidden border-r md:block">
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
-            <Link className="flex items-center gap-2 font-semibold" href="/">
-              <span className="hidden text-lg font-semibold md:block">dew</span>
-              <Badge className="hidden md:block">beta</Badge>
+            <Link className="flex items-center gap-3" href="/">
+              <span className="text-lg font-semibold">dew</span>
+              <Badge>beta</Badge>
             </Link>
           </div>
           <div className="flex-1">
