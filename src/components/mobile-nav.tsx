@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
-import { Button } from "~/components/ui/button";
 import { ViewVerticalIcon } from "@radix-ui/react-icons";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { dashboardConfig } from "~/config/dashboard";
-import React from "react";
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { Button } from "~/components/ui/button";
+import { ScrollArea } from "~/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
+import { dashboardConfig } from "~/config/dashboard";
 import { cn } from "~/lib/utils";
 
 const MobileNav = () => {
@@ -27,28 +26,50 @@ const MobileNav = () => {
       <SheetContent side="left" className="pr-0">
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="flex flex-col space-y-2">
-            {dashboardConfig.mainNav.map((item, index) => (
-              <div key={index} className="flex flex-col space-y-3 pt-6">
-                <h4 className="font-medium">{item.title}</h4>
-                {item?.items?.length &&
-                  item.items.map((item) => (
-                    <React.Fragment key={item.href}>
-                      {!item.disabled &&
-                        (item.href ? (
-                          <MobileLink
-                            href={item.href}
-                            onOpenChange={setOpen}
-                            className="text-muted-foreground"
-                          >
-                            {item.title}
-                          </MobileLink>
-                        ) : (
-                          item.title
-                        ))}
-                    </React.Fragment>
-                  ))}
-              </div>
-            ))}
+            {dashboardConfig.mainNav.map((item, index) => {
+              if (item.items === undefined && item.href !== undefined) {
+                return (
+                  <MobileLink
+                    href={item.href}
+                    key={index}
+                    onOpenChange={setOpen}
+                  >
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        "flex w-full items-center justify-start gap-3 transition-all hover:bg-background",
+                      )}
+                    >
+                      {item.icon && item.icon}
+                      <span>{item.title}</span>
+                    </Button>
+                  </MobileLink>
+                );
+              }
+
+              return (
+                <div key={index} className="flex flex-col space-y-3 pt-6">
+                  <h4 className="font-medium">{item.title}</h4>
+                  {item?.items?.length &&
+                    item.items.map((item) => (
+                      <React.Fragment key={item.href}>
+                        {!item.disabled &&
+                          (item.href ? (
+                            <MobileLink
+                              href={item.href}
+                              onOpenChange={setOpen}
+                              className="text-muted-foreground"
+                            >
+                              {item.title}
+                            </MobileLink>
+                          ) : (
+                            item.title
+                          ))}
+                      </React.Fragment>
+                    ))}
+                </div>
+              );
+            })}
           </div>
         </ScrollArea>
       </SheetContent>

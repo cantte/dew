@@ -68,7 +68,7 @@ const CashRegisterPage = async () => {
   });
 
   return (
-    <div className="flex h-[calc(100vh-5rem)] flex-col space-y-4">
+    <div className="flex h-[calc(100vh-7.5rem)] flex-col space-y-4">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
         Caja registradora
       </h3>

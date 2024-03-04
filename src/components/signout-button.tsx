@@ -5,7 +5,12 @@ import { Button } from "~/components/ui/button";
 
 const SignOutButton = () => {
   return (
-    <Button variant="ghost" size="sm" onClick={() => void signOut()}>
+    <Button
+      variant="ghost"
+      size="sm"
+      className="w-full"
+      onClick={() => void signOut()}
+    >
       Cerrar sesión
     </Button>
   );

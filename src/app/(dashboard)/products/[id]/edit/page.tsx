@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import EditProductForm from "~/app/(dashboard)/products/[id]/edit/form";
-import MainShell from "~/components/main-shell";
+import BackButton from "~/components/back-button";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -25,9 +25,15 @@ const EditProductPage = async ({ params }: Props) => {
   }
 
   return (
-    <MainShell title={`Editar producto ${product.name}`}>
-      <EditProductForm product={product} />
-    </MainShell>
+    <div>
+      <div className="mb-4 mt-4 md:mt-0">
+        <BackButton />
+      </div>
+      <section className="flex flex-col gap-4">
+        <h1 className="text-2xl font-bold">Editar producto</h1>
+        <EditProductForm product={product} />
+      </section>
+    </div>
   );
 };
 

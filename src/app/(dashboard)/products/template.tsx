@@ -7,7 +7,11 @@ type Props = {
 
 const RootTemplate = ({ children }: Props) => {
   return (
-    <MotionDiv initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}>
+    <MotionDiv
+      className="w-full max-w-3xl"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       {children}
     </MotionDiv>
   );
