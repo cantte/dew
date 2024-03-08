@@ -1,4 +1,4 @@
-import { Coins, Home, ShoppingBasket, ShoppingCart } from "lucide-react";
+import { Coins, Home, ShoppingBasket, ShoppingCart, Store } from "lucide-react";
 import React from "react";
 import { type SidebarNavItem } from "~/types/nav";
 
@@ -27,6 +27,11 @@ export const dashboardConfig: DashboardConfig = {
       title: "Caja registradora",
       href: "/dashboard/cash",
       icon: <Coins className="h-4 w-4" />,
+    },
+    {
+      title: "Tiendas",
+      href: "/dashboard/stores",
+      icon: <Store className="h-4 w-4" />,
     },
   ],
 };
