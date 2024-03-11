@@ -21,15 +21,23 @@ import { api } from "~/trpc/react";
 type DataTableProps<TValue> = {
   columns: ColumnDef<Sale, TValue>[];
   data: Sale[];
+  storeId: string;
 };
 
-const SalesDataTable = <TValue,>({ columns, data }: DataTableProps<TValue>) => {
+const SalesDataTable = <TValue,>({
+  columns,
+  data,
+  storeId,
+}: DataTableProps<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const { data: sales } = api.sale.list.useQuery(undefined, {
-    initialData: data,
-  });
+  const { data: sales } = api.sale.list.useQuery(
+    { storeId: storeId },
+    {
+      initialData: data,
+    },
+  );
 
   const table = useReactTable<Sale>({
     data: sales,

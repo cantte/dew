@@ -100,20 +100,22 @@ export const salesProcedure = createTRPCRouter({
         }
       });
     }),
-  list: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.sales.findMany({
-      with: {
-        customer: {
-          columns: {
-            id: true,
-            name: true,
+  list: protectedProcedure
+    .input(z.object({ storeId: z.string().min(1).max(36) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.sales.findMany({
+        with: {
+          customer: {
+            columns: {
+              id: true,
+              name: true,
+            },
           },
         },
-      },
-      orderBy: [desc(sales.createdAt)],
-      where: eq(sales.createdBy, ctx.session.user.id),
-    });
-  }),
+        orderBy: [desc(sales.createdAt)],
+        where: eq(sales.storeId, input.storeId),
+      });
+    }),
   overview: protectedProcedure
     .input(
       z.object({

@@ -1,11 +1,38 @@
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+import NextLink from "next/link";
 import Link from "next/link";
 import { columns } from "~/app/(dashboard)/dashboard/sales/columns";
 import SalesDataTable from "~/app/(dashboard)/dashboard/sales/data-table";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const SalesPage = async () => {
-  const sales = await api.sale.list.query();
+  const userPreferences = await api.userPreference.find.query();
+  const store = await api.store.find.query({
+    id: userPreferences?.storeId ?? "0",
+  });
+
+  if (store === undefined) {
+    return (
+      <Alert>
+        <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
+        <AlertTitle>Acción requerida</AlertTitle>
+        <AlertDescription>
+          No ha registrado una tienda, por favor cree una tienda para poder
+          continuar.
+          <br />
+          <Button asChild size="sm" className="mt-2">
+            <NextLink href={`/stores/create`}>Crear tienda</NextLink>
+          </Button>
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
+  const sales = await api.sale.list.query({
+    storeId: store.id,
+  });
 
   return (
     <div>
@@ -20,7 +47,7 @@ const SalesPage = async () => {
       </div>
 
       <div className="mt-4">
-        <SalesDataTable columns={columns} data={sales} />
+        <SalesDataTable columns={columns} data={sales} storeId={store.id} />
       </div>
     </div>
   );
