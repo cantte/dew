@@ -24,7 +24,7 @@ export const cashRegistersRouter = createTRPCRouter({
     .input(z.object({ storeId: z.string().min(1).max(36) }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.cashRegisters.findFirst({
-        where: and(eq(cashRegisters.storeId, input.storeId)),
+        where: eq(cashRegisters.storeId, input.storeId),
       });
     }),
   transactions: createTRPCRouter({
