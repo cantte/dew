@@ -41,10 +41,15 @@ import { type RouterOutputs } from "~/trpc/shared";
 export type CreateSaleFormValues = z.infer<typeof createSaleInput>;
 type Product = RouterOutputs["product"]["find"];
 
-const CreateSaleForm = () => {
+type Props = {
+  storeId: string;
+};
+
+const CreateSaleForm = ({ storeId }: Props) => {
   const form = useForm<CreateSaleFormValues>({
     resolver: zodResolver(createSaleInput),
     defaultValues: {
+      storeId: storeId,
       items: [],
     },
   });
