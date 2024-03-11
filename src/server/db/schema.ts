@@ -151,6 +151,7 @@ export const sales = mysqlTable(
       .notNull()
       .default("cash"),
     payment: float("payment").notNull(),
+    storeId: varchar("store_id", { length: 36 }).notNull(),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
@@ -169,6 +170,7 @@ export const salesRelations = relations(sales, ({ one, many }) => ({
     references: [customers.id],
   }),
   saleItems: many(saleItems),
+  store: one(stores, { fields: [sales.storeId], references: [stores.id] }),
 }));
 
 export const saleItems = mysqlTable(
