@@ -121,6 +121,7 @@ export const salesProcedure = createTRPCRouter({
       z.object({
         from: z.coerce.date(),
         to: z.coerce.date(),
+        storeId: z.string().min(1).max(36),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -132,7 +133,7 @@ export const salesProcedure = createTRPCRouter({
         .from(sales)
         .where(
           and(
-            eq(sales.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(sales.createdAt, input.from, input.to),
           ),
         );
@@ -144,7 +145,7 @@ export const salesProcedure = createTRPCRouter({
         .from(sales)
         .where(
           and(
-            eq(sales.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(sales.createdAt, input.from, input.to),
           ),
         )
@@ -157,7 +158,7 @@ export const salesProcedure = createTRPCRouter({
         .from(sales)
         .where(
           and(
-            eq(sales.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(sales.createdAt, input.from, input.to),
           ),
         );
@@ -167,9 +168,10 @@ export const salesProcedure = createTRPCRouter({
           productsCount: sum(saleItems.quantity),
         })
         .from(saleItems)
+        .innerJoin(sales, eq(sales.code, saleItems.saleCode))
         .where(
           and(
-            eq(saleItems.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(saleItems.createdAt, input.from, input.to),
           ),
         );
