@@ -24,10 +24,7 @@ export const cashRegistersRouter = createTRPCRouter({
     .input(z.object({ storeId: z.string().min(1).max(36) }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.cashRegisters.findFirst({
-        where: and(
-          eq(cashRegisters.storeId, input.storeId),
-          eq(cashRegisters.createdBy, ctx.session.user.id),
-        ),
+        where: and(eq(cashRegisters.storeId, input.storeId)),
       });
     }),
   transactions: createTRPCRouter({
@@ -51,7 +48,7 @@ export const cashRegistersRouter = createTRPCRouter({
           }
 
           if (cashRegister === undefined) {
-            return;
+            throw new Error("Cash register not found");
           }
 
           if (input.type === "OUT" && cashRegister.amount < input.amount) {
