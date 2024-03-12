@@ -93,8 +93,8 @@ dependencies:
     specifier: ^0.30.1
     version: 0.30.1(@planetscale/database@1.16.0)(@types/react@18.2.64)(mysql2@3.9.2)(react@18.2.0)
   framer-motion:
-    specifier: ^11.0.8
-    version: 11.0.8(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^11.0.12
+    version: 11.0.12(react-dom@18.2.0)(react@18.2.0)
   jsbarcode:
     specifier: ^3.11.6
     version: 3.11.6
@@ -4297,12 +4297,15 @@ packages:
       '@emotion/is-prop-valid': 0.8.8
     dev: false
 
-  /framer-motion@11.0.8(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1KSGNuqe1qZkS/SWQlDnqK2VCVzRVEoval379j0FiUBJAZoqgwyvqFkfvJbgW2IPFo4wX16K+M0k5jO23lCIjA==}
+  /framer-motion@11.0.12(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1VW4pk+4EH8RwWHdqntWTwF9peranyHn/BczvMzF9TGh/FwMKxoRZzkig8Nak9BQA8GymfIyCGo5adXwRuXDXA==}
     peerDependencies:
+      '@emotion/is-prop-valid': '*'
       react: ^18.0.0
       react-dom: ^18.0.0
     peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
       react:
         optional: true
       react-dom:
@@ -4311,8 +4314,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
-    optionalDependencies:
-      '@emotion/is-prop-valid': 0.8.8
     dev: false
 
   /fs.realpath@1.0.0:
