@@ -53,7 +53,9 @@ export const accounts = mysqlTable(
     session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
     userIdIdx: index("userId_idx").on(account.userId),
   }),
 );
@@ -224,11 +226,12 @@ export const stores = mysqlTable(
   }),
 );
 
-export const storeRelations = relations(stores, ({ one }) => ({
+export const storeRelations = relations(stores, ({ one, many }) => ({
   user: one(users, {
     fields: [stores.createdBy],
     references: [users.id],
   }),
+  employees: many(employees),
 }));
 
 export const cashRegisters = mysqlTable(
@@ -306,3 +309,48 @@ export const userPreferences = mysqlTable(
     userIdIdx: index("user_id_idx").on(userPreference.userId),
   }),
 );
+
+export const employees = mysqlTable(
+  "employee",
+  {
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    name: varchar("name", { length: 128 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    phone: varchar("phone", { length: 32 }),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+  },
+  (employee) => ({
+    createdByIdx: index("created_by_idx").on(employee.createdBy),
+  }),
+);
+
+export const employeeRelations = relations(employees, ({ many }) => ({
+  stores: many(stores),
+}));
+
+export const employeeStore = mysqlTable(
+  "employee_store",
+  {
+    employeeId: varchar("employee_id", { length: 36 }).notNull(),
+    storeId: varchar("store_id", { length: 36 }).notNull(),
+  },
+  (employeeStore) => ({
+    employeeIdIdx: index("employee_id_idx").on(employeeStore.employeeId),
+    storeIdIdx: index("store_id_idx").on(employeeStore.storeId),
+  }),
+);
+
+export const employeeStoreRelations = relations(employeeStore, ({ one }) => ({
+  employee: one(employees, {
+    fields: [employeeStore.employeeId],
+    references: [employees.id],
+  }),
+  store: one(stores, {
+    fields: [employeeStore.storeId],
+    references: [stores.id],
+  }),
+}));
