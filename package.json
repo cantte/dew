@@ -42,7 +42,7 @@
     "clsx": "^2.1.0",
     "date-fns": "^3.4.0",
     "drizzle-orm": "^0.30.2",
-    "framer-motion": "^11.0.13",
+    "framer-motion": "^11.0.14",
     "jsbarcode": "^3.11.6",
     "lucide-react": "^0.357.0",
     "next": "^14.1.3",
