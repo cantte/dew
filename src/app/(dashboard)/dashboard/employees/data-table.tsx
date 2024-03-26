@@ -2,52 +2,44 @@
 
 import {
   type ColumnDef,
-  type ColumnFiltersState,
   getCoreRowModel,
   getFacetedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
-import { type Sale } from "~/app/(dashboard)/dashboard/sales/columns";
-import SalesDataTableToolbar from "~/app/(dashboard)/dashboard/sales/data-table-toolbar";
+import { type Employee } from "~/app/(dashboard)/dashboard/employees/columns";
 import DataTable from "~/components/data-table";
 import DataTablePagination from "~/components/data-table-pagination";
 import { api } from "~/trpc/react";
 
-type DataTableProps<TValue> = {
-  columns: ColumnDef<Sale, TValue>[];
-  data: Sale[];
+type Props<TValue> = {
+  columns: ColumnDef<Employee, TValue>[];
+  data: Employee[];
   storeId: string;
 };
 
-const SalesDataTable = <TValue,>({
+const EmployeeDataTable = <TValue,>({
   columns,
   data,
   storeId,
-}: DataTableProps<TValue>) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const { data: sales } = api.sale.list.useQuery(
-    { storeId: storeId },
+}: Props<TValue>) => {
+  const { data: employees } = api.employee.byStore.useQuery(
+    {
+      storeId: storeId,
+    },
     {
       initialData: data,
     },
   );
 
-  const table = useReactTable<Sale>({
-    data: sales,
+  const table = useReactTable<Employee>({
+    data: employees,
     columns,
     state: {
-      sorting,
-      columnFilters,
+      columnFilters: [],
     },
-    onColumnFiltersChange: setColumnFilters,
-    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -57,11 +49,10 @@ const SalesDataTable = <TValue,>({
 
   return (
     <div className="space-y-4">
-      <SalesDataTableToolbar table={table} />
       <DataTable table={table} />
       <DataTablePagination table={table} />
     </div>
   );
 };
 
-export default SalesDataTable;
+export default EmployeeDataTable;

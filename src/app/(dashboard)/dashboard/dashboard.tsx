@@ -1,14 +1,11 @@
 "use client";
 
-import { ArchiveIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { ArchiveIcon } from "@radix-ui/react-icons";
 import { endOfDay, startOfDay } from "date-fns";
-import NextLink from "next/link";
 import { useState } from "react";
 import type DateRange from "~/components/date-range";
 import DateRangeFilter from "~/components/date-range-filter";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
@@ -48,6 +45,7 @@ const Dashboard = ({
     {
       from: date?.from ?? today,
       to: date?.to ?? today,
+      storeId: userPreferences?.storeId ?? "0",
     },
     {
       initialData: overview,
@@ -59,20 +57,6 @@ const Dashboard = ({
       <div className="flex items-center justify-between space-x-2">
         <h1 className="text-3xl font-semibold">Panel de control</h1>
       </div>
-      {userPreferences === undefined && (
-        <Alert>
-          <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
-          <AlertTitle>Acción requerida</AlertTitle>
-          <AlertDescription>
-            No ha registrado una tienda, por favor cree una tienda para poder
-            continuar.
-            <br />
-            <Button asChild size="sm" className="mt-2">
-              <NextLink href={`/stores/create`}>Crear tienda</NextLink>
-            </Button>
-          </AlertDescription>
-        </Alert>
-      )}
 
       <DateRangeFilter selected={date} onSelectRange={setDate} />
 

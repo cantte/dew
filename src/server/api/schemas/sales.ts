@@ -13,6 +13,7 @@ export const createSaleInput = z.object({
   amount: z.coerce.number().min(0),
   paymentMethod: z.string().max(32).optional(),
   payment: z.coerce.number().min(0),
+  storeId: z.string().min(1).max(36),
 
   items: z.array(createSaleItemInput).min(1),
 });

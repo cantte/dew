@@ -1,16 +1,21 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import NextLink from "next/link";
 import Link from "next/link";
-import { columns } from "~/app/(dashboard)/dashboard/sales/columns";
-import SalesDataTable from "~/app/(dashboard)/dashboard/sales/data-table";
+import { redirect } from "next/navigation";
+import { columns } from "~/app/(dashboard)/dashboard/employees/columns";
+import EmployeeDataTable from "~/app/(dashboard)/dashboard/employees/data-table";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
-const SalesPage = async () => {
+const EmployeesPage = async () => {
   const userPreferences = await api.userPreference.find.query();
+
+  if (userPreferences === undefined) {
+    return redirect("/dashboard");
+  }
+
   const store = await api.store.find.query({
-    id: userPreferences?.storeId ?? "0",
+    id: userPreferences.storeId,
   });
 
   if (store === undefined) {
@@ -23,14 +28,14 @@ const SalesPage = async () => {
           continuar.
           <br />
           <Button asChild size="sm" className="mt-2">
-            <NextLink href={`/stores/create`}>Crear tienda</NextLink>
+            <Link href={`/stores/create`}>Crear tienda</Link>
           </Button>
         </AlertDescription>
       </Alert>
     );
   }
 
-  const sales = await api.sale.list.query({
+  const employees = await api.employee.byStore.query({
     storeId: store.id,
   });
 
@@ -38,19 +43,23 @@ const SalesPage = async () => {
     <div>
       <div className="flex justify-between">
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          Ventas
+          Empleados
         </h3>
 
         <Button asChild>
-          <Link href="/sales/create">Crear venta</Link>
+          <Link href="/employees/create">Crear empleado</Link>
         </Button>
       </div>
 
       <div className="mt-4">
-        <SalesDataTable columns={columns} data={sales} storeId={store.id} />
+        <EmployeeDataTable
+          columns={columns}
+          data={employees}
+          storeId={store.id}
+        />
       </div>
     </div>
   );
 };
 
-export default SalesPage;
+export default EmployeesPage;
