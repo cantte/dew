@@ -39,7 +39,7 @@ export const employeesRouter = createTRPCRouter({
       });
     }),
   byStore: protectedProcedure
-    .input(z.object({ storeId: z.string().min(1).max(32) }))
+    .input(z.object({ storeId: z.string().min(1).max(36) }))
     .query(async ({ ctx, input }) => {
       return ctx.db.query.employeeStore.findMany({
         with: {
