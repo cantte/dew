@@ -7,15 +7,15 @@ export type Employee = RouterOutputs["employee"]["byStore"][number];
 
 export const columns: ColumnDef<Employee>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "employee.name",
     header: "Nombre",
   },
   {
-    accessorKey: "email",
+    accessorKey: "employee.email",
     header: "Correo",
   },
   {
-    accessorKey: "phone",
+    accessorKey: "employee.phone",
     header: "Teléfono",
   },
 ];
