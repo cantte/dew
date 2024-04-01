@@ -93,8 +93,8 @@ dependencies:
     specifier: ^0.30.6
     version: 0.30.6(@planetscale/database@1.16.0)(@types/react@18.2.72)(mysql2@3.9.3)(react@18.2.0)
   framer-motion:
-    specifier: ^11.0.22
-    version: 11.0.22(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^11.0.24
+    version: 11.0.24(react-dom@18.2.0)(react@18.2.0)
   jsbarcode:
     specifier: ^3.11.6
     version: 3.11.6
@@ -4129,8 +4129,8 @@ packages:
       '@emotion/is-prop-valid': 0.8.8
     dev: false
 
-  /framer-motion@11.0.22(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-kWyldNJLyKDvLWjPYFmgngQYLiU8973BtAeVBc83r2cnil/NBUQJb1ff/6/EweNQYb5BW3PaXFjZa4D3pn/W2Q==}
+  /framer-motion@11.0.24(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-l2iM8NR53qtcujgAqYvGPJJGModPNWEVUaATRDLfnaLvUoFpImovBm0AHalSSsY8tW6knP8mfJTW4WYGbnAe4w==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0
