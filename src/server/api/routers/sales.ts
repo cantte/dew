@@ -100,25 +100,28 @@ export const salesProcedure = createTRPCRouter({
         }
       });
     }),
-  list: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.sales.findMany({
-      with: {
-        customer: {
-          columns: {
-            id: true,
-            name: true,
+  list: protectedProcedure
+    .input(z.object({ storeId: z.string().min(1).max(36) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.sales.findMany({
+        with: {
+          customer: {
+            columns: {
+              id: true,
+              name: true,
+            },
           },
         },
-      },
-      orderBy: [desc(sales.createdAt)],
-      where: eq(sales.createdBy, ctx.session.user.id),
-    });
-  }),
+        orderBy: [desc(sales.createdAt)],
+        where: eq(sales.storeId, input.storeId),
+      });
+    }),
   overview: protectedProcedure
     .input(
       z.object({
         from: z.coerce.date(),
         to: z.coerce.date(),
+        storeId: z.string().min(1).max(36),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -130,7 +133,7 @@ export const salesProcedure = createTRPCRouter({
         .from(sales)
         .where(
           and(
-            eq(sales.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(sales.createdAt, input.from, input.to),
           ),
         );
@@ -142,7 +145,7 @@ export const salesProcedure = createTRPCRouter({
         .from(sales)
         .where(
           and(
-            eq(sales.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(sales.createdAt, input.from, input.to),
           ),
         )
@@ -155,7 +158,7 @@ export const salesProcedure = createTRPCRouter({
         .from(sales)
         .where(
           and(
-            eq(sales.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(sales.createdAt, input.from, input.to),
           ),
         );
@@ -165,9 +168,10 @@ export const salesProcedure = createTRPCRouter({
           productsCount: sum(saleItems.quantity),
         })
         .from(saleItems)
+        .innerJoin(sales, eq(sales.code, saleItems.saleCode))
         .where(
           and(
-            eq(saleItems.createdBy, ctx.session.user.id),
+            eq(sales.storeId, input.storeId),
             between(saleItems.createdAt, input.from, input.to),
           ),
         );
