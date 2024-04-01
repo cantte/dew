@@ -11,10 +11,16 @@ export const employeesRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { storeId, ...data } = input;
       await ctx.db.transaction(async (tx) => {
-        await tx.insert(employees).values({
-          ...data,
-          createdBy: ctx.session.user.id,
+        const employee = await tx.query.employees.findFirst({
+          where: eq(employees.id, data.id),
         });
+
+        if (employee === undefined) {
+          await tx.insert(employees).values({
+            ...data,
+            createdBy: ctx.session.user.id,
+          });
+        }
 
         // After creating an employee, link to store
         await tx.insert(employeeStore).values({
