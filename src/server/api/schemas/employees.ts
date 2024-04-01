@@ -5,5 +5,5 @@ export const createEmployeeInput = z.object({
   name: z.string().min(1).max(128),
   email: z.string().max(255),
   phone: z.string().max(32).optional(),
-  storeId: z.string().min(1).max(32),
+  storeId: z.string().min(1).max(36),
 });
