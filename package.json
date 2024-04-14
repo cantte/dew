@@ -41,7 +41,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
-    "drizzle-orm": "^0.30.7",
+    "drizzle-orm": "^0.30.8",
     "framer-motion": "^11.0.26",
     "jsbarcode": "^3.11.6",
     "lucide-react": "^0.367.0",
