@@ -8,7 +8,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
-import { mysqlTable } from "~/server/db/schema";
+import { createTable } from "~/server/db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db, mysqlTable),
+  adapter: DrizzleAdapter(db, createTable),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,

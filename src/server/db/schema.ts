@@ -1,14 +1,14 @@
 import { relations, sql } from "drizzle-orm";
 import {
-  float,
   index,
-  int,
-  mysqlTableCreator,
+  integer,
+  pgTableCreator,
   primaryKey,
+  real,
   text,
   timestamp,
   varchar,
-} from "drizzle-orm/mysql-core";
+} from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 /**
@@ -17,28 +17,28 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const mysqlTable = mysqlTableCreator((name) => `dew_${name}`);
+export const createTable = pgTableCreator((name) => `${name}`);
 
-export const users = mysqlTable("user", {
+export const users = createTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
-    fsp: 3,
-  }).default(sql`CURRENT_TIMESTAMP(3)`),
+  }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
-  sessions: many(sessions),
 }));
 
-export const accounts = mysqlTable(
+export const accounts = createTable(
   "account",
   {
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     type: varchar("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
@@ -46,7 +46,7 @@ export const accounts = mysqlTable(
     providerAccountId: varchar("providerAccountId", { length: 255 }).notNull(),
     refresh_token: text("refresh_token"),
     access_token: text("access_token"),
-    expires_at: int("expires_at"),
+    expires_at: integer("expires_at"),
     token_type: varchar("token_type", { length: 255 }),
     scope: varchar("scope", { length: 255 }),
     id_token: text("id_token"),
@@ -56,7 +56,7 @@ export const accounts = mysqlTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-    userIdIdx: index("userId_idx").on(account.userId),
+    userIdIdx: index("account_userId_idx").on(account.userId),
   }),
 );
 
@@ -64,17 +64,19 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
 }));
 
-export const sessions = mysqlTable(
+export const sessions = createTable(
   "session",
   {
     sessionToken: varchar("sessionToken", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (session) => ({
-    userIdIdx: index("userId_idx").on(session.userId),
+    userIdIdx: index("session_userId_idx").on(session.userId),
   }),
 );
 
@@ -82,7 +84,7 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
 }));
 
-export const verificationTokens = mysqlTable(
+export const verificationTokens = createTable(
   "verificationToken",
   {
     identifier: varchar("identifier", { length: 255 }).notNull(),
@@ -94,26 +96,25 @@ export const verificationTokens = mysqlTable(
   }),
 );
 
-export const products = mysqlTable(
+export const products = createTable(
   "product",
   {
     id: varchar("id", { length: 255 }).notNull().primaryKey(),
     code: varchar("code", { length: 255 }).notNull(),
     name: varchar("name", { length: 255 }),
     description: text("description"),
-    purchasePrice: float("purchasePrice").notNull(),
-    salePrice: float("salePrice").notNull(),
-    stock: int("stock").notNull(),
-    quantity: int("quantity").notNull().default(0),
-    createdBy: varchar("createdBy", { length: 255 }).notNull(),
+    purchasePrice: real("purchase_price").notNull(),
+    salePrice: real("sale_price").notNull(),
+    stock: integer("stock").notNull(),
+    quantity: integer("quantity").notNull().default(0),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updatedAt").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (product) => ({
-    idIdx: index("id_idx").on(product.id),
-    createdByIdx: index("createdBy_idx").on(product.createdBy),
+    createdByIdx: index("product_created_by_idx").on(product.createdBy),
   }),
 );
 
@@ -124,7 +125,7 @@ export const productsRelations = relations(products, ({ one }) => ({
   }),
 }));
 
-export const customers = mysqlTable(
+export const customers = createTable(
   "customer",
   {
     id: varchar("id", { length: 32 }).notNull().primaryKey(),
@@ -135,34 +136,33 @@ export const customers = mysqlTable(
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updatedAt").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (customer) => ({
-    idIdx: index("id_idx").on(customer.id),
-    createdByIdx: index("createdBy_idx").on(customer.createdBy),
+    createdByIdx: index("customer_created_by_idx").on(customer.createdBy),
   }),
 );
 
-export const sales = mysqlTable(
+export const sales = createTable(
   "sale",
   {
     code: varchar("code", { length: 36 }).notNull().primaryKey(),
     customerId: varchar("customer_id", { length: 32 }).notNull(),
-    amount: float("amount").notNull(),
+    amount: real("amount").notNull(),
     paymentMethod: varchar("payment_method", { length: 32 })
       .notNull()
       .default("cash"),
-    payment: float("payment").notNull(),
+    payment: real("payment").notNull(),
     storeId: varchar("store_id", { length: 36 }).notNull(),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (sale) => ({
-    customerIdIdx: index("customer_id_idx").on(sale.customerId),
-    createdByIdx: index("created_by_idx").on(sale.createdBy),
+    customerIdIdx: index("sale_customer_id_idx").on(sale.customerId),
+    createdByIdx: index("sale_created_by_idx").on(sale.createdBy),
   }),
 );
 
@@ -175,27 +175,26 @@ export const salesRelations = relations(sales, ({ one, many }) => ({
   store: one(stores, { fields: [sales.storeId], references: [stores.id] }),
 }));
 
-export const saleItems = mysqlTable(
+export const saleItems = createTable(
   "sale_item",
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
     saleCode: varchar("sale_code", { length: 36 }).notNull(),
     productId: varchar("product_id", { length: 255 }).notNull(),
-    quantity: int("quantity").notNull(),
-    purchasePrice: float("purchase_price").notNull(),
-    salePrice: float("sale_price").notNull(),
-    profit: float("profit").notNull(),
+    quantity: integer("quantity").notNull(),
+    purchasePrice: real("purchase_price").notNull(),
+    salePrice: real("sale_price").notNull(),
+    profit: real("profit").notNull(),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (saleItem) => ({
-    idIdx: index("id_idx").on(saleItem.id),
-    saleIdIdx: index("sale_code_idx").on(saleItem.saleCode),
-    productIdIdx: index("product_id_idx").on(saleItem.productId),
-    createdByIdx: index("created_by_idx").on(saleItem.createdBy),
+    saleIdIdx: index("sale_item_sale_code_idx").on(saleItem.saleCode),
+    productIdIdx: index("sale_item_product_id_idx").on(saleItem.productId),
+    createdByIdx: index("sale_item_created_by_idx").on(saleItem.createdBy),
   }),
 );
 
@@ -207,7 +206,7 @@ export const saleItemsRelations = relations(saleItems, ({ one }) => ({
   }),
 }));
 
-export const stores = mysqlTable(
+export const stores = createTable(
   "store",
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
@@ -218,11 +217,10 @@ export const stores = mysqlTable(
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (store) => ({
-    idIdx: index("id_idx").on(store.id),
-    createdByIdx: index("created_by_idx").on(store.createdBy),
+    createdByIdx: index("store_created_by_idx").on(store.createdBy),
   }),
 );
 
@@ -234,22 +232,23 @@ export const storeRelations = relations(stores, ({ one, many }) => ({
   employees: many(employees),
 }));
 
-export const cashRegisters = mysqlTable(
+export const cashRegisters = createTable(
   "cash_register",
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
-    amount: float("amount").notNull(),
+    amount: real("amount").notNull(),
     storeId: varchar("store_id", { length: 36 }).notNull(),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (cashRegister) => ({
-    idIdx: index("id_idx").on(cashRegister.id),
-    storeIdIdx: index("store_id_idx").on(cashRegister.storeId),
-    createdByIdx: index("created_by_idx").on(cashRegister.createdBy),
+    storeIdIdx: index("cash_register_store_id_idx").on(cashRegister.storeId),
+    createdByIdx: index("cash_register_created_by_idx").on(
+      cashRegister.createdBy,
+    ),
   }),
 );
 
@@ -264,11 +263,11 @@ export const cashRegisterRelations = relations(cashRegisters, ({ one }) => ({
   }),
 }));
 
-export const cashRegisterTransactions = mysqlTable(
+export const cashRegisterTransactions = createTable(
   "cash_register_transaction",
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
-    amount: float("amount").notNull(),
+    amount: real("amount").notNull(),
     type: varchar("type", { length: 32 }).notNull(),
     cashRegisterId: varchar("cash_register_id", { length: 36 }).notNull(),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
@@ -277,10 +276,9 @@ export const cashRegisterTransactions = mysqlTable(
       .notNull(),
   },
   (cashRegisterTransaction) => ({
-    idIdx: index("id_idx").on(cashRegisterTransaction.id),
-    cashRegisterIdIdx: index("cash_register_id_idx").on(
-      cashRegisterTransaction.cashRegisterId,
-    ),
+    cashRegisterIdIdx: index(
+      "cash_register_transaction_cash_register_id_idx",
+    ).on(cashRegisterTransaction.cashRegisterId),
     createdByIdx: index("created_by_idx").on(cashRegisterTransaction.createdBy),
   }),
 );
@@ -299,18 +297,12 @@ export const cashRegisterTransactionRelations = relations(
   }),
 );
 
-export const userPreferences = mysqlTable(
-  "user_preference",
-  {
-    userId: varchar("user_id", { length: 255 }).notNull().primaryKey(),
-    storeId: varchar("store_id", { length: 36 }).notNull(),
-  },
-  (userPreference) => ({
-    userIdIdx: index("user_id_idx").on(userPreference.userId),
-  }),
-);
+export const userPreferences = createTable("user_preference", {
+  userId: varchar("user_id", { length: 255 }).notNull().primaryKey(),
+  storeId: varchar("store_id", { length: 36 }).notNull(),
+});
 
-export const employees = mysqlTable(
+export const employees = createTable(
   "employee",
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
@@ -321,10 +313,10 @@ export const employees = mysqlTable(
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (employee) => ({
-    createdByIdx: index("created_by_idx").on(employee.createdBy),
+    createdByIdx: index("employee_created_by_idx").on(employee.createdBy),
   }),
 );
 
@@ -332,7 +324,7 @@ export const employeeRelations = relations(employees, ({ many }) => ({
   stores: many(stores),
 }));
 
-export const employeeStore = mysqlTable(
+export const employeeStore = createTable(
   "employee_store",
   {
     employeeId: varchar("employee_id", { length: 36 }).notNull(),
@@ -340,7 +332,7 @@ export const employeeStore = mysqlTable(
   },
   (employeeStore) => ({
     employeeIdIdx: index("employee_id_idx").on(employeeStore.employeeId),
-    storeIdIdx: index("store_id_idx").on(employeeStore.storeId),
+    storeIdIdx: index("employee_store_store_id_idx").on(employeeStore.storeId),
   }),
 );
 

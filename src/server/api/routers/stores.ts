@@ -21,7 +21,8 @@ export const storesProcedure = createTRPCRouter({
           userId: ctx.session.user.id,
           storeId: storeId,
         })
-        .onDuplicateKeyUpdate({
+        .onConflictDoUpdate({
+          target: userPreferences.userId,
           set: {
             storeId,
           },
