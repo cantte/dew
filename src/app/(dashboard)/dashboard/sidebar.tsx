@@ -20,6 +20,7 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
         if (item.items === undefined && item.href !== undefined) {
           return (
             <Button
+              key={`${index}-${item.href}`}
               asChild
               variant="ghost"
               className={cn(
@@ -37,7 +38,7 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
           );
         }
         return (
-          <div key={index} className={cn("pb-4")}>
+          <div key={`${index}-${item.title}`} className={cn("pb-4")}>
             <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
               {item.title}
             </h4>
