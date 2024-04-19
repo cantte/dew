@@ -20,17 +20,22 @@ import { api } from "~/trpc/react";
 type ProductDataTableProps<TValue> = {
   columns: ColumnDef<Product, TValue>[];
   data: Product[];
+  storeId: string;
 };
 
 const ProductDataTable = <TValue,>({
   columns,
   data,
+  storeId,
 }: ProductDataTableProps<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const { data: products } = api.product.list.useQuery(undefined, {
-    initialData: data,
-  });
+  const { data: products } = api.product.list.useQuery(
+    { storeId: storeId },
+    {
+      initialData: data,
+    },
+  );
 
   const table = useReactTable<Product>({
     data: products,

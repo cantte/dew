@@ -30,12 +30,18 @@ export const productsRouter = createTRPCRouter({
         });
       });
     }),
-  list: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.products.findMany({
-      orderBy: [desc(products.createdAt)],
-      where: eq(products.createdBy, ctx.session.user.id),
-    });
-  }),
+  list: protectedProcedure
+    .input(z.object({ storeId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db
+        .select()
+        .from(products)
+        .innerJoin(storeProducts, eq(products.id, storeProducts.productId))
+        .where(eq(storeProducts.storeId, input.storeId))
+        .orderBy(desc(products.createdAt));
+
+      return result.map((row) => row.product);
+    }),
   exists: protectedProcedure
     .input(z.object({ code: z.string().min(1).max(255) }))
     .query(async ({ ctx, input }) => {
