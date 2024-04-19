@@ -125,6 +125,30 @@ export const productsRelations = relations(products, ({ one }) => ({
   }),
 }));
 
+export const storeProducts = createTable(
+  "store_product",
+  {
+    storeId: varchar("store_id", { length: 36 }).notNull(),
+    productId: varchar("product_id", { length: 255 }).notNull(),
+  },
+  (storeProduct) => ({
+    compoundKey: primaryKey({
+      columns: [storeProduct.storeId, storeProduct.productId],
+    }),
+  }),
+);
+
+export const storeProductRelations = relations(storeProducts, ({ one }) => ({
+  store: one(stores, {
+    fields: [storeProducts.storeId],
+    references: [stores.id],
+  }),
+  product: one(products, {
+    fields: [storeProducts.productId],
+    references: [products.id],
+  }),
+}));
+
 export const customers = createTable(
   "customer",
   {

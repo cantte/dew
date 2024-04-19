@@ -8,16 +8,26 @@ import {
   updateProductQuantityInput,
 } from "~/server/api/schemas/products";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { products } from "~/server/db/schema";
+import { products, storeProducts } from "~/server/db/schema";
 
 export const productsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createProductInput)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(products).values({
-        ...input,
-        id: uuid(),
-        createdBy: ctx.session.user.id,
+      await ctx.db.transaction(async (tx) => {
+        const { storeId, ...product } = input;
+        const productId = uuid();
+
+        await tx.insert(products).values({
+          ...product,
+          id: productId,
+          createdBy: ctx.session.user.id,
+        });
+
+        await tx.insert(storeProducts).values({
+          storeId: storeId,
+          productId: productId,
+        });
       });
     }),
   list: protectedProcedure.query(async ({ ctx }) => {
