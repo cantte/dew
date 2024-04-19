@@ -15,6 +15,7 @@
 
         --primary: 275 86% 36%;
         --primary-foreground: 60 100% 99%;
+        --primary-text: 275 86% 36%;
 
         --secondary: 0 0% 96%;
         --secondary-foreground: 0 0% 9%;
@@ -54,6 +55,7 @@
 
         --primary: 275 86% 36%;
         --primary-foreground: 0 0% 98%;
+        --primary-text: 275 100% 73%;
 
         --secondary: 0 0% 15%;
         --secondary-foreground: 0 0% 98%;

@@ -43,7 +43,7 @@ const TextCycle = () => {
   return (
     <AnimatePresence>
       <motion.span
-        className="absolute ml-3 text-primary"
+        className="text-primary-text absolute ml-3"
         variants={variants}
         key={index}
         initial="enter"
