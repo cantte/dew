@@ -4,6 +4,7 @@ import {
   getServerSession,
   type NextAuthOptions,
 } from "next-auth";
+import { type Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env";
@@ -49,7 +50,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db, createTable),
+  adapter: DrizzleAdapter(db, createTable) as Adapter,
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
