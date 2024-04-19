@@ -1,10 +1,24 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "~/components/ui/button";
 
 const SignInButton = () => {
-  return <Button onClick={() => void signIn("google")}>Iniciar sesión</Button>;
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
+  return (
+    <Button
+      onClick={() =>
+        void signIn("google", {
+          callbackUrl: callbackUrl ?? "/",
+        })
+      }
+    >
+      Iniciar sesión
+    </Button>
+  );
 };
 
 export default SignInButton;
