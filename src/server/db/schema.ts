@@ -112,6 +112,7 @@ export const products = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    deletedAt: timestamp("deleted_at"),
   },
   (product) => ({
     createdByIdx: index("product_created_by_idx").on(product.createdBy),

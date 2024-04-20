@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
@@ -52,10 +51,10 @@ const UpdateProductQuantityModal = ({
     updateProductQuantity.mutate(values);
   };
 
-  const router = useRouter();
+  const utils = api.useUtils();
   useEffect(() => {
     if (updateProductQuantity.isSuccess) {
-      router.refresh();
+      void utils.product.list.invalidate();
       setIsOpen(false);
     }
   }, [updateProductQuantity.isSuccess]);
