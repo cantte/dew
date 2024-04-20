@@ -23,11 +23,18 @@ import { Textarea } from "~/components/ui/textarea";
 import { createProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
 
-type CreateProductFormValues = z.infer<typeof createProductInput>;
+type Props = {
+  storeId: string;
+};
 
-const CreateProductForm = () => {
-  const form = useForm<CreateProductFormValues>({
+type FormValues = z.infer<typeof createProductInput>;
+
+const CreateProductForm = ({ storeId }: Props) => {
+  const form = useForm<FormValues>({
     resolver: zodResolver(createProductInput),
+    defaultValues: {
+      storeId,
+    },
   });
 
   const createProduct = api.product.create.useMutation();
@@ -38,7 +45,7 @@ const CreateProductForm = () => {
     }
   }, [createProduct.isSuccess]);
 
-  const onSubmit = (data: CreateProductFormValues) => {
+  const onSubmit = (data: FormValues) => {
     createProduct.mutate(data);
   };
 

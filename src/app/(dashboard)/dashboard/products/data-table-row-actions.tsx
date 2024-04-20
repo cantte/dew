@@ -5,6 +5,7 @@ import { type Row } from "@tanstack/react-table";
 import NextLink from "next/link";
 import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
 import BarcodeModal from "~/components/products/barcode-modal";
+import DeleteProductModal from "~/components/products/delete-modal";
 import UpdateQuantityModal from "~/components/products/update-quantity-modal";
 import { Button } from "~/components/ui/button";
 import {
@@ -35,7 +36,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
         <DropdownMenuItem asChild>
           <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
         </DropdownMenuItem>
-        <DropdownMenuItem disabled>Eliminar</DropdownMenuItem>
+        <DeleteProductModal product={row.original} />
         <UpdateQuantityModal product={row.original} />
         <BarcodeModal product={row.original} />
       </DropdownMenuContent>

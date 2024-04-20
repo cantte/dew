@@ -26,8 +26,8 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Visualiza tus <span className="text-primary">tiendas</span> de
-              forma intuitiva
+              Visualiza tus <span className="text-primary-text">tiendas</span>{" "}
+              de forma intuitiva
             </h4>
 
             <p className="text-base leading-7 text-muted-foreground">
@@ -50,7 +50,7 @@ const FeaturesSection = () => {
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
               Gestiona tu inventario de{" "}
-              <span className="text-primary">productos</span> con precisión
+              <span className="text-primary-text">productos</span> con precisión
             </h4>
 
             <p className="text-base leading-7 text-muted-foreground">
@@ -74,8 +74,8 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Potencia tus <span className="text-primary">ventas</span> con un
-              seguimiento inteligente
+              Potencia tus <span className="text-primary-text">ventas</span> con
+              un seguimiento inteligente
             </h4>
 
             <p className="text-base leading-7 text-muted-foreground">
@@ -99,8 +99,8 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Registra a tus <span className="text-primary">clientes</span> una
-              vez
+              Registra a tus <span className="text-primary-text">clientes</span>{" "}
+              una vez
             </h4>
 
             <p className="text-base leading-7 text-muted-foreground">
@@ -126,7 +126,7 @@ const FeaturesSection = () => {
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
               Gestiona tus transacciones con nuestra{" "}
-              <span className="text-primary">caja registradora</span>
+              <span className="text-primary-text">caja registradora</span>
             </h4>
 
             <p className="text-base leading-7 text-muted-foreground">
@@ -153,7 +153,7 @@ const FeaturesSection = () => {
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
               Análisis profundo con nuestros{" "}
-              <span className="text-primary">reportes</span>
+              <span className="text-primary-text">reportes</span>
             </h4>
 
             <p className="text-base leading-7 text-muted-foreground">

@@ -1,4 +1,4 @@
-import { and, desc, eq, lt } from "drizzle-orm";
+import { and, desc, eq, isNull, lt } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
@@ -8,24 +8,53 @@ import {
   updateProductQuantityInput,
 } from "~/server/api/schemas/products";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { products } from "~/server/db/schema";
+import { products, storeProducts } from "~/server/db/schema";
 
 export const productsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createProductInput)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(products).values({
-        ...input,
-        id: uuid(),
-        createdBy: ctx.session.user.id,
+      await ctx.db.transaction(async (tx) => {
+        const { storeId, ...product } = input;
+        const productId = uuid();
+
+        await tx.insert(products).values({
+          ...product,
+          id: productId,
+          createdBy: ctx.session.user.id,
+        });
+
+        await tx.insert(storeProducts).values({
+          storeId: storeId,
+          productId: productId,
+        });
       });
     }),
-  list: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.products.findMany({
-      orderBy: [desc(products.createdAt)],
-      where: eq(products.createdBy, ctx.session.user.id),
-    });
-  }),
+  list: protectedProcedure
+    .input(z.object({ storeId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db
+        .select({
+          id: products.id,
+          code: products.code,
+          name: products.name,
+          description: products.description,
+          purchasePrice: products.purchasePrice,
+          salePrice: products.salePrice,
+          stock: products.stock,
+          quantity: products.quantity,
+          createdAt: products.createdAt,
+        })
+        .from(products)
+        .innerJoin(storeProducts, eq(products.id, storeProducts.productId))
+        .where(
+          and(
+            eq(storeProducts.storeId, input.storeId),
+            isNull(products.deletedAt),
+          ),
+        )
+        .orderBy(desc(products.createdAt));
+    }),
   exists: protectedProcedure
     .input(z.object({ code: z.string().min(1).max(255) }))
     .query(async ({ ctx, input }) => {
@@ -101,5 +130,13 @@ export const productsRouter = createTRPCRouter({
     .input(updateProductInput)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.update(products).set(input).where(eq(products.id, input.id));
+    }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(products)
+        .set({ deletedAt: new Date() })
+        .where(eq(products.id, input.id));
     }),
 });

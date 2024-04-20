@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
@@ -52,11 +51,10 @@ const UpdateProductQuantityModal = ({
     updateProductQuantity.mutate(values);
   };
 
-  const productListKey = api.product.list.getQueryKey();
-  const queryClient = useQueryClient();
+  const utils = api.useUtils();
   useEffect(() => {
     if (updateProductQuantity.isSuccess) {
-      void queryClient.invalidateQueries(productListKey);
+      void utils.product.list.invalidate();
       setIsOpen(false);
     }
   }, [updateProductQuantity.isSuccess]);

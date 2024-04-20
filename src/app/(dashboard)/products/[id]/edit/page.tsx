@@ -4,6 +4,8 @@ import BackButton from "~/components/back-button";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
+export const fetchCache = "force-no-store";
+
 type Props = {
   params: {
     id: string;
