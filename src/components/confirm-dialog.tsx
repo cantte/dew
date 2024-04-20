@@ -1,4 +1,3 @@
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -7,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/components/ui/dialog";
 
 type Props = {
