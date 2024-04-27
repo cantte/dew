@@ -44,7 +44,7 @@ const EditProductForm = ({ product }: Props) => {
   const router = useRouter();
   useEffect(() => {
     if (updateProduct.isSuccess) {
-      router.back();
+      router.refresh();
     }
   }, [updateProduct.isSuccess]);
 
