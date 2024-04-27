@@ -17,6 +17,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
+import { useToast } from "~/components/ui/use-toast";
 import { updateProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
@@ -42,8 +43,13 @@ const EditProductForm = ({ product }: Props) => {
   const updateProduct = api.product.update.useMutation();
 
   const router = useRouter();
+  const { toast } = useToast();
   useEffect(() => {
     if (updateProduct.isSuccess) {
+      toast({
+        title: "Producto actualizado",
+        description: "El producto ha sido actualizado exitosamente.",
+      });
       router.refresh();
     }
   }, [updateProduct.isSuccess]);
