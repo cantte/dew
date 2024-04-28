@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import {
   createProductInput,
+  linkToStoresInput,
   updateProductInput,
   updateProductQuantityInput,
 } from "~/server/api/schemas/products";
@@ -140,5 +141,21 @@ export const productsRouter = createTRPCRouter({
         .update(products)
         .set({ deletedAt: new Date() })
         .where(eq(products.id, input.id));
+    }),
+  linkToStores: protectedProcedure
+    .input(linkToStoresInput)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.transaction(async (tx) => {
+        await tx
+          .delete(storeProducts)
+          .where(eq(storeProducts.productId, input.id));
+
+        await tx.insert(storeProducts).values(
+          input.stores.map((storeId) => ({
+            storeId: storeId,
+            productId: input.id,
+          })),
+        );
+      });
     }),
 });

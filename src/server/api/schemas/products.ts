@@ -26,3 +26,8 @@ export const updateProductInput = z.object({
   salePrice: z.coerce.number().min(0),
   stock: z.coerce.number().min(0),
 });
+
+export const linkToStoresInput = z.object({
+  id: z.string().uuid(),
+  stores: z.array(z.string().uuid()),
+});
