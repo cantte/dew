@@ -54,24 +54,6 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
     RouterOutputs["store"]["list"]
   >(currentStore ? [currentStore] : []);
 
-  const onSelect = (storeId: string) => {
-    const store = stores.find((store) => store.id === storeId);
-
-    if (store) {
-      setSelectedStores((prev) => {
-        const exists = prev.some(
-          (currentStore) => currentStore.id === store.id,
-        );
-
-        if (exists) {
-          return prev.filter((currentStore) => currentStore.id !== store.id);
-        }
-
-        return [...prev, store];
-      });
-    }
-  };
-
   useEffect(() => {
     form.setValue(
       "stores",
@@ -158,7 +140,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
                 <MultiSelectStore
                   stores={stores}
                   currentStores={selectedStores}
-                  onSelect={onSelect}
+                  onSelectedChange={setSelectedStores}
                 />
 
                 <div className="mt-1.5 flex flex-row items-center justify-between">

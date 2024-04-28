@@ -13,10 +13,35 @@ type Props = {
   stores: RouterOutputs["store"]["list"];
   currentStores: RouterOutputs["store"]["list"];
 
-  onSelect: (value: string) => void;
+  onSelectedChange: (value: RouterOutputs["store"]["list"]) => void;
 };
 
-const MultiSelectStore = ({ stores, currentStores, onSelect }: Props) => {
+const MultiSelectStore = ({
+  stores,
+  currentStores,
+  onSelectedChange,
+}: Props) => {
+  const onSelect = (storeId: string) => {
+    const store = stores.find((store) => store.id === storeId);
+
+    if (!store) {
+      return;
+    }
+
+    const exists = currentStores.some(
+      (currentStore) => currentStore.id === store.id,
+    );
+
+    if (!exists) {
+      onSelectedChange([...currentStores, store]);
+      return;
+    }
+
+    onSelectedChange(
+      currentStores.filter((currentStore) => currentStore.id !== store.id),
+    );
+  };
+
   return (
     <div>
       <DropdownMenu>
@@ -27,7 +52,7 @@ const MultiSelectStore = ({ stores, currentStores, onSelect }: Props) => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="w-64">
-          {stores.map((store) => {
+          {stores?.map((store) => {
             const isSelected = currentStores.some(
               (currentStore) => currentStore.id === store.id,
             );
