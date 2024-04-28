@@ -44,6 +44,8 @@ const CreateProductPage = async () => {
     );
   }
 
+  const stores = await api.store.list.query();
+
   return (
     <div>
       <div className="mb-4 mt-4 md:mt-0">
@@ -53,7 +55,7 @@ const CreateProductPage = async () => {
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Crear producto</h1>
 
-        <CreateProductForm storeId={store.id} />
+        <CreateProductForm storeId={store.id} stores={stores} />
       </section>
     </div>
   );

@@ -3,10 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { type z } from "zod";
+import MultiSelectStore from "~/components/stores/multi-select-store";
+import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 
 import {
@@ -20,28 +22,74 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
+import { useToast } from "~/components/ui/use-toast";
 import { createProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
+import { RouterOutputs } from "~/trpc/shared";
 
 type Props = {
   storeId: string;
+
+  stores: RouterOutputs["store"]["list"];
 };
 
 type FormValues = z.infer<typeof createProductInput>;
 
-const CreateProductForm = ({ storeId }: Props) => {
+const CreateProductForm = ({ storeId, stores }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(createProductInput),
     defaultValues: {
-      storeId,
+      stores: [storeId],
     },
   });
 
-  const createProduct = api.product.create.useMutation();
+  const currentStore = useMemo(
+    () => stores.find((store) => store.id === storeId),
+    [stores, storeId],
+  );
+
+  const [selectedStores, setSelectedStores] = useState<
+    RouterOutputs["store"]["list"]
+  >(currentStore ? [currentStore] : []);
+
+  const onSelect = (storeId: string) => {
+    const store = stores.find((store) => store.id === storeId);
+
+    if (store) {
+      setSelectedStores((prev) => {
+        const exists = prev.some(
+          (currentStore) => currentStore.id === store.id,
+        );
+
+        if (exists) {
+          return prev.filter((currentStore) => currentStore.id !== store.id);
+        }
+
+        return [...prev, store];
+      });
+    }
+  };
 
   useEffect(() => {
+    form.setValue(
+      "stores",
+      selectedStores.map((store) => store.id),
+    );
+  }, [selectedStores]);
+
+  const createProduct = api.product.create.useMutation();
+
+  const { toast } = useToast();
+  useEffect(() => {
     if (createProduct.isSuccess) {
-      form.reset();
+      toast({
+        title: "Éxito",
+        description: "El producto se creó con éxito.",
+      });
+
+      form.reset({
+        stores: [storeId],
+      });
     }
   }, [createProduct.isSuccess]);
 
@@ -93,6 +141,41 @@ const CreateProductForm = ({ storeId }: Props) => {
                 Puedes usar el código de barras del producto. Escanéalo con un
                 lector de códigos de barras.
               </FormDescription>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="stores"
+          render={() => (
+            <FormItem>
+              <div>
+                <MultiSelectStore
+                  stores={stores}
+                  currentStores={selectedStores}
+                  onSelect={onSelect}
+                />
+
+                <div className="mt-1.5 flex flex-row items-center justify-between">
+                  {selectedStores.length > 0 && (
+                    <div>
+                      <span className="text-xs text-gray-500">
+                        Tiendas seleccionadas
+                      </span>
+                      <ul className="mt-1 flex flex-row space-x-2">
+                        {selectedStores.map((store) => (
+                          <Badge variant="outline" key={store.id}>
+                            {store.name}
+                          </Badge>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
 
               <FormMessage />
             </FormItem>

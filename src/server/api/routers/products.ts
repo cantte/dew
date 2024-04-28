@@ -15,7 +15,7 @@ export const productsRouter = createTRPCRouter({
     .input(createProductInput)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
-        const { storeId, ...product } = input;
+        const { stores, ...product } = input;
         const productId = uuid();
 
         await tx.insert(products).values({
@@ -24,10 +24,12 @@ export const productsRouter = createTRPCRouter({
           createdBy: ctx.session.user.id,
         });
 
-        await tx.insert(storeProducts).values({
-          storeId: storeId,
-          productId: productId,
-        });
+        await tx.insert(storeProducts).values(
+          stores.map((storeId) => ({
+            storeId: storeId,
+            productId: productId,
+          })),
+        );
       });
     }),
   list: protectedProcedure

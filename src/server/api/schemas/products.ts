@@ -8,7 +8,8 @@ export const createProductInput = z.object({
   salePrice: z.coerce.number().min(0),
   stock: z.coerce.number().min(0),
   quantity: z.coerce.number().min(0),
-  storeId: z.string().min(1).max(255),
+
+  stores: z.array(z.string().uuid()).min(1),
 });
 
 export const updateProductQuantityInput = z.object({
