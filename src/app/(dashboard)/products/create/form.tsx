@@ -39,6 +39,8 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(createProductInput),
     defaultValues: {
+      code: "",
+      name: "",
       stores: [storeId],
     },
   });
@@ -134,7 +136,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
             <FormItem>
               <FormLabel>Código</FormLabel>
               <FormControl>
-                <Input autoFocus {...field} />
+                <Input type="text" autoFocus {...field} />
               </FormControl>
 
               <FormDescription>
@@ -189,7 +191,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
             <FormItem>
               <FormLabel>Nombre</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input type="text" {...field} />
               </FormControl>
 
               <FormMessage />
