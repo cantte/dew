@@ -152,8 +152,8 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
                       </span>
                       <ul className="mt-1 flex flex-row space-x-2">
                         {selectedStores.map((store) => (
-                          <Badge variant="outline" key={store.id}>
-                            {store.name}
+                          <Badge variant="outline" key={store}>
+                            {stores?.find((s) => s.id === store)?.name}
                           </Badge>
                         ))}
                       </ul>
