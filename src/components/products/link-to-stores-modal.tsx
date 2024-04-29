@@ -18,6 +18,7 @@ import {
 } from "~/components/ui/dialog";
 import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
 import { Form, FormField, FormItem, FormMessage } from "~/components/ui/form";
+import { useToast } from "~/components/ui/use-toast";
 import { linkToStoresInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
 
@@ -43,8 +44,14 @@ const LinkToStoresModal = ({ product }: Props) => {
   };
 
   const utils = api.useUtils();
+  const { toast } = useToast();
   useEffect(() => {
     if (linkToStores.isSuccess) {
+      toast({
+        title: "Éxito",
+        description: "El producto ha sido agregado a las tiendas",
+      });
+
       void utils.product.list.invalidate();
       setIsOpen(false);
     }
