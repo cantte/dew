@@ -11,14 +11,14 @@ import { RouterOutputs } from "~/trpc/shared";
 
 type Props = {
   stores: RouterOutputs["store"]["list"];
-  currentStores: RouterOutputs["store"]["list"];
+  selectedStores: Array<string>;
 
-  onSelectedChange: (value: RouterOutputs["store"]["list"]) => void;
+  onSelectedChange: (value: Array<string>) => void;
 };
 
 const MultiSelectStore = ({
   stores,
-  currentStores,
+  selectedStores,
   onSelectedChange,
 }: Props) => {
   const onSelect = (storeId: string) => {
@@ -28,17 +28,17 @@ const MultiSelectStore = ({
       return;
     }
 
-    const exists = currentStores.some(
-      (currentStore) => currentStore.id === store.id,
+    const exists = selectedStores.some(
+      (currentStore) => currentStore === store.id,
     );
 
     if (!exists) {
-      onSelectedChange([...currentStores, store]);
+      onSelectedChange([...selectedStores, store.id]);
       return;
     }
 
     onSelectedChange(
-      currentStores.filter((currentStore) => currentStore.id !== store.id),
+      selectedStores.filter((currentStore) => currentStore !== store.id),
     );
   };
 
@@ -53,8 +53,8 @@ const MultiSelectStore = ({
 
         <DropdownMenuContent className="w-64">
           {stores?.map((store) => {
-            const isSelected = currentStores.some(
-              (currentStore) => currentStore.id === store.id,
+            const isSelected = selectedStores.some(
+              (currentStore) => currentStore === store.id,
             );
 
             return (
