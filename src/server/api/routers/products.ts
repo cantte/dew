@@ -158,4 +158,14 @@ export const productsRouter = createTRPCRouter({
         );
       });
     }),
+  stores: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db
+        .select({
+          id: storeProducts.storeId,
+        })
+        .from(storeProducts)
+        .where(eq(storeProducts.productId, input.id));
+    }),
 });

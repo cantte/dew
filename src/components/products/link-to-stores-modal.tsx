@@ -20,7 +20,6 @@ import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
 import { Form, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import { linkToStoresInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
-import { RouterOutputs } from "~/trpc/shared";
 
 type Props = {
   product: Product;
@@ -52,16 +51,21 @@ const LinkToStoresModal = ({ product }: Props) => {
   }, [linkToStores.isSuccess]);
 
   const { data: stores } = api.store.list.useQuery();
-  const [selectedStores, setSelectedStores] = useState<
-    RouterOutputs["store"]["list"]
-  >([]);
+
+  const selectedStores = form.watch("stores", []);
+  const setSelectedStores = (value: Array<string>) =>
+    form.setValue("stores", value);
+  const { data: productStores } = api.product.stores.useQuery({
+    id: product.id,
+  });
 
   useEffect(() => {
-    form.setValue(
-      "stores",
-      selectedStores.map((store) => store.id),
-    );
-  }, [selectedStores]);
+    if (!productStores) {
+      return;
+    }
+
+    setSelectedStores(productStores.map((store) => store.id));
+  }, [productStores]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -96,11 +100,13 @@ const LinkToStoresModal = ({ product }: Props) => {
               render={() => (
                 <FormItem>
                   <div>
-                    <MultiSelectStore
-                      stores={stores}
-                      currentStores={selectedStores}
-                      onSelectedChange={setSelectedStores}
-                    />
+                    {stores && (
+                      <MultiSelectStore
+                        stores={stores}
+                        selectedStores={selectedStores}
+                        onSelectedChange={setSelectedStores}
+                      />
+                    )}
 
                     <div className="mt-1.5 flex flex-row items-center justify-between">
                       {selectedStores.length > 0 && (
@@ -110,8 +116,8 @@ const LinkToStoresModal = ({ product }: Props) => {
                           </span>
                           <ul className="mt-1 flex flex-row space-x-2">
                             {selectedStores.map((store) => (
-                              <Badge variant="outline" key={store.id}>
-                                {store.name}
+                              <Badge variant="outline" key={store}>
+                                {stores?.find((s) => s.id === store)?.name}
                               </Badge>
                             ))}
                           </ul>
