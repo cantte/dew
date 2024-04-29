@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import { type z } from "zod";
@@ -50,16 +50,17 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
     [stores, storeId],
   );
 
-  const [selectedStores, setSelectedStores] = useState<
-    RouterOutputs["store"]["list"]
-  >(currentStore ? [currentStore] : []);
+  const selectedStores = form.watch("stores", []);
+  const setSelectedStores = (value: Array<string>) =>
+    form.setValue("stores", value);
 
   useEffect(() => {
-    form.setValue(
-      "stores",
-      selectedStores.map((store) => store.id),
-    );
-  }, [selectedStores]);
+    if (!currentStore) {
+      return;
+    }
+
+    setSelectedStores([currentStore.id]);
+  }, [currentStore]);
 
   const createProduct = api.product.create.useMutation();
 
@@ -139,7 +140,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
               <div>
                 <MultiSelectStore
                   stores={stores}
-                  currentStores={selectedStores}
+                  selectedStores={selectedStores}
                   onSelectedChange={setSelectedStores}
                 />
 
