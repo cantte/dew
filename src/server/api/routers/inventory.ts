@@ -13,8 +13,6 @@ export const inventoryRouter = createTRPCRouter({
           id: products.id,
           code: products.code,
           name: products.name,
-          purchasePrice: products.purchasePrice,
-          salePrice: products.salePrice,
           stock: inventory.stock,
           quantity: inventory.quantity,
         })

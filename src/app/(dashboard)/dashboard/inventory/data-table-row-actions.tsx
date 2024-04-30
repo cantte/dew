@@ -2,21 +2,17 @@
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { type Row } from "@tanstack/react-table";
-import NextLink from "next/link";
-import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
-import BarcodeModal from "~/components/products/barcode-modal";
-import DeleteProductModal from "~/components/products/delete-modal";
-import LinkToStoresModal from "~/components/products/link-to-stores-modal";
+import { ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
+import UpdateProductQuantityModal from "~/components/products/update-quantity-modal";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
 type DataTableRowActionsProps = {
-  row: Row<Product>;
+  row: Row<ProductInventory>;
 };
 
 const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
@@ -33,12 +29,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem asChild>
-          <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
-        </DropdownMenuItem>
-        <DeleteProductModal product={row.original} />
-        <BarcodeModal product={row.original} />
-        <LinkToStoresModal product={row.original} />
+        <UpdateProductQuantityModal product={row.original} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

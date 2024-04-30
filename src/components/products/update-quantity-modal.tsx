@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
-import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
+import { ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import {
@@ -28,7 +28,7 @@ import { updateProductQuantityInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
 
 type Props = {
-  product: Product;
+  product: ProductInventory;
 };
 
 type FormValues = z.infer<typeof updateProductQuantityInput>;
@@ -50,7 +50,7 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
   const utils = api.useUtils();
   useEffect(() => {
     if (updateProductQuantity.isSuccess) {
-      void utils.product.list.invalidate();
+      void utils.inventory.list.invalidate();
       setIsOpen(false);
     }
   }, [updateProductQuantity.isSuccess]);
