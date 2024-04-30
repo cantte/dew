@@ -6,8 +6,6 @@ export const createProductInput = z.object({
   description: z.string().optional(),
   purchasePrice: z.coerce.number().min(0),
   salePrice: z.coerce.number().min(0),
-  stock: z.coerce.number().min(0),
-  quantity: z.coerce.number().min(0),
 
   stores: z.array(z.string().uuid()).min(1),
 });
@@ -24,7 +22,6 @@ export const updateProductInput = z.object({
   description: z.string().optional(),
   purchasePrice: z.coerce.number().min(0),
   salePrice: z.coerce.number().min(0),
-  stock: z.coerce.number().min(0),
 });
 
 export const linkToStoresInput = z.object({

@@ -16,6 +16,20 @@ export const columns: ColumnDef<Product>[] = [
     header: "Nombre",
   },
   {
+    accessorKey: "purchasePrice",
+    header: "Precio de compra",
+    cell: ({ row }) => {
+      return (
+        <span>
+          {Intl.NumberFormat("es-CO", {
+            style: "currency",
+            currency: "COP",
+          }).format(row.original.purchasePrice)}
+        </span>
+      );
+    },
+  },
+  {
     accessorKey: "salePrice",
     header: "Precio de venta",
     cell: ({ row }) => {
@@ -26,24 +40,6 @@ export const columns: ColumnDef<Product>[] = [
             currency: "COP",
           }).format(row.original.salePrice)}
         </span>
-      );
-    },
-  },
-  {
-    accessorKey: "stock",
-    header: "Stock",
-    cell: ({ row }) => {
-      return (
-        <span>{Intl.NumberFormat("es-CO").format(row.original.stock)}</span>
-      );
-    },
-  },
-  {
-    accessorKey: "quantity",
-    header: "Existencia",
-    cell: ({ row }) => {
-      return (
-        <span>{Intl.NumberFormat("es-CO").format(row.original.quantity)}</span>
       );
     },
   },

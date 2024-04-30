@@ -25,7 +25,7 @@ import { type RouterOutputs } from "~/trpc/shared";
 type Props = {
   overview: RouterOutputs["sale"]["overview"];
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
-  lowStockProducts: RouterOutputs["product"]["lowStock"];
+  lowStockProducts: RouterOutputs["inventory"]["lowStock"];
 
   userPreferences: RouterOutputs["userPreference"]["find"];
 };

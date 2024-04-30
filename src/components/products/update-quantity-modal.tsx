@@ -27,27 +27,23 @@ import { Input } from "~/components/ui/input";
 import { updateProductQuantityInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
 
-type UpdateProductQuantityModalProps = {
+type Props = {
   product: Product;
 };
 
-type UpdateProductQuantityFormValues = z.infer<
-  typeof updateProductQuantityInput
->;
+type FormValues = z.infer<typeof updateProductQuantityInput>;
 
-const UpdateProductQuantityModal = ({
-  product,
-}: UpdateProductQuantityModalProps) => {
+const UpdateProductQuantityModal = ({ product }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<UpdateProductQuantityFormValues>({
+  const form = useForm<FormValues>({
     defaultValues: {
       id: product.id,
     },
     resolver: zodResolver(updateProductQuantityInput),
   });
 
-  const updateProductQuantity = api.product.updateQuantity.useMutation();
-  const onSubmit: SubmitHandler<UpdateProductQuantityFormValues> = (values) => {
+  const updateProductQuantity = api.inventory.update.useMutation();
+  const onSubmit: SubmitHandler<FormValues> = (values) => {
     updateProductQuantity.mutate(values);
   };
 

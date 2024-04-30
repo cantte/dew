@@ -36,7 +36,9 @@ const DashboardPage = async () => {
     storeId: store.id,
   });
   const mostSoldProducts = await api.sale.mostSoldProducts.query();
-  const lowStockProducts = await api.product.lowStock.query();
+  const lowStockProducts = await api.inventory.lowStock.query({
+    storeId: store.id,
+  });
 
   return (
     <main>

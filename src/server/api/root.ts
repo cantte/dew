@@ -1,6 +1,7 @@
 import { cashRegistersRouter } from "~/server/api/routers/cashRegisters";
 import { customersProcedure } from "~/server/api/routers/customers";
 import { employeesRouter } from "~/server/api/routers/employees";
+import { inventoryRouter } from "~/server/api/routers/inventory";
 import { productsRouter } from "~/server/api/routers/products";
 import { salesProcedure } from "~/server/api/routers/sales";
 import { storesProcedure } from "~/server/api/routers/stores";
@@ -14,6 +15,7 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   product: productsRouter,
+  inventory: inventoryRouter,
   customer: customersProcedure,
   sale: salesProcedure,
   store: storesProcedure,

@@ -23,7 +23,7 @@ import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
-  product: RouterOutputs["product"]["findById"];
+  product: NonNullable<RouterOutputs["product"]["findById"]>;
 };
 
 type FormValues = z.infer<typeof updateProductInput>;
@@ -31,12 +31,11 @@ type FormValues = z.infer<typeof updateProductInput>;
 const EditProductForm = ({ product }: Props) => {
   const form = useForm<FormValues>({
     defaultValues: {
-      id: product!.id,
-      name: product!.name ?? undefined,
-      description: product!.description ?? undefined,
-      purchasePrice: product!.purchasePrice ?? undefined,
-      salePrice: product!.salePrice ?? undefined,
-      stock: product!.stock ?? undefined,
+      id: product.id,
+      name: product.name ?? undefined,
+      description: product.description ?? undefined,
+      purchasePrice: product.purchasePrice ?? undefined,
+      salePrice: product.salePrice ?? undefined,
     },
     resolver: zodResolver(updateProductInput),
   });
@@ -129,21 +128,6 @@ const EditProductForm = ({ product }: Props) => {
             />
           </div>
         </div>
-
-        <FormField
-          control={form.control}
-          name="stock"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Stock</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <Button type="submit" disabled={updateProduct.isLoading}>
           {updateProduct.isLoading && (

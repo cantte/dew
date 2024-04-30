@@ -8,7 +8,13 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { customers, products, saleItems, sales } from "~/server/db/schema";
+import {
+  customers,
+  products,
+  saleItems,
+  sales,
+  inventory,
+} from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
 export const salesProcedure = createTRPCRouter({
@@ -41,10 +47,15 @@ export const salesProcedure = createTRPCRouter({
         for (const soldProduct of soldProducts) {
           const [product] = await tx
             .select({
-              quantity: products.quantity,
+              quantity: inventory.quantity,
             })
-            .from(products)
-            .where(eq(products.id, soldProduct.id));
+            .from(inventory)
+            .where(
+              and(
+                eq(inventory.productId, soldProduct.id),
+                eq(inventory.storeId, input.storeId),
+              ),
+            );
 
           if (product === undefined) {
             tx.rollback();
@@ -57,11 +68,16 @@ export const salesProcedure = createTRPCRouter({
           }
 
           await tx
-            .update(products)
+            .update(inventory)
             .set({
               quantity: product.quantity - soldProduct.quantity,
             })
-            .where(eq(products.id, soldProduct.id));
+            .where(
+              and(
+                eq(inventory.productId, soldProduct.id),
+                eq(inventory.storeId, input.storeId),
+              ),
+            );
 
           // Send email
           const [customer] = await tx

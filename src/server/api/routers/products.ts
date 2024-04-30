@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull, lt } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 
@@ -6,10 +6,9 @@ import {
   createProductInput,
   linkToStoresInput,
   updateProductInput,
-  updateProductQuantityInput,
 } from "~/server/api/schemas/products";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { products, storeProducts } from "~/server/db/schema";
+import { products, inventory } from "~/server/db/schema";
 
 export const productsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -25,10 +24,12 @@ export const productsRouter = createTRPCRouter({
           createdBy: ctx.session.user.id,
         });
 
-        await tx.insert(storeProducts).values(
+        await tx.insert(inventory).values(
           stores.map((storeId) => ({
             storeId: storeId,
             productId: productId,
+            stock: 0,
+            quantity: 0,
           })),
         );
       });
@@ -44,17 +45,12 @@ export const productsRouter = createTRPCRouter({
           description: products.description,
           purchasePrice: products.purchasePrice,
           salePrice: products.salePrice,
-          stock: products.stock,
-          quantity: products.quantity,
           createdAt: products.createdAt,
         })
         .from(products)
-        .innerJoin(storeProducts, eq(products.id, storeProducts.productId))
+        .innerJoin(inventory, eq(products.id, inventory.productId))
         .where(
-          and(
-            eq(storeProducts.storeId, input.storeId),
-            isNull(products.deletedAt),
-          ),
+          and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
         )
         .orderBy(desc(products.createdAt));
     }),
@@ -88,46 +84,34 @@ export const productsRouter = createTRPCRouter({
         where: eq(products.id, input.id),
       });
     }),
-  lowStock: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.products.findMany({
-      where: and(
-        eq(products.createdBy, ctx.session.user.id),
-        lt(products.quantity, products.stock),
-      ),
-      limit: 10,
-    });
-  }),
-  updateQuantity: protectedProcedure
-    .input(updateProductQuantityInput)
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (tx) => {
-        const [product] = await tx
-          .select({
-            quantity: products.quantity,
-          })
-          .from(products)
-          .where(eq(products.id, input.id));
+  findForSale: protectedProcedure
+    .input(z.object({ code: z.string().min(1).max(255) }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db
+        .select({
+          id: products.id,
+          code: products.code,
+          name: products.name,
+          description: products.description,
+          quantity: inventory.quantity,
+          salePrice: products.salePrice,
+          purchasePrice: products.purchasePrice,
+        })
+        .from(products)
+        .innerJoin(inventory, eq(products.id, inventory.productId))
+        .where(
+          and(
+            eq(products.code, input.code),
+            isNull(products.deletedAt),
+            eq(products.createdBy, ctx.session.user.id),
+          ),
+        );
 
-        if (product === undefined) {
-          throw new Error("Producto no encontrado");
-        }
+      if (result.length === 0) {
+        return null;
+      }
 
-        if (input.operation === "remove") {
-          if (product.quantity < input.quantity) {
-            throw new Error("Cantidad insuficiente");
-          }
-        }
-
-        await tx
-          .update(products)
-          .set({
-            quantity:
-              input.operation === "add"
-                ? product.quantity + input.quantity
-                : product.quantity - input.quantity,
-          })
-          .where(eq(products.id, input.id));
-      });
+      return result[0];
     }),
   update: protectedProcedure
     .input(updateProductInput)
@@ -146,14 +130,14 @@ export const productsRouter = createTRPCRouter({
     .input(linkToStoresInput)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
-        await tx
-          .delete(storeProducts)
-          .where(eq(storeProducts.productId, input.id));
+        await tx.delete(inventory).where(eq(inventory.productId, input.id));
 
-        await tx.insert(storeProducts).values(
+        await tx.insert(inventory).values(
           input.stores.map((storeId) => ({
             storeId: storeId,
             productId: input.id,
+            stock: 0,
+            quantity: 0,
           })),
         );
       });
@@ -163,9 +147,9 @@ export const productsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return ctx.db
         .select({
-          id: storeProducts.storeId,
+          id: inventory.storeId,
         })
-        .from(storeProducts)
-        .where(eq(storeProducts.productId, input.id));
+        .from(inventory)
+        .where(eq(inventory.productId, input.id));
     }),
 });
