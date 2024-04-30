@@ -38,7 +38,6 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
           <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
         </DropdownMenuItem>
         <DeleteProductModal product={row.original} />
-        <UpdateQuantityModal product={row.original} />
         <BarcodeModal product={row.original} />
         <LinkToStoresModal product={row.original} />
       </DropdownMenuContent>
