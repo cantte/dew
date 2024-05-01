@@ -1,6 +1,6 @@
 import { and, desc, eq, isNull, lte } from "drizzle-orm";
 import { z } from "zod";
-import { updateProductQuantityInput } from "~/server/api/schemas/products";
+import { updateInventoryQuantityInput } from "~/server/api/schemas/inventory";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { inventory, products } from "~/server/db/schema";
 
@@ -46,7 +46,7 @@ export const inventoryRouter = createTRPCRouter({
         .orderBy(desc(products.createdAt));
     }),
   update: protectedProcedure
-    .input(updateProductQuantityInput)
+    .input(updateInventoryQuantityInput)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
         const { id, quantity, operation } = input;

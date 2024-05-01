@@ -24,14 +24,14 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { updateProductQuantityInput } from "~/server/api/schemas/products";
+import { updateInventoryQuantityInput } from "~/server/api/schemas/inventory";
 import { api } from "~/trpc/react";
 
 type Props = {
   product: ProductInventory;
 };
 
-type FormValues = z.infer<typeof updateProductQuantityInput>;
+type FormValues = z.infer<typeof updateInventoryQuantityInput>;
 
 const UpdateProductQuantityModal = ({ product }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
     defaultValues: {
       id: product.id,
     },
-    resolver: zodResolver(updateProductQuantityInput),
+    resolver: zodResolver(updateInventoryQuantityInput),
   });
 
   const updateProductQuantity = api.inventory.update.useMutation();
