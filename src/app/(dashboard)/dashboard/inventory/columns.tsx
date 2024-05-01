@@ -1,7 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import DataTableRowActions from "~/app/(dashboard)/dashboard/inventory/data-table-row-actions";
+import UpdateInventoryModal from "~/components/products/update-inventory-modal";
 import { type RouterOutputs } from "~/trpc/shared";
 
 export type ProductInventory = RouterOutputs["inventory"]["list"][number];
@@ -26,7 +26,7 @@ export const columns: ColumnDef<ProductInventory>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      return <DataTableRowActions row={row} />;
+      return <UpdateInventoryModal product={row.original} />;
     },
   },
 ];

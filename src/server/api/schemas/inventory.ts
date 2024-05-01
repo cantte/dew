@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-export const updateInventoryQuantityInput = z.object({
+export const updateInventoryInput = z.object({
   id: z.string(),
-  quantity: z.coerce.number().min(1),
+  stock: z.coerce.number().min(1),
+  quantity: z.coerce.number().min(0),
   operation: z.enum(["add", "remove"]),
 });

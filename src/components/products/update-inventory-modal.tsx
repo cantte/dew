@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RotateCw, SquarePen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
@@ -13,7 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -24,22 +24,33 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { updateInventoryQuantityInput } from "~/server/api/schemas/inventory";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { useToast } from "~/components/ui/use-toast";
+import { updateInventoryInput } from "~/server/api/schemas/inventory";
 import { api } from "~/trpc/react";
 
 type Props = {
   product: ProductInventory;
 };
 
-type FormValues = z.infer<typeof updateInventoryQuantityInput>;
+type FormValues = z.infer<typeof updateInventoryInput>;
 
-const UpdateProductQuantityModal = ({ product }: Props) => {
+const UpdateInventoryModal = ({ product }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<FormValues>({
     defaultValues: {
       id: product.id,
+      stock: product.stock,
+      quantity: 0,
+      operation: "add",
     },
-    resolver: zodResolver(updateInventoryQuantityInput),
+    resolver: zodResolver(updateInventoryInput),
   });
 
   const updateProductQuantity = api.inventory.update.useMutation();
@@ -48,8 +59,14 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
   };
 
   const utils = api.useUtils();
+  const { toast } = useToast();
   useEffect(() => {
     if (updateProductQuantity.isSuccess) {
+      toast({
+        title: "Éxito",
+        description: "Inventario actualizado correctamente",
+      });
+
       void utils.inventory.list.invalidate();
       setIsOpen(false);
     }
@@ -58,16 +75,17 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-          Modificar existencia
-        </DropdownMenuItem>
+        <Button variant="secondary" size="icon">
+          <SquarePen className="h-4 w-4" />
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Modificar existencia</DialogTitle>
           <DialogDescription>
-            Modificar la existencia del producto <strong>{product.name}</strong>
+            Producto <strong>{product.name}</strong>, cantidad actual{" "}
+            <strong>{product.quantity}</strong>
             {updateProductQuantity.error && (
               <Alert variant="destructive" className="mt-4">
                 <AlertTitle>Ha ocurrido un error</AlertTitle>
@@ -81,6 +99,21 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="stock"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Stock</FormLabel>
+                  <FormControl>
+                    <Input autoFocus {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="quantity"
@@ -101,22 +134,43 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
               )}
             />
 
-            <div className="flex flex-grow flex-row justify-between space-x-4">
-              <Button
-                type="submit"
-                className="grow"
-                onClick={() => form.setValue("operation", "remove")}
-              >
-                Restar
-              </Button>
-              <Button
-                type="submit"
-                className="grow"
-                onClick={() => form.setValue("operation", "add")}
-              >
-                Agregar
-              </Button>
-            </div>
+            <FormField
+              control={form.control}
+              name="operation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Operación</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Seleccione la operación a realizar" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="add">Agregar</SelectItem>
+                      <SelectItem value="remove">Restar</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <FormDescription>
+                    Seleccione la operación a realizar sobre la existencia del
+                    producto.
+                  </FormDescription>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" disabled={updateProductQuantity.isLoading}>
+              {updateProductQuantity.isLoading && (
+                <RotateCw className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Actualizar inventario
+            </Button>
           </form>
         </Form>
       </DialogContent>
@@ -124,4 +178,4 @@ const UpdateProductQuantityModal = ({ product }: Props) => {
   );
 };
 
-export default UpdateProductQuantityModal;
+export default UpdateInventoryModal;
