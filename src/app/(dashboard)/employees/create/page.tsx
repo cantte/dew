@@ -10,12 +10,12 @@ const CreateEmployeePage = async () => {
     return redirect("/api/auth/signin");
   }
 
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
   if (userPreferences === undefined) {
     return redirect("/dashboard");
   }
 
-  const store = await api.store.find.query({
+  const store = await api.store.find({
     id: userPreferences.storeId,
   });
   if (store === undefined) {

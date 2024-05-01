@@ -11,7 +11,7 @@ type Props = {
 };
 
 const CustomerSaleDetailPage = async ({ params }: Props) => {
-  const sale = await api.sale.findPublic.query({ code: params.code });
+  const sale = await api.sale.findPublic({ code: params.code });
 
   if (!sale) {
     return notFound();

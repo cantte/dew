@@ -233,8 +233,8 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
           </div>
         </div>
 
-        <Button type="submit" disabled={createProduct.isLoading}>
-          {createProduct.isLoading && (
+        <Button type="submit" disabled={createProduct.isPending}>
+          {createProduct.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
           Crear

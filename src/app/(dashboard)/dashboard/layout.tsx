@@ -24,12 +24,12 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     return redirect("/api/auth/signin");
   }
 
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
   const store =
     userPreferences !== undefined
-      ? await api.store.find.query({ id: userPreferences.storeId })
+      ? await api.store.find({ id: userPreferences.storeId })
       : undefined;
-  const stores = await api.store.list.query();
+  const stores = await api.store.list();
 
   return (
     <div className="grid min-h-screen w-full overflow-hidden md:grid-cols-[280px_1fr]">

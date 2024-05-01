@@ -138,8 +138,8 @@ const LinkToStoresModal = ({ product }: Props) => {
               )}
             />
 
-            <Button type="submit" disabled={linkToStores.isLoading}>
-              {linkToStores.isLoading && (
+            <Button type="submit" disabled={linkToStores.isPending}>
+              {linkToStores.isPending && (
                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               )}
               Agregar a tiendas

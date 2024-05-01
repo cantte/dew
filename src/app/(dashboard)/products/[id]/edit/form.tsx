@@ -129,8 +129,8 @@ const EditProductForm = ({ product }: Props) => {
           </div>
         </div>
 
-        <Button type="submit" disabled={updateProduct.isLoading}>
-          {updateProduct.isLoading && (
+        <Button type="submit" disabled={updateProduct.isPending}>
+          {updateProduct.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
           Actualizar

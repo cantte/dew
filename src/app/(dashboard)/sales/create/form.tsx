@@ -389,8 +389,8 @@ const CreateSaleForm = ({ storeId }: Props) => {
                   </div>
                 </div>
 
-                <Button type="submit" disabled={createSale.isLoading}>
-                  {createSale.isLoading && (
+                <Button type="submit" disabled={createSale.isPending}>
+                  {createSale.isPending && (
                     <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Crear venta

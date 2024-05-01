@@ -29,9 +29,9 @@ const EnableCashButton = ({ storeId }: Props) => {
       size="sm"
       className="mt-2"
       onClick={handleClick}
-      disabled={createCash.isLoading}
+      disabled={createCash.isPending}
     >
-      {createCash.isLoading && (
+      {createCash.isPending && (
         <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
       )}
       Habilitar caja registradora

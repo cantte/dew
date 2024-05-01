@@ -56,7 +56,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
             <FormItem>
               <FormLabel>Nombre</FormLabel>
               <FormControl>
-                <Input autoFocus disabled={createStore.isLoading} {...field} />
+                <Input autoFocus disabled={createStore.isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -70,7 +70,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
             <FormItem>
               <FormLabel>Dirección</FormLabel>
               <FormControl>
-                <Input disabled={createStore.isLoading} {...field} />
+                <Input disabled={createStore.isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -84,15 +84,15 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
             <FormItem>
               <FormLabel>Teléfono</FormLabel>
               <FormControl>
-                <Input disabled={createStore.isLoading} {...field} />
+                <Input disabled={createStore.isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" disabled={createStore.isLoading}>
-          {createStore.isLoading && (
+        <Button type="submit" disabled={createStore.isPending}>
+          {createStore.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
           Crear tienda

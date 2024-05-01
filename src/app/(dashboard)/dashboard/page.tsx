@@ -7,8 +7,8 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const DashboardPage = async () => {
-  const userPreferences = await api.userPreference.find.query();
-  const store = await api.store.find.query({
+  const userPreferences = await api.userPreference.find();
+  const store = await api.store.find({
     id: userPreferences?.storeId ?? "0",
   });
   if (store === undefined) {
@@ -30,13 +30,13 @@ const DashboardPage = async () => {
 
   const from = startOfDay(new Date());
   const to = endOfDay(new Date());
-  const overview = await api.sale.overview.query({
+  const overview = await api.sale.overview({
     from,
     to,
     storeId: store.id,
   });
-  const mostSoldProducts = await api.sale.mostSoldProducts.query();
-  const lowStockProducts = await api.inventory.lowStock.query({
+  const mostSoldProducts = await api.sale.mostSoldProducts();
+  const lowStockProducts = await api.inventory.lowStock({
     storeId: store.id,
   });
 

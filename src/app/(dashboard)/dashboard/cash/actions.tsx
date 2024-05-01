@@ -138,7 +138,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                         <FormControl>
                           <Input
                             type="number"
-                            disabled={createCashRegisterTransaction.isLoading}
+                            disabled={createCashRegisterTransaction.isPending}
                             {...field}
                           />
                         </FormControl>
@@ -150,9 +150,9 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
 
                   <Button
                     type="submit"
-                    disabled={createCashRegisterTransaction.isLoading}
+                    disabled={createCashRegisterTransaction.isPending}
                   >
-                    {createCashRegisterTransaction.isLoading && (
+                    {createCashRegisterTransaction.isPending && (
                       <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Realizar transacción
@@ -190,7 +190,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                         <FormControl>
                           <Input
                             type="number"
-                            disabled={createCashRegisterTransaction.isLoading}
+                            disabled={createCashRegisterTransaction.isPending}
                             {...field}
                           />
                         </FormControl>
@@ -203,9 +203,9 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                   <Button
                     type="submit"
                     className="w-full"
-                    disabled={createCashRegisterTransaction.isLoading}
+                    disabled={createCashRegisterTransaction.isPending}
                   >
-                    {createCashRegisterTransaction.isLoading && (
+                    {createCashRegisterTransaction.isPending && (
                       <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Realizar transacción

@@ -8,8 +8,8 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const SalesPage = async () => {
-  const userPreferences = await api.userPreference.find.query();
-  const store = await api.store.find.query({
+  const userPreferences = await api.userPreference.find();
+  const store = await api.store.find({
     id: userPreferences?.storeId ?? "0",
   });
 
@@ -30,7 +30,7 @@ const SalesPage = async () => {
     );
   }
 
-  const sales = await api.sale.list.query({
+  const sales = await api.sale.list({
     storeId: store.id,
   });
 

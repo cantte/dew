@@ -165,8 +165,8 @@ const UpdateInventoryModal = ({ product }: Props) => {
               )}
             />
 
-            <Button type="submit" disabled={updateProductQuantity.isLoading}>
-              {updateProductQuantity.isLoading && (
+            <Button type="submit" disabled={updateProductQuantity.isPending}>
+              {updateProductQuantity.isPending && (
                 <RotateCw className="mr-2 h-4 w-4 animate-spin" />
               )}
               Actualizar inventario

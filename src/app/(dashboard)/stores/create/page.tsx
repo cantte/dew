@@ -7,8 +7,8 @@ import { Badge } from "~/components/ui/badge";
 import { api } from "~/trpc/server";
 
 const CreateStorePage = async () => {
-  const userPreferences = await api.userPreference.find.query();
-  const store = await api.store.find.query({
+  const userPreferences = await api.userPreference.find();
+  const store = await api.store.find({
     id: userPreferences?.storeId ?? "0",
   });
   if (store !== undefined) {

@@ -8,13 +8,13 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const DashboardPage = async () => {
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
 
   if (userPreferences === undefined) {
     return redirect("/dashboard");
   }
 
-  const store = await api.store.find.query({
+  const store = await api.store.find({
     id: userPreferences.storeId,
   });
 
@@ -35,7 +35,7 @@ const DashboardPage = async () => {
     );
   }
 
-  const products = await api.product.list.query({
+  const products = await api.product.list({
     storeId: store.id,
   });
 
