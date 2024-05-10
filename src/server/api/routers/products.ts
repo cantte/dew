@@ -35,26 +35,24 @@ export const productsRouter = createTRPCRouter({
         );
       });
     }),
-  list: protectedProcedure
-    .input(z.object({ storeId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db
-        .select({
-          id: products.id,
-          code: products.code,
-          name: products.name,
-          description: products.description,
-          purchasePrice: products.purchasePrice,
-          salePrice: products.salePrice,
-          createdAt: products.createdAt,
-        })
-        .from(products)
-        .innerJoin(inventory, eq(products.id, inventory.productId))
-        .where(
-          and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
-        )
-        .orderBy(desc(products.createdAt));
-    }),
+  list: protectedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return ctx.db
+      .select({
+        id: products.id,
+        code: products.code,
+        name: products.name,
+        description: products.description,
+        purchasePrice: products.purchasePrice,
+        salePrice: products.salePrice,
+        createdAt: products.createdAt,
+      })
+      .from(products)
+      .innerJoin(inventory, eq(products.id, inventory.productId))
+      .where(
+        and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
+      )
+      .orderBy(desc(products.createdAt));
+  }),
   exists: protectedProcedure
     .input(z.object({ code: z.string().min(1).max(255) }))
     .query(async ({ ctx, input }) => {

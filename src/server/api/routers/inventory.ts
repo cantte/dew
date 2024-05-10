@@ -1,30 +1,28 @@
 import { and, desc, eq, isNull, lte } from "drizzle-orm";
-import { z } from "zod";
+import { byStoreInput } from "~/server/api/schemas/common";
 import { updateInventoryInput } from "~/server/api/schemas/inventory";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { inventory, products } from "~/server/db/schema";
 
 export const inventoryRouter = createTRPCRouter({
-  list: protectedProcedure
-    .input(z.object({ storeId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db
-        .select({
-          id: products.id,
-          code: products.code,
-          name: products.name,
-          stock: inventory.stock,
-          quantity: inventory.quantity,
-        })
-        .from(products)
-        .innerJoin(inventory, eq(products.id, inventory.productId))
-        .where(
-          and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
-        )
-        .orderBy(desc(products.createdAt));
-    }),
+  list: protectedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return ctx.db
+      .select({
+        id: products.id,
+        code: products.code,
+        name: products.name,
+        stock: inventory.stock,
+        quantity: inventory.quantity,
+      })
+      .from(products)
+      .innerJoin(inventory, eq(products.id, inventory.productId))
+      .where(
+        and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
+      )
+      .orderBy(desc(products.createdAt));
+  }),
   lowStock: protectedProcedure
-    .input(z.object({ storeId: z.string().uuid() }))
+    .input(byStoreInput)
     .query(async ({ ctx, input }) => {
       return ctx.db
         .select({

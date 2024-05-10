@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { byStoreInput } from "~/server/api/schemas/common";
 
 import { createEmployeeInput } from "~/server/api/schemas/employees";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -45,7 +46,7 @@ export const employeesRouter = createTRPCRouter({
       });
     }),
   byStore: protectedProcedure
-    .input(z.object({ storeId: z.string().min(1).max(36) }))
+    .input(byStoreInput)
     .query(async ({ ctx, input }) => {
       return ctx.db.query.employeeStore.findMany({
         with: {

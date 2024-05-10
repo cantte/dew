@@ -2,6 +2,7 @@ import { and, between, count, desc, eq, sum } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 import NewSale from "~/emails/new-sale";
+import { byStoreInput } from "~/server/api/schemas/common";
 import { createSaleInput } from "~/server/api/schemas/sales";
 import {
   createTRPCRouter,
@@ -10,10 +11,10 @@ import {
 } from "~/server/api/trpc";
 import {
   customers,
+  inventory,
   products,
   saleItems,
   sales,
-  inventory,
 } from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
@@ -116,22 +117,20 @@ export const salesProcedure = createTRPCRouter({
         }
       });
     }),
-  list: protectedProcedure
-    .input(z.object({ storeId: z.string().min(1).max(36) }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.query.sales.findMany({
-        with: {
-          customer: {
-            columns: {
-              id: true,
-              name: true,
-            },
+  list: protectedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return ctx.db.query.sales.findMany({
+      with: {
+        customer: {
+          columns: {
+            id: true,
+            name: true,
           },
         },
-        orderBy: [desc(sales.createdAt)],
-        where: eq(sales.storeId, input.storeId),
-      });
-    }),
+      },
+      orderBy: [desc(sales.createdAt)],
+      where: eq(sales.storeId, input.storeId),
+    });
+  }),
   overview: protectedProcedure
     .input(
       z.object({
