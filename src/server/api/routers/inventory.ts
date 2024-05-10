@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull, lte } from "drizzle-orm";
+import { and, desc, eq, isNull, lte, sql } from "drizzle-orm";
 import { byStoreInput } from "~/server/api/schemas/common";
 import { updateInventoryInput } from "~/server/api/schemas/inventory";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -13,6 +13,7 @@ export const inventoryRouter = createTRPCRouter({
         name: products.name,
         stock: inventory.stock,
         quantity: inventory.quantity,
+        isLowStock: sql<boolean>`inventory.quantity <= inventory.stock`,
       })
       .from(products)
       .innerJoin(inventory, eq(products.id, inventory.productId))
