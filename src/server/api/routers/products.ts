@@ -1,6 +1,7 @@
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, count, desc, eq, isNull, sql } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
+import { byStoreInput } from "~/server/api/schemas/common";
 
 import {
   createProductInput,
@@ -8,7 +9,7 @@ import {
   updateProductInput,
 } from "~/server/api/schemas/products";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { products, inventory } from "~/server/db/schema";
+import { inventory, products } from "~/server/db/schema";
 
 export const productsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -151,5 +152,40 @@ export const productsRouter = createTRPCRouter({
         })
         .from(inventory)
         .where(eq(inventory.productId, input.id));
+    }),
+  overview: protectedProcedure
+    .input(byStoreInput)
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db
+        .select({
+          products: count(products.id),
+          value: sql<number>`SUM(${products.salePrice} * ${inventory.quantity})`,
+          cost: sql<number>`SUM(${products.purchasePrice} * ${inventory.quantity})`,
+        })
+        .from(products)
+        .innerJoin(inventory, eq(products.id, inventory.productId))
+        .where(
+          and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
+        );
+
+      if (result.length === 0) {
+        return {
+          products: 0,
+          value: 0,
+          cost: 0,
+        };
+      }
+
+      const response = result[0];
+
+      if (response === undefined) {
+        return {
+          products: 0,
+          value: 0,
+          cost: 0,
+        };
+      }
+
+      return response;
     }),
 });

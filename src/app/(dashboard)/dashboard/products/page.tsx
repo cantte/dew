@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { columns } from "~/app/(dashboard)/dashboard/products/columns";
 import ProductDataTable from "~/app/(dashboard)/dashboard/products/data-table";
+import ProductsOverview from "~/app/(dashboard)/dashboard/products/overview";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
@@ -39,6 +40,10 @@ const DashboardPage = async () => {
     storeId: store.id,
   });
 
+  const overview = await api.product.overview({
+    storeId: store.id,
+  });
+
   return (
     <div>
       <div className="flex justify-between">
@@ -51,7 +56,9 @@ const DashboardPage = async () => {
         </Button>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-2 space-y-4">
+        <ProductsOverview overview={overview} />
+
         <ProductDataTable
           columns={columns}
           data={products}
