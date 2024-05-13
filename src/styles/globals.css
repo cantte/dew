@@ -3,109 +3,109 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --background: 60 100% 99%;
-        --foreground: 0 0% 4%;
+  :root {
+    --background: 60 100% 99%;
+    --foreground: 0 0% 4%;
 
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
 
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
 
-        --primary: 275 86% 36%;
-        --primary-foreground: 60 100% 99%;
-        --primary-text: 275 86% 36%;
+    --primary: 275 86% 36%;
+    --primary-foreground: 60 100% 99%;
+    --primary-text: 275 86% 36%;
 
-        --secondary: 0 0% 96%;
-        --secondary-foreground: 0 0% 9%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45%;
 
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
 
-        --destructive: 0 100% 38%;
-        --destructive-foreground: 60 100% 99%;
+    --destructive: 0 100% 38%;
+    --destructive-foreground: 60 100% 99%;
 
-        --success: 120 100% 25%;
-        --success-foreground: 60 100% 99%;
-        --success-text: 120 100% 25%;
+    --success: 120 100% 25%;
+    --success-foreground: 60 100% 99%;
+    --success-text: 120 100% 25%;
 
-        --warning: 45 100% 50%;
-        --warning-foreground: 60 100% 99%;
+    --warning: 45 100% 50%;
+    --warning-foreground: 60 100% 99%;
 
-        --border: 0 0% 90%;
-        --input: 0 0% 90%;
-        --ring: 0 0% 4%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 4%;
 
-        --radius: 0.5rem;
-    }
+    --radius: 0.5rem;
+  }
 
-    .dark {
-        --background: 0 0% 5%;
-        --foreground: 0 0% 98%;
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
 
-        --card: 0 0% 4%;
-        --card-foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
 
-        --popover: 0 0% 4%;
-        --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
 
-        --primary: 275 86% 36%;
-        --primary-foreground: 0 0% 98%;
-        --primary-text: 275 100% 73%;
+    --primary: 275 86% 36%;
+    --primary-foreground: 0 0% 98%;
+    --primary-text: 275 100% 73%;
 
-        --secondary: 0 0% 15%;
-        --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
 
-        --muted: 0 0% 15%;
-        --muted-foreground: 0 0% 64%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 64%;
 
-        --accent: 0 0% 15%;
-        --accent-foreground: 0 0% 98%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
 
-        --destructive: 0 100% 65%;
-        --destructive-foreground: 0 0% 4%;
+    --destructive: 0 100% 65%;
+    --destructive-foreground: 0 0% 4%;
 
-        --success: 142 69% 58%;
-        --success-foreground: 0 0% 4%;
-        --success-text: 142 69% 58%;
+    --success: 142 69% 58%;
+    --success-foreground: 0 0% 4%;
+    --success-text: 142 69% 58%;
 
-        --warning: 45 100% 50%;
-        --warning-foreground: 0 0% 98%;
+    --warning: 45 100% 50%;
+    --warning-foreground: 0 0% 98%;
 
-        --border: 0 0% 15%;
-        --input: 0 0% 15%;
-        --ring: 0 0% 83%;
-    }
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 83%;
+  }
 }
 
 @layer base {
-    * {
-        @apply border-border;
-    }
+  * {
+    @apply border-border;
+  }
 
-    body {
-        @apply bg-background text-foreground;
-    }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 .rainbow-border {
-    border-radius: 9999px;
-    background: linear-gradient(90deg, #02fcef70, #ffb52b70 50%, #a02bfe70);
-    height: 32px;
-    line-height: 0;
-    transition: transform .2s ease-in-out;
-    transform-origin: 0 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #02fcef70, #ffb52b70 50%, #a02bfe70);
+  height: 32px;
+  line-height: 0;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: 0 100%;
 }
 
 .rainbow-border span {
-    line-height: 1;
-    margin: 1px;
-    border-radius: 9999px;
-    width: calc(100% - 2px);
-    height: calc(32px - 2px);
-    @apply bg-background;
+  line-height: 1;
+  margin: 1px;
+  border-radius: 9999px;
+  width: calc(100% - 2px);
+  height: calc(32px - 2px);
+  @apply bg-background;
 }

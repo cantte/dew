@@ -1,11 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
-  "baseBranches": [
-    "dev"
-  ],
+  "extends": ["config:base"],
+  "baseBranches": ["dev"],
   "updateInternalDeps": true,
   "rangeStrategy": "bump"
 }
