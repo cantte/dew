@@ -1,6 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
+import UpdateStoreModal from "~/components/stores/update-store.modal";
 import { type RouterOutputs } from "~/trpc/shared";
 
 export type Store = RouterOutputs["store"]["list"][number];
@@ -30,6 +31,12 @@ export const columns: ColumnDef<Store>[] = [
           }).format(new Date(row.original.createdAt))}
         </span>
       );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return <UpdateStoreModal store={row.original} />;
     },
   },
 ];
