@@ -10,7 +10,9 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "email": "dotenv \"email dev --dir src/emails --port 3500\""
+    "email": "dotenv \"email dev --dir src/emails --port 3500\"",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.1.0",
