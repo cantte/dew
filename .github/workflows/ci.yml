@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: cancel previous redundant builds
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ github.token }}
 
