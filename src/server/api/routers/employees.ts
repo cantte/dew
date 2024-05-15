@@ -1,7 +1,11 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { byStoreInput } from "~/server/api/schemas/common";
 
-import { createEmployeeInput } from "~/server/api/schemas/employees";
+import {
+  createEmployeeInput,
+  updateEmployeeInput,
+} from "~/server/api/schemas/employees";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { employees, employeeStore } from "~/server/db/schema";
 
@@ -45,7 +49,7 @@ export const employeesRouter = createTRPCRouter({
       });
     }),
   byStore: protectedProcedure
-    .input(z.object({ storeId: z.string().min(1).max(36) }))
+    .input(byStoreInput)
     .query(async ({ ctx, input }) => {
       return ctx.db.query.employeeStore.findMany({
         with: {
@@ -60,5 +64,13 @@ export const employeesRouter = createTRPCRouter({
         },
         where: eq(employeeStore.storeId, input.storeId),
       });
+    }),
+  update: protectedProcedure
+    .input(updateEmployeeInput)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(employees)
+        .set(input)
+        .where(eq(employees.id, input.id));
     }),
 });

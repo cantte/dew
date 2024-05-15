@@ -15,10 +15,10 @@ const CreateProductPage = async () => {
     return redirect("/api/auth/signin");
   }
 
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
   const store =
     userPreferences !== undefined
-      ? await api.store.find.query({ id: userPreferences.storeId })
+      ? await api.store.find({ id: userPreferences.storeId })
       : undefined;
 
   if (!store) {
@@ -44,6 +44,8 @@ const CreateProductPage = async () => {
     );
   }
 
+  const stores = await api.store.list();
+
   return (
     <div>
       <div className="mb-4 mt-4 md:mt-0">
@@ -53,7 +55,7 @@ const CreateProductPage = async () => {
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Crear producto</h1>
 
-        <CreateProductForm storeId={store.id} />
+        <CreateProductForm storeId={store.id} stores={stores} />
       </section>
     </div>
   );

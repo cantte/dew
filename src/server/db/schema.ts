@@ -105,8 +105,6 @@ export const products = createTable(
     description: text("description"),
     purchasePrice: real("purchase_price").notNull(),
     salePrice: real("sale_price").notNull(),
-    stock: integer("stock").notNull(),
-    quantity: integer("quantity").notNull().default(0),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
@@ -126,26 +124,28 @@ export const productsRelations = relations(products, ({ one }) => ({
   }),
 }));
 
-export const storeProducts = createTable(
-  "store_product",
+export const inventory = createTable(
+  "inventory",
   {
     storeId: varchar("store_id", { length: 36 }).notNull(),
     productId: varchar("product_id", { length: 255 }).notNull(),
+    stock: integer("stock").notNull(),
+    quantity: integer("quantity").notNull().default(0),
   },
-  (storeProduct) => ({
+  (inventory) => ({
     compoundKey: primaryKey({
-      columns: [storeProduct.storeId, storeProduct.productId],
+      columns: [inventory.storeId, inventory.productId],
     }),
   }),
 );
 
-export const storeProductRelations = relations(storeProducts, ({ one }) => ({
+export const inventoryRelations = relations(inventory, ({ one }) => ({
   store: one(stores, {
-    fields: [storeProducts.storeId],
+    fields: [inventory.storeId],
     references: [stores.id],
   }),
   product: one(products, {
-    fields: [storeProducts.productId],
+    fields: [inventory.productId],
     references: [products.id],
   }),
 }));

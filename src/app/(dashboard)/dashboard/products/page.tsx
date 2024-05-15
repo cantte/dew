@@ -3,18 +3,19 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { columns } from "~/app/(dashboard)/dashboard/products/columns";
 import ProductDataTable from "~/app/(dashboard)/dashboard/products/data-table";
+import ProductsOverview from "~/app/(dashboard)/dashboard/products/overview";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const DashboardPage = async () => {
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
 
   if (userPreferences === undefined) {
     return redirect("/dashboard");
   }
 
-  const store = await api.store.find.query({
+  const store = await api.store.find({
     id: userPreferences.storeId,
   });
 
@@ -35,7 +36,11 @@ const DashboardPage = async () => {
     );
   }
 
-  const products = await api.product.list.query({
+  const products = await api.product.list({
+    storeId: store.id,
+  });
+
+  const overview = await api.product.overview({
     storeId: store.id,
   });
 
@@ -51,7 +56,9 @@ const DashboardPage = async () => {
         </Button>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-2 space-y-4">
+        <ProductsOverview overview={overview} />
+
         <ProductDataTable
           columns={columns}
           data={products}

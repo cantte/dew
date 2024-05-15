@@ -18,7 +18,7 @@ const EditProductPage = async ({ params }: Props) => {
     return redirect("/api/auth/signin");
   }
 
-  const product = await api.product.findById.query({
+  const product = await api.product.findById({
     id: params.id,
   });
 

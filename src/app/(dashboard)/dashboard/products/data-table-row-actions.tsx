@@ -6,7 +6,7 @@ import NextLink from "next/link";
 import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
 import BarcodeModal from "~/components/products/barcode-modal";
 import DeleteProductModal from "~/components/products/delete-modal";
-import UpdateQuantityModal from "~/components/products/update-quantity-modal";
+import LinkToStoresModal from "~/components/products/link-to-stores-modal";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -37,8 +37,8 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
           <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
         </DropdownMenuItem>
         <DeleteProductModal product={row.original} />
-        <UpdateQuantityModal product={row.original} />
         <BarcodeModal product={row.original} />
+        <LinkToStoresModal product={row.original} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

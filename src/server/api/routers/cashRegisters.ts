@@ -6,6 +6,7 @@ import {
   createCashRegisterInput,
   createCashRegisterTransactionInput,
 } from "~/server/api/schemas/cashRegisters";
+import { byStoreInput } from "~/server/api/schemas/common";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { cashRegisters, cashRegisterTransactions } from "~/server/db/schema";
 
@@ -20,13 +21,11 @@ export const cashRegistersRouter = createTRPCRouter({
         createdBy: ctx.session.user.id,
       });
     }),
-  find: protectedProcedure
-    .input(z.object({ storeId: z.string().min(1).max(36) }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.query.cashRegisters.findFirst({
-        where: eq(cashRegisters.storeId, input.storeId),
-      });
-    }),
+  find: protectedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return ctx.db.query.cashRegisters.findFirst({
+      where: eq(cashRegisters.storeId, input.storeId),
+    });
+  }),
   transactions: createTRPCRouter({
     create: protectedProcedure
       .input(createCashRegisterTransactionInput)

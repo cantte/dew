@@ -39,7 +39,7 @@ import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
 
 export type CreateSaleFormValues = z.infer<typeof createSaleInput>;
-type Product = RouterOutputs["product"]["find"];
+type Product = RouterOutputs["product"]["findForSale"];
 
 type Props = {
   storeId: string;
@@ -124,7 +124,7 @@ const CreateSaleForm = ({ storeId }: Props) => {
     data: product,
     error: findProductError,
     isFetching: isFindingProduct,
-  } = api.product.find.useQuery(
+  } = api.product.findForSale.useQuery(
     { code: finalProductCode },
     {
       enabled:
@@ -143,7 +143,10 @@ const CreateSaleForm = ({ storeId }: Props) => {
     }
 
     const canAddProduct =
-      product !== undefined && productSelected && product.quantity > 0;
+      product !== undefined &&
+      product !== null &&
+      productSelected &&
+      product.quantity > 0;
 
     if (!canAddProduct) {
       return;
@@ -386,8 +389,8 @@ const CreateSaleForm = ({ storeId }: Props) => {
                   </div>
                 </div>
 
-                <Button type="submit" disabled={createSale.isLoading}>
-                  {createSale.isLoading && (
+                <Button type="submit" disabled={createSale.isPending}>
+                  {createSale.isPending && (
                     <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Crear venta

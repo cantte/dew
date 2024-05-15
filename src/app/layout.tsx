@@ -3,7 +3,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { type Metadata } from "next";
 
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import { type ReactNode } from "react";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "~/components/ui/toaster";
@@ -54,9 +53,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <TRPCReactProvider cookies={cookies().toString()}>
-            {children}
-          </TRPCReactProvider>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
         </ThemeProvider>
         <Analytics />
         <Toaster />

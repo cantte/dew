@@ -17,12 +17,13 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
+import { useToast } from "~/components/ui/use-toast";
 import { updateProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
-  product: RouterOutputs["product"]["findById"];
+  product: NonNullable<RouterOutputs["product"]["findById"]>;
 };
 
 type FormValues = z.infer<typeof updateProductInput>;
@@ -30,21 +31,25 @@ type FormValues = z.infer<typeof updateProductInput>;
 const EditProductForm = ({ product }: Props) => {
   const form = useForm<FormValues>({
     defaultValues: {
-      id: product!.id,
-      name: product!.name ?? undefined,
-      description: product!.description ?? undefined,
-      purchasePrice: product!.purchasePrice ?? undefined,
-      salePrice: product!.salePrice ?? undefined,
-      stock: product!.stock ?? undefined,
+      id: product.id,
+      name: product.name ?? undefined,
+      description: product.description ?? undefined,
+      purchasePrice: product.purchasePrice ?? undefined,
+      salePrice: product.salePrice ?? undefined,
     },
     resolver: zodResolver(updateProductInput),
   });
   const updateProduct = api.product.update.useMutation();
 
   const router = useRouter();
+  const { toast } = useToast();
   useEffect(() => {
     if (updateProduct.isSuccess) {
-      router.back();
+      toast({
+        title: "Producto actualizado",
+        description: "El producto ha sido actualizado exitosamente.",
+      });
+      router.refresh();
     }
   }, [updateProduct.isSuccess]);
 
@@ -124,23 +129,8 @@ const EditProductForm = ({ product }: Props) => {
           </div>
         </div>
 
-        <FormField
-          control={form.control}
-          name="stock"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Stock</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" disabled={updateProduct.isLoading}>
-          {updateProduct.isLoading && (
+        <Button type="submit" disabled={updateProduct.isPending}>
+          {updateProduct.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
           Actualizar

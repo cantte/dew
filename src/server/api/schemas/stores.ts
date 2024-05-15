@@ -9,3 +9,7 @@ export const createStoreInput = z.object({
 export const findStoreInput = z.object({
   id: z.string().min(1).max(36),
 });
+
+export const updateStoreInput = createStoreInput.extend({
+  id: z.string().min(1).max(36),
+});

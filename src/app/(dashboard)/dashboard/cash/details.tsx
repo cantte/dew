@@ -53,7 +53,7 @@ const CashRegisterDetails = ({ transactions, cashRegisterId }: Props) => {
             <CardTitle className="text-sm font-medium">Ingresos</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-success-text text-2xl font-bold">
+            <div className="text-2xl font-bold text-success-text">
               {Intl.NumberFormat("es-CO", {
                 style: "currency",
                 currency: "COP",

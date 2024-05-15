@@ -112,8 +112,8 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
           )}
         />
 
-        <Button type="submit" disabled={createCustomer.isLoading}>
-          {createCustomer.isLoading && (
+        <Button type="submit" disabled={createCustomer.isPending}>
+          {createCustomer.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
           Crear

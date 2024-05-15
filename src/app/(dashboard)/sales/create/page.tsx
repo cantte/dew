@@ -4,7 +4,7 @@ import BackButton from "~/components/back-button";
 import { api } from "~/trpc/server";
 
 const CreateSalePage = async () => {
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
   if (userPreferences === undefined) {
     return redirect("/dashboard");
   }

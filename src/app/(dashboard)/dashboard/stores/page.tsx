@@ -3,7 +3,7 @@ import StoreDataTable from "~/app/(dashboard)/dashboard/stores/data-table";
 import { api } from "~/trpc/server";
 
 const StoresPage = async () => {
-  const stores = await api.store.list.query();
+  const stores = await api.store.list();
 
   return (
     <div>

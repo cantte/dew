@@ -164,8 +164,8 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
             )}
           />
 
-          <Button type="submit" disabled={createEmployee.isLoading}>
-            {createEmployee.isLoading && (
+          <Button type="submit" disabled={createEmployee.isPending}>
+            {createEmployee.isPending && (
               <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
             )}
             Crear

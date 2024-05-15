@@ -11,7 +11,7 @@ type SaleDetailPageProps = {
 };
 
 const SaleDetailPage = async ({ params }: SaleDetailPageProps) => {
-  const sale = await api.sale.find.query({ code: params.code });
+  const sale = await api.sale.find({ code: params.code });
 
   if (!sale) {
     return notFound();

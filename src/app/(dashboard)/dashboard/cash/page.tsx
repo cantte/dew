@@ -9,10 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { api } from "~/trpc/server";
 
 const CashRegisterPage = async () => {
-  const userPreferences = await api.userPreference.find.query();
+  const userPreferences = await api.userPreference.find();
   const store =
     userPreferences !== undefined
-      ? await api.store.find.query({ id: userPreferences.storeId })
+      ? await api.store.find({ id: userPreferences.storeId })
       : undefined;
 
   if (!store) {
@@ -38,7 +38,7 @@ const CashRegisterPage = async () => {
     );
   }
 
-  const cashRegister = await api.cashRegister.find.query({ storeId: store.id });
+  const cashRegister = await api.cashRegister.find({ storeId: store.id });
   if (!cashRegister) {
     return (
       <div className="space-y-4">
@@ -61,7 +61,7 @@ const CashRegisterPage = async () => {
   }
 
   const today = new Date();
-  const transactions = await api.cashRegister.transactions.list.query({
+  const transactions = await api.cashRegister.transactions.list({
     cashRegisterId: cashRegister.id,
     from: startOfDay(today),
     to: endOfDay(today),
