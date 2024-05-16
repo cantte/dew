@@ -35,10 +35,10 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<FormValues>({
     defaultValues: {
-      id: employee.employee.id,
-      name: employee.employee.name,
-      email: employee.employee.email,
-      phone: employee.employee.phone ?? undefined,
+      id: employee.id,
+      name: employee.name,
+      email: employee.email,
+      phone: employee.phone ?? undefined,
     },
     resolver: zodResolver(updateEmployeeInput),
   });

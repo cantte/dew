@@ -8,15 +8,15 @@ export type Employee = RouterOutputs["employee"]["byStore"][number];
 
 export const columns: ColumnDef<Employee>[] = [
   {
-    accessorKey: "employee.name",
+    accessorKey: "name",
     header: "Nombre",
   },
   {
-    accessorKey: "employee.email",
+    accessorKey: "email",
     header: "Correo",
   },
   {
-    accessorKey: "employee.phone",
+    accessorKey: "phone",
     header: "Teléfono",
   },
   {

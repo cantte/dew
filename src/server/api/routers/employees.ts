@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { byStoreInput } from "~/server/api/schemas/common";
 
@@ -51,19 +51,19 @@ export const employeesRouter = createTRPCRouter({
   byStore: protectedProcedure
     .input(byStoreInput)
     .query(async ({ ctx, input }) => {
-      return ctx.db.query.employeeStore.findMany({
-        with: {
-          employee: {
-            columns: {
-              id: true,
-              name: true,
-              email: true,
-              phone: true,
-            },
-          },
-        },
-        where: eq(employeeStore.storeId, input.storeId),
-      });
+      return ctx.db
+        .select({
+          id: employees.id,
+          name: employees.name,
+          email: employees.email,
+          phone: employees.phone,
+          isOwner: eq(employees.id, employeeStore.employeeId),
+          isCurrentEmployee: eq(employees.userId, ctx.session.user.id),
+        })
+        .from(employees)
+        .innerJoin(employeeStore, eq(employees.id, employeeStore.employeeId))
+        .where(eq(employeeStore.storeId, input.storeId))
+        .orderBy(desc(employees.createdAt));
     }),
   update: protectedProcedure
     .input(updateEmployeeInput)
