@@ -46,6 +46,7 @@ export const storesProcedure = createTRPCRouter({
             id: user.id,
             name: user.name ?? "Sin nombre",
             email: user.email ?? "Sin email",
+            userId: user.id,
             createdBy: user.id,
           })
           .onConflictDoNothing();
