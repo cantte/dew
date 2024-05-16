@@ -334,6 +334,7 @@ export const employees = createTable(
     name: varchar("name", { length: 128 }).notNull(),
     email: varchar("email", { length: 255 }).notNull(),
     phone: varchar("phone", { length: 32 }),
+    userId: varchar("user_id", { length: 255 }),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
@@ -345,8 +346,9 @@ export const employees = createTable(
   }),
 );
 
-export const employeeRelations = relations(employees, ({ many }) => ({
+export const employeeRelations = relations(employees, ({ many, one }) => ({
   stores: many(stores),
+  user: one(users, { fields: [employees.userId], references: [users.id] }),
 }));
 
 export const employeeStore = createTable(
