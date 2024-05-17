@@ -1,5 +1,6 @@
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
+import EmployeeStoreInvitationEmail from "~/emails/employee-store-invitation";
 import { byStoreInput } from "~/server/api/schemas/common";
 
 import {
@@ -8,6 +9,7 @@ import {
 } from "~/server/api/schemas/employees";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { employees, employeeStore } from "~/server/db/schema";
+import resend from "~/server/email/resend";
 
 export const employeesRouter = createTRPCRouter({
   create: protectedProcedure
@@ -36,7 +38,19 @@ export const employeesRouter = createTRPCRouter({
           storeId,
         });
 
-        // TODO: Send email to employee with login link
+        // Send email to employee
+        await resend.emails.send({
+          from: process.env.RESEND_EMAIL!,
+          to: data.email,
+          subject: "Has sido invitado a la tienda",
+          react: EmployeeStoreInvitationEmail({
+            employeeName: data.name,
+            storeName: storeId,
+            url: process.env.VERCEL_URL
+              ? `https://${process.env.VERCEL_URL}/stores/${storeId}/accept-invitation?employeeId=${input.id}`
+              : `http://localhost:3000/stores/${storeId}/employees/accept-invitation?employeeId=${input.id}`,
+          }),
+        });
       });
     }),
   find: protectedProcedure
