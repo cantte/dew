@@ -9,7 +9,12 @@ import {
   updateEmployeeInput,
 } from "~/server/api/schemas/employees";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { employees, employeeStore, stores } from "~/server/db/schema";
+import {
+  employees,
+  employeeStore,
+  stores,
+  userPreferences,
+} from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
 export const employeesRouter = createTRPCRouter({
@@ -161,6 +166,19 @@ export const employeesRouter = createTRPCRouter({
             storeId: input.storeId,
           })
           .onConflictDoNothing();
+
+        await tx
+          .insert(userPreferences)
+          .values({
+            userId: ctx.session.user.id,
+            storeId: input.storeId,
+          })
+          .onConflictDoUpdate({
+            target: userPreferences.userId,
+            set: {
+              storeId: input.storeId,
+            },
+          });
       });
     }),
 });
