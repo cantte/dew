@@ -69,6 +69,7 @@ export const storesProcedure = createTRPCRouter({
       .select({
         id: stores.id,
         name: stores.name,
+        createdAt: stores.createdAt,
       })
       .from(employeeStore)
       .innerJoin(stores, eq(employeeStore.storeId, stores.id))
