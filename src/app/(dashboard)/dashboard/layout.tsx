@@ -55,9 +55,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
           <div className="flex items-center gap-3">
             <MobileNav />
 
-            {userPreferences !== undefined && (
-              <SelectStore currentStore={store} stores={stores} />
-            )}
+            <SelectStore currentStore={store} stores={stores} />
           </div>
 
           <nav className="flex items-center gap-3">
