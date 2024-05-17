@@ -358,8 +358,9 @@ export const employeeStore = createTable(
     storeId: varchar("store_id", { length: 36 }).notNull(),
   },
   (employeeStore) => ({
-    employeeIdIdx: index("employee_id_idx").on(employeeStore.employeeId),
-    storeIdIdx: index("employee_store_store_id_idx").on(employeeStore.storeId),
+    compoundKey: primaryKey({
+      columns: [employeeStore.storeId, employeeStore.employeeId],
+    }),
   }),
 );
 
