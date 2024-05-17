@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod";
 import EmployeeStoreInvitationEmail from "~/emails/employee-store-invitation";
 import { byStoreInput } from "~/server/api/schemas/common";
@@ -97,12 +97,45 @@ export const employeesRouter = createTRPCRouter({
   linkToStore: protectedProcedure
     .input(linkToStoreInput)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db
-        .insert(employeeStore)
-        .values({
-          employeeId: input.employeeId,
-          storeId: input.storeId,
-        })
-        .onConflictDoNothing();
+      await ctx.db.transaction(async (tx) => {
+        const result = await tx
+          .select({
+            hasUser: isNotNull(employees.userId).mapWith(Boolean),
+          })
+          .from(employees)
+          .where(eq(employees.id, input.employeeId));
+
+        if (result.length === 0) {
+          try {
+            tx.rollback();
+          } catch (error) {
+            throw new Error("Employee not found");
+          }
+        }
+
+        const employee = result.at(0);
+        if (employee!.hasUser) {
+          try {
+            tx.rollback();
+          } catch (error) {
+            throw new Error("Employee already linked to a user");
+          }
+        }
+
+        await tx
+          .update(employees)
+          .set({
+            userId: ctx.session.user.id,
+          })
+          .where(eq(employees.id, input.employeeId));
+
+        await tx
+          .insert(employeeStore)
+          .values({
+            employeeId: input.employeeId,
+            storeId: input.storeId,
+          })
+          .onConflictDoNothing();
+      });
     }),
 });
