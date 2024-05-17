@@ -12,7 +12,7 @@ const SignInButton = () => {
     <Button
       onClick={() =>
         void signIn("google", {
-          callbackUrl: callbackUrl ?? "/",
+          callbackUrl: callbackUrl ?? "/dashboard",
         })
       }
     >
