@@ -5,6 +5,7 @@ import { byStoreInput } from "~/server/api/schemas/common";
 
 import {
   createEmployeeInput,
+  linkToStoreInput,
   updateEmployeeInput,
 } from "~/server/api/schemas/employees";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -92,5 +93,16 @@ export const employeesRouter = createTRPCRouter({
         .update(employees)
         .set(input)
         .where(eq(employees.id, input.id));
+    }),
+  linkToStore: protectedProcedure
+    .input(linkToStoreInput)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .insert(employeeStore)
+        .values({
+          employeeId: input.employeeId,
+          storeId: input.storeId,
+        })
+        .onConflictDoNothing();
     }),
 });
