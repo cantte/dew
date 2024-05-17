@@ -69,6 +69,8 @@ export const storesProcedure = createTRPCRouter({
       .select({
         id: stores.id,
         name: stores.name,
+        address: stores.address,
+        phone: stores.phone,
         createdAt: stores.createdAt,
       })
       .from(employeeStore)
