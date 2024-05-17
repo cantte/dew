@@ -48,7 +48,7 @@ export const employeesRouter = createTRPCRouter({
             storeName: storeId,
             url: process.env.VERCEL_URL
               ? `https://${process.env.VERCEL_URL}/stores/${storeId}/accept-invitation?employeeId=${input.id}`
-              : `http://localhost:3000/stores/${storeId}/employees/accept-invitation?employeeId=${input.id}`,
+              : `http://localhost:3000/stores/${storeId}/accept-invitation?employeeId=${input.id}`,
           }),
         });
       });
