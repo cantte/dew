@@ -9,7 +9,7 @@ import {
   updateEmployeeInput,
 } from "~/server/api/schemas/employees";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { employees, employeeStore } from "~/server/db/schema";
+import { employees, employeeStore, stores } from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
 export const employeesRouter = createTRPCRouter({
@@ -39,6 +39,31 @@ export const employeesRouter = createTRPCRouter({
           storeId,
         });
 
+        const storeQuery = await tx
+          .select({
+            name: stores.name,
+          })
+          .from(stores)
+          .where(eq(stores.id, storeId));
+
+        if (storeQuery.length === 0) {
+          try {
+            tx.rollback();
+          } catch (error) {
+            throw new Error("Store not found");
+          }
+        }
+
+        const store = storeQuery.at(0);
+        if (store === undefined) {
+          try {
+            tx.rollback();
+          } catch (error) {
+            throw new Error("Store not found");
+          }
+          return;
+        }
+
         // Send email to employee
         await resend.emails.send({
           from: process.env.RESEND_EMAIL!,
@@ -46,7 +71,7 @@ export const employeesRouter = createTRPCRouter({
           subject: "Has sido invitado a la tienda",
           react: EmployeeStoreInvitationEmail({
             employeeName: data.name,
-            storeName: storeId,
+            storeName: store.name,
             url: process.env.VERCEL_URL
               ? `https://${process.env.VERCEL_URL}/stores/${storeId}/accept-invitation?employeeId=${input.id}`
               : `http://localhost:3000/stores/${storeId}/accept-invitation?employeeId=${input.id}`,
