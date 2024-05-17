@@ -6,31 +6,56 @@ import {
   updateStoreInput,
 } from "~/server/api/schemas/stores";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { stores, userPreferences } from "~/server/db/schema";
+import {
+  employees,
+  employeeStore,
+  stores,
+  userPreferences,
+} from "~/server/db/schema";
 
 export const storesProcedure = createTRPCRouter({
   create: protectedProcedure
     .input(createStoreInput)
     .mutation(async ({ ctx, input }) => {
-      const storeId = uuid();
-      await ctx.db.insert(stores).values({
-        ...input,
-        id: storeId,
-        createdBy: ctx.session.user.id,
-      });
-
-      await ctx.db
-        .insert(userPreferences)
-        .values({
-          userId: ctx.session.user.id,
-          storeId: storeId,
-        })
-        .onConflictDoUpdate({
-          target: userPreferences.userId,
-          set: {
-            storeId,
-          },
+      await ctx.db.transaction(async (tx) => {
+        const storeId = uuid();
+        await tx.insert(stores).values({
+          ...input,
+          id: storeId,
+          createdBy: ctx.session.user.id,
         });
+
+        await tx
+          .insert(userPreferences)
+          .values({
+            userId: ctx.session.user.id,
+            storeId: storeId,
+          })
+          .onConflictDoUpdate({
+            target: userPreferences.userId,
+            set: {
+              storeId,
+            },
+          });
+
+        const user = ctx.session.user;
+
+        await tx
+          .insert(employees)
+          .values({
+            id: user.id,
+            name: user.name ?? "Sin nombre",
+            email: user.email ?? "Sin email",
+            userId: user.id,
+            createdBy: user.id,
+          })
+          .onConflictDoNothing();
+
+        await tx.insert(employeeStore).values({
+          employeeId: user.id,
+          storeId: storeId,
+        });
+      });
     }),
   find: protectedProcedure
     .input(findStoreInput)
