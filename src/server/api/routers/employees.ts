@@ -57,8 +57,10 @@ export const employeesRouter = createTRPCRouter({
           name: employees.name,
           email: employees.email,
           phone: employees.phone,
-          isOwner: eq(employees.id, employeeStore.employeeId),
-          isCurrentEmployee: eq(employees.userId, ctx.session.user.id),
+          isOwner: eq(employees.id, employeeStore.employeeId).mapWith(Boolean),
+          isCurrentEmployee: eq(employees.userId, ctx.session.user.id).mapWith(
+            Boolean,
+          ),
         })
         .from(employees)
         .innerJoin(employeeStore, eq(employees.id, employeeStore.employeeId))
