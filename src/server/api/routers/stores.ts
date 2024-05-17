@@ -65,9 +65,15 @@ export const storesProcedure = createTRPCRouter({
       });
     }),
   list: protectedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.stores.findMany({
-      where: eq(stores.createdBy, ctx.session.user.id),
-    });
+    return ctx.db
+      .select({
+        id: stores.id,
+        name: stores.name,
+      })
+      .from(employeeStore)
+      .innerJoin(stores, eq(employeeStore.storeId, stores.id))
+      .innerJoin(employees, eq(employeeStore.employeeId, employees.id))
+      .where(eq(employees.userId, ctx.session.user.id));
   }),
   update: protectedProcedure
     .input(updateStoreInput)
