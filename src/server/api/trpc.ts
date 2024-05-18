@@ -34,6 +34,10 @@ export const createCallerFactory = t.createCallerFactory;
 export const createTRPCRouter = t.router;
 
 const rateLimit = t.middleware(async ({ ctx, next }) => {
+  if (process.env.NODE_ENV === "development") {
+    return next();
+  }
+
   const { success } = await ratelimit.limit(ctx.session?.user?.id ?? "anon");
 
   if (!success) {
