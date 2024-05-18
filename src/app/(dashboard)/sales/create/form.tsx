@@ -7,7 +7,9 @@ import {
   ReloadIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
+import { PopoverTrigger } from "@radix-ui/react-popover";
 import { useDebounce } from "@uidotdev/usehooks";
+import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
@@ -24,6 +26,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { Popover, PopoverContent } from "~/components/ui/popover";
 import { Separator } from "~/components/ui/separator";
 import {
   Table,
@@ -99,6 +102,12 @@ const CreateSaleForm = ({ storeId }: Props) => {
       form.clearErrors("customerId");
     }
   }, [customer, findCustomerError]);
+
+  const handleContinueWithoutCustomer = () => {
+    form.setValue("customerId", "000000");
+    setCustomerSelected(true);
+  };
+
   const [isOpenCreateCustomerModal, setIsOpenCreateCustomerModal] =
     useState(false);
 
@@ -221,9 +230,25 @@ const CreateSaleForm = ({ storeId }: Props) => {
                 )}
 
                 {!isFindingCustomer && !customer && (
-                  <FormDescription>
-                    Nota: Si la venta es en mostrador y no deseas registrar un cliente, ingresa 000000.
-                  </FormDescription>
+                  <div className="!mt-4 flex items-center space-x-4">
+                    <Button
+                      variant="secondary"
+                      onClick={handleContinueWithoutCustomer}
+                    >
+                      Continuar sin cliente
+                    </Button>
+                    <Popover>
+                      <PopoverTrigger>
+                        <Info className="h-4 w-4" />
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <span className="text-sm text-muted-foreground">
+                          Puedes continuar sin un cliente, se asociará la venta
+                          al mostrador.
+                        </span>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 )}
 
                 {customer && (
@@ -367,7 +392,11 @@ const CreateSaleForm = ({ storeId }: Props) => {
                     <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                       Cliente
                     </h4>
-                    <p className="text-muted-foreground">{customer?.name}</p>
+                    {customer !== undefined ? (
+                      <p className="text-muted-foreground">{customer.name}</p>
+                    ) : (
+                      <p className="text-muted-foreground">Mostrador</p>
+                    )}
                   </div>
 
                   <Separator className="my-4" />
