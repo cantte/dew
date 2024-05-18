@@ -220,6 +220,12 @@ const CreateSaleForm = ({ storeId }: Props) => {
                   <FormDescription>Buscando cliente...</FormDescription>
                 )}
 
+                {!isFindingCustomer && !customer && (
+                  <FormDescription>
+                    Nota: Si la venta es en mostrador y no deseas registrar un cliente, ingresa 000000.
+                  </FormDescription>
+                )}
+
                 {customer && (
                   <>
                     <FormDescription>{customer.name}</FormDescription>
