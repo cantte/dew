@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { MinusIcon, PlusIcon, RotateCw, TrashIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import type { TypeOf } from "zod";
 import { Button } from "~/components/ui/button";
@@ -140,59 +140,64 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
         </Table>
       </div>
       <div className="flex flex-col justify-between gap-4 rounded border p-4">
-        <div className="flex flex-col">
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            Resumen
-          </h4>
-          <p className="text-muted-foreground">
-            Productos vendidos:{" "}
-            {Intl.NumberFormat("es-CO").format(
-              form.watch("items").reduce((acc, item) => acc + item.quantity, 0),
-            )}
-          </p>
+        <div className="text-sm">
+          <div className="grid gap-3">
+            <div className="font-semibold">Resumen</div>
+            <ul className="grid gap-3">
+              <li className="flex items-center justify-between">
+                <span className="text-muted-foreground">
+                  Productos vendidos
+                </span>
+                <span>
+                  {Intl.NumberFormat("es-CO").format(
+                    form
+                      .watch("items")
+                      .reduce((acc, item) => acc + item.quantity, 0),
+                  )}
+                </span>
+              </li>
+              <li className="flex items-center justify-between">
+                <span className="text-muted-foreground">Total</span>
+                <span>
+                  {Intl.NumberFormat("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                  }).format(form.watch("amount") ?? 0)}
+                </span>
+              </li>
+            </ul>
 
-          <p className="text-muted-foreground">
-            Total:{" "}
-            {Intl.NumberFormat("es-CO", {
-              style: "currency",
-              currency: "COP",
-            }).format(form.watch("amount") ?? 0)}
-          </p>
+            <Separator className="my-2" />
 
-          <Separator className="my-4" />
+            <div className="font-semibold">Cliente</div>
+            <p className="text-muted-foreground">
+              {customer ? `${customer.name} (${customer.id})` : "Mostrador"}
+            </p>
 
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            Cliente
-          </h4>
-          <p className="text-muted-foreground">
-            {customer ? `${customer.name} (${customer.id})` : "Mostrador"}
-          </p>
+            <Separator className="my-2" />
 
-          <Separator className="my-4" />
-
-          <div className="space-y-2">
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-              Método de pago
-            </h4>
-            <Select
-              value={form.watch("paymentMethod")}
-              onValueChange={onSelectPaymentMethod}
-            >
-              <SelectTrigger>
-                <SelectValue defaultValue={form.watch("paymentMethod")} />
-              </SelectTrigger>
-              <SelectContent>
-                {paymentMethods.map((method) => (
-                  <SelectItem key={method.value} value={method.value}>
-                    {method.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="space-y-2">
+              <div className="font-semibold">Método de pago</div>
+              <Select
+                value={form.watch("paymentMethod")}
+                onValueChange={onSelectPaymentMethod}
+              >
+                <SelectTrigger>
+                  <SelectValue defaultValue={form.watch("paymentMethod")} />
+                </SelectTrigger>
+                <SelectContent>
+                  {paymentMethods.map((method) => (
+                    <SelectItem key={method.value} value={method.value}>
+                      {method.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
-
         <Button type="submit" disabled={isCreating}>
+          {isCreating && <RotateCw className="mr-2 h-4 w-4 animate-spin" />}
           Finalizar venta
         </Button>
       </div>

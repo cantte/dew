@@ -220,26 +220,34 @@ const SelectProductsStep = ({ onContinue }: Props) => {
           </Table>
         </div>
         <div className="flex flex-col justify-between gap-4 rounded border p-4">
-          <div className="flex flex-col">
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-              Resumen
-            </h4>
-            <p className="text-muted-foreground">
-              Productos vendidos:{" "}
-              {Intl.NumberFormat("es-CO").format(
-                form
-                  .watch("items")
-                  .reduce((acc, item) => acc + item.quantity, 0),
-              )}
-            </p>
+          <div className="text-sm">
+            <div className="grid gap-3">
+              <div className="font-semibold">Resumen</div>
 
-            <p className="text-muted-foreground">
-              Total:{" "}
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
-              }).format(form.watch("amount") ?? 0)}
-            </p>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">
+                    Productos vendidos
+                  </span>
+                  <span>
+                    {Intl.NumberFormat("es-CO").format(
+                      form
+                        .watch("items")
+                        .reduce((acc, item) => acc + item.quantity, 0),
+                    )}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Total</span>
+                  <span>
+                    {Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(form.watch("amount") ?? 0)}
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <Button
