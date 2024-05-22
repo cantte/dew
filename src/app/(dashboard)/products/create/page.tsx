@@ -1,10 +1,7 @@
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import CreateProductForm from "~/app/(dashboard)/products/create/form";
 import BackButton from "~/components/back-button";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -15,11 +12,7 @@ const CreateProductPage = async () => {
     return redirect("/api/auth/signin");
   }
 
-  const userPreferences = await api.userPreference.find();
-  const store =
-    userPreferences !== undefined
-      ? await api.store.find({ id: userPreferences.storeId })
-      : undefined;
+  const store = await api.store.findCurrent();
 
   if (!store) {
     return (
@@ -28,18 +21,7 @@ const CreateProductPage = async () => {
           Crear producto
         </h3>
 
-        <Alert>
-          <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
-          <AlertTitle>Acción requerida</AlertTitle>
-          <AlertDescription>
-            No ha registrado una tienda, por favor cree una tienda para poder
-            continuar.
-            <br />
-            <Button asChild size="sm" className="mt-2">
-              <Link href={`/stores/create`}>Crear tienda</Link>
-            </Button>
-          </AlertDescription>
-        </Alert>
+        <NotFoundStoreAlert />
       </div>
     );
   }

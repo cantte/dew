@@ -1,4 +1,3 @@
-import React from "react";
 import { Separator } from "~/components/ui/separator";
 import {
   Table,
@@ -8,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { paymentMethods } from "~/server/api/schemas/sales";
 import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
@@ -57,32 +57,53 @@ const SaleDetail = ({ sale }: Props) => {
         </div>
 
         <div className="flex flex-col justify-between gap-4 rounded border p-4">
-          <div>
-            <div className="flex flex-col">
-              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                Cliente
-              </h4>
-              <p className="text-muted-foreground">{sale.customer.name}</p>
-            </div>
+          <div className="text-sm">
+            <div className="grid gap-3">
+              <div className="font-semibold">Resumen</div>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">
+                    Productos vendidos
+                  </span>
+                  <span>
+                    {Intl.NumberFormat("es-CO").format(
+                      sale.saleItems.reduce(
+                        (acc, item) => acc + item.quantity,
+                        0,
+                      ),
+                    )}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Total</span>
+                  <span>
+                    {Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(sale.amount)}
+                  </span>
+                </li>
+              </ul>
 
-            <Separator className="my-4" />
+              <Separator className="my-2" />
 
-            <div className="flex flex-col">
-              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                Resumen
-              </h4>
+              <div className="font-semibold">Cliente</div>
               <p className="text-muted-foreground">
-                Productos vendidos:{" "}
-                {Intl.NumberFormat("es-CO").format(sale.saleItems.length)}
+                {sale.customer
+                  ? `${sale.customer.name} (${sale.customer.id})`
+                  : "Mostrador"}
               </p>
 
-              <p className="text-muted-foreground">
-                Total:{" "}
-                {Intl.NumberFormat("es-CO", {
-                  style: "currency",
-                  currency: "COP",
-                }).format(sale.amount)}
-              </p>
+              <Separator className="my-2" />
+
+              <div className="space-y-2">
+                <div className="font-semibold">Método de pago</div>
+                <p className="text-muted-foreground">
+                  {paymentMethods.find(
+                    (method) => method.value === sale.paymentMethod,
+                  )?.label ?? "Desconocido"}
+                </p>
+              </div>
             </div>
           </div>
         </div>

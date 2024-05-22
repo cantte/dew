@@ -27,14 +27,14 @@ type Props = {
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
   lowStockProducts: RouterOutputs["inventory"]["lowStock"];
 
-  userPreferences: RouterOutputs["userPreference"]["find"];
+  storeId: string;
 };
 
 const Dashboard = ({
   overview,
   mostSoldProducts,
   lowStockProducts,
-  userPreferences,
+  storeId,
 }: Props) => {
   const today = new Date();
   const [date, setDate] = useState<DateRange | undefined>({
@@ -45,7 +45,7 @@ const Dashboard = ({
     {
       from: date?.from ?? today,
       to: date?.to ?? today,
-      storeId: userPreferences?.storeId ?? "0",
+      storeId: storeId,
     },
     {
       initialData: overview,

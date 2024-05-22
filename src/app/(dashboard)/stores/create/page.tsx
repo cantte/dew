@@ -1,14 +1,12 @@
 import { redirect } from "next/navigation";
 import CreateStoreForm from "~/app/(dashboard)/stores/create/form";
-import { api } from "~/trpc/server";
+import { getServerAuthSession } from "~/server/auth";
 
 const CreateStorePage = async () => {
-  const userPreferences = await api.userPreference.find();
-  const store = await api.store.find({
-    id: userPreferences?.storeId ?? "0",
-  });
-  if (store !== undefined) {
-    return redirect("/dashboard");
+  const session = await getServerAuthSession();
+
+  if (!session) {
+    return redirect("/api/auth/signin");
   }
 
   return <CreateStoreForm />;

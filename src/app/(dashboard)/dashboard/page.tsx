@@ -1,31 +1,12 @@
-import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { endOfDay, startOfDay } from "date-fns";
-import NextLink from "next/link";
 import Dashboard from "~/app/(dashboard)/dashboard/dashboard";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { api } from "~/trpc/server";
 
 const DashboardPage = async () => {
-  const userPreferences = await api.userPreference.find();
-  const store = await api.store.find({
-    id: userPreferences?.storeId ?? "0",
-  });
-  if (store === undefined) {
-    return (
-      <Alert>
-        <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
-        <AlertTitle>Acción requerida</AlertTitle>
-        <AlertDescription>
-          No ha registrado una tienda, por favor cree una tienda para poder
-          continuar.
-          <br />
-          <Button asChild size="sm" className="mt-2">
-            <NextLink href={`/stores/create`}>Crear tienda</NextLink>
-          </Button>
-        </AlertDescription>
-      </Alert>
-    );
+  const store = await api.store.findCurrent();
+  if (!store) {
+    return <NotFoundStoreAlert />;
   }
 
   const from = startOfDay(new Date());
@@ -46,7 +27,7 @@ const DashboardPage = async () => {
         overview={overview}
         mostSoldProducts={mostSoldProducts}
         lowStockProducts={lowStockProducts}
-        userPreferences={userPreferences}
+        storeId={store.id}
       />
     </main>
   );

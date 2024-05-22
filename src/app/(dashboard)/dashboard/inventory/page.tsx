@@ -1,38 +1,13 @@
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 import { columns } from "~/app/(dashboard)/dashboard/inventory/columns";
 import InventoryDataTable from "~/app/(dashboard)/dashboard/inventory/data-table";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { api } from "~/trpc/server";
 
 const InventoryPage = async () => {
-  const userPreferences = await api.userPreference.find();
+  const store = await api.store.findCurrent();
 
-  if (userPreferences === undefined) {
-    return redirect("/dashboard");
-  }
-
-  const store = await api.store.find({
-    id: userPreferences.storeId,
-  });
-
-  if (store === undefined) {
-    return (
-      <Alert>
-        <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
-        <AlertTitle>Acción requerida</AlertTitle>
-        <AlertDescription>
-          No ha registrado una tienda, por favor cree una tienda para poder
-          continuar.
-          <br />
-          <Button asChild size="sm" className="mt-2">
-            <Link href={`/stores/create`}>Crear tienda</Link>
-          </Button>
-        </AlertDescription>
-      </Alert>
-    );
+  if (!store) {
+    return <NotFoundStoreAlert />;
   }
 
   const productInventory = await api.inventory.list({
