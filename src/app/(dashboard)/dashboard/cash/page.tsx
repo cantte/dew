@@ -1,19 +1,14 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { endOfDay, startOfDay } from "date-fns";
-import NextLink from "next/link";
 import CashRegisterDetails from "~/app/(dashboard)/dashboard/cash/details";
 import EnableCash from "~/app/(dashboard)/dashboard/cash/enable-cash";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { api } from "~/trpc/server";
 
 const CashRegisterPage = async () => {
-  const userPreferences = await api.userPreference.find();
-  const store =
-    userPreferences !== undefined
-      ? await api.store.find({ id: userPreferences.storeId })
-      : undefined;
+  const store = await api.store.findCurrent();
 
   if (!store) {
     return (
@@ -22,23 +17,13 @@ const CashRegisterPage = async () => {
           Caja registradora
         </h3>
 
-        <Alert>
-          <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
-          <AlertTitle>Acción requerida</AlertTitle>
-          <AlertDescription>
-            No ha registrado una tienda, por favor cree una tienda para poder
-            continuar.
-            <br />
-            <Button asChild size="sm" className="mt-2">
-              <NextLink href={`/stores/create`}>Crear tienda</NextLink>
-            </Button>
-          </AlertDescription>
-        </Alert>
+        <NotFoundStoreAlert />
       </div>
     );
   }
 
   const cashRegister = await api.cashRegister.find({ storeId: store.id });
+
   if (!cashRegister) {
     return (
       <div className="space-y-4">

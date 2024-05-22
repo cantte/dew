@@ -83,4 +83,17 @@ export const storesProcedure = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.db.update(stores).set(input).where(eq(stores.id, input.id));
     }),
+  findCurrent: protectedProcedure.query(async ({ ctx }) => {
+    const userPreference = await ctx.db.query.userPreferences.findFirst({
+      where: eq(userPreferences.userId, ctx.session.user.id),
+    });
+
+    if (userPreference === undefined) {
+      return undefined;
+    }
+
+    return ctx.db.query.stores.findFirst({
+      where: eq(stores.id, userPreference.storeId),
+    });
+  }),
 });

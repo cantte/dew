@@ -1,33 +1,15 @@
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import NextLink from "next/link";
 import Link from "next/link";
 import { columns } from "~/app/(dashboard)/dashboard/sales/columns";
 import SalesDataTable from "~/app/(dashboard)/dashboard/sales/data-table";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const SalesPage = async () => {
-  const userPreferences = await api.userPreference.find();
-  const store = await api.store.find({
-    id: userPreferences?.storeId ?? "0",
-  });
+  const store = await api.store.findCurrent();
 
   if (store === undefined) {
-    return (
-      <Alert>
-        <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
-        <AlertTitle>Acción requerida</AlertTitle>
-        <AlertDescription>
-          No ha registrado una tienda, por favor cree una tienda para poder
-          continuar.
-          <br />
-          <Button asChild size="sm" className="mt-2">
-            <NextLink href={`/stores/create`}>Crear tienda</NextLink>
-          </Button>
-        </AlertDescription>
-      </Alert>
-    );
+    return <NotFoundStoreAlert />;
   }
 
   const sales = await api.sale.list({

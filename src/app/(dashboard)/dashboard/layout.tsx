@@ -24,11 +24,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     return redirect("/api/auth/signin");
   }
 
-  const userPreferences = await api.userPreference.find();
-  const store =
-    userPreferences !== undefined
-      ? await api.store.find({ id: userPreferences.storeId })
-      : undefined;
+  const store = await api.store.findCurrent();
   const stores = await api.store.list();
 
   return (

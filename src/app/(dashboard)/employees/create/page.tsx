@@ -6,19 +6,14 @@ import { api } from "~/trpc/server";
 
 const CreateEmployeePage = async () => {
   const session = await getServerAuthSession();
-  if (session === null) {
+
+  if (!session) {
     return redirect("/api/auth/signin");
   }
 
-  const userPreferences = await api.userPreference.find();
-  if (userPreferences === undefined) {
-    return redirect("/dashboard");
-  }
+  const store = await api.store.findCurrent();
 
-  const store = await api.store.find({
-    id: userPreferences.storeId,
-  });
-  if (store === undefined) {
+  if (!store) {
     return redirect("/dashboard");
   }
 
