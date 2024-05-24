@@ -104,6 +104,36 @@ const SaleDetail = ({ sale }: Props) => {
                   )?.label ?? "Desconocido"}
                 </p>
               </div>
+
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Total a pagar</span>
+                  <span>
+                    {Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(sale.amount)}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Pago recibido</span>
+                  <span>
+                    {Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(sale.payment)}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Cambio</span>
+                  <span>
+                    {Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(sale.payment - sale.amount)}
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
