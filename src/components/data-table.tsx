@@ -16,7 +16,7 @@ type DataTableProps<TData> = {
 
 const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border p-4">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
