@@ -4,6 +4,15 @@ import type { TypeOf } from "zod";
 import UpdateSalePriceDialog from "~/app/(dashboard)/sales/create/update-sale-price.dialog";
 import { Button } from "~/components/ui/button";
 import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -56,7 +65,11 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
 
   const onSelectPaymentMethod = (value: string) => {
     form.setValue("paymentMethod", value as PaymentMethod);
+    form.setValue("payment", form.watch("amount"));
   };
+
+  const amount = form.watch("amount");
+  const payment = form.watch("payment");
 
   return (
     <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
@@ -203,6 +216,31 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                   ))}
                 </SelectContent>
               </Select>
+
+              {form.watch("paymentMethod") === "Cash" && (
+                <FormField
+                  control={form.control}
+                  name="payment"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Pago recibido</FormLabel>
+                      <FormControl>
+                        <Input type="number" disabled={isCreating} {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+
+                      <FormDescription>
+                        Cambio:{" "}
+                        {Intl.NumberFormat("es-CO", {
+                          style: "currency",
+                          currency: "COP",
+                        }).format(payment - amount)}
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
           </div>
         </div>
