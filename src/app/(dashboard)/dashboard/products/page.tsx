@@ -21,14 +21,10 @@ const ProductsPage = async () => {
 
   return (
     <div className="space-y-4">
-        <ProductsOverview overview={overview} />
+      <ProductsOverview overview={overview} />
 
-        <ProductDataTable
-          columns={columns}
-          data={products}
-          storeId={store.id}
-        />
-      </div>
+      <ProductDataTable columns={columns} data={products} storeId={store.id} />
+    </div>
   );
 };
 
