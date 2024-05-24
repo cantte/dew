@@ -3,6 +3,7 @@ import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import type { TypeOf } from "zod";
+import UpdateSalePriceDialog from "~/app/(dashboard)/sales/create/update-sale-price.dialog";
 import { Button } from "~/components/ui/button";
 import { FormDescription } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
@@ -189,10 +190,19 @@ const SelectProductsStep = ({ onContinue }: Props) => {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
-                    }).format(item.salePrice)}
+                    <div className="flex items-center space-x-1">
+                      <span>
+                        {Intl.NumberFormat("es-CO", {
+                          style: "currency",
+                          currency: "COP",
+                        }).format(item.salePrice)}
+                      </span>
+
+                      <UpdateSalePriceDialog
+                        productName={getProductName(item.productId)}
+                        index={index}
+                      />
+                    </div>
                   </TableCell>
                   <TableCell>
                     {Intl.NumberFormat("es-CO", {
