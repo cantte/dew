@@ -52,7 +52,7 @@ const ProductDataTable = <TValue,>({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <ProductsDataTableToolbar table={table} />
       <DataTable table={table} />
       <DataTablePagination table={table} />
