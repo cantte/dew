@@ -2,6 +2,8 @@
 
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { type Table } from "@tanstack/react-table";
+import { PlusCircle } from "lucide-react";
+import Link from "next/link";
 import DateRangeFilter from "~/app/(dashboard)/dashboard/sales/date-range-filter";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -19,7 +21,7 @@ const SalesDataTableToolbar = <TData,>({
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Buscar cliente"
+          placeholder="Buscar por cliente"
           value={
             (table.getColumn("customer")?.getFilterValue() as string) ?? ""
           }
@@ -28,6 +30,8 @@ const SalesDataTableToolbar = <TData,>({
           }
           className="w-[150px] lg:w-[250px]"
         />
+
+        <DateRangeFilter table={table} className="border-dashed" />
 
         {isFiltered && (
           <Button
@@ -41,7 +45,16 @@ const SalesDataTableToolbar = <TData,>({
         )}
       </div>
 
-      <DateRangeFilter table={table} className="border-dashed" />
+      <div className="flex space-x-2">
+        <Button asChild size="sm" className="h-7 gap-1">
+          <Link href="/sales/create">
+            <PlusCircle className="h-3.5 w-3.5" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Nueva venta
+            </span>
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 };
