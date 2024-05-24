@@ -8,20 +8,25 @@ export const createSaleItemInput = z.object({
   profit: z.coerce.number().min(0),
 });
 
-export const createSaleInput = z.object({
-  customerId: z.string().min(1).max(32),
-  amount: z.coerce.number().min(0),
-  paymentMethod: z.enum([
-    "Cash",
-    "CreditCard",
-    "DebitCard",
-    "Transfer",
-  ] as const),
-  payment: z.coerce.number().min(0),
-  storeId: z.string().min(1).max(36),
+export const createSaleInput = z
+  .object({
+    customerId: z.string().min(1).max(32),
+    amount: z.coerce.number().min(0),
+    paymentMethod: z.enum([
+      "Cash",
+      "CreditCard",
+      "DebitCard",
+      "Transfer",
+    ] as const),
+    payment: z.coerce.number().min(0),
+    storeId: z.string().min(1).max(36),
 
-  items: z.array(createSaleItemInput).min(1),
-});
+    items: z.array(createSaleItemInput).min(1),
+  })
+  .refine((data) => data.payment >= data.amount, {
+    message: "El monto de pago debe ser mayor o igual al monto total",
+    path: ["payment"],
+  });
 
 export type PaymentMethod = TypeOf<typeof createSaleInput>["paymentMethod"];
 
