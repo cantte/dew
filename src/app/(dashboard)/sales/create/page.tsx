@@ -1,15 +1,17 @@
-import { redirect } from "next/navigation";
 import CreateSaleForm from "~/app/(dashboard)/sales/create/form";
 import BackButton from "~/components/back-button";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { api } from "~/trpc/server";
 
 const CreateSalePage = async () => {
-  const userPreferences = await api.userPreference.find();
-  if (userPreferences === undefined) {
-    return redirect("/dashboard");
+  const store = await api.store.findCurrent();
+  if (!store) {
+    return <NotFoundStoreAlert />;
   }
 
-  const mostSoldProducts = await api.sale.mostSoldProducts();
+  const suggestions = await api.product.suggestions({
+    storeId: store.id,
+  });
 
   return (
     <div>
@@ -20,10 +22,7 @@ const CreateSalePage = async () => {
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Crear venta</h1>
 
-        <CreateSaleForm
-          storeId={userPreferences.storeId}
-          mostSoldProducts={mostSoldProducts}
-        />
+        <CreateSaleForm storeId={store.id} suggestions={suggestions} />
       </section>
     </div>
   );

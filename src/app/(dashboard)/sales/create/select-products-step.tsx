@@ -25,12 +25,12 @@ export type FormValues = TypeOf<typeof createSaleInput>;
 type Product = RouterOutputs["product"]["findForSale"];
 
 type Props = {
-  mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
+  suggestions: RouterOutputs["product"]["suggestions"];
 
   onContinue: (selectedProducts: Product[]) => void;
 };
 
-const SelectProductsStep = ({ onContinue, mostSoldProducts }: Props) => {
+const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
   const form = useFormContext<FormValues>();
 
   const [productCode, setProductCode] = useState("");
@@ -112,8 +112,9 @@ const SelectProductsStep = ({ onContinue, mostSoldProducts }: Props) => {
     return product?.name ?? "Error";
   };
 
-  const onSelectProduct = (product: Product) => {
-    console.log(product);
+  const onSelectProduct = (productCode: string) => {
+    setProductCode(productCode);
+    setProductSelected(true);
   };
 
   return (
@@ -139,10 +140,7 @@ const SelectProductsStep = ({ onContinue, mostSoldProducts }: Props) => {
               }}
             />
 
-            <FindProduct
-              suggestions={mostSoldProducts}
-              onSelect={onSelectProduct}
-            />
+            <FindProduct suggestions={suggestions} onSelect={onSelectProduct} />
           </div>
 
           <FormDescription>
@@ -155,8 +153,7 @@ const SelectProductsStep = ({ onContinue, mostSoldProducts }: Props) => {
             <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
               <span className="text-xs">Ctrl +</span>K
             </kbd>{" "}
-            para buscar un producto (Está característica se encuentra en
-            desarrollo).
+            para buscar un producto.
           </FormDescription>
 
           {isFindingProduct && (

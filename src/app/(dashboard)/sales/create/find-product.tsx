@@ -1,3 +1,5 @@
+import { useDebounce } from "@uidotdev/usehooks";
+import { CommandLoading } from "cmdk";
 import { useEffect, useState } from "react";
 import {
   Command,
@@ -7,20 +9,21 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "~/components/ui/command";
+import { api } from "~/trpc/react";
 import type { RouterOutputs } from "~/trpc/shared";
 
-type Product = NonNullable<RouterOutputs["product"]["findForSale"]>;
+type SearchedProduct = NonNullable<RouterOutputs["product"]["search"]>[number];
 
 type Props = {
-  suggestions: RouterOutputs["sale"]["mostSoldProducts"];
+  suggestions: RouterOutputs["product"]["suggestions"];
 
-  onSelect: (product: Product) => void;
+  onSelect: (productCode: string) => void;
 };
 
 const FindProduct = ({ onSelect, suggestions }: Props) => {
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -32,20 +35,79 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const [query, setQuery] = useState("");
+  const finalQuery = useDebounce(query, 250);
+
+  const store = api.store.findCurrent.useQuery();
+  const search = api.product.search.useQuery(
+    {
+      query: finalQuery,
+      storeId: store.data?.id ?? "",
+    },
+    {
+      enabled: open && finalQuery.length > 0 && store.data !== undefined,
+    },
+  );
+
+  const [products, setProducts] = useState<SearchedProduct[]>([]);
+  useEffect(() => {
+    if (search.data) {
+      setProducts(search.data);
+    }
+  }, [search.data]);
+
+  const handleSelect = (value: string) => {
+    const [id] = value.split("@");
+    const product = products.find((product) => product.id === id);
+    if (product) {
+      onSelect(product.code);
+    }
+    setOpen(false);
+  };
+
   return (
     <>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <Command className="rounded-lg border shadow-md">
-          <CommandInput />
+        <Command className="rounded-lg border shadow-md" shouldFilter={false}>
+          <CommandInput onValueChange={setQuery} />
           <CommandList>
-            <CommandEmpty>No se encontraron productos</CommandEmpty>
+            {!search.isFetching && products.length === 0 && (
+              <CommandEmpty>No se encontraron productos</CommandEmpty>
+            )}
+
             <CommandGroup heading="Sugerencias">
               {suggestions.map((product) => (
-                <CommandItem key={product.id}>
-                  <span>{product.name}</span>
+                <CommandItem
+                  key={product.id}
+                  value={`${product.id}@${product.name}`}
+                  onSelect={handleSelect}
+                >
+                  {product.name}
                 </CommandItem>
               ))}
             </CommandGroup>
+
+            <CommandSeparator />
+
+            {products.length > 0 && (
+              <CommandGroup heading="Resultados">
+                {products.map((product) => (
+                  <CommandItem
+                    key={product.id}
+                    value={`${product.id}@${product.name}`}
+                    onSelect={handleSelect}
+                  >
+                    {product.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            {search.isFetching && (
+              <CommandLoading className="py-6 text-center text-sm">
+                Cargando datos...
+              </CommandLoading>
+            )}
           </CommandList>
         </Command>
       </CommandDialog>
