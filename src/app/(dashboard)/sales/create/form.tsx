@@ -21,9 +21,10 @@ type Customer = RouterOutputs["customer"]["find"];
 
 type Props = {
   storeId: string;
+  mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
 };
 
-const CreateSaleForm = ({ storeId }: Props) => {
+const CreateSaleForm = ({ storeId, mostSoldProducts }: Props) => {
   const form = useForm<CreateSaleFormValues>({
     resolver: zodResolver(createSaleInput),
     defaultValues: {
@@ -80,7 +81,7 @@ const CreateSaleForm = ({ storeId }: Props) => {
         {
           {
             "select-products": (
-              <SelectProductsStep onContinue={handleFinishSelectProducts} />
+              <SelectProductsStep onContinue={handleFinishSelectProducts} mostSoldProducts={mostSoldProducts} />
             ),
             "select-customer": (
               <SelectCustomerStep onContinue={handleFinishSelectCustomer} />

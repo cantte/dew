@@ -9,6 +9,8 @@ const CreateSalePage = async () => {
     return redirect("/dashboard");
   }
 
+  const mostSoldProducts = await api.sale.mostSoldProducts();
+
   return (
     <div>
       <div className="mb-4 mt-4 md:mt-0">
@@ -18,7 +20,10 @@ const CreateSalePage = async () => {
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Crear venta</h1>
 
-        <CreateSaleForm storeId={userPreferences.storeId} />
+        <CreateSaleForm
+          storeId={userPreferences.storeId}
+          mostSoldProducts={mostSoldProducts}
+        />
       </section>
     </div>
   );
