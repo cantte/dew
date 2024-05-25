@@ -16,9 +16,17 @@ type Props = {
   products: number;
   date: Date;
   url: string;
+  store: string;
 };
 
-const NewSaleCustomerEmail = ({ name, total, products, date, url }: Props) => {
+const NewSaleCustomerEmail = ({
+  name,
+  total,
+  products,
+  date,
+  url,
+  store,
+}: Props) => {
   return (
     <Html>
       <Head />
@@ -35,7 +43,7 @@ const NewSaleCustomerEmail = ({ name, total, products, date, url }: Props) => {
 
             <Text className="scroll-m-20 text-xl font-semibold tracking-tight">
               Señor(a) {name}, hemos registrado una nueva compra en nuestro
-              sistema.
+              sistema en la tienda {store}.
             </Text>
 
             <Container>

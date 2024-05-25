@@ -15,6 +15,7 @@ import {
   products,
   saleItems,
   sales,
+  stores,
 } from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
@@ -80,7 +81,7 @@ export const salesProcedure = createTRPCRouter({
               ),
             );
 
-          // Send email
+          // after updating the inventory, send an email to the customer
           const [customer] = await tx
             .select({
               email: customers.email,
@@ -94,6 +95,17 @@ export const salesProcedure = createTRPCRouter({
           }
 
           if (customer.email === null) {
+            return;
+          }
+
+          const [store] = await tx
+            .select({
+              name: stores.name,
+            })
+            .from(stores)
+            .where(eq(stores.id, input.storeId));
+
+          if (store === undefined) {
             return;
           }
 
@@ -112,6 +124,7 @@ export const salesProcedure = createTRPCRouter({
               url: process.env.VERCEL_URL
                 ? `https://${process.env.VERCEL_URL}/sales/c/${code}`
                 : `http://localhost:3000/sales/c/${code}`,
+              store: store.name,
             }),
           });
         }
