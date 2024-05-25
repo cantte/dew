@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { byStoreInput } from "~/server/api/schemas/common";
 
 export const createProductInput = z.object({
   code: z.string().min(1).max(255),
@@ -21,4 +22,8 @@ export const updateProductInput = z.object({
 export const linkToStoresInput = z.object({
   id: z.string().uuid(),
   stores: z.array(z.string().uuid()),
+});
+
+export const searchProductsInput = byStoreInput.extend({
+  query: z.string().min(1).max(255),
 });
