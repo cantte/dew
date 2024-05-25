@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-    Command,
-    CommandDialog,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
 } from "~/components/ui/command";
 import type { RouterOutputs } from "~/trpc/shared";
 

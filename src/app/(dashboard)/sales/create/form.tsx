@@ -81,7 +81,10 @@ const CreateSaleForm = ({ storeId, mostSoldProducts }: Props) => {
         {
           {
             "select-products": (
-              <SelectProductsStep onContinue={handleFinishSelectProducts} mostSoldProducts={mostSoldProducts} />
+              <SelectProductsStep
+                onContinue={handleFinishSelectProducts}
+                mostSoldProducts={mostSoldProducts}
+              />
             ),
             "select-customer": (
               <SelectCustomerStep onContinue={handleFinishSelectCustomer} />
