@@ -62,6 +62,12 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
     if (product) {
       onSelect(product.code);
     }
+
+    const suggestion = suggestions.find((product) => product.id === id);
+    if (suggestion) {
+      onSelect(suggestion.code);
+    }
+
     setOpen(false);
   };
 
