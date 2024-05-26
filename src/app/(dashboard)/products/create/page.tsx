@@ -16,12 +16,14 @@ const CreateProductPage = async () => {
 
   if (!store) {
     return (
-      <div className="space-y-4">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          Crear producto
-        </h3>
+      <div className="w-full max-w-7xl">
+        <div className="space-y-4">
+          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+            Crear producto
+          </h3>
 
-        <NotFoundStoreAlert />
+          <NotFoundStoreAlert />
+        </div>
       </div>
     );
   }
@@ -29,7 +31,7 @@ const CreateProductPage = async () => {
   const stores = await api.store.list();
 
   return (
-    <div>
+    <div className="w-full max-w-7xl">
       <div className="mb-4 mt-4 md:mt-0">
         <BackButton />
       </div>

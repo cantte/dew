@@ -9,7 +9,11 @@ const CreateStorePage = async () => {
     return redirect("/api/auth/signin");
   }
 
-  return <CreateStoreForm />;
+  return (
+    <div className="w-full max-w-7xl">
+      <CreateStoreForm />
+    </div>
+  );
 };
 
 export default CreateStorePage;
