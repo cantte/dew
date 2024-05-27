@@ -22,7 +22,7 @@ const SalesOverview = ({ overview }: Props) => {
     <div className="flex items-center space-x-4">
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Badge variant="secondary">
               Ventas: {Intl.NumberFormat("es-CO").format(+overview.sales)}
             </Badge>
@@ -35,7 +35,7 @@ const SalesOverview = ({ overview }: Props) => {
 
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Badge variant="secondary">
               Clientes: {Intl.NumberFormat("es-CO").format(+overview.customers)}
             </Badge>
@@ -48,7 +48,7 @@ const SalesOverview = ({ overview }: Props) => {
 
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Badge variant="secondary">
               Ingresos:{" "}
               {Intl.NumberFormat("es-CO", {
@@ -65,7 +65,7 @@ const SalesOverview = ({ overview }: Props) => {
 
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Badge variant="secondary">
               Productos: {Intl.NumberFormat("es-CO").format(+overview.products)}
             </Badge>
