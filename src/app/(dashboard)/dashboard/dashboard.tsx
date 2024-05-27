@@ -1,8 +1,14 @@
 "use client";
 
-import { ArchiveIcon } from "@radix-ui/react-icons";
-import { endOfDay, startOfDay } from "date-fns";
+import { endOfMonth, startOfMonth } from "date-fns";
 import { useState } from "react";
+import {
+  Tooltip as ChartTooltip,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+} from "recharts";
+import SalesOverview from "~/app/(dashboard)/dashboard/sales/overview";
 import type DateRange from "~/components/date-range";
 import DateRangeFilter from "~/components/date-range-filter";
 import { Badge } from "~/components/ui/badge";
@@ -24,6 +30,8 @@ import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
   overview: RouterOutputs["sale"]["overview"];
+  report: RouterOutputs["sale"]["report"];
+
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
   lowStockProducts: RouterOutputs["inventory"]["lowStock"];
 
@@ -32,14 +40,15 @@ type Props = {
 
 const Dashboard = ({
   overview,
+  report,
   mostSoldProducts,
   lowStockProducts,
   storeId,
 }: Props) => {
   const today = new Date();
   const [date, setDate] = useState<DateRange | undefined>({
-    from: startOfDay(today),
-    to: endOfDay(today),
+    from: startOfMonth(today),
+    to: endOfMonth(today),
   });
   const { data } = api.sale.overview.useQuery(
     {
@@ -52,117 +61,196 @@ const Dashboard = ({
     },
   );
 
+  console.log(report);
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between space-x-2">
-        <h1 className="text-3xl font-semibold">Panel de control</h1>
+      <div className="space-y-2">
+        <span className="font-semibold">Panel de control</span>
+
+        <DateRangeFilter selected={date} onSelectRange={setDate} />
+
+        <SalesOverview overview={data} />
       </div>
 
-      <DateRangeFilter selected={date} onSelectRange={setDate} />
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ingresos</CardTitle>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <CardTitle className="text-sm font-normal">
+              Ingresos totales
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {Intl.NumberFormat("es-CO", {
                 style: "currency",
                 currency: "COP",
-              }).format(+data.revenue)}
+              }).format(report.totalAmount)}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {report.amountImprovement > 0 ? "+" : ""}
+              {Intl.NumberFormat("es-CO", {
+                style: "percent",
+                minimumFractionDigits: 2,
+              }).format(report.amountImprovement)}{" "}
+              respecto al mes anterior
+            </p>
+            <div className="h-[80px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={report.totalAmountPerDay}
+                  margin={{
+                    top: 5,
+                    right: 10,
+                    left: 10,
+                    bottom: 0,
+                  }}
+                >
+                  <ChartTooltip
+                    content={({ active, payload }) => {
+                      if (active && payload) {
+                        const firstPayload = payload[0];
+
+                        if (!firstPayload) {
+                          return null;
+                        }
+
+                        return (
+                          <div className="rounded-lg border bg-background p-2 shadow-sm">
+                            <p className="text-sm">
+                              {Intl.NumberFormat("es-CO", {
+                                style: "currency",
+                                currency: "COP",
+                              }).format(+firstPayload.value!)}
+                            </p>
+
+                            <p className="text-xs text-muted-foreground">
+                              {Intl.DateTimeFormat("es-CO").format(
+                                Date.parse(
+                                  (firstPayload.payload as { date: string })
+                                    .date,
+                                ),
+                              )}
+                            </p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    strokeWidth={2}
+                    dataKey="total"
+                    activeDot={{
+                      r: 6,
+                      style: { fill: "hsl(var(--primary))", opacity: 0.25 },
+                    }}
+                    style={
+                      {
+                        stroke: "hsl(var(--primary))",
+                      } as React.CSSProperties
+                    }
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Clientes atendidos
+            <CardTitle className="text-sm font-normal">
+              Ganancias totales
             </CardTitle>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {Intl.NumberFormat("es-CO").format(+data.customers)}
+              {Intl.NumberFormat("es-CO", {
+                style: "currency",
+                currency: "COP",
+              }).format(report.totalProfit)}
             </div>
-          </CardContent>
-        </Card>
+            <p className="text-xs text-muted-foreground">
+              {report.profitImprovement > 0 ? "+" : ""}
+              {Intl.NumberFormat("es-CO", {
+                style: "percent",
+                minimumFractionDigits: 2,
+              }).format(report.profitImprovement)}{" "}
+              respecto al mes anterior
+            </p>
+            <div className="h-[80px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={report.totalProfitPerDay}
+                  dataKey="total"
+                  margin={{
+                    top: 5,
+                    right: 10,
+                    left: 10,
+                    bottom: 0,
+                  }}
+                >
+                  <ChartTooltip
+                    content={({ active, payload }) => {
+                      if (active && payload) {
+                        const firstPayload = payload[0];
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Ventas realizadas
-            </CardTitle>
+                        if (!firstPayload) {
+                          return null;
+                        }
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <rect width="20" height="14" x="2" y="5" rx="2" />
-              <path d="M2 10h20" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {Intl.NumberFormat("es-CO").format(+data.sales)}
-            </div>
-          </CardContent>
-        </Card>
+                        return (
+                          <div className="rounded-lg border bg-background p-2 shadow-sm">
+                            <p className="text-sm">
+                              {Intl.NumberFormat("es-CO", {
+                                style: "currency",
+                                currency: "COP",
+                              }).format(+firstPayload.value!)}
+                            </p>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Productos vendidos
-            </CardTitle>
-
-            <ArchiveIcon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {Intl.NumberFormat("es-CO").format(+data.products)}
+                            <p className="text-xs text-muted-foreground">
+                              {Intl.DateTimeFormat("es-CO", {
+                                day: "numeric",
+                                month: "short",
+                              }).format(
+                                Date.parse(
+                                  (firstPayload.payload as { date: string })
+                                    .date,
+                                ),
+                              )}
+                            </p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    strokeWidth={2}
+                    dataKey="total"
+                    activeDot={{
+                      r: 6,
+                      style: { fill: "hsl(var(--primary))", opacity: 0.25 },
+                    }}
+                    style={
+                      {
+                        stroke: "hsl(var(--primary))",
+                      } as React.CSSProperties
+                    }
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <div className="flex flex-col space-y-4">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+      <div className="flex flex-col space-y-2">
+        <span className="font-semibold tracking-tight">
           Productos más vendidos
-        </h3>
+        </span>
         <div>
           {mostSoldProducts.length > 0 ? (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
