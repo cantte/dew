@@ -1,4 +1,4 @@
-import { and, count, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, count, desc, eq, isNull, sql, sum } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
 import { byStoreInput } from "~/server/api/schemas/common";
@@ -6,10 +6,11 @@ import { byStoreInput } from "~/server/api/schemas/common";
 import {
   createProductInput,
   linkToStoresInput,
+  searchProductsInput,
   updateProductInput,
 } from "~/server/api/schemas/products";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { inventory, products } from "~/server/db/schema";
+import { inventory, products, saleItems } from "~/server/db/schema";
 
 export const productsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -185,5 +186,46 @@ export const productsRouter = createTRPCRouter({
       }
 
       return response;
+    }),
+  search: protectedProcedure
+    .input(searchProductsInput)
+    .query(async ({ ctx, input }) => {
+      return ctx.db
+        .select({
+          id: products.id,
+          code: products.code,
+          name: products.name,
+          description: products.description,
+        })
+        .from(products)
+        .innerJoin(inventory, eq(products.id, inventory.productId))
+        .where(
+          and(
+            eq(inventory.storeId, input.storeId),
+            isNull(products.deletedAt),
+            sql`to_tsvector(${products.name}) @@ to_tsquery(${input.query})`,
+          ),
+        )
+        .orderBy(desc(products.createdAt));
+    }),
+  suggestions: protectedProcedure
+    .input(byStoreInput)
+    .query(async ({ ctx, input }) => {
+      return ctx.db
+        .select({
+          id: products.id,
+          code: products.code,
+          name: products.name,
+          description: products.description,
+        })
+        .from(products)
+        .innerJoin(inventory, eq(products.id, inventory.productId))
+        .innerJoin(saleItems, eq(products.id, saleItems.productId))
+        .groupBy(products.id)
+        .where(
+          and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
+        )
+        .orderBy(desc(sum(saleItems.quantity)))
+        .limit(3);
     }),
 });

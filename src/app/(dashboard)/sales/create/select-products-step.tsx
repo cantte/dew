@@ -3,6 +3,8 @@ import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import type { TypeOf } from "zod";
+import FindProduct from "~/app/(dashboard)/sales/create/find-product";
+import UpdateSalePriceDialog from "~/app/(dashboard)/sales/create/update-sale-price.dialog";
 import { Button } from "~/components/ui/button";
 import { FormDescription } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
@@ -23,10 +25,12 @@ export type FormValues = TypeOf<typeof createSaleInput>;
 type Product = RouterOutputs["product"]["findForSale"];
 
 type Props = {
+  suggestions: RouterOutputs["product"]["suggestions"];
+
   onContinue: (selectedProducts: Product[]) => void;
 };
 
-const SelectProductsStep = ({ onContinue }: Props) => {
+const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
   const form = useFormContext<FormValues>();
 
   const [productCode, setProductCode] = useState("");
@@ -108,36 +112,56 @@ const SelectProductsStep = ({ onContinue }: Props) => {
     return product?.name ?? "Error";
   };
 
+  const onSelectProduct = (productCode: string) => {
+    setProductCode(productCode);
+    setProductSelected(true);
+  };
+
   return (
     <div className="flex w-full grow flex-col space-y-4">
-      <div className="w-full items-center gap-1.5">
-        <Label htmlFor="productId">Código o nombre del producto</Label>
-        <Input
-          type="text"
-          id="productId"
-          autoFocus
-          value={productCode}
-          disabled={isFindingProduct}
-          onChange={(e) => setProductCode(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              e.stopPropagation();
-              setProductSelected(true);
-            }
-          }}
-        />
+      <div className="space-y-2">
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="productId">Código del producto</Label>
 
-        <FormDescription>
-          Escanea el código de barras del producto o ingresa el código de forma
-          manual. Puedes buscar por nombre del producto. Presiona enter para
-          agregar el producto a la lista.
-        </FormDescription>
+          <div className="flex space-x-2">
+            <Input
+              type="text"
+              id="productId"
+              autoFocus
+              value={productCode}
+              disabled={isFindingProduct}
+              onChange={(e) => setProductCode(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setProductSelected(true);
+                }
+              }}
+            />
 
-        {isFindingProduct && (
-          <FormDescription>Buscando producto...</FormDescription>
-        )}
+            <FindProduct suggestions={suggestions} onSelect={onSelectProduct} />
+          </div>
+
+          <FormDescription>
+            Escanea el código de barras del producto o ingresa el código de
+            forma manual. Presiona enter para agregar el producto a la lista.
+          </FormDescription>
+
+          <FormDescription>
+            Presiona{" "}
+            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+              <span className="text-xs">Ctrl +</span>K
+            </kbd>{" "}
+            para buscar un producto.
+          </FormDescription>
+
+          {isFindingProduct && (
+            <FormDescription>Buscando producto...</FormDescription>
+          )}
+        </div>
       </div>
+
       <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
         <div className="rounded border p-4 md:col-span-2">
           <Table>
@@ -189,10 +213,19 @@ const SelectProductsStep = ({ onContinue }: Props) => {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
-                    }).format(item.salePrice)}
+                    <div className="flex items-center space-x-1">
+                      <span>
+                        {Intl.NumberFormat("es-CO", {
+                          style: "currency",
+                          currency: "COP",
+                        }).format(item.salePrice)}
+                      </span>
+
+                      <UpdateSalePriceDialog
+                        productName={getProductName(item.productId)}
+                        index={index}
+                      />
+                    </div>
                   </TableCell>
                   <TableCell>
                     {Intl.NumberFormat("es-CO", {

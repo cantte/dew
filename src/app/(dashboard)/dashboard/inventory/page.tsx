@@ -15,21 +15,11 @@ const InventoryPage = async () => {
   });
 
   return (
-    <div>
-      <div className="flex justify-between">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          Inventario
-        </h3>
-      </div>
-
-      <div className="mt-4">
-        <InventoryDataTable
-          columns={columns}
-          data={productInventory}
-          storeId={store.id}
-        />
-      </div>
-    </div>
+    <InventoryDataTable
+      columns={columns}
+      data={productInventory}
+      storeId={store.id}
+    />
   );
 };
 

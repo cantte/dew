@@ -27,7 +27,7 @@ const EditProductPage = async ({ params }: Props) => {
   }
 
   return (
-    <div>
+    <div className="w-full max-w-7xl">
       <div className="mb-4 mt-4 md:mt-0">
         <BackButton />
       </div>
