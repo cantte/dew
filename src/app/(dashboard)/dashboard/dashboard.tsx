@@ -29,8 +29,6 @@ type Props = {
 
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
   lowStockProducts: RouterOutputs["inventory"]["lowStock"];
-
-  storeId: string;
 };
 
 const Dashboard = ({
@@ -38,7 +36,6 @@ const Dashboard = ({
   report,
   mostSoldProducts,
   lowStockProducts,
-  storeId,
 }: Props) => {
   return (
     <div className="space-y-4">

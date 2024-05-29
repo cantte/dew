@@ -36,7 +36,6 @@ const DashboardPage = async () => {
         report={report}
         mostSoldProducts={mostSoldProducts}
         lowStockProducts={lowStockProducts}
-        storeId={store.id}
       />
     </main>
   );
