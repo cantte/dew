@@ -82,7 +82,10 @@ const SalesOverview = ({ overview }: Props) => {
         </PopoverTrigger>
         <PopoverContent>
           <span className="text-sm text-muted-foreground">
-            Información general de las ventas registradas en el día.
+            Información general de las ventas registradas en el mes de{" "}
+            {Intl.DateTimeFormat("es-CO", {
+              month: "long",
+            }).format(new Date())}.
           </span>
         </PopoverContent>
       </Popover>
