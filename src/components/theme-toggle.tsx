@@ -1,36 +1,56 @@
 "use client";
 
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Button } from "~/components/ui/button";
 
 export function ThemeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+        <Button
+          variant="ghost"
+          className="flex h-7 w-full justify-between gap-1"
+        >
+          <span className="ml-1 whitespace-nowrap text-xs">Cambiar tema</span>
+          {theme === "light" ? (
+            <Sun className="h-3 w-3" />
+          ) : theme === "dark" ? (
+            <Moon className="h-3 w-3" />
+          ) : (
+            <Monitor className="h-3 w-3" />
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Claro
+        <DropdownMenuItem
+          className="flex h-7 w-full justify-between gap-1"
+          onClick={() => setTheme("light")}
+        >
+          <span>Claro</span>
+          <Sun className="h-3 w-3" />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Oscuro
+        <DropdownMenuItem
+          className="flex h-7 w-full justify-between gap-1"
+          onClick={() => setTheme("dark")}
+        >
+          <span>Oscuro</span>
+          <Moon className="h-3 w-3" />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          Sistema
+        <DropdownMenuItem
+          className="flex h-7 w-full justify-between gap-1"
+          onClick={() => setTheme("system")}
+        >
+          <span>Sistema</span>
+          <Monitor className="h-3 w-3" />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
