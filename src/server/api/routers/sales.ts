@@ -81,54 +81,51 @@ export const salesProcedure = createTRPCRouter({
                 eq(inventory.storeId, input.storeId),
               ),
             );
-
-          // after updating the inventory, send an email to the customer
-          const [customer] = await tx
-            .select({
-              email: customers.email,
-              name: customers.name,
-            })
-            .from(customers)
-            .where(eq(customers.id, input.customerId));
-
-          if (customer === undefined) {
-            return;
-          }
-
-          if (customer.email === null) {
-            return;
-          }
-
-          const [store] = await tx
-            .select({
-              name: stores.name,
-            })
-            .from(stores)
-            .where(eq(stores.id, input.storeId));
-
-          if (store === undefined) {
-            return;
-          }
-
-          await resend.emails.send({
-            from: process.env.RESEND_EMAIL!,
-            to: customer.email,
-            subject: "Nueva venta registrada",
-            react: NewSale({
-              name: customer.name,
-              total: input.amount,
-              products: input.items.reduce(
-                (acc, item) => item.quantity + acc,
-                0,
-              ),
-              date: new Date(),
-              url: process.env.VERCEL_URL
-                ? `https://${process.env.VERCEL_URL}/sales/c/${code}`
-                : `http://localhost:3000/sales/c/${code}`,
-              store: store.name,
-            }),
-          });
         }
+
+        // after updating the inventory, send an email to the customer
+        const [customer] = await tx
+          .select({
+            email: customers.email,
+            name: customers.name,
+          })
+          .from(customers)
+          .where(eq(customers.id, input.customerId));
+
+        if (customer === undefined) {
+          return;
+        }
+
+        if (customer.email === null) {
+          return;
+        }
+
+        const [store] = await tx
+          .select({
+            name: stores.name,
+          })
+          .from(stores)
+          .where(eq(stores.id, input.storeId));
+
+        if (store === undefined) {
+          return;
+        }
+
+        await resend.emails.send({
+          from: process.env.RESEND_EMAIL!,
+          to: customer.email,
+          subject: "Nueva venta registrada",
+          react: NewSale({
+            name: customer.name,
+            total: input.amount,
+            products: input.items.reduce((acc, item) => item.quantity + acc, 0),
+            date: new Date(),
+            url: process.env.VERCEL_URL
+              ? `https://${process.env.VERCEL_URL}/sales/c/${code}`
+              : `http://localhost:3000/sales/c/${code}`,
+            store: store.name,
+          }),
+        });
       });
     }),
   list: protectedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
