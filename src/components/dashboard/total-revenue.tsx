@@ -1,8 +1,8 @@
 import {
-    Tooltip as ChartTooltip,
-    Line,
-    LineChart,
-    ResponsiveContainer,
+  Tooltip as ChartTooltip,
+  Line,
+  LineChart,
+  ResponsiveContainer,
 } from "recharts";
 import ValueDateTooltip from "~/components/dashboard/value-date-tooltip";
 import { Card } from "~/components/ui/card";
@@ -19,7 +19,7 @@ type Props = {
 
 const TotalRevenue = ({ revenue, revenueImprovement, revenueData }: Props) => {
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-normal">Ingresos totales</CardTitle>
       </CardHeader>
