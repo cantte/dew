@@ -48,7 +48,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
-    "drizzle-orm": "^0.30.10",
+    "drizzle-orm": "^0.31.0",
     "framer-motion": "^11.2.9",
     "jsbarcode": "^3.11.6",
     "lucide-react": "^0.379.0",
