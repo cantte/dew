@@ -1,7 +1,5 @@
 "use client";
 
-import { endOfMonth, startOfMonth } from "date-fns";
-import { useState } from "react";
 import {
   Tooltip as ChartTooltip,
   Line,
@@ -9,8 +7,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import SalesOverview from "~/app/(dashboard)/dashboard/sales/overview";
-import type DateRange from "~/components/date-range";
-import DateRangeFilter from "~/components/date-range-filter";
 import { Badge } from "~/components/ui/badge";
 import {
   Card,
@@ -25,7 +21,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { api } from "~/trpc/react";
 import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
@@ -34,8 +29,6 @@ type Props = {
 
   mostSoldProducts: RouterOutputs["sale"]["mostSoldProducts"];
   lowStockProducts: RouterOutputs["inventory"]["lowStock"];
-
-  storeId: string;
 };
 
 const Dashboard = ({
@@ -43,34 +36,13 @@ const Dashboard = ({
   report,
   mostSoldProducts,
   lowStockProducts,
-  storeId,
 }: Props) => {
-  const today = new Date();
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: startOfMonth(today),
-    to: endOfMonth(today),
-  });
-  const { data } = api.sale.overview.useQuery(
-    {
-      from: date?.from ?? today,
-      to: date?.to ?? today,
-      storeId: storeId,
-    },
-    {
-      initialData: overview,
-    },
-  );
-
-  console.log(report);
-
   return (
     <div className="space-y-4">
       <div className="space-y-2">
         <span className="font-semibold">Panel de control</span>
 
-        <DateRangeFilter selected={date} onSelectRange={setDate} />
-
-        <SalesOverview overview={data} />
+        <SalesOverview overview={overview} />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">

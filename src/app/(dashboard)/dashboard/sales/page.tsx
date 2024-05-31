@@ -1,4 +1,4 @@
-import { endOfDay, startOfDay } from "date-fns";
+import { endOfMonth, startOfMonth } from "date-fns";
 import { columns } from "~/app/(dashboard)/dashboard/sales/columns";
 import SalesDataTable from "~/app/(dashboard)/dashboard/sales/data-table";
 import SalesOverview from "~/app/(dashboard)/dashboard/sales/overview";
@@ -16,8 +16,9 @@ const SalesPage = async () => {
     storeId: store.id,
   });
 
-  const from = startOfDay(new Date());
-  const to = endOfDay(new Date());
+  const today = new Date();
+  const from = startOfMonth(today);
+  const to = endOfMonth(today);
   const overview = await api.sale.overview({
     storeId: store.id,
     from,

@@ -1,3 +1,4 @@
+import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
@@ -5,8 +6,8 @@ import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
 import AccountNav from "~/components/account-nav";
 import MobileNav from "~/components/mobile-nav";
 import SelectStore from "~/components/stores/select-store";
-import { ThemeToggle } from "~/components/theme-toggle";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 import { dashboardConfig } from "~/config/dashboard";
@@ -56,8 +57,15 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
 
           <nav className="flex items-center gap-3">
             <ul className="flex gap-2">
-              <li>
-                <ThemeToggle />
+              <li className="flex items-center">
+                <Button asChild size="sm" className="mb-0 h-7 gap-1">
+                  <Link href="/sales/create">
+                    <PlusCircle className="h-3.5 w-3.5" />
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                      Nueva venta
+                    </span>
+                  </Link>
+                </Button>
               </li>
 
               <li>
