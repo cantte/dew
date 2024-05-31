@@ -1,11 +1,11 @@
 import {
-    type ColumnDef,
-    getCoreRowModel,
-    getFacetedRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
+  type ColumnDef,
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 import DataTable from "~/components/data-table";
 import type { RouterOutputs } from "~/trpc/shared";
