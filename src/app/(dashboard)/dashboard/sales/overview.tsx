@@ -85,7 +85,8 @@ const SalesOverview = ({ overview }: Props) => {
             Información general de las ventas registradas en el mes de{" "}
             {Intl.DateTimeFormat("es-CO", {
               month: "long",
-            }).format(new Date())}.
+            }).format(new Date())}
+            .
           </span>
         </PopoverContent>
       </Popover>
