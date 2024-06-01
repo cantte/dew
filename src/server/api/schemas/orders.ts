@@ -1,0 +1,24 @@
+import { z } from "zod";
+
+export const createOrderItemInput = z.object({
+  productId: z.string().min(1).max(64),
+  quantity: z.coerce.number().min(0),
+  purchasePrice: z.coerce.number().min(0),
+  salePrice: z.coerce.number().min(0),
+  profit: z.coerce.number().min(0),
+});
+
+export const createOrderInput = z.object({
+  customerId: z.string().min(1).max(32),
+  storeId: z.string().min(1).max(36),
+  amount: z.coerce.number().min(0),
+  paymentMethod: z.enum([
+    "Cash",
+    "CreditCard",
+    "DebitCard",
+    "Transfer",
+  ] as const),
+  payment: z.coerce.number().min(0),
+
+  items: z.array(createOrderItemInput).min(1),
+});

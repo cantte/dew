@@ -72,17 +72,31 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
   };
 
   return (
-    <>
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <Command className="rounded-lg border shadow-md" shouldFilter={false}>
-          <CommandInput onValueChange={setQuery} />
-          <CommandList>
-            {!search.isFetching && products.length === 0 && (
-              <CommandEmpty>No se encontraron productos</CommandEmpty>
-            )}
+    <CommandDialog open={open} onOpenChange={setOpen}>
+      <Command className="rounded-lg border shadow-md" shouldFilter={false}>
+        <CommandInput onValueChange={setQuery} />
+        <CommandList>
+          {!search.isFetching && products.length === 0 && (
+            <CommandEmpty>No se encontraron productos</CommandEmpty>
+          )}
 
-            <CommandGroup heading="Sugerencias">
-              {suggestions.map((product) => (
+          <CommandGroup heading="Sugerencias">
+            {suggestions.map((product) => (
+              <CommandItem
+                key={product.id}
+                value={`${product.id}@${product.name}`}
+                onSelect={handleSelect}
+              >
+                {product.name}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          {products.length > 0 && (
+            <CommandGroup heading="Resultados">
+              {products.map((product) => (
                 <CommandItem
                   key={product.id}
                   value={`${product.id}@${product.name}`}
@@ -92,32 +106,16 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
                 </CommandItem>
               ))}
             </CommandGroup>
+          )}
 
-            <CommandSeparator />
-
-            {products.length > 0 && (
-              <CommandGroup heading="Resultados">
-                {products.map((product) => (
-                  <CommandItem
-                    key={product.id}
-                    value={`${product.id}@${product.name}`}
-                    onSelect={handleSelect}
-                  >
-                    {product.name}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            )}
-
-            {search.isFetching && (
-              <CommandLoading className="py-6 text-center text-sm">
-                Cargando datos...
-              </CommandLoading>
-            )}
-          </CommandList>
-        </Command>
-      </CommandDialog>
-    </>
+          {search.isFetching && (
+            <CommandLoading className="py-6 text-center text-sm">
+              Cargando datos...
+            </CommandLoading>
+          )}
+        </CommandList>
+      </Command>
+    </CommandDialog>
   );
 };
 

@@ -1,6 +1,5 @@
 "use client";
 
-import NextLink from "next/link";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "~/components/ui/button";
@@ -30,10 +29,10 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
                   : "text-muted-foreground",
               )}
             >
-              <NextLink href={item.href}>
+              <Link href={item.href}>
                 {item.icon && item.icon}
                 <span>{item.title}</span>
-              </NextLink>
+              </Link>
             </Button>
           );
         }

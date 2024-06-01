@@ -30,7 +30,7 @@ type Props = {
 };
 
 const UpdateSalePriceDialog = ({ productName, index }: Props) => {
-  const [open, onOpenChange] = useState(false);
+  const [open, setOpen] = useState(false);
   const form = useFormContext<FormValues>();
 
   const { setValue } = form;
@@ -49,7 +49,7 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
   }, [open, setValue, items]);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button variant="ghost" size="icon" type="button">
           <Pen className="h-4 w-4" />
@@ -80,7 +80,7 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
         />
 
         <DialogFooter>
-          <Button type="button" onClick={() => onOpenChange(false)}>
+          <Button type="button" onClick={() => setOpen(false)}>
             Actualizar
           </Button>
         </DialogFooter>

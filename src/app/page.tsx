@@ -32,15 +32,13 @@ export default async function Home() {
               </li>
 
               {session !== null && (
-                <>
-                  <li className="inline-flex items-center justify-center">
-                    <Button size="sm" asChild>
-                      <NextLink href="/dashboard">
-                        Ir al panel de control
-                      </NextLink>
-                    </Button>
-                  </li>
-                </>
+                <li className="inline-flex items-center justify-center">
+                  <Button size="sm" asChild>
+                    <NextLink href="/dashboard">
+                      Ir al panel de control
+                    </NextLink>
+                  </Button>
+                </li>
               )}
 
               {session === null && (

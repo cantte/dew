@@ -1,6 +1,6 @@
-import "~/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { type Metadata } from "next";
+import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { type ReactNode } from "react";
@@ -43,7 +43,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+type Props = {
+  children: ReactNode;
+};
+
+export default function RootLayout({ children }: Readonly<Props>) {
   return (
     <html lang="es">
       <body className={`font-sans ${inter.variable} bg-background antialiased`}>

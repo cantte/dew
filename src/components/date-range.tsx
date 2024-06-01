@@ -13,7 +13,7 @@ import {
 import { cn } from "~/lib/utils";
 
 type DateRangeFilterProps = HTMLAttributes<HTMLDivElement> & {
-  selected?: DateRange | undefined;
+  selected?: DateRange;
   onSelectRange?: SelectRangeEventHandler;
 };
 
