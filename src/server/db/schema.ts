@@ -252,6 +252,8 @@ export const orders = createTable(
       .default("cash"),
     payment: real("payment").notNull(),
     status: orderStatuses("status").notNull().default("pending"),
+    address: text("address"),
+    phone: varchar("phone", { length: 32 }),
     createdBy: varchar("created_by", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
