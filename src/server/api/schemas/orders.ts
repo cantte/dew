@@ -19,6 +19,8 @@ export const createOrderInput = z.object({
     "Transfer",
   ] as const),
   payment: z.coerce.number().min(0),
+  address: z.string().min(1).max(255),
+  phone: z.string().min(1).max(32),
 
   items: z.array(createOrderItemInput).min(1),
 });
