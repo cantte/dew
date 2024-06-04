@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { TypeOf } from "zod";
-import CheckoutStep from "~/app/(dashboard)/sales/create/checkout-step";
+import CheckoutStep from "~/app/(dashboard)/orders/create/checkout-step";
 import SelectCustomerStep from "~/app/(dashboard)/sales/create/select-customer-step";
 import SelectProductsStep from "~/app/(dashboard)/sales/create/select-products-step";
 import { Form } from "~/components/ui/form";
