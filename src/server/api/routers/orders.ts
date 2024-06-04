@@ -1,4 +1,6 @@
+import { desc, eq } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
+import { byStoreInput } from "~/server/api/schemas/common";
 import { createOrderInput } from "~/server/api/schemas/orders";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { orderItems, orders } from "~/server/db/schema";
@@ -26,4 +28,18 @@ export const ordersRouter = createTRPCRouter({
         await tx.insert(orderItems).values(items);
       });
     }),
+  list: protectedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return ctx.db.query.orders.findMany({
+      with: {
+        customer: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: [desc(orders.createdAt)],
+      where: eq(orders.storeId, input.storeId),
+    });
+  }),
 });
