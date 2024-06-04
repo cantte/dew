@@ -1,7 +1,6 @@
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
+import { columns } from "~/app/(dashboard)/dashboard/orders/columns";
+import OrdersDataTable from "~/app/(dashboard)/dashboard/orders/data-table";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
-import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
 const OrdersPage = async () => {
@@ -11,20 +10,13 @@ const OrdersPage = async () => {
     return <NotFoundStoreAlert />;
   }
 
+  const orders = await api.order.list({
+    storeId: store.id,
+  });
+
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="font-bold">Ordenes</span>
-
-        <Button asChild size="sm" className="h-7 gap-1">
-          <Link href="/orders/create">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Nueva orden
-            </span>
-          </Link>
-        </Button>
-      </div>
+      <OrdersDataTable columns={columns} data={orders} storeId={store.id} />
     </div>
   );
 };
