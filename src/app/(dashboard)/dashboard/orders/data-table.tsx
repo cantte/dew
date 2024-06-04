@@ -1,13 +1,13 @@
 "use client";
 
 import {
-    getCoreRowModel,
-    getFacetedRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
-    type ColumnDef,
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type ColumnDef,
 } from "@tanstack/react-table";
 import type { Order } from "~/app/(dashboard)/dashboard/orders/columns";
 import OrdersDataTableToolbar from "~/app/(dashboard)/dashboard/orders/data-table-toolbar";

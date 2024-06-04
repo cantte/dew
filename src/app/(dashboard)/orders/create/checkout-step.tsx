@@ -4,29 +4,29 @@ import type { TypeOf } from "zod";
 import UpdateSalePriceDialog from "~/app/(dashboard)/sales/create/update-sale-price.dialog";
 import { Button } from "~/components/ui/button";
 import {
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "~/components/ui/select";
 import { Separator } from "~/components/ui/separator";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "~/components/ui/table";
 import type { createOrderInput } from "~/server/api/schemas/orders";
 import { paymentMethods, type PaymentMethod } from "~/server/api/schemas/sales";
