@@ -77,7 +77,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
         stores: [storeId],
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createProduct.isSuccess]);
 
   const onSubmit = (data: FormValues) => {

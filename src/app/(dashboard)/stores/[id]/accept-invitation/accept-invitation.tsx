@@ -27,7 +27,7 @@ const AcceptStoreInvitation = ({ storeId, employeeId }: Props) => {
     if (linkEmployeeToStore.isSuccess) {
       router.push(`/dashboard`);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [linkEmployeeToStore.isSuccess]);
 
   return (

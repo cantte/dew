@@ -22,7 +22,7 @@ const EnableCashButton = ({ storeId }: Props) => {
     if (createCash.isSuccess) {
       router.refresh();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createCash.isSuccess]);
 
   return (

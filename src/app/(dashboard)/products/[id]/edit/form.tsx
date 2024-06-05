@@ -51,7 +51,7 @@ const EditProductForm = ({ product }: Props) => {
       });
       router.refresh();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateProduct.isSuccess]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {

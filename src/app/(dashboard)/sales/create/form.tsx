@@ -70,7 +70,7 @@ const CreateSaleForm = ({ storeId, suggestions }: Props) => {
       setSelectedProducts([]);
       goToStep("select-products");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createSale.isSuccess]);
 
   return (
