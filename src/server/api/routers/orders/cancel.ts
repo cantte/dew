@@ -14,13 +14,13 @@ const cancelOrder = async ({ ctx, input }: Options) => {
   await ctx.db.transaction(async (tx) => {
     await tx
       .update(orders)
-      .set({ state: "cancelled" })
+      .set({ status: "cancelled" })
       .where(eq(orders.id, input.id));
 
     await tx.insert(orderHistory).values({
       id: uuid(),
       orderId: input.id,
-      state: "cancelled",
+      status: "cancelled",
       createdBy: ctx.session.user.id,
     });
   });
