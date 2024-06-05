@@ -36,3 +36,11 @@ export const paymentMethods = [
   { value: "DebitCard", label: "Tarjeta de débito" },
   { value: "Transfer", label: "Transferencia" },
 ] as const;
+
+export const getSalesOverviewInput = z.object({
+  from: z.coerce.date(),
+  to: z.coerce.date(),
+  storeId: z.string().min(1).max(36),
+});
+
+export const findSaleInput = z.object({ code: z.string() });

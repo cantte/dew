@@ -19,3 +19,7 @@ export const linkToStoreInput = z.object({
   employeeId: z.string().min(1).max(36),
   storeId: z.string().min(1).max(36),
 });
+
+export const findEmployeeInput = z.object({
+  id: z.string().min(1).max(36),
+});

@@ -6,3 +6,7 @@ export const createCustomerInput = z.object({
   email: z.string().max(255).optional(),
   phone: z.string().max(32).optional(),
 });
+
+export const findCustomerInput = z.object({
+  id: z.string().min(1).max(32),
+});

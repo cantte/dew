@@ -27,3 +27,11 @@ export const linkToStoresInput = z.object({
 export const searchProductsInput = byStoreInput.extend({
   query: z.string().min(1).max(255),
 });
+
+export const byCodeProductInput = z.object({
+  code: z.string().min(1).max(255),
+});
+
+export const byProductIdInput = z.object({
+  id: z.string().uuid(),
+});

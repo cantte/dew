@@ -1,10 +1,9 @@
-import { initTRPC, TRPCError } from "@trpc/server";
+import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
-import { ratelimit } from "~/server/ratelimit";
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await getServerAuthSession();
@@ -16,7 +15,9 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   };
 };
 
-const t = initTRPC.context<typeof createTRPCContext>().create({
+export type TRPCContextInner = Awaited<ReturnType<typeof createTRPCContext>>;
+
+export const trpcContext = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
@@ -30,40 +31,6 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
   },
 });
 
-export const createCallerFactory = t.createCallerFactory;
-export const createTRPCRouter = t.router;
-
-const rateLimit = t.middleware(async ({ ctx, next }) => {
-  if (process.env.NODE_ENV === "development") {
-    return next();
-  }
-
-  const { success } = await ratelimit.limit(ctx.session?.user?.id ?? "anon");
-
-  if (!success) {
-    throw new TRPCError({
-      message: "Rate limit exceeded",
-      code: "BAD_REQUEST",
-    });
-  }
-
-  return next();
-});
-
-export const publicProcedure = t.procedure.use(rateLimit);
-
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-    },
-  });
-});
-
-export const protectedProcedure = t.procedure
-  .use(enforceUserIsAuthed)
-  .use(rateLimit);
+export const createCallerFactory = trpcContext.createCallerFactory;
+export const middleware = trpcContext.middleware;
+export const router = trpcContext.router;
