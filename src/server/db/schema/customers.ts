@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import { index, timestamp, varchar } from "drizzle-orm/pg-core";
+import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
 
 export const customers = createTable(
@@ -9,7 +10,9 @@ export const customers = createTable(
     name: varchar("name", { length: 128 }).notNull(),
     email: varchar("email", { length: 255 }),
     phone: varchar("phone", { length: 32 }),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
