@@ -11,9 +11,7 @@ import { paymentMethods } from "~/server/api/schemas/sales";
 import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
-  sale: NonNullable<
-    RouterOutputs["sale"]["find"] | RouterOutputs["sale"]["findPublic"]
-  >;
+  sale: NonNullable<RouterOutputs["sale"]["find"]>;
 };
 
 const SaleDetail = ({ sale }: Props) => {
