@@ -32,6 +32,11 @@ const linkProductToStores = async ({ ctx, input }: Options) => {
     const deletedStores = storeIds.filter(
       (storeId) => !input.stores.includes(storeId),
     );
+
+    if (deletedStores.length === 0) {
+      return;
+    }
+
     await tx
       .delete(inventory)
       .where(
