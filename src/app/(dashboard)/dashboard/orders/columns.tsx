@@ -2,6 +2,7 @@
 
 import { type ColumnDef } from "@tanstack/react-table";
 import { Badge } from "~/components/ui/badge";
+import { orderStatus } from "~/constants";
 import { paymentMethods } from "~/server/api/schemas/sales";
 import type { RouterOutputs } from "~/trpc/shared";
 
@@ -64,7 +65,19 @@ export const columns: ColumnDef<Order>[] = [
     accessorKey: "status",
     header: "Estado",
     cell: ({ row }) => {
-      return <Badge>{row.original.status}</Badge>;
+      const status = orderStatus.find(
+        (status) => status.id === row.original.status,
+      );
+
+      return (
+        <Badge
+          variant={
+            row.original.status === "cancelled" ? "destructive" : "default"
+          }
+        >
+          {status?.label ?? "Desconocido"}
+        </Badge>
+      );
     },
   },
   {
