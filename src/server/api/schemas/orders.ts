@@ -24,3 +24,7 @@ export const createOrderInput = z.object({
 
   items: z.array(createOrderItemInput).min(1),
 });
+
+export const byOrderIdInput = z.object({
+  id: z.string().uuid(),
+});
