@@ -9,8 +9,12 @@ export const cashRegisters = createTable(
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
     amount: real("amount").notNull(),
-    storeId: varchar("store_id", { length: 36 }).notNull(),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    storeId: varchar("store_id", { length: 36 })
+      .notNull()
+      .references(() => stores.id),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -41,8 +45,12 @@ export const cashRegisterTransactions = createTable(
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
     amount: real("amount").notNull(),
     type: varchar("type", { length: 32 }).notNull(),
-    cashRegisterId: varchar("cash_register_id", { length: 36 }).notNull(),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    cashRegisterId: varchar("cash_register_id", { length: 36 })
+      .notNull()
+      .references(() => cashRegisters.id),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
