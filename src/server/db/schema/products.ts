@@ -12,7 +12,9 @@ export const products = createTable(
     description: text("description"),
     purchasePrice: real("purchase_price").notNull(),
     salePrice: real("sale_price").notNull(),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
