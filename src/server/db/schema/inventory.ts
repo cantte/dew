@@ -7,8 +7,12 @@ import { stores } from "~/server/db/schema/stores";
 export const inventory = createTable(
   "inventory",
   {
-    storeId: varchar("store_id", { length: 36 }).notNull(),
-    productId: varchar("product_id", { length: 255 }).notNull(),
+    storeId: varchar("store_id", { length: 36 })
+      .notNull()
+      .references(() => stores.id),
+    productId: varchar("product_id", { length: 255 })
+      .notNull()
+      .references(() => products.id),
     stock: integer("stock").notNull(),
     quantity: integer("quantity").notNull().default(0),
   },
