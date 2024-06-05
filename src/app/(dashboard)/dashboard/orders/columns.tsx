@@ -1,6 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
+import OrderRowActions from "~/app/(dashboard)/dashboard/orders/row-actions";
 import { Badge } from "~/components/ui/badge";
 import { orderStatus } from "~/constants";
 import { paymentMethods } from "~/server/api/schemas/sales";
@@ -87,5 +88,11 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: "phone",
     header: "Teléfono",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return <OrderRowActions row={row} />;
+    },
   },
 ];
