@@ -25,6 +25,7 @@ const DeleteProductModal = ({ product }: Props) => {
       void utils.product.list.invalidate();
       setIsOpen(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteProduct.isSuccess]);
 
   return (

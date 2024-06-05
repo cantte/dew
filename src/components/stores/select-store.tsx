@@ -52,6 +52,7 @@ const SelectStore = ({ currentStore, stores }: Props) => {
     if (updateUserPreference.isSuccess) {
       router.refresh();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateUserPreference.isSuccess]);
 
   useEffect(() => {

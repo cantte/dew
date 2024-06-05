@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RotateCw, SquarePen } from "lucide-react";
 import { useEffect, useState } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
-import { ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
+import { type ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import {
@@ -70,6 +70,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
       void utils.inventory.list.invalidate();
       setIsOpen(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateProductQuantity.isSuccess]);
 
   return (

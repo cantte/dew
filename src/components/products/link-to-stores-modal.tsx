@@ -55,6 +55,7 @@ const LinkToStoresModal = ({ product }: Props) => {
       void utils.product.list.invalidate();
       setIsOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [linkToStores.isSuccess]);
 
   const { data: stores } = api.store.list.useQuery();
@@ -72,6 +73,7 @@ const LinkToStoresModal = ({ product }: Props) => {
     }
 
     setSelectedStores(productStores.map((store) => store.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productStores]);
 
   return (

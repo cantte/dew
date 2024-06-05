@@ -7,6 +7,7 @@ type Props<TData> = {
   table: Table<TData>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">

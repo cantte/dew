@@ -25,7 +25,7 @@ import { Textarea } from "~/components/ui/textarea";
 import { useToast } from "~/components/ui/use-toast";
 import { createProductInput } from "~/server/api/schemas/products";
 import { api } from "~/trpc/react";
-import { RouterOutputs } from "~/trpc/shared";
+import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
   storeId: string;
@@ -60,6 +60,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
     }
 
     setSelectedStores([currentStore.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStore]);
 
   const createProduct = api.product.create.useMutation();
@@ -76,6 +77,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
         stores: [storeId],
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createProduct.isSuccess]);
 
   const onSubmit = (data: FormValues) => {
@@ -104,6 +106,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
         message: "El código ya existe",
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exists, error]);
 
   return (

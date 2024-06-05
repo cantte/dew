@@ -1,17 +1,17 @@
 "use client";
 
 import {
-  ColumnDef,
-  type ColumnFiltersState,
   getCoreRowModel,
   getFacetedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type ColumnDef,
+  type ColumnFiltersState,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
+import { type ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
 import ProductsDataTableToolbar from "~/app/(dashboard)/dashboard/products/data-table-toolbar";
 import DataTable from "~/components/data-table";
 import DataTablePagination from "~/components/data-table-pagination";

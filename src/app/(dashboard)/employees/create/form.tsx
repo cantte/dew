@@ -56,6 +56,7 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
       });
       route.push("/dashboard/employees");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createEmployee.isSuccess]);
 
   const onSubmit = (data: FormValues) => {

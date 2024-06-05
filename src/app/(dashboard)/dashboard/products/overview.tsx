@@ -1,4 +1,3 @@
-import React from "react";
 import { Badge } from "~/components/ui/badge";
 import {
   Tooltip,
@@ -6,7 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { RouterOutputs } from "~/trpc/shared";
+import { type RouterOutputs } from "~/trpc/shared";
 
 type Props = {
   overview: NonNullable<RouterOutputs["product"]["overview"]>;
