@@ -11,8 +11,10 @@ export const employees = createTable(
     name: varchar("name", { length: 128 }).notNull(),
     email: varchar("email", { length: 255 }).notNull(),
     phone: varchar("phone", { length: 32 }),
-    userId: varchar("user_id", { length: 255 }),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).references(() => users.id),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -31,8 +33,12 @@ export const employeeRelations = relations(employees, ({ many, one }) => ({
 export const employeeStore = createTable(
   "employee_store",
   {
-    employeeId: varchar("employee_id", { length: 36 }).notNull(),
-    storeId: varchar("store_id", { length: 36 }).notNull(),
+    employeeId: varchar("employee_id", { length: 36 })
+      .notNull()
+      .references(() => employees.id),
+    storeId: varchar("store_id", { length: 36 })
+      .notNull()
+      .references(() => stores.id),
   },
   (employeeStore) => ({
     compoundKey: primaryKey({
