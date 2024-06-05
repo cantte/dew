@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import {
-    index,
-    integer,
-    pgEnum,
-    real,
-    text,
-    timestamp,
-    varchar,
+  index,
+  integer,
+  pgEnum,
+  real,
+  text,
+  timestamp,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { createTable } from "~/server/db/schema/base";
 import { customers } from "~/server/db/schema/customers";
@@ -90,3 +90,22 @@ export const orderItemsRelations = relations(orderItems, ({ one }) => ({
     references: [products.id],
   }),
 }));
+
+export const orderHistory = createTable(
+  "order_history",
+  {
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    orderId: varchar("order_id", { length: 36 }).notNull(),
+    status: orderStatuses("status").notNull(),
+    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (orderHistory) => ({
+    orderIdIdx: index("order_history_order_id_idx").on(orderHistory.orderId),
+    createdByIdx: index("order_history_created_by_idx").on(
+      orderHistory.createdBy,
+    ),
+  }),
+);
