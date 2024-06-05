@@ -11,7 +11,9 @@ export const stores = createTable(
     name: varchar("name", { length: 128 }).notNull(),
     address: text("address"),
     phone: varchar("phone", { length: 32 }),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
