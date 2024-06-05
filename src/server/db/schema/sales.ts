@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { index, integer, real, timestamp, varchar } from "drizzle-orm/pg-core";
+import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
 import { customers } from "~/server/db/schema/customers";
 import { products } from "~/server/db/schema/products";
@@ -9,14 +10,20 @@ export const sales = createTable(
   "sale",
   {
     code: varchar("code", { length: 36 }).notNull().primaryKey(),
-    customerId: varchar("customer_id", { length: 32 }).notNull(),
+    customerId: varchar("customer_id", { length: 32 })
+      .notNull()
+      .references(() => customers.id),
     amount: real("amount").notNull(),
     paymentMethod: varchar("payment_method", { length: 32 })
       .notNull()
       .default("cash"),
     payment: real("payment").notNull(),
-    storeId: varchar("store_id", { length: 36 }).notNull(),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    storeId: varchar("store_id", { length: 36 })
+      .notNull()
+      .references(() => stores.id),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -41,13 +48,19 @@ export const saleItems = createTable(
   "sale_item",
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
-    saleCode: varchar("sale_code", { length: 36 }).notNull(),
-    productId: varchar("product_id", { length: 255 }).notNull(),
+    saleCode: varchar("sale_code", { length: 36 })
+      .notNull()
+      .references(() => sales.code),
+    productId: varchar("product_id", { length: 255 })
+      .notNull()
+      .references(() => products.id),
     quantity: integer("quantity").notNull(),
     purchasePrice: real("purchase_price").notNull(),
     salePrice: real("sale_price").notNull(),
     profit: real("profit").notNull(),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
