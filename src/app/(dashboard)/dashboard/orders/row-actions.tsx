@@ -29,12 +29,13 @@ const OrderRowActions = ({ row }: Props) => {
 
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>Ver detalles</DropdownMenuItem>
-        {row.original.status !== "cancelled" && (
-          <>
-            <DropdownMenuItem>Actualizar estado</DropdownMenuItem>
-            <ConfirmCancelOrderDialog order={row.original} />
-          </>
-        )}
+        {row.original.status !== "cancelled" &&
+          row.original.status !== "delivered" && (
+            <>
+              <DropdownMenuItem>Actualizar estado</DropdownMenuItem>
+              <ConfirmCancelOrderDialog order={row.original} />
+            </>
+          )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
