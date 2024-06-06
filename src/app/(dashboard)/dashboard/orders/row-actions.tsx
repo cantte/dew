@@ -2,6 +2,7 @@ import type { Row } from "@tanstack/react-table";
 import { Ellipsis } from "lucide-react";
 import type { Order } from "~/app/(dashboard)/dashboard/orders/columns";
 import ConfirmCancelOrderDialog from "~/components/orders/confirm-cancel.dialog";
+import ConfirmMoveOrderStatusDialog from "~/components/orders/confirm-move-status.dialog";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -32,7 +33,7 @@ const OrderRowActions = ({ row }: Props) => {
         {row.original.status !== "cancelled" &&
           row.original.status !== "delivered" && (
             <>
-              <DropdownMenuItem>Actualizar estado</DropdownMenuItem>
+              <ConfirmMoveOrderStatusDialog order={row.original} />
               <ConfirmCancelOrderDialog order={row.original} />
             </>
           )}
