@@ -1,11 +1,11 @@
 import { Separator } from "~/components/ui/separator";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "~/components/ui/table";
 import { paymentMethods } from "~/server/api/schemas/sales";
 import type { RouterOutputs } from "~/trpc/shared";

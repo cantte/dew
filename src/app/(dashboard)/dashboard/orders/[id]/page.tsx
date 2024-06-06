@@ -3,10 +3,10 @@ import BackButton from "~/components/back-button";
 import OrderDetail from "~/components/orders/detail";
 import { Badge } from "~/components/ui/badge";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { orderStatus } from "~/constants";
 import { api } from "~/trpc/server";
