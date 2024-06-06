@@ -1,9 +1,10 @@
 "use client";
 
-import { History, RotateCw } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ConfirmDialog from "~/components/confirm-dialog";
+import OrderHistoryDialog from "~/components/orders/history.dialog";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import {
@@ -197,14 +198,11 @@ const OrderDetail = ({ order }: Props) => {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <Button
-                variant="outline"
-                className="w-full"
+              <OrderHistoryDialog
+                order={order}
                 disabled={moveToNextStatus.isPending}
-              >
-                <History className="mr-2 h-4 w-4" />
-                Ver historial
-              </Button>
+              />
+
               {order.status !== "cancelled" && order.status !== "delivered" && (
                 <Button
                   className="w-full"
