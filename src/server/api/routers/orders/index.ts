@@ -4,6 +4,7 @@ import createOrder from "~/server/api/routers/orders/create";
 import findOrder from "~/server/api/routers/orders/find";
 import listOrders from "~/server/api/routers/orders/list";
 import moveOrderToNextStatus from "~/server/api/routers/orders/moveToNextStatus";
+import searchOrderHistory from "~/server/api/routers/orders/searchHistory";
 import { byStoreInput } from "~/server/api/schemas/common";
 import { byOrderIdInput, createOrderInput } from "~/server/api/schemas/orders";
 import { router } from "~/server/api/trpc";
@@ -30,6 +31,11 @@ const ordersRouter = router({
   find: authedProcedure.input(byOrderIdInput).query(async ({ ctx, input }) => {
     return await findOrder({ ctx, input });
   }),
+  history: authedProcedure
+    .input(byOrderIdInput)
+    .query(async ({ ctx, input }) => {
+      return await searchOrderHistory({ ctx, input });
+    }),
 });
 
 export default ordersRouter;
