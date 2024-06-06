@@ -117,8 +117,8 @@ importers:
         specifier: ^3.11.6
         version: 3.11.6
       lucide-react:
-        specifier: ^0.383.0
-        version: 0.383.0(react@18.3.1)
+        specifier: ^0.390.0
+        version: 0.390.0(react@18.3.1)
       next:
         specifier: ^14.2.3
         version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -205,8 +205,8 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2
       drizzle-kit:
-        specifier: ^0.22.2
-        version: 0.22.2
+        specifier: ^0.22.3
+        version: 0.22.3
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -2374,8 +2374,8 @@ packages:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
 
-  drizzle-kit@0.22.2:
-    resolution: {integrity: sha512-dxluXlhT1N9bpj2eZR3N/z3u4H0PbbrBYgyouIobFF25tOt2Buy1abx26Jii96qcYV0JgxjhnuV+FBcgR0Xa0w==}
+  drizzle-kit@0.22.3:
+    resolution: {integrity: sha512-SWxH9rTE5G6SjKh9ckiEWAvzZ2ZElntQT+Vn4K/jPgSOESKXPlwNby2bTIVutvtBQzo40S9XnyZ7iR6ObvpDHA==}
     hasBin: true
 
   drizzle-orm@0.31.1:
@@ -3190,8 +3190,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-react@0.383.0:
-    resolution: {integrity: sha512-13xlG0CQCJtzjSQYwwJ3WRqMHtRj3EXmLlorrARt7y+IHnxUCp3XyFNL1DfaGySWxHObDvnu1u1dV+0VMKHUSg==}
+  lucide-react@0.390.0:
+    resolution: {integrity: sha512-APqbfEcVuHnZbiy3E97gYWLeBdkE4e6NbY6AuVETZDZVn/bQCHYUoHyxcUHyvRopfPOHhFUEvDyyQzHwM+S9/w==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
 
@@ -6376,7 +6376,7 @@ snapshots:
 
   dotenv@16.3.1: {}
 
-  drizzle-kit@0.22.2:
+  drizzle-kit@0.22.3:
     dependencies:
       '@esbuild-kit/esm-loader': 2.6.5
       esbuild: 0.19.11
@@ -7310,7 +7310,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.383.0(react@18.3.1):
+  lucide-react@0.390.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
