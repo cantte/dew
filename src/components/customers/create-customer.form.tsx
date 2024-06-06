@@ -40,6 +40,7 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
       form.reset();
       onCreate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createCustomer.isSuccess]);
 
   const onSubmit = (data: CreateCustomerFormValues) => {

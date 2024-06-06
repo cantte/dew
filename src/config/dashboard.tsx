@@ -1,13 +1,13 @@
 import {
+  Box,
   Coins,
   Home,
+  Package,
   ShoppingBasket,
   ShoppingCart,
   Store,
   Users,
-  Box,
 } from "lucide-react";
-import React from "react";
 import { type SidebarNavItem } from "~/types/nav";
 
 type DashboardConfig = {
@@ -35,6 +35,11 @@ export const dashboardConfig: DashboardConfig = {
       title: "Ventas",
       href: "/dashboard/sales",
       icon: <ShoppingCart className="h-4 w-4" />,
+    },
+    {
+      title: "Ordenes",
+      href: "/dashboard/orders",
+      icon: <Package className="h-4 w-4" />,
     },
     {
       title: "Caja registradora",

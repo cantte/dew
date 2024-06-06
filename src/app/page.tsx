@@ -3,10 +3,8 @@ import NextLink from "next/link";
 import Footer from "~/components/footer";
 import FeaturesSection from "~/components/home/features";
 import SignInButton from "~/components/signin-button";
-import { ThemeToggle } from "~/components/theme-toggle";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function Home() {
@@ -23,14 +21,6 @@ export default async function Home() {
 
           <nav className="flex items-center gap-3">
             <ul className="flex gap-2">
-              <li>
-                <ThemeToggle />
-              </li>
-
-              <li>
-                <Separator orientation="vertical" />
-              </li>
-
               {session !== null && (
                 <li className="inline-flex items-center justify-center">
                   <Button size="sm" asChild>

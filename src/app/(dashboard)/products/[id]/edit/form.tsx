@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
 import { Button } from "~/components/ui/button";
 import {
@@ -51,6 +51,7 @@ const EditProductForm = ({ product }: Props) => {
       });
       router.refresh();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateProduct.isSuccess]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {

@@ -1,45 +1,51 @@
-import { Button } from "~/components/ui/button";
+import { RotateCw } from "lucide-react";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "~/components/ui/dialog";
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "~/components/ui/alert-dialog";
+import { Button } from "~/components/ui/button";
 
 type Props = {
   isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
   title: string;
   description: string;
+  pending?: boolean;
+
+  onClose: () => void;
+  onConfirm: () => void;
 };
 
 const ConfirmDialog = ({
   isOpen,
-  onClose,
-  onConfirm,
   title,
   description,
+  pending,
+  onClose,
+  onConfirm,
 }: Props) => {
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+        </AlertDialogHeader>
 
-        <DialogDescription>{description}</DialogDescription>
+        <AlertDialogDescription>{description}</AlertDialogDescription>
 
-        <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>
-            Cancelar
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={pending}>Cancelar</AlertDialogCancel>
+          <Button onClick={onConfirm} disabled={pending}>
+            {pending && <RotateCw className="mr-2 h-4 w-4 animate-spin" />}
+            Confirmar
           </Button>
-          <Button onClick={onConfirm}>Confirmar</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 

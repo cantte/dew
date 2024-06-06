@@ -1,0 +1,92 @@
+import authedProcedure from "~/server/api/procedures/authed";
+import createProduct from "~/server/api/routers/products/create";
+import deleteProduct from "~/server/api/routers/products/delete";
+import existsProduct from "~/server/api/routers/products/exists";
+import findProduct from "~/server/api/routers/products/find";
+import findProductById from "~/server/api/routers/products/findById";
+import findProductForSale from "~/server/api/routers/products/findForSale";
+import linkProductToStores from "~/server/api/routers/products/linkToStores";
+import listProducts from "~/server/api/routers/products/list";
+import productsOverview from "~/server/api/routers/products/overview";
+import searchProducts from "~/server/api/routers/products/search";
+import listProductStores from "~/server/api/routers/products/stores";
+import getProductSuggestions from "~/server/api/routers/products/suggestions";
+import updateProduct from "~/server/api/routers/products/update";
+import { byStoreInput } from "~/server/api/schemas/common";
+import {
+  byCodeProductInput,
+  byProductIdInput,
+  createProductInput,
+  linkToStoresInput,
+  searchProductsInput,
+  updateProductInput,
+} from "~/server/api/schemas/products";
+import { router } from "~/server/api/trpc";
+
+const productsRouter = router({
+  create: authedProcedure
+    .input(createProductInput)
+    .mutation(async ({ ctx, input }) => {
+      await createProduct({ ctx, input });
+    }),
+  list: authedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return await listProducts({ ctx, input });
+  }),
+  exists: authedProcedure
+    .input(byCodeProductInput)
+    .query(async ({ ctx, input }) => {
+      return await existsProduct({ ctx, input });
+    }),
+  find: authedProcedure
+    .input(byCodeProductInput)
+    .query(async ({ ctx, input }) => {
+      return await findProduct({ ctx, input });
+    }),
+  findById: authedProcedure
+    .input(byProductIdInput)
+    .query(async ({ ctx, input }) => {
+      return await findProductById({ ctx, input });
+    }),
+  findForSale: authedProcedure
+    .input(byCodeProductInput)
+    .query(async ({ ctx, input }) => {
+      return await findProductForSale({ ctx, input });
+    }),
+  update: authedProcedure
+    .input(updateProductInput)
+    .mutation(async ({ ctx, input }) => {
+      await updateProduct({ ctx, input });
+    }),
+  delete: authedProcedure
+    .input(byProductIdInput)
+    .mutation(async ({ ctx, input }) => {
+      await deleteProduct({ ctx, input });
+    }),
+  linkToStores: authedProcedure
+    .input(linkToStoresInput)
+    .mutation(async ({ ctx, input }) => {
+      await linkProductToStores({ ctx, input });
+    }),
+  stores: authedProcedure
+    .input(byProductIdInput)
+    .query(async ({ ctx, input }) => {
+      return await listProductStores({ ctx, input });
+    }),
+  overview: authedProcedure
+    .input(byStoreInput)
+    .query(async ({ ctx, input }) => {
+      return await productsOverview({ ctx, input });
+    }),
+  search: authedProcedure
+    .input(searchProductsInput)
+    .query(async ({ ctx, input }) => {
+      return await searchProducts({ ctx, input });
+    }),
+  suggestions: authedProcedure
+    .input(byStoreInput)
+    .query(async ({ ctx, input }) => {
+      return await getProductSuggestions({ ctx, input });
+    }),
+});
+
+export default productsRouter;

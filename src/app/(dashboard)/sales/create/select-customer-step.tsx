@@ -61,6 +61,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
       form.setValue("customerId", customer.id);
       form.clearErrors("customerId");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customer, findCustomerError]);
 
   const handleContinueWithoutCustomer = () => {

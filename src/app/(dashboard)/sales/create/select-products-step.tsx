@@ -95,6 +95,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
     resetProduct();
     form.setValue("items", items);
     calculateAmount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, findProductError, productSelected]);
 
   const calculateAmount = () => {
