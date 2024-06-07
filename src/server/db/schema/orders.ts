@@ -1,11 +1,14 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  date,
   index,
   integer,
   pgEnum,
   real,
   text,
   timestamp,
+  unique,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
@@ -121,6 +124,35 @@ export const orderHistory = createTable(
     orderIdIdx: index("order_history_order_id_idx").on(orderHistory.orderId),
     createdByIdx: index("order_history_created_by_idx").on(
       orderHistory.createdBy,
+    ),
+  }),
+);
+
+export const orderSummary = createTable(
+  "order_summary",
+  {
+    id: uuid("id").notNull().primaryKey(),
+    date: date("date")
+      .notNull()
+      .default(sql`CURRENT_DATE`),
+    amount: real("amount").notNull(),
+    profit: real("profit").notNull(),
+    sales: integer("sales").notNull(),
+    customers: integer("customers").notNull(),
+    products: integer("products").notNull(),
+    storeId: varchar("store_id", { length: 36 })
+      .notNull()
+      .references(() => stores.id),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+  },
+  (orderSummary) => ({
+    storeIdIdx: index("order_summary_store_id_idx").on(orderSummary.storeId),
+    uniqueDateStoreId: unique("order_summary_date_store_id_unique").on(
+      orderSummary.date,
+      orderSummary.storeId,
     ),
   }),
 );
