@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { upsertSaleSummaryInput } from "~/server/api/schemas/sales";
-import { saleSummary } from "~/server/db/schema";
+import { saleSummary } from "~/server/db/schema/sales";
 
 type DbTransaction = Parameters<
   Parameters<TRPCAuthedContext["db"]["transaction"]>[0]
