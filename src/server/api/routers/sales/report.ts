@@ -1,9 +1,9 @@
 import { subMonths } from "date-fns";
-import { and, between, eq, sql, sum } from "drizzle-orm";
+import { and, between, eq, sum } from "drizzle-orm";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { getSalesOverviewInput } from "~/server/api/schemas/sales";
-import { saleItems, sales } from "~/server/db/schema";
+import { saleSummary } from "~/server/db/schema";
 
 type Options = {
   ctx: TRPCAuthedContext;
@@ -11,28 +11,19 @@ type Options = {
 };
 
 const generateSalesReport = async ({ ctx, input }: Options) => {
-  const [totalAmountResult] = await ctx.db
+  const [summary] = await ctx.db
     .select({
-      totalAmount: sum(sales.amount),
+      amount: sum(saleSummary.amount),
+      customers: sum(saleSummary.customers),
+      sales: sum(saleSummary.sales),
+      products: sum(saleSummary.products),
+      profit: sum(saleSummary.profit),
     })
-    .from(sales)
+    .from(saleSummary)
     .where(
       and(
-        eq(sales.storeId, input.storeId),
-        between(sales.createdAt, input.from, input.to),
-      ),
-    );
-
-  const [totalProfitResult] = await ctx.db
-    .select({
-      totalProfit: sum(saleItems.profit),
-    })
-    .from(saleItems)
-    .innerJoin(sales, eq(sales.code, saleItems.saleCode))
-    .where(
-      and(
-        eq(sales.storeId, input.storeId),
-        between(sales.createdAt, input.from, input.to),
+        eq(saleSummary.storeId, input.storeId),
+        between(saleSummary.createdAt, input.from, input.to),
       ),
     );
 
@@ -40,39 +31,26 @@ const generateSalesReport = async ({ ctx, input }: Options) => {
   const previousFrom = subMonths(input.from.getTime(), 1);
   const previousTo = subMonths(input.to.getTime(), 1);
 
-  const [previousTotalAmountResult] = await ctx.db
+  const [previousSummary] = await ctx.db
     .select({
-      totalAmount: sum(sales.amount),
+      amount: sum(saleSummary.amount),
+      customers: sum(saleSummary.customers),
+      sales: sum(saleSummary.sales),
+      products: sum(saleSummary.products),
+      profit: sum(saleSummary.profit),
     })
-    .from(sales)
+    .from(saleSummary)
     .where(
       and(
-        eq(sales.storeId, input.storeId),
-        between(sales.createdAt, previousFrom, previousTo),
+        eq(saleSummary.storeId, input.storeId),
+        between(saleSummary.createdAt, previousFrom, previousTo),
       ),
     );
 
-  const [previousTotalProfitResult] = await ctx.db
-    .select({
-      totalProfit: sum(saleItems.profit),
-    })
-    .from(saleItems)
-    .innerJoin(sales, eq(sales.code, saleItems.saleCode))
-    .where(
-      and(
-        eq(sales.storeId, input.storeId),
-        between(sales.createdAt, previousFrom, previousTo),
-      ),
-    );
-
-  const totalAmount = Number(totalAmountResult?.totalAmount ?? 0);
-  const totalProfit = Number(totalProfitResult?.totalProfit ?? 0);
-  const previousTotalAmount = Number(
-    previousTotalAmountResult?.totalAmount ?? 0,
-  );
-  const previousTotalProfit = Number(
-    previousTotalProfitResult?.totalProfit ?? 0,
-  );
+  const totalAmount = Number(summary?.amount ?? 0);
+  const totalProfit = Number(summary?.profit ?? 0);
+  const previousTotalAmount = Number(previousSummary?.amount ?? 0);
+  const previousTotalProfit = Number(previousSummary?.profit ?? 0);
 
   // Calculate the improvement in percentage
   const amountImprovement =
@@ -83,46 +61,37 @@ const generateSalesReport = async ({ ctx, input }: Options) => {
   // Get totalAmount and totalProfit per day
   const totalAmountPerDay = await ctx.db
     .select({
-      date: sql`date(${sales.createdAt})`,
-      totalAmount: sum(sales.amount),
+      date: saleSummary.date,
+      total: saleSummary.amount,
     })
-    .from(sales)
+    .from(saleSummary)
     .where(
       and(
-        eq(sales.storeId, input.storeId),
-        between(sales.createdAt, input.from, input.to),
+        eq(saleSummary.storeId, input.storeId),
+        between(saleSummary.createdAt, input.from, input.to),
       ),
-    )
-    .groupBy(sql`date(${sales.createdAt})`);
+    );
 
   const totalProfitPerDay = await ctx.db
     .select({
-      date: sql`date(${saleItems.createdAt})`,
-      totalProfit: sum(saleItems.profit),
+      date: saleSummary.date,
+      total: saleSummary.profit,
     })
-    .from(saleItems)
-    .innerJoin(sales, eq(sales.code, saleItems.saleCode))
+    .from(saleSummary)
     .where(
       and(
-        eq(sales.storeId, input.storeId),
-        between(sales.createdAt, input.from, input.to),
+        eq(saleSummary.storeId, input.storeId),
+        between(saleSummary.createdAt, input.from, input.to),
       ),
-    )
-    .groupBy(sql`date(${saleItems.createdAt})`);
+    );
 
   return {
     totalAmount,
     totalProfit,
     amountImprovement,
     profitImprovement,
-    totalAmountPerDay: totalAmountPerDay.map((day) => ({
-      total: Number(day.totalAmount),
-      date: day.date as string,
-    })),
-    totalProfitPerDay: totalProfitPerDay.map((day) => ({
-      total: Number(day.totalProfit),
-      date: day.date as string,
-    })),
+    totalAmountPerDay,
+    totalProfitPerDay,
   };
 };
 
