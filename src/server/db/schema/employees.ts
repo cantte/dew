@@ -1,5 +1,11 @@
 import { relations, sql } from "drizzle-orm";
-import { index, primaryKey, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  index,
+  primaryKey,
+  timestamp,
+  unique,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
 import { stores } from "~/server/db/schema/stores";
@@ -22,6 +28,7 @@ export const employees = createTable(
   },
   (employee) => ({
     createdByIdx: index("employee_created_by_idx").on(employee.createdBy),
+    uniqueEmail: unique("employee_email_unique").on(employee.email),
   }),
 );
 
