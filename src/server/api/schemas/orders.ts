@@ -28,3 +28,11 @@ export const createOrderInput = z.object({
 export const byOrderIdInput = z.object({
   id: z.string().uuid(),
 });
+
+export const upsertOrderSummaryInput = z.object({
+  date: z.date(),
+  amount: z.coerce.number().min(0),
+  profit: z.coerce.number().min(0),
+  products: z.coerce.number().min(0),
+  storeId: z.string().uuid(),
+});
