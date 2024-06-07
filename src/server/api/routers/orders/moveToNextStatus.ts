@@ -41,7 +41,7 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       createdBy: ctx.session.user.id,
     });
 
-    if (order.status === "delivered") {
+    if (nextStatus === "delivered") {
       const items = await tx.query.orderItems.findMany({
         where: eq(orderItems.orderId, input.id),
       });
