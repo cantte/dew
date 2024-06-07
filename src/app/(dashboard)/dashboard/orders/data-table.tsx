@@ -12,6 +12,7 @@ import {
 import type { Order } from "~/app/(dashboard)/dashboard/orders/columns";
 import OrdersDataTableToolbar from "~/app/(dashboard)/dashboard/orders/data-table-toolbar";
 import DataTable from "~/components/data-table";
+import DataTablePagination from "~/components/data-table-pagination";
 import { api } from "~/trpc/react";
 
 type Props<TValue> = {
@@ -44,6 +45,7 @@ const OrdersDataTable = <TValue,>({
     <div className="space-y-2">
       <OrdersDataTableToolbar table={table} />
       <DataTable table={table} />
+      <DataTablePagination table={table} />
     </div>
   );
 };
