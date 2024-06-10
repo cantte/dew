@@ -12,13 +12,13 @@ const DashboardPage = async () => {
   const from = startOfMonth(new Date());
   const to = endOfMonth(new Date());
 
-  const overview = await api.sale.overview({
+  const saleOverview = await api.sale.overview({
     from,
     to,
     storeId: store.id,
   });
 
-  const report = await api.sale.report({
+  const salesReport = await api.sale.report({
     from,
     to,
     storeId: store.id,
@@ -32,8 +32,8 @@ const DashboardPage = async () => {
   return (
     <main>
       <Dashboard
-        overview={overview}
-        report={report}
+        overview={saleOverview}
+        report={salesReport}
         mostSoldProducts={mostSoldProducts}
         lowStockProducts={lowStockProducts}
       />
