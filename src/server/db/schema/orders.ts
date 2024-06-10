@@ -137,7 +137,7 @@ export const orderSummary = createTable(
       .default(sql`CURRENT_DATE`),
     amount: real("amount").notNull(),
     profit: real("profit").notNull(),
-    sales: integer("sales").notNull(),
+    orders: integer("orders").notNull(),
     customers: integer("customers").notNull(),
     products: integer("products").notNull(),
     storeId: varchar("store_id", { length: 36 })

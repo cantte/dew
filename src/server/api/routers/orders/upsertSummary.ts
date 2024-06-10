@@ -21,7 +21,7 @@ const upsertOrderSummary = async ({ tx, input }: Options) => {
       ...input,
       id: uuid(),
       customers: 1,
-      sales: 1,
+      orders: 1,
       date: input.date.toISOString().split("T")[0],
     })
     .onConflictDoUpdate({
@@ -31,7 +31,7 @@ const upsertOrderSummary = async ({ tx, input }: Options) => {
         profit: sql`${orderSummary.profit} + EXCLUDED.profit`,
         products: sql`${orderSummary.products} + EXCLUDED.products`,
         customers: sql`1 + EXCLUDED.customers`,
-        sales: sql`1 + EXCLUDED.sales`,
+        orders: sql`1 + EXCLUDED.orders`,
       },
     });
 };
