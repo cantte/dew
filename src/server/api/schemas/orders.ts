@@ -36,3 +36,9 @@ export const upsertOrderSummaryInput = z.object({
   products: z.coerce.number().min(0),
   storeId: z.string().uuid(),
 });
+
+export const getOrderOverviewInput = z.object({
+  storeId: z.string().uuid(),
+  from: z.date(),
+  to: z.date(),
+});
