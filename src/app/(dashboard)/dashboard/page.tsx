@@ -24,6 +24,12 @@ const DashboardPage = async () => {
     storeId: store.id,
   });
 
+  const ordersReport = await api.order.report({
+    from,
+    to,
+    storeId: store.id,
+  });
+
   const mostSoldProducts = await api.sale.mostSoldProducts();
   const lowStockProducts = await api.inventory.lowStock({
     storeId: store.id,
@@ -32,8 +38,9 @@ const DashboardPage = async () => {
   return (
     <main>
       <Dashboard
-        overview={saleOverview}
-        report={salesReport}
+        saleOverview={saleOverview}
+        salesReport={salesReport}
+        ordersReport={ordersReport}
         mostSoldProducts={mostSoldProducts}
         lowStockProducts={lowStockProducts}
       />
