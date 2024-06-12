@@ -1,5 +1,14 @@
 import { relations, sql } from "drizzle-orm";
-import { index, integer, real, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  date,
+  index,
+  integer,
+  real,
+  timestamp,
+  unique,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
 import { customers } from "~/server/db/schema/customers";
@@ -80,3 +89,32 @@ export const saleItemsRelations = relations(saleItems, ({ one }) => ({
     references: [products.id],
   }),
 }));
+
+export const saleSummary = createTable(
+  "sale_summary",
+  {
+    id: uuid("id").notNull().primaryKey(),
+    date: date("date")
+      .notNull()
+      .default(sql`CURRENT_DATE`),
+    amount: real("amount").notNull(),
+    profit: real("profit").notNull(),
+    sales: integer("sales").notNull(),
+    customers: integer("customers").notNull(),
+    products: integer("products").notNull(),
+    storeId: varchar("store_id", { length: 36 })
+      .notNull()
+      .references(() => stores.id),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+  },
+  (saleSummary) => ({
+    storeIdIdx: index("sale_summary_store_id_idx").on(saleSummary.storeId),
+    uniqueDateStoreId: unique("sale_summary_date_store_id_unique").on(
+      saleSummary.date,
+      saleSummary.storeId,
+    ),
+  }),
+);

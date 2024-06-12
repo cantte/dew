@@ -1,3 +1,4 @@
+import { endOfMonth, startOfMonth } from "date-fns";
 import { Info } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
 import {
@@ -11,13 +12,24 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import type { RouterOutputs } from "~/trpc/shared";
+import { api } from "~/trpc/server";
 
-type Props = {
-  overview: NonNullable<RouterOutputs["sale"]["overview"]>;
-};
+const SalesOverview = async () => {
+  const store = await api.store.findCurrent();
+  if (!store) {
+    return null;
+  }
 
-const SalesOverview = ({ overview }: Props) => {
+  const today = new Date();
+  const from = startOfMonth(today);
+  const to = endOfMonth(today);
+
+  const overview = await api.sale.overview({
+    from,
+    to,
+    storeId: store.id,
+  });
+
   return (
     <div className="flex items-center space-x-4">
       <TooltipProvider>

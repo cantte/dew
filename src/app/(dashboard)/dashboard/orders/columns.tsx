@@ -80,6 +80,9 @@ export const columns: ColumnDef<Order>[] = [
         </Badge>
       );
     },
+    filterFn: (row, id, value: string) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "address",

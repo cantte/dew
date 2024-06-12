@@ -3,8 +3,9 @@ import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
 import { orderStatus } from "~/constants";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
+import upsertOrderSummary from "~/server/api/routers/orders/upsertSummary";
 import type { byOrderIdInput } from "~/server/api/schemas/orders";
-import { orderHistory, orders } from "~/server/db/schema";
+import { orderHistory, orderItems, orders } from "~/server/db/schema";
 
 type Options = {
   ctx: TRPCAuthedContext;
@@ -39,6 +40,22 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       status: nextStatus,
       createdBy: ctx.session.user.id,
     });
+
+    if (nextStatus === "delivered") {
+      const items = await tx.query.orderItems.findMany({
+        where: eq(orderItems.orderId, input.id),
+      });
+
+      const orderSummary = {
+        date: new Date(),
+        amount: order.amount,
+        profit: items.reduce((acc, item) => acc + item.profit, 0),
+        products: items.reduce((acc, item) => acc + item.quantity, 0),
+        storeId: order.storeId,
+      };
+
+      await upsertOrderSummary({ tx, input: orderSummary });
+    }
   });
 };
 

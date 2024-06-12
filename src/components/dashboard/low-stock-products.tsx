@@ -1,59 +1,20 @@
 import {
-  type ColumnDef,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import DataTable from "~/components/data-table";
-import type { RouterOutputs } from "~/trpc/shared";
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
+import { api } from "~/trpc/server";
 
-type Props = {
-  lowStockProducts: RouterOutputs["inventory"]["lowStock"];
-};
+const LowStockProducts = async () => {
+  const store = await api.store.findCurrent();
+  if (!store) {
+    return null;
+  }
 
-type LowStockProduct = RouterOutputs["inventory"]["lowStock"][number];
-
-const columns: ColumnDef<LowStockProduct>[] = [
-  {
-    header: "Producto",
-    accessorKey: "name",
-  },
-  {
-    header: "Cantidad",
-    accessorKey: "quantity",
-    cell: ({ row }) => {
-      return (
-        <span>
-          {Intl.NumberFormat("es-CO").format(+(row.original.quantity ?? 0))}
-        </span>
-      );
-    },
-  },
-  {
-    header: "Stock",
-    accessorKey: "stock",
-    cell: ({ row }) => {
-      return (
-        <span>
-          {Intl.NumberFormat("es-CO").format(+(row.original.stock ?? 0))}
-        </span>
-      );
-    },
-  },
-];
-
-const LowStockProducts = ({ lowStockProducts }: Props) => {
-  const table = useReactTable<LowStockProduct>({
-    data: lowStockProducts,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
+  const lowStockProducts = await api.inventory.lowStock({
+    storeId: store.id,
   });
 
   return (
@@ -64,7 +25,29 @@ const LowStockProducts = ({ lowStockProducts }: Props) => {
             Productos bajos en stock
           </span>
 
-          <DataTable table={table} />
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHeader>Producto</TableHeader>
+                <TableHeader>Cantidad</TableHeader>
+                <TableHeader>Stock</TableHeader>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {lowStockProducts.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>
+                    {Intl.NumberFormat("es-CO").format(product.quantity)}
+                  </TableCell>
+                  <TableCell>
+                    {Intl.NumberFormat("es-CO").format(product.stock)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       )}
     </>

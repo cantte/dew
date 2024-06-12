@@ -44,3 +44,11 @@ export const getSalesOverviewInput = z.object({
 });
 
 export const findSaleInput = z.object({ code: z.string() });
+
+export const upsertSaleSummaryInput = z.object({
+  date: z.date(),
+  amount: z.coerce.number().min(0),
+  profit: z.coerce.number().min(0),
+  products: z.coerce.number().min(0),
+  storeId: z.string().uuid(),
+});

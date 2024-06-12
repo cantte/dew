@@ -1,8 +1,9 @@
-import { endOfMonth, startOfMonth } from "date-fns";
+import { Suspense } from "react";
 import { columns } from "~/app/(dashboard)/dashboard/sales/columns";
 import SalesDataTable from "~/app/(dashboard)/dashboard/sales/data-table";
 import SalesOverview from "~/app/(dashboard)/dashboard/sales/overview";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
+import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/server";
 
 const SalesPage = async () => {
@@ -16,18 +17,11 @@ const SalesPage = async () => {
     storeId: store.id,
   });
 
-  const today = new Date();
-  const from = startOfMonth(today);
-  const to = endOfMonth(today);
-  const overview = await api.sale.overview({
-    storeId: store.id,
-    from,
-    to,
-  });
-
   return (
     <div className="space-y-4">
-      <SalesOverview overview={overview} />
+      <Suspense fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}>
+        <SalesOverview />
+      </Suspense>
       <SalesDataTable columns={columns} data={sales} storeId={store.id} />
     </div>
   );

@@ -11,9 +11,9 @@ const mostSoldProducts = async ({ ctx }: Options) => {
     .select({
       id: products.id,
       name: products.name,
-      quantity: sum(saleItems.quantity),
-      amount: sum(saleItems.salePrice),
-      profit: sum(saleItems.profit),
+      quantity: sum(saleItems.quantity).mapWith(Number),
+      amount: sum(saleItems.salePrice).mapWith(Number),
+      profit: sum(saleItems.profit).mapWith(Number),
     })
     .from(products)
     .innerJoin(saleItems, eq(products.id, saleItems.productId))

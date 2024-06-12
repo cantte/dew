@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
 import NewSale from "~/emails/new-sale";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
+import upsertSaleSummary from "~/server/api/routers/sales/upsertSummary";
 import type { createSaleInput } from "~/server/api/schemas/sales";
 import {
   customers,
@@ -78,7 +79,17 @@ const createSale = async ({ ctx, input }: Options) => {
         );
     }
 
-    // after updating the inventory, send an email to the customer
+    const saleSummary = {
+      date: new Date(),
+      amount: input.amount,
+      profit: input.items.reduce((acc, item) => item.profit + acc, 0),
+      products: input.items.reduce((acc, item) => item.quantity + acc, 0),
+      storeId: input.storeId,
+    };
+
+    await upsertSaleSummary({ tx, input: saleSummary });
+
+    // Send email to customer
     const [customer] = await tx
       .select({
         email: customers.email,

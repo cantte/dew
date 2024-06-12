@@ -2,28 +2,28 @@ import { subMonths } from "date-fns";
 import { and, between, eq, sum } from "drizzle-orm";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { getSalesOverviewInput } from "~/server/api/schemas/sales";
-import { saleSummary } from "~/server/db/schema";
+import type { getOrderOverviewInput } from "~/server/api/schemas/orders";
+import { orderSummary } from "~/server/db/schema";
 
 type Options = {
   ctx: TRPCAuthedContext;
-  input: TypeOf<typeof getSalesOverviewInput>;
+  input: TypeOf<typeof getOrderOverviewInput>;
 };
 
-const generateSalesReport = async ({ ctx, input }: Options) => {
+const generateOrdersReport = async ({ ctx, input }: Options) => {
   const [summary] = await ctx.db
     .select({
-      amount: sum(saleSummary.amount),
-      customers: sum(saleSummary.customers),
-      sales: sum(saleSummary.sales),
-      products: sum(saleSummary.products),
-      profit: sum(saleSummary.profit),
+      amount: sum(orderSummary.amount),
+      customers: sum(orderSummary.customers),
+      orders: sum(orderSummary.orders),
+      products: sum(orderSummary.products),
+      profit: sum(orderSummary.profit),
     })
-    .from(saleSummary)
+    .from(orderSummary)
     .where(
       and(
-        eq(saleSummary.storeId, input.storeId),
-        between(saleSummary.createdAt, input.from, input.to),
+        eq(orderSummary.storeId, input.storeId),
+        between(orderSummary.createdAt, input.from, input.to),
       ),
     );
 
@@ -33,17 +33,17 @@ const generateSalesReport = async ({ ctx, input }: Options) => {
 
   const [previousSummary] = await ctx.db
     .select({
-      amount: sum(saleSummary.amount),
-      customers: sum(saleSummary.customers),
-      sales: sum(saleSummary.sales),
-      products: sum(saleSummary.products),
-      profit: sum(saleSummary.profit),
+      amount: sum(orderSummary.amount),
+      customers: sum(orderSummary.customers),
+      orders: sum(orderSummary.orders),
+      products: sum(orderSummary.products),
+      profit: sum(orderSummary.profit),
     })
-    .from(saleSummary)
+    .from(orderSummary)
     .where(
       and(
-        eq(saleSummary.storeId, input.storeId),
-        between(saleSummary.createdAt, previousFrom, previousTo),
+        eq(orderSummary.storeId, input.storeId),
+        between(orderSummary.createdAt, previousFrom, previousTo),
       ),
     );
 
@@ -61,27 +61,27 @@ const generateSalesReport = async ({ ctx, input }: Options) => {
   // Get totalAmount and totalProfit per day
   const totalAmountPerDay = await ctx.db
     .select({
-      date: saleSummary.date,
-      total: saleSummary.amount,
+      date: orderSummary.date,
+      total: orderSummary.amount,
     })
-    .from(saleSummary)
+    .from(orderSummary)
     .where(
       and(
-        eq(saleSummary.storeId, input.storeId),
-        between(saleSummary.createdAt, input.from, input.to),
+        eq(orderSummary.storeId, input.storeId),
+        between(orderSummary.createdAt, input.from, input.to),
       ),
     );
 
   const totalProfitPerDay = await ctx.db
     .select({
-      date: saleSummary.date,
-      total: saleSummary.profit,
+      date: orderSummary.date,
+      total: orderSummary.profit,
     })
-    .from(saleSummary)
+    .from(orderSummary)
     .where(
       and(
-        eq(saleSummary.storeId, input.storeId),
-        between(saleSummary.createdAt, input.from, input.to),
+        eq(orderSummary.storeId, input.storeId),
+        between(orderSummary.createdAt, input.from, input.to),
       ),
     );
 
@@ -95,4 +95,4 @@ const generateSalesReport = async ({ ctx, input }: Options) => {
   };
 };
 
-export default generateSalesReport;
+export default generateOrdersReport;
