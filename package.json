@@ -52,7 +52,7 @@
     "framer-motion": "^11.2.10",
     "jsbarcode": "^3.11.6",
     "lucide-react": "^0.394.0",
-    "next": "^14.2.3",
+    "next": "^14.2.4",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
     "postgres": "^3.4.4",
@@ -72,7 +72,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.2.3",
+    "@next/eslint-plugin-next": "^14.2.4",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
@@ -84,7 +84,7 @@
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.22.7",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.3",
+    "eslint-config-next": "^14.2.4",
     "eslint-plugin-drizzle": "^0.2.3",
     "pg": "^8.12.0",
     "postcss": "^8.4.38",
