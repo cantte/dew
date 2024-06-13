@@ -127,16 +127,15 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
 
             <FormMessage />
 
-            {findCustomerError &&
-              findCustomerError.message.includes("undefined") && (
-                <Button
-                  type="button"
-                  onClick={() => setIsOpenCreateCustomerModal(true)}
-                  variant="outline"
-                >
-                  Crear cliente
-                </Button>
-              )}
+            {findCustomerError?.message.includes("undefined") && (
+              <Button
+                type="button"
+                onClick={() => setIsOpenCreateCustomerModal(true)}
+                variant="outline"
+              >
+                Crear cliente
+              </Button>
+            )}
           </FormItem>
         )}
       />
