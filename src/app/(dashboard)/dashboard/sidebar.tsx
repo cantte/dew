@@ -30,7 +30,7 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
               )}
             >
               <Link href={item.href}>
-                {item.icon && item.icon}
+                {item.icon}
                 <span>{item.title}</span>
               </Link>
             </Button>
