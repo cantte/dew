@@ -2,15 +2,15 @@ import { endOfMonth, startOfMonth } from "date-fns";
 import { Info } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "~/components/ui/popover";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { api } from "~/trpc/server";
 
