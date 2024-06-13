@@ -3,6 +3,7 @@ import LowStockProducts from "~/components/dashboard/low-stock-products";
 import MostSoldProducts from "~/components/dashboard/most-sold-products";
 import OrdersReport from "~/components/dashboard/orders-report";
 import SalesReport from "~/components/dashboard/sales-report";
+import OrdersOverview from "~/components/orders/overview";
 import SalesOverview from "~/components/sales/overview";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -40,6 +41,12 @@ const DashboardPage = async () => {
 
         <TabsContent value="orders">
           <div className="space-y-4">
+            <Suspense
+              fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
+            >
+              <OrdersOverview />
+            </Suspense>
+
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
               <Suspense fallback={<SalesReportFallback />}>
                 <OrdersReport />
