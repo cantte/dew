@@ -7,7 +7,7 @@
     "build": "next build",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "start": "next start",
     "email": "dotenv \"email dev --dir src/emails --port 3500\"",
