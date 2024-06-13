@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { index, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { index, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
 import { employees } from "~/server/db/schema/employees";
@@ -7,7 +7,7 @@ import { employees } from "~/server/db/schema/employees";
 export const stores = createTable(
   "store",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    id: uuid("id").notNull().primaryKey(),
     name: varchar("name", { length: 128 }).notNull(),
     address: text("address"),
     phone: varchar("phone", { length: 32 }),
