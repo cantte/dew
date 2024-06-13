@@ -5,12 +5,33 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
+  type TooltipProps,
 } from "recharts";
+import type {
+  NameType,
+  ValueType,
+} from "recharts/types/component/DefaultTooltipContent";
 import ValueDateTooltip from "~/components/dashboard/value-date-tooltip";
-import { Card } from "~/components/ui/card";
-
-import { CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import type { RouterOutputs } from "~/trpc/shared";
+
+const Tooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
+  if (active && payload) {
+    const firstPayload = payload[0];
+
+    if (!firstPayload) {
+      return null;
+    }
+
+    const value = +(firstPayload.value ?? 0);
+    const date = new Date(
+      (firstPayload.payload as { date: string }).date + "T00:00:00", // Prevents timezone issues
+    );
+
+    return <ValueDateTooltip value={value} date={date} />;
+  }
+  return null;
+};
 
 type Props = {
   profit: number;
@@ -52,26 +73,7 @@ const TotalProfit = ({ profit, profitImprovement, profitData }: Props) => {
                 bottom: 0,
               }}
             >
-              <ChartTooltip
-                content={({ active, payload }) => {
-                  if (active && payload) {
-                    const firstPayload = payload[0];
-
-                    if (!firstPayload) {
-                      return null;
-                    }
-
-                    const value = +(firstPayload.value ?? 0);
-                    const date = new Date(
-                      (firstPayload.payload as { date: string }).date +
-                        "T00:00:00", // Prevents timezone issues
-                    );
-
-                    return <ValueDateTooltip value={value} date={date} />;
-                  }
-                  return null;
-                }}
-              />
+              <ChartTooltip content={<Tooltip />} />
               <Line
                 type="monotone"
                 strokeWidth={2}
