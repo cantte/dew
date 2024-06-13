@@ -40,7 +40,7 @@ const MobileNav = () => {
                         "flex w-full items-center justify-start gap-3 transition-all hover:bg-background",
                       )}
                     >
-                      {item.icon && item.icon}
+                      {item.icon}
                       <span>{item.title}</span>
                     </Button>
                   </MobileLink>

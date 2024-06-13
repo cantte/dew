@@ -45,9 +45,9 @@ export default async function Home() {
             <div className="flex grow flex-col justify-center">
               <div className="max-w-[725px] text-center">
                 <h1 className="mb-8 text-[38px] leading-[46px] md:text-[70px] md:leading-[85px]">
-                  Lleva un registro de tus{" "}
-                  <span className="text-primary-text">ventas </span>
-                  sin complicaciones
+                  <span>Lleva un registro de tus</span>{" "}
+                  <span className="text-primary-text">ventas</span>{" "}
+                  <span>sin complicaciones</span>
                 </h1>
                 <div className="text-center sm:px-20">
                   <span className="text-[17px] font-normal tracking-[-0.16px] text-muted-foreground md:text-xl">
