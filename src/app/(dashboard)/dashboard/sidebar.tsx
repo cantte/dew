@@ -65,7 +65,7 @@ export const DashboardSidebarItem = ({
       {items.map((item, index) =>
         item.href && !item.disabled ? (
           <Link
-            key={index}
+            key={`${index}-${item.href}`}
             href={item.href}
             className={cn(
               "group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline",
@@ -84,7 +84,7 @@ export const DashboardSidebarItem = ({
           </Link>
         ) : (
           <span
-            key={index}
+            key={`${index}-${item.title}`}
             className={cn(
               "flex w-full cursor-not-allowed items-center rounded-md p-2 text-muted-foreground hover:underline",
               item.disabled && "cursor-not-allowed opacity-60",
