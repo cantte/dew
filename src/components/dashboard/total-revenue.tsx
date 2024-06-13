@@ -12,9 +12,7 @@ import type {
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 import ValueDateTooltip from "~/components/dashboard/value-date-tooltip";
-import { Card } from "~/components/ui/card";
-
-import { CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import type { RouterOutputs } from "~/trpc/shared";
 
 const Tooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
