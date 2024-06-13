@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { index, real, timestamp, varchar } from "drizzle-orm/pg-core";
+import { index, real, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
 import { stores } from "~/server/db/schema/stores";
@@ -9,7 +9,7 @@ export const cashRegisters = createTable(
   {
     id: varchar("id", { length: 36 }).notNull().primaryKey(),
     amount: real("amount").notNull(),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
     createdBy: varchar("created_by", { length: 255 })

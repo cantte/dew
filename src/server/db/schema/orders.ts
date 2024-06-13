@@ -32,7 +32,7 @@ export const orders = createTable(
     customerId: varchar("customer_id", { length: 32 })
       .notNull()
       .references(() => customers.id),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
     amount: real("amount").notNull(),
@@ -140,7 +140,7 @@ export const orderSummary = createTable(
     orders: integer("orders").notNull(),
     customers: integer("customers").notNull(),
     products: integer("products").notNull(),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
     createdAt: timestamp("created_at")

@@ -4,6 +4,7 @@ import {
   primaryKey,
   timestamp,
   unique,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
@@ -43,7 +44,7 @@ export const employeeStore = createTable(
     employeeId: varchar("employee_id", { length: 36 })
       .notNull()
       .references(() => employees.id),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
   },
