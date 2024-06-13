@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import SalesOverview from "~/app/(dashboard)/dashboard/sales/overview";
 import LowStockProducts from "~/components/dashboard/low-stock-products";
 import MostSoldProducts from "~/components/dashboard/most-sold-products";
 import OrdersReport from "~/components/dashboard/orders-report";
 import SalesReport from "~/components/dashboard/sales-report";
+import SalesOverview from "~/components/sales/overview";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";

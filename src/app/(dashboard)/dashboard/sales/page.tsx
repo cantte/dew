@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { columns } from "~/app/(dashboard)/dashboard/sales/columns";
 import SalesDataTable from "~/app/(dashboard)/dashboard/sales/data-table";
-import SalesOverview from "~/app/(dashboard)/dashboard/sales/overview";
+import SalesOverview from "~/components/sales/overview";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/server";
