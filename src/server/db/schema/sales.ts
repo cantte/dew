@@ -60,7 +60,7 @@ export const saleItems = createTable(
     saleCode: varchar("sale_code", { length: 36 })
       .notNull()
       .references(() => sales.code),
-    productId: varchar("product_id", { length: 255 })
+    productId: uuid("product_id")
       .notNull()
       .references(() => products.id),
     quantity: integer("quantity").notNull(),
