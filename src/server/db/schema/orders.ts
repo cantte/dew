@@ -77,7 +77,7 @@ export const orderItems = createTable(
     orderId: uuid("order_id")
       .notNull()
       .references(() => orders.id),
-    productId: varchar("product_id", { length: 255 })
+    productId: uuid("product_id")
       .notNull()
       .references(() => products.id),
     quantity: integer("quantity").notNull(),
