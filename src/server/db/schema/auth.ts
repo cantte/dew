@@ -5,6 +5,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
@@ -89,5 +90,5 @@ export const verificationTokens = createTable(
 
 export const userPreferences = createTable("user_preference", {
   userId: varchar("user_id", { length: 255 }).notNull().primaryKey(),
-  storeId: varchar("store_id", { length: 36 }).notNull(),
+  storeId: uuid("store_id").notNull(),
 });
