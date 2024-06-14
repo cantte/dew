@@ -28,7 +28,7 @@ export const orderStatuses = pgEnum("order_status", [
 export const orders = createTable(
   "order",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    id: uuid("id").notNull().primaryKey(),
     customerId: varchar("customer_id", { length: 32 })
       .notNull()
       .references(() => customers.id),
@@ -73,8 +73,8 @@ export const orderRelations = relations(orders, ({ one, many }) => ({
 export const orderItems = createTable(
   "order_item",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
-    orderId: varchar("order_id", { length: 36 })
+    id: uuid("id").notNull().primaryKey(),
+    orderId: uuid("order_id")
       .notNull()
       .references(() => orders.id),
     productId: varchar("product_id", { length: 255 })
@@ -110,8 +110,8 @@ export const orderItemsRelations = relations(orderItems, ({ one }) => ({
 export const orderHistory = createTable(
   "order_history",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
-    orderId: varchar("order_id", { length: 36 })
+    id: uuid("id").notNull().primaryKey(),
+    orderId: uuid("order_id")
       .notNull()
       .references(() => orders.id),
     status: orderStatuses("status").notNull(),
