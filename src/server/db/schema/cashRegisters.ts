@@ -7,7 +7,7 @@ import { stores } from "~/server/db/schema/stores";
 export const cashRegisters = createTable(
   "cash_register",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    id: uuid("id").notNull().primaryKey(),
     amount: real("amount").notNull(),
     storeId: uuid("store_id")
       .notNull()
@@ -42,10 +42,10 @@ export const cashRegisterRelations = relations(cashRegisters, ({ one }) => ({
 export const cashRegisterTransactions = createTable(
   "cash_register_transaction",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    id: uuid("id").notNull().primaryKey(),
     amount: real("amount").notNull(),
     type: varchar("type", { length: 32 }).notNull(),
-    cashRegisterId: varchar("cash_register_id", { length: 36 })
+    cashRegisterId: uuid("cash_register_id")
       .notNull()
       .references(() => cashRegisters.id),
     createdBy: varchar("created_by", { length: 255 })
