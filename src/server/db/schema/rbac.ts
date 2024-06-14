@@ -47,7 +47,7 @@ export const rolePermissionRelations = relations(rolePermission, ({ one }) => ({
 }));
 
 export const employeeStoreRole = createTable("employee_store_role", {
-  employeeId: varchar("employee_id", { length: 36 })
+  employeeId: uuid("employee_id")
     .notNull()
     .references(() => employees.id),
   storeId: uuid("store_id")
