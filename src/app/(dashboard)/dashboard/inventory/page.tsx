@@ -12,7 +12,7 @@ const InventoryPage = async () => {
   }
 
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["inventory:create"],
+    permissions: ["inventory:view"],
   });
 
   if (!hasPermissions) {
