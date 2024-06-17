@@ -64,35 +64,38 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
           }).format(valueImprovement)}{" "}
           respecto al mes anterior
         </p>
-        <div className="h-[80px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={summary}
-              margin={{
-                top: 5,
-                right: 10,
-                left: 10,
-                bottom: 0,
-              }}
-            >
-              <ChartTooltip content={<Tooltip />} />
-              <Line
-                type="monotone"
-                strokeWidth={2}
-                dataKey="total"
-                activeDot={{
-                  r: 6,
-                  style: { fill: "hsl(var(--primary))", opacity: 0.25 },
+
+        {summary.length > 0 && (
+          <div className="h-[80px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={summary}
+                margin={{
+                  top: 5,
+                  right: 10,
+                  left: 10,
+                  bottom: 0,
                 }}
-                style={
-                  {
-                    stroke: "hsl(var(--primary))",
-                  } as React.CSSProperties
-                }
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+              >
+                <ChartTooltip content={<Tooltip />} />
+                <Line
+                  type="monotone"
+                  strokeWidth={2}
+                  dataKey="total"
+                  activeDot={{
+                    r: 6,
+                    style: { fill: "hsl(var(--primary))", opacity: 0.25 },
+                  }}
+                  style={
+                    {
+                      stroke: "hsl(var(--primary))",
+                    } as React.CSSProperties
+                  }
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
