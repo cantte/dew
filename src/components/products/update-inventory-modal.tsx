@@ -73,109 +73,123 @@ const UpdateInventoryModal = ({ product }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateProductQuantity.isSuccess]);
 
+  const canUpdateInventory = api.rbac.checkPermissions.useQuery({
+    permissions: ["inventory:update"],
+  });
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="secondary" size="icon">
-          <SquarePen className="h-4 w-4" />
-        </Button>
-      </DialogTrigger>
-
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Modificar existencia</DialogTitle>
-          <DialogDescription>
-            Producto <strong>{product.name}</strong>, cantidad actual{" "}
-            <strong>{product.quantity}</strong>
-            {updateProductQuantity.error && (
-              <Alert variant="destructive" className="mt-4">
-                <AlertTitle>Ha ocurrido un error</AlertTitle>
-                <AlertDescription>
-                  {updateProductQuantity.error.message}
-                </AlertDescription>
-              </Alert>
-            )}
-          </DialogDescription>
-        </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stock</FormLabel>
-                  <FormControl>
-                    <Input autoFocus {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cantidad</FormLabel>
-                  <FormControl>
-                    <Input autoFocus {...field} />
-                  </FormControl>
-
-                  <FormDescription>
-                    Digite la cantidad a agregar o restar de la existencia
-                    actual del producto.
-                  </FormDescription>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="operation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Operación</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccione la operación a realizar" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="add">Agregar</SelectItem>
-                      <SelectItem value="remove">Restar</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <FormDescription>
-                    Seleccione la operación a realizar sobre la existencia del
-                    producto.
-                  </FormDescription>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" disabled={updateProductQuantity.isPending}>
-              {updateProductQuantity.isPending && (
-                <RotateCw className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Actualizar inventario
+    <>
+      {!canUpdateInventory.isPending && canUpdateInventory.data ? (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <Button variant="secondary" size="icon">
+              <SquarePen className="h-4 w-4" />
             </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+          </DialogTrigger>
+
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Modificar existencia</DialogTitle>
+              <DialogDescription>
+                Producto <strong>{product.name}</strong>, cantidad actual{" "}
+                <strong>{product.quantity}</strong>
+                {updateProductQuantity.error && (
+                  <Alert variant="destructive" className="mt-4">
+                    <AlertTitle>Ha ocurrido un error</AlertTitle>
+                    <AlertDescription>
+                      {updateProductQuantity.error.message}
+                    </AlertDescription>
+                  </Alert>
+                )}
+              </DialogDescription>
+            </DialogHeader>
+
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="stock"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Stock</FormLabel>
+                      <FormControl>
+                        <Input autoFocus {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="quantity"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cantidad</FormLabel>
+                      <FormControl>
+                        <Input autoFocus {...field} />
+                      </FormControl>
+
+                      <FormDescription>
+                        Digite la cantidad a agregar o restar de la existencia
+                        actual del producto.
+                      </FormDescription>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="operation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Operación</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Seleccione la operación a realizar" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="add">Agregar</SelectItem>
+                          <SelectItem value="remove">Restar</SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <FormDescription>
+                        Seleccione la operación a realizar sobre la existencia
+                        del producto.
+                      </FormDescription>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  disabled={updateProductQuantity.isPending}
+                >
+                  {updateProductQuantity.isPending && (
+                    <RotateCw className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Actualizar inventario
+                </Button>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      ) : null}
+    </>
   );
 };
 
