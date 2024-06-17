@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
 import { createTable } from "~/server/db/schema/base";
+import { roles } from "~/server/db/schema/rbac";
 import { stores } from "~/server/db/schema/stores";
 
 export const employees = createTable(
@@ -47,10 +48,19 @@ export const employeeStore = createTable(
     storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
+    roleId: uuid("role_id").references(() => roles.id),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (employeeStore) => ({
     compoundKey: primaryKey({
-      columns: [employeeStore.storeId, employeeStore.employeeId],
+      columns: [
+        employeeStore.storeId,
+        employeeStore.employeeId,
+        employeeStore.roleId,
+      ],
     }),
   }),
 );
@@ -63,5 +73,9 @@ export const employeeStoreRelations = relations(employeeStore, ({ one }) => ({
   store: one(stores, {
     fields: [employeeStore.storeId],
     references: [stores.id],
+  }),
+  role: one(roles, {
+    fields: [employeeStore.roleId],
+    references: [roles.id],
   }),
 }));

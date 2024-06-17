@@ -5,9 +5,8 @@ import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { createStoreInput } from "~/server/api/schemas/stores";
 import {
   employeeStore,
-  employeeStoreRole,
   employees,
-  role,
+  roles,
   stores,
   userPreferences,
 } from "~/server/db/schema";
@@ -52,26 +51,18 @@ const createStore = async ({ ctx, input }: Options) => {
       })
       .onConflictDoNothing();
 
-    await tx.insert(employeeStore).values({
-      employeeId: user.id,
-      storeId: storeId,
-    });
-
-    // Set role as admin of the store
-    const adminRole = await tx.query.role.findFirst({
+    const adminRole = await tx.query.roles.findFirst({
       columns: {
         id: true,
       },
-      where: eq(role.name, "admin"),
+      where: eq(roles.name, "admin"),
     });
 
-    if (adminRole) {
-      await tx.insert(employeeStoreRole).values({
-        employeeId: user.id,
-        roleId: adminRole.id,
-        storeId: storeId,
-      });
-    }
+    await tx.insert(employeeStore).values({
+      employeeId: user.id,
+      storeId: storeId,
+      roleId: adminRole?.id,
+    });
   });
 };
 

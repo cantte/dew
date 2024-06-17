@@ -4,9 +4,8 @@ import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { linkToStoreInput } from "~/server/api/schemas/employees";
 import {
   employeeStore,
-  employeeStoreRole,
   employees,
-  role,
+  roles,
   userPreferences,
 } from "~/server/db/schema";
 
@@ -49,14 +48,6 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
       .where(eq(employees.id, input.employeeId));
 
     await tx
-      .insert(employeeStore)
-      .values({
-        employeeId: input.employeeId,
-        storeId: input.storeId,
-      })
-      .onConflictDoNothing();
-
-    await tx
       .insert(userPreferences)
       .values({
         userId: ctx.session.user.id,
@@ -69,20 +60,21 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
         },
       });
 
-    const employeeRole = await tx.query.role.findFirst({
+    const employeeRole = await tx.query.roles.findFirst({
       columns: {
         id: true,
       },
-      where: eq(role.name, "employee"),
+      where: eq(roles.name, "employee"),
     });
 
-    if (employeeRole) {
-      await tx.insert(employeeStoreRole).values({
+    await tx
+      .insert(employeeStore)
+      .values({
         employeeId: input.employeeId,
-        roleId: employeeRole.id,
         storeId: input.storeId,
-      });
-    }
+        roleId: employeeRole?.id,
+      })
+      .onConflictDoNothing();
   });
 };
 
