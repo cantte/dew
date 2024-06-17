@@ -11,7 +11,7 @@ const SalesReport = async () => {
   }
 
   const hasPermission = await api.rbac.checkPermissions({
-    permissions: ["sale_view"],
+    permissions: ["sale:view"],
   });
 
   if (!hasPermission) {
