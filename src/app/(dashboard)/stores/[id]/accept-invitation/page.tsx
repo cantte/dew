@@ -1,6 +1,7 @@
 import { InfoIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import AcceptStoreInvitation from "~/app/(dashboard)/stores/[id]/accept-invitation/accept-invitation";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
@@ -33,6 +34,14 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
     return redirect(
       `/api/auth/signin?callbackUrl=/stores/${params.id}/accept-invitation?employeeId=${employeeId as string}`,
     );
+  }
+
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["employee:view", "store:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const store = await api.store.find({ id: params.id });
