@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import BackButton from "~/components/back-button";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import OrderDetail from "~/components/orders/detail";
 import { Badge } from "~/components/ui/badge";
 import {
@@ -20,6 +21,14 @@ type Props = {
 export const dynamic = "force-dynamic";
 
 const OrderDetailPage = async ({ params }: Props) => {
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["order:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
+  }
+
   const order = await api.order.find({ id: params.id });
 
   if (!order) {

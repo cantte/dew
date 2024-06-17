@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { columns } from "~/app/(dashboard)/dashboard/employees/columns";
 import EmployeeDataTable from "~/app/(dashboard)/dashboard/employees/data-table";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
@@ -10,6 +11,14 @@ const EmployeesPage = async () => {
 
   if (!store) {
     return <NotFoundStoreAlert />;
+  }
+
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["employee:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const employees = await api.employee.byStore({

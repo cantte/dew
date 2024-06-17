@@ -4,6 +4,7 @@ import {
   primaryKey,
   timestamp,
   unique,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { users } from "~/server/db/schema/auth";
@@ -13,7 +14,7 @@ import { stores } from "~/server/db/schema/stores";
 export const employees = createTable(
   "employee",
   {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    id: uuid("id").notNull().primaryKey(),
     name: varchar("name", { length: 128 }).notNull(),
     email: varchar("email", { length: 255 }).notNull(),
     phone: varchar("phone", { length: 32 }),
@@ -40,10 +41,10 @@ export const employeeRelations = relations(employees, ({ many, one }) => ({
 export const employeeStore = createTable(
   "employee_store",
   {
-    employeeId: varchar("employee_id", { length: 36 })
+    employeeId: uuid("employee_id")
       .notNull()
       .references(() => employees.id),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
   },

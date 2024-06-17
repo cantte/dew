@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, primaryKey, varchar } from "drizzle-orm/pg-core";
+import { integer, primaryKey, uuid } from "drizzle-orm/pg-core";
 import { createTable } from "~/server/db/schema/base";
 import { products } from "~/server/db/schema/products";
 import { stores } from "~/server/db/schema/stores";
@@ -7,10 +7,10 @@ import { stores } from "~/server/db/schema/stores";
 export const inventory = createTable(
   "inventory",
   {
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
-    productId: varchar("product_id", { length: 255 })
+    productId: uuid("product_id")
       .notNull()
       .references(() => products.id),
     stock: integer("stock").notNull(),

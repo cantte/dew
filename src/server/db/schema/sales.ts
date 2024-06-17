@@ -27,7 +27,7 @@ export const sales = createTable(
       .notNull()
       .default("cash"),
     payment: real("payment").notNull(),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
     createdBy: varchar("created_by", { length: 255 })
@@ -60,7 +60,7 @@ export const saleItems = createTable(
     saleCode: varchar("sale_code", { length: 36 })
       .notNull()
       .references(() => sales.code),
-    productId: varchar("product_id", { length: 255 })
+    productId: uuid("product_id")
       .notNull()
       .references(() => products.id),
     quantity: integer("quantity").notNull(),
@@ -102,7 +102,7 @@ export const saleSummary = createTable(
     sales: integer("sales").notNull(),
     customers: integer("customers").notNull(),
     products: integer("products").notNull(),
-    storeId: varchar("store_id", { length: 36 })
+    storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
     createdAt: timestamp("created_at")

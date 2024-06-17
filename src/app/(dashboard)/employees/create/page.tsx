@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import CreateEmployeeForm from "~/app/(dashboard)/employees/create/form";
 import BackButton from "~/components/back-button";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
+import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -14,7 +16,15 @@ const CreateEmployeePage = async () => {
   const store = await api.store.findCurrent();
 
   if (!store) {
-    return redirect("/dashboard");
+    return <NotFoundStoreAlert />;
+  }
+
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["employee:create"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   return (

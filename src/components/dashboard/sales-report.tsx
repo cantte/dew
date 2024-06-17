@@ -10,6 +10,14 @@ const SalesReport = async () => {
     return null;
   }
 
+  const hasPermission = await api.rbac.checkPermissions({
+    permissions: ["sale:view"],
+  });
+
+  if (!hasPermission) {
+    return null;
+  }
+
   const today = new Date();
   const from = startOfMonth(today);
   const to = endOfMonth(today);

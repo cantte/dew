@@ -2,6 +2,7 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { endOfDay, startOfDay } from "date-fns";
 import CashRegisterDetails from "~/app/(dashboard)/dashboard/cash/details";
 import EnableCash from "~/app/(dashboard)/dashboard/cash/enable-cash";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -11,20 +12,28 @@ const CashRegisterPage = async () => {
   const store = await api.store.findCurrent();
 
   if (!store) {
-    return (
-      <div className="space-y-4">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          Caja registradora
-        </h3>
+    return <NotFoundStoreAlert />;
+  }
 
-        <NotFoundStoreAlert />
-      </div>
-    );
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["cash_register:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const cashRegister = await api.cashRegister.find({ storeId: store.id });
 
   if (!cashRegister) {
+    const hasPermissions = await api.rbac.checkPermissions({
+      permissions: ["cash_register:create"],
+    });
+
+    if (!hasPermissions) {
+      return <NotEnoughPermissions />;
+    }
+
     return (
       <div className="space-y-4">
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">

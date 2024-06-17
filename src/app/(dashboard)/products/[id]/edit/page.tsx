@@ -1,6 +1,7 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import EditProductForm from "~/app/(dashboard)/products/[id]/edit/form";
 import BackButton from "~/components/back-button";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
@@ -14,8 +15,17 @@ type Props = {
 
 const EditProductPage = async ({ params }: Props) => {
   const session = await getServerAuthSession();
+
   if (session === null) {
     return redirect("/api/auth/signin");
+  }
+
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["product:update", "product:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const product = await api.product.findById({
@@ -23,7 +33,7 @@ const EditProductPage = async ({ params }: Props) => {
   });
 
   if (product === null || product === undefined) {
-    return redirect("/dashboard/products");
+    return notFound();
   }
 
   return (

@@ -2,7 +2,13 @@ import { eq, isNotNull } from "drizzle-orm";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { linkToStoreInput } from "~/server/api/schemas/employees";
-import { employeeStore, employees, userPreferences } from "~/server/db/schema";
+import {
+  employeeStore,
+  employeeStoreRole,
+  employees,
+  role,
+  userPreferences,
+} from "~/server/db/schema";
 
 type Options = {
   ctx: TRPCAuthedContext;
@@ -62,6 +68,21 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
           storeId: input.storeId,
         },
       });
+
+    const employeeRole = await tx.query.role.findFirst({
+      columns: {
+        id: true,
+      },
+      where: eq(role.name, "employee"),
+    });
+
+    if (employeeRole) {
+      await tx.insert(employeeStoreRole).values({
+        employeeId: input.employeeId,
+        roleId: employeeRole.id,
+        storeId: input.storeId,
+      });
+    }
   });
 };
 

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import BackButton from "~/components/back-button";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import SaleDetail from "~/components/sale-detail";
 import { Badge } from "~/components/ui/badge";
 import {
@@ -10,13 +11,21 @@ import {
 } from "~/components/ui/tooltip";
 import { api } from "~/trpc/server";
 
-type SaleDetailPageProps = {
+type Props = {
   params: {
     code: string;
   };
 };
 
-const SaleDetailPage = async ({ params }: SaleDetailPageProps) => {
+const SaleDetailPage = async ({ params }: Props) => {
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["sale:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
+  }
+
   const sale = await api.sale.find({ code: params.code });
 
   if (!sale) {

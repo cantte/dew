@@ -1,10 +1,13 @@
+import { eq } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { createStoreInput } from "~/server/api/schemas/stores";
 import {
   employeeStore,
+  employeeStoreRole,
   employees,
+  role,
   stores,
   userPreferences,
 } from "~/server/db/schema";
@@ -53,6 +56,22 @@ const createStore = async ({ ctx, input }: Options) => {
       employeeId: user.id,
       storeId: storeId,
     });
+
+    // Set role as admin of the store
+    const adminRole = await tx.query.role.findFirst({
+      columns: {
+        id: true,
+      },
+      where: eq(role.name, "admin"),
+    });
+
+    if (adminRole) {
+      await tx.insert(employeeStoreRole).values({
+        employeeId: user.id,
+        roleId: adminRole.id,
+        storeId: storeId,
+      });
+    }
   });
 };
 
