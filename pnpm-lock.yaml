@@ -60,7 +60,7 @@ importers:
         specifier: 0.0.19
         version: 0.0.19(@types/react@18.3.3)(react@18.3.1)
       '@sentry/nextjs':
-        specifier: '8'
+        specifier: 8.9.2
         version: 8.9.2(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.25.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.52.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.25.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.25.0)(next@14.2.4(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.90.1(esbuild@0.19.11))
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
