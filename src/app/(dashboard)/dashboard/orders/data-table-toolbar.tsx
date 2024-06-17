@@ -4,6 +4,7 @@ import Link from "next/link";
 import DataTableFacetedFilter from "~/components/data-table-faceted-filter";
 import { Button } from "~/components/ui/button";
 import { orderStatus } from "~/constants";
+import { api } from "~/trpc/react";
 
 type Props<TData> = {
   table: Table<TData>;
@@ -12,6 +13,10 @@ type Props<TData> = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const canCreateOrder = api.rbac.checkPermissions.useQuery({
+    permissions: ["order:create"],
+  });
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -36,14 +41,16 @@ const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
         )}
       </div>
       <div className="flex space-x-2">
-        <Button asChild size="sm" className="h-7 gap-1">
-          <Link href="/orders/create">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Nueva orden
-            </span>
-          </Link>
-        </Button>
+        {!canCreateOrder.isPending && canCreateOrder.data ? (
+          <Button asChild size="sm" className="h-7 gap-1">
+            <Link href="/orders/create">
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Nueva orden
+              </span>
+            </Link>
+          </Button>
+        ) : null}
       </div>
     </div>
   );
