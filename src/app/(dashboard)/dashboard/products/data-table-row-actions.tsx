@@ -14,12 +14,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { api } from "~/trpc/react";
 
 type DataTableRowActionsProps = {
   row: Row<Product>;
 };
 
 const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
+  const canDeleteProduct = api.rbac.checkPermissions.useQuery({
+    permissions: ["product:delete"],
+  });
+
+  const canEditProduct = api.rbac.checkPermissions.useQuery({
+    permissions: ["product:edit"],
+  });
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,12 +42,22 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem asChild>
-          <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
-        </DropdownMenuItem>
-        <DeleteProductModal product={row.original} />
+        {!canEditProduct.isPending && canEditProduct.data ? (
+          <>
+            <DropdownMenuItem asChild>
+              <NextLink href={`/products/${row.original.id}/edit`}>
+                Editar
+              </NextLink>
+            </DropdownMenuItem>
+            <LinkToStoresModal product={row.original} />
+          </>
+        ) : null}
+
+        {!canDeleteProduct.isPending && canDeleteProduct.data ? (
+          <DeleteProductModal product={row.original} />
+        ) : null}
+
         <BarcodeModal product={row.original} />
-        <LinkToStoresModal product={row.original} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
