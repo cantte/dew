@@ -6,6 +6,7 @@ import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { api } from "~/trpc/react";
 
 type DataTableToolbarProps<TData> = {
   table: Table<TData>;
@@ -15,6 +16,11 @@ const ProductsDataTableToolbar = <TData,>({
   table,
 }: DataTableToolbarProps<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const canCreateProduct = api.rbac.checkPermissions.useQuery({
+    permissions: ["product:create"],
+  });
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="flex flex-1 items-center space-x-2">
@@ -40,14 +46,16 @@ const ProductsDataTableToolbar = <TData,>({
       </div>
 
       <div className="flex space-x-2">
-        <Button asChild size="sm" className="h-7 gap-1">
-          <Link href="/products/create">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Crear producto
-            </span>
-          </Link>
-        </Button>
+        {!canCreateProduct.isPending && canCreateProduct.data ? (
+          <Button asChild size="sm" className="h-7 gap-1">
+            <Link href="/products/create">
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Crear producto
+              </span>
+            </Link>
+          </Button>
+        ) : null}
       </div>
     </div>
   );
