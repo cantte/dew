@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { columns } from "~/app/(dashboard)/dashboard/orders/columns";
 import OrdersDataTable from "~/app/(dashboard)/dashboard/orders/data-table";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import OrdersOverview from "~/components/orders/overview";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -11,6 +12,14 @@ const OrdersPage = async () => {
 
   if (store === undefined) {
     return <NotFoundStoreAlert />;
+  }
+
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["order:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const orders = await api.order.list({
