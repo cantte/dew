@@ -43,3 +43,6 @@ yarn-error.log*
 
 # react email
 .react-email/
+
+# Sentry Config File
+.env.sentry-build-plugin
