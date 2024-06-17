@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import CreateProductForm from "~/app/(dashboard)/products/create/form";
 import BackButton from "~/components/back-button";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
@@ -8,24 +9,22 @@ import { api } from "~/trpc/server";
 const CreateProductPage = async () => {
   const session = await getServerAuthSession();
 
-  if (session === null) {
+  if (!session) {
     return redirect("/api/auth/signin");
   }
 
   const store = await api.store.findCurrent();
 
   if (!store) {
-    return (
-      <div className="w-full max-w-7xl">
-        <div className="space-y-4">
-          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-            Crear producto
-          </h3>
+    return <NotFoundStoreAlert />;
+  }
 
-          <NotFoundStoreAlert />
-        </div>
-      </div>
-    );
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["product:create"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const stores = await api.store.list();
