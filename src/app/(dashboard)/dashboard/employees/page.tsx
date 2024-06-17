@@ -1,3 +1,4 @@
+import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { columns } from "~/app/(dashboard)/dashboard/employees/columns";
 import EmployeeDataTable from "~/app/(dashboard)/dashboard/employees/data-table";
@@ -26,24 +27,25 @@ const EmployeesPage = async () => {
   });
 
   return (
-    <div>
+    <div className="space-y-2">
       <div className="flex justify-between">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          Empleados
-        </h3>
+        <span></span>
 
-        <Button asChild>
-          <Link href="/employees/create">Crear empleado</Link>
+        <Button asChild size="sm" className="h-7 gap-1">
+          <Link href="/employees/create">
+            <PlusCircle className="h-3.5 w-3.5" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Crear empleado
+            </span>
+          </Link>
         </Button>
       </div>
 
-      <div className="mt-4">
-        <EmployeeDataTable
-          columns={columns}
-          data={employees}
-          storeId={store.id}
-        />
-      </div>
+      <EmployeeDataTable
+        columns={columns}
+        data={employees}
+        storeId={store.id}
+      />
     </div>
   );
 };
