@@ -1,6 +1,7 @@
 import { columns } from "~/app/(dashboard)/dashboard/products/columns";
 import ProductDataTable from "~/app/(dashboard)/dashboard/products/data-table";
 import ProductsOverview from "~/app/(dashboard)/dashboard/products/overview";
+import NotEnoughPermissions from "~/components/not-enough-permissions";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
 import { api } from "~/trpc/server";
 
@@ -9,6 +10,14 @@ const ProductsPage = async () => {
 
   if (!store) {
     return <NotFoundStoreAlert />;
+  }
+
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ["product:view"],
+  });
+
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />;
   }
 
   const products = await api.product.list({
