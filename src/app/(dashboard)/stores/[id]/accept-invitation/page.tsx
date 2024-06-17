@@ -29,7 +29,7 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
   }
 
   const session = await getServerAuthSession();
-  if (session === null) {
+  if (!session) {
     return redirect(
       `/api/auth/signin?callbackUrl=/stores/${params.id}/accept-invitation?employeeId=${employeeId as string}`,
     );
