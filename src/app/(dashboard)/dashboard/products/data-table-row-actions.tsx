@@ -26,7 +26,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
   });
 
   const canEditProduct = api.rbac.checkPermissions.useQuery({
-    permissions: ["product:edit"],
+    permissions: ["product:update"],
   });
 
   return (
