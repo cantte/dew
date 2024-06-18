@@ -275,6 +275,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                         const items = form.getValues("items");
                         items.splice(index, 1);
                         form.setValue("items", items);
+                        calculateAmount();
                       }}
                     >
                       <TrashIcon className="h-4 w-4" />
