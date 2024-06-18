@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
+import uuid from "~/lib/uuid";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { createStoreInput } from "~/server/api/schemas/stores";
 import {

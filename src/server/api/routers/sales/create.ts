@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
-import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
 import NewSale from "~/emails/new-sale";
+import uuid from "~/lib/uuid";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import upsertSaleSummary from "~/server/api/routers/sales/upsertSummary";
 import type { createSaleInput } from "~/server/api/schemas/sales";
