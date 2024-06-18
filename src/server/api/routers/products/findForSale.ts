@@ -1,6 +1,8 @@
 import { and, eq, isNull } from "drizzle-orm";
 import type { TypeOf } from "zod";
+import { applyDiscount } from "~/lib/utils";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
+import searchProductDiscounts from "~/server/api/routers/products/searchDiscount";
 import type { byCodeProductInput } from "~/server/api/schemas/products";
 import { inventory, products } from "~/server/db/schema";
 
@@ -34,7 +36,24 @@ const findProductForSale = async ({ ctx, input }: Options) => {
     return null;
   }
 
-  return result[0];
+  const product = result[0];
+
+  if (!product) {
+    return null;
+  }
+
+  const discounts = await searchProductDiscounts({
+    ctx,
+    input: {
+      id: product.id,
+    },
+  });
+
+  return {
+    ...product,
+    finalPrice: applyDiscount(product.purchasePrice, discounts),
+    discounts: discounts,
+  };
 };
 
 export default findProductForSale;
