@@ -1,5 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
+  date,
   index,
   real,
   text,
@@ -39,3 +41,30 @@ export const productsRelations = relations(products, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export const productsDiscounts = createTable(
+  "product_discount",
+  {
+    id: uuid("id").notNull().primaryKey(),
+    productId: uuid("product_id")
+      .notNull()
+      .references(() => products.id),
+    isPercentage: boolean("is_percentage").notNull(),
+    discount: real("discount").notNull(),
+    startDate: date("start_date").notNull(),
+    endDate: date("end_date").notNull(),
+    createdBy: varchar("created_by", { length: 255 })
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    deletedAt: timestamp("deleted_at"),
+  },
+  (productDiscount) => ({
+    productIdIdx: index("product_discount_product_id_idx").on(
+      productDiscount.productId,
+    ),
+  }),
+);
