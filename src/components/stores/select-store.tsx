@@ -30,9 +30,11 @@ import { type RouterOutputs } from "~/trpc/shared";
 type Props = {
   currentStore: RouterOutputs["store"]["find"];
   stores: RouterOutputs["store"]["list"];
+
+  canCreateStore: boolean;
 };
 
-const SelectStore = ({ currentStore, stores }: Props) => {
+const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
   const [value, setValue] = useState(currentStore?.id);
   const [open, setOpen] = useState(false);
 
@@ -84,12 +86,15 @@ const SelectStore = ({ currentStore, stores }: Props) => {
               {store.name}
             </SelectItem>
           ))}
-          <SelectItem value="new-store">
-            <div className="flex flex-row items-center">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              <span>Crear nueva tienda</span>
-            </div>
-          </SelectItem>
+
+          {canCreateStore && (
+            <SelectItem value="new-store">
+              <div className="flex flex-row items-center">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                <span>Crear nueva tienda</span>
+              </div>
+            </SelectItem>
+          )}
         </SelectContent>
       </Select>
 

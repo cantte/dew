@@ -1,5 +1,5 @@
 import { useDebounce } from "@uidotdev/usehooks";
-import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { BadgePercent, MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import type { TypeOf } from "zod";
@@ -17,6 +17,12 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import type { createSaleInput } from "~/server/api/schemas/sales";
 import { api } from "~/trpc/react";
 import type { RouterOutputs } from "~/trpc/shared";
@@ -86,7 +92,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
     items.push({
       productId: product.id,
       quantity: 1,
-      salePrice: product.salePrice,
+      salePrice: product.finalPrice,
       purchasePrice: product.purchasePrice,
       profit: product.salePrice - product.purchasePrice,
     });
@@ -113,10 +119,22 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
     return product?.name ?? "Error";
   };
 
+  const hasDiscounts = (productId: string) => {
+    const product = selectedProducts.find((p) => p?.id === productId);
+
+    if (!product) {
+      return false;
+    }
+
+    return product.discounts.length > 0;
+  };
+
   const onSelectProduct = (productCode: string) => {
     setProductCode(productCode);
     setProductSelected(true);
   };
+
+  const hasItems = form.watch("items").length > 0;
 
   return (
     <div className="flex w-full grow flex-col space-y-4">
@@ -178,7 +196,23 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
             <TableBody>
               {form.watch("items").map((item, index) => (
                 <TableRow key={item.productId}>
-                  <TableCell>{getProductName(item.productId)}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-row items-center space-x-2">
+                      <span>{getProductName(item.productId)}</span>
+                      {hasDiscounts(item.productId) && (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <BadgePercent className="h-4 w-4" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              Este producto tiene descuentos aplicados
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell className="flex items-center space-x-3">
                     <Button
                       size="icon"
@@ -243,6 +277,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                         const items = form.getValues("items");
                         items.splice(index, 1);
                         form.setValue("items", items);
+                        calculateAmount();
                       }}
                     >
                       <TrashIcon className="h-4 w-4" />
@@ -286,7 +321,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
 
           <Button
             type="button"
-            disabled={isFindingProduct || !selectedProducts.length}
+            disabled={isFindingProduct || !hasItems}
             onClick={() => onContinue(selectedProducts)}
           >
             Continuar

@@ -5,6 +5,7 @@ import { type Row } from "@tanstack/react-table";
 import NextLink from "next/link";
 import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
 import BarcodeModal from "~/components/products/barcode-modal";
+import CreateProductDiscountDialog from "~/components/products/create-discount";
 import DeleteProductModal from "~/components/products/delete-modal";
 import LinkToStoresModal from "~/components/products/link-to-stores-modal";
 import { Button } from "~/components/ui/button";
@@ -14,12 +15,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { api } from "~/trpc/react";
 
 type DataTableRowActionsProps = {
   row: Row<Product>;
 };
 
 const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
+  const canDeleteProduct = api.rbac.checkPermissions.useQuery({
+    permissions: ["product:delete"],
+  });
+
+  const canEditProduct = api.rbac.checkPermissions.useQuery({
+    permissions: ["product:update"],
+  });
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,12 +43,23 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem asChild>
-          <NextLink href={`/products/${row.original.id}/edit`}>Editar</NextLink>
-        </DropdownMenuItem>
-        <DeleteProductModal product={row.original} />
+        {!canEditProduct.isPending && canEditProduct.data ? (
+          <>
+            <DropdownMenuItem asChild>
+              <NextLink href={`/products/${row.original.id}/edit`}>
+                Editar
+              </NextLink>
+            </DropdownMenuItem>
+            <LinkToStoresModal product={row.original} />
+            <CreateProductDiscountDialog product={row.original} />
+          </>
+        ) : null}
+
+        {!canDeleteProduct.isPending && canDeleteProduct.data ? (
+          <DeleteProductModal product={row.original} />
+        ) : null}
+
         <BarcodeModal product={row.original} />
-        <LinkToStoresModal product={row.original} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

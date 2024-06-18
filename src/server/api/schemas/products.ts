@@ -35,3 +35,11 @@ export const byCodeProductInput = z.object({
 export const byProductIdInput = z.object({
   id: z.string().uuid(),
 });
+
+export const createProductDiscountInput = z.object({
+  productId: z.string().uuid(),
+  isPercentage: z.boolean(),
+  discount: z.coerce.number().min(0),
+  startDate: z.date(),
+  endDate: z.date(),
+});

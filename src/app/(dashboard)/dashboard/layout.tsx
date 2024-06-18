@@ -28,6 +28,10 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
   const store = await api.store.findCurrent();
   const stores = await api.store.list();
 
+  const canCreateStore = await api.rbac.checkPermissions({
+    permissions: ["store:create"],
+  });
+
   return (
     <div className="grid min-h-screen w-full overflow-hidden md:grid-cols-[280px_1fr]">
       <div className="hidden border-r md:block">
@@ -52,7 +56,11 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
           <div className="flex items-center gap-3">
             <MobileNav />
 
-            <SelectStore currentStore={store} stores={stores} />
+            <SelectStore
+              currentStore={store}
+              stores={stores}
+              canCreateStore={canCreateStore}
+            />
           </div>
 
           <nav className="flex items-center gap-3">

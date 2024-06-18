@@ -7,6 +7,7 @@ import Link from "next/link";
 import DateRangeFilter from "~/app/(dashboard)/dashboard/sales/date-range-filter";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { api } from "~/trpc/react";
 
 type DataTableToolbarProps<TData> = {
   table: Table<TData>;
@@ -16,6 +17,10 @@ const SalesDataTableToolbar = <TData,>({
   table,
 }: DataTableToolbarProps<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const canCreateSale = api.rbac.checkPermissions.useQuery({
+    permissions: ["sale:create"],
+  });
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -46,14 +51,16 @@ const SalesDataTableToolbar = <TData,>({
       </div>
 
       <div className="flex space-x-2">
-        <Button asChild size="sm" className="h-7 gap-1">
-          <Link href="/sales/create">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Nueva venta
-            </span>
-          </Link>
-        </Button>
+        {!canCreateSale.isPending && canCreateSale.data ? (
+          <Button asChild size="sm" className="h-7 gap-1">
+            <Link href="/sales/create">
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Nueva venta
+              </span>
+            </Link>
+          </Button>
+        ) : null}
       </div>
     </div>
   );

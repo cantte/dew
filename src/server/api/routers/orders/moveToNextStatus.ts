@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import { v4 as uuid } from "uuid";
 import type { TypeOf } from "zod";
 import { orderStatus } from "~/constants";
+import uuid from "~/lib/uuid";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import upsertOrderSummary from "~/server/api/routers/orders/upsertSummary";
 import type { byOrderIdInput } from "~/server/api/schemas/orders";

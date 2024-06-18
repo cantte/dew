@@ -80,19 +80,23 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
             <CommandEmpty>No se encontraron productos</CommandEmpty>
           )}
 
-          <CommandGroup heading="Sugerencias">
-            {suggestions.map((product) => (
-              <CommandItem
-                key={product.id}
-                value={`${product.id}@${product.name}`}
-                onSelect={handleSelect}
-              >
-                {product.name}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          {suggestions.length > 0 && (
+            <>
+              <CommandGroup heading="Sugerencias">
+                {suggestions.map((product) => (
+                  <CommandItem
+                    key={product.id}
+                    value={`${product.id}@${product.name}`}
+                    onSelect={handleSelect}
+                  >
+                    {product.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
 
-          <CommandSeparator />
+              <CommandSeparator />
+            </>
+          )}
 
           {products.length > 0 && (
             <CommandGroup heading="Resultados">

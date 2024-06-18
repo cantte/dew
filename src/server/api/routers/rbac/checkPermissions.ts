@@ -3,9 +3,9 @@ import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { checkPermissionsInput } from "~/server/api/schemas/rbac";
 import {
-  employeeStoreRole,
+  employeeStore,
   employees,
-  permission,
+  permissions,
   rolePermission,
 } from "~/server/db/schema";
 
@@ -19,22 +19,24 @@ const checkPermissions = async ({ ctx, input }: Options) => {
 
   const hasPermissions = await ctx.db
     .select({
-      hasPermissions: isNotNull(employeeStoreRole.employeeId),
+      hasPermissions: isNotNull(employeeStore.employeeId),
     })
-    .from(employeeStoreRole)
-    .innerJoin(employees, eq(employees.id, employeeStoreRole.employeeId))
+    .from(employeeStore)
+    .innerJoin(employees, eq(employees.id, employeeStore.employeeId))
+    .innerJoin(rolePermission, eq(rolePermission.roleId, employeeStore.roleId))
     .innerJoin(
-      rolePermission,
-      eq(rolePermission.roleId, employeeStoreRole.roleId),
-    )
-    .innerJoin(
-      permission,
+      permissions,
       and(
-        eq(permission.id, rolePermission.permissionId),
-        inArray(permission.name, grants),
+        eq(permissions.id, rolePermission.permissionId),
+        inArray(permissions.name, grants),
       ),
     )
-    .where(eq(employees.userId, ctx.session.user.id));
+    .where(
+      and(
+        isNotNull(employeeStore.roleId),
+        eq(employees.userId, ctx.session.user.id),
+      ),
+    );
 
   return hasPermissions.length > 0;
 };
