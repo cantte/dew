@@ -5,6 +5,7 @@ import { type Row } from "@tanstack/react-table";
 import NextLink from "next/link";
 import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
 import BarcodeModal from "~/components/products/barcode-modal";
+import CreateProductDiscountDialog from "~/components/products/create-discount";
 import DeleteProductModal from "~/components/products/delete-modal";
 import LinkToStoresModal from "~/components/products/link-to-stores-modal";
 import { Button } from "~/components/ui/button";
@@ -50,6 +51,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
               </NextLink>
             </DropdownMenuItem>
             <LinkToStoresModal product={row.original} />
+            <CreateProductDiscountDialog product={row.original} />
           </>
         ) : null}
 
