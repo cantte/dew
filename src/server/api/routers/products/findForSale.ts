@@ -51,7 +51,7 @@ const findProductForSale = async ({ ctx, input }: Options) => {
 
   return {
     ...product,
-    finalPrice: applyDiscount(product.purchasePrice, discounts),
+    finalPrice: applyDiscount(product.salePrice, discounts),
     discounts: discounts,
   };
 };
