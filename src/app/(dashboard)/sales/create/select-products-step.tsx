@@ -134,6 +134,8 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
     setProductSelected(true);
   };
 
+  const hasItems = form.watch("items").length > 0;
+
   return (
     <div className="flex w-full grow flex-col space-y-4">
       <div className="space-y-2">
@@ -319,7 +321,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
 
           <Button
             type="button"
-            disabled={isFindingProduct || !selectedProducts.length}
+            disabled={isFindingProduct || !hasItems}
             onClick={() => onContinue(selectedProducts)}
           >
             Continuar
