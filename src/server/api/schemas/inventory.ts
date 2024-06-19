@@ -6,3 +6,8 @@ export const updateInventoryInput = z.object({
   quantity: z.coerce.number().min(0),
   operation: z.enum(["add", "remove"]),
 });
+
+export const findInventoryInput = z.object({
+  id: z.string().uuid(),
+  storeId: z.string().uuid(),
+});
