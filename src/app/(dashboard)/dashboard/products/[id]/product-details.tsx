@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import ProductSummary from "~/app/(dashboard)/dashboard/products/[id]/product-summary";
 import { Badge } from "~/components/ui/badge";
 import {
   Card,
@@ -8,6 +10,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
+import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/server";
 
 type Props = {
@@ -86,41 +89,28 @@ const ProductDetails = async ({ id }: Props) => {
 
               <Separator className="my-2" />
 
-              <div className="font-semibold">Ventas</div>
-
-              <ul className="grid gap-2">
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">
-                    Cantidad vendida
-                  </span>
-                  <span>{Intl.NumberFormat("es-CO").format(0)}</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Total vendido</span>
-                  <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
-                    }).format(0)}
-                  </span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-muted-foreground">
-                    Ganancias generadas
-                  </span>
-                  <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
-                    }).format(0)}
-                  </span>
-                </li>
-              </ul>
+              <Suspense fallback={<ProductSummaryFallback />}>
+                <ProductSummary id={id} />
+              </Suspense>
             </div>
           </div>
         </div>
       </CardContent>
     </Card>
+  );
+};
+
+const ProductSummaryFallback = () => {
+  return (
+    <>
+      <div className="font-semibold">Ventas</div>
+
+      <div className="flex flex-col items-start space-y-2">
+        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-5 w-full" />
+        <Skeleton className="h-5 w-full" />
+      </div>
+    </>
   );
 };
 
