@@ -73,7 +73,7 @@ const ProductDetails = async ({ id }: Props) => {
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
-                    Gancia estimada por unidad
+                    Ganancia estimada por unidad
                   </span>
                   <span>
                     {Intl.NumberFormat("es-CO", {
