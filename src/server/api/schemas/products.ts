@@ -43,3 +43,13 @@ export const createProductDiscountInput = z.object({
   startDate: z.date(),
   endDate: z.date(),
 });
+
+export const upsertProductSummaryInput = z.array(
+  z.object({
+    id: z.string().uuid(),
+    productId: z.string().uuid(),
+    sales: z.coerce.number().min(0),
+    amount: z.coerce.number(),
+    profit: z.coerce.number(),
+  }),
+);

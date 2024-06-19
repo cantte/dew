@@ -11,6 +11,7 @@ import listProducts from "~/server/api/routers/products/list";
 import productsOverview from "~/server/api/routers/products/overview";
 import searchProducts from "~/server/api/routers/products/search";
 import searchProductDiscounts from "~/server/api/routers/products/searchDiscount";
+import searchProductSummary from "~/server/api/routers/products/searchSummary";
 import listProductStores from "~/server/api/routers/products/stores";
 import getProductSuggestions from "~/server/api/routers/products/suggestions";
 import updateProduct from "~/server/api/routers/products/update";
@@ -99,6 +100,11 @@ const productsRouter = router({
     .input(byProductIdInput)
     .query(async ({ ctx, input }) => {
       return await searchProductDiscounts({ ctx, input });
+    }),
+  searchSummary: authedProcedure
+    .input(byProductIdInput)
+    .query(async ({ ctx, input }) => {
+      return await searchProductSummary({ ctx, input });
     }),
 });
 

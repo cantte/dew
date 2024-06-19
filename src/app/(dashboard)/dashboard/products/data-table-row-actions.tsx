@@ -60,6 +60,12 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
         ) : null}
 
         <BarcodeModal product={row.original} />
+
+        <DropdownMenuItem asChild>
+          <NextLink href={`/dashboard/products/${row.original.id}`}>
+            Ver detalles
+          </NextLink>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

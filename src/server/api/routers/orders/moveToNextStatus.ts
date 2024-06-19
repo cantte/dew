@@ -4,6 +4,7 @@ import { orderStatus } from "~/constants";
 import uuid from "~/lib/uuid";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import upsertOrderSummary from "~/server/api/routers/orders/upsertSummary";
+import upsertProductsSummaries from "~/server/api/routers/products/upsertSummaries";
 import type { byOrderIdInput } from "~/server/api/schemas/orders";
 import { orderHistory, orderItems, orders } from "~/server/db/schema";
 
@@ -45,6 +46,16 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       const items = await tx.query.orderItems.findMany({
         where: eq(orderItems.orderId, input.id),
       });
+
+      const deliveredProductSummaries = items.map((item) => ({
+        id: uuid(),
+        productId: item.productId,
+        sales: item.quantity,
+        amount: item.quantity * item.salePrice,
+        profit: item.profit,
+      }));
+
+      await upsertProductsSummaries({ tx, input: deliveredProductSummaries });
 
       const orderSummary = {
         date: new Date(),

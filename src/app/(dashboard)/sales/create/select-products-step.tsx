@@ -94,7 +94,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
       quantity: 1,
       salePrice: product.finalPrice,
       purchasePrice: product.purchasePrice,
-      profit: product.salePrice - product.purchasePrice,
+      profit: product.finalPrice - product.purchasePrice,
     });
     setSelectedProducts([...selectedProducts, product]);
 

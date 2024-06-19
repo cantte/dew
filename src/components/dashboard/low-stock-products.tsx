@@ -2,6 +2,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
@@ -25,29 +26,31 @@ const LowStockProducts = async () => {
             Productos bajos en stock
           </span>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHeader>Producto</TableHeader>
-                <TableHeader>Cantidad</TableHeader>
-                <TableHeader>Stock</TableHeader>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {lowStockProducts.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>
-                    {Intl.NumberFormat("es-CO").format(product.quantity)}
-                  </TableCell>
-                  <TableCell>
-                    {Intl.NumberFormat("es-CO").format(product.stock)}
-                  </TableCell>
+          <div className="rounded-md border p-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Producto</TableHead>
+                  <TableHead>Cantidad</TableHead>
+                  <TableHead>Stock</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              <TableBody>
+                {lowStockProducts.map((product) => (
+                  <TableRow key={product.id}>
+                    <TableCell>{product.name}</TableCell>
+                    <TableCell>
+                      {Intl.NumberFormat("es-CO").format(product.quantity)}
+                    </TableCell>
+                    <TableCell>
+                      {Intl.NumberFormat("es-CO").format(product.stock)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       )}
     </>
