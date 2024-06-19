@@ -2,10 +2,7 @@ import { eq, isNotNull } from "drizzle-orm";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { linkToStoreInput } from "~/server/api/schemas/employees";
-import {
-  employees,
-  userPreferences
-} from "~/server/db/schema";
+import { employees, userPreferences } from "~/server/db/schema";
 
 type Options = {
   ctx: TRPCAuthedContext;
