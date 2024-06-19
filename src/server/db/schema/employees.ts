@@ -48,7 +48,9 @@ export const employeeStore = createTable(
     storeId: uuid("store_id")
       .notNull()
       .references(() => stores.id),
-    roleId: uuid("role_id").references(() => roles.id),
+    roleId: uuid("role_id")
+      .notNull()
+      .references(() => roles.id),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
