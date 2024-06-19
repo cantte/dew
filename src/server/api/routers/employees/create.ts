@@ -3,7 +3,7 @@ import type { TypeOf } from "zod";
 import EmployeeStoreInvitationEmail from "~/emails/employee-store-invitation";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { createEmployeeInput } from "~/server/api/schemas/employees";
-import { employeeStore, employees, stores } from "~/server/db/schema";
+import { employeeStore, employees, roles, stores } from "~/server/db/schema";
 import resend from "~/server/email/resend";
 
 type Options = {
@@ -30,10 +30,30 @@ const createEmployee = async ({ ctx, input }: Options) => {
       });
 
     // After creating an employee, link to store
-    await tx.insert(employeeStore).values({
-      employeeId: input.id,
-      storeId,
+    const employeeRole = await tx.query.roles.findFirst({
+      columns: {
+        id: true,
+      },
+      where: eq(roles.name, "employee"),
     });
+
+    if (!employeeRole) {
+      try {
+        tx.rollback();
+      } catch (error) {
+        throw new Error("Employee role not found");
+      }
+      return;
+    }
+
+    await tx
+      .insert(employeeStore)
+      .values({
+        employeeId: input.id,
+        storeId: input.storeId,
+        roleId: employeeRole.id,
+      })
+      .onConflictDoNothing();
 
     const storeQuery = await tx
       .select({
