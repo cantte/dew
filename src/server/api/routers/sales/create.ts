@@ -3,6 +3,7 @@ import type { TypeOf } from "zod";
 import NewSale from "~/emails/new-sale";
 import uuid from "~/lib/uuid";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
+import upsertProductsSummaries from "~/server/api/routers/products/upsertSummaries";
 import upsertSaleSummary from "~/server/api/routers/sales/upsertSummary";
 import type { createSaleInput } from "~/server/api/schemas/sales";
 import {
@@ -78,6 +79,16 @@ const createSale = async ({ ctx, input }: Options) => {
           ),
         );
     }
+
+    const soldProductSummaries = items.map((item) => ({
+      id: uuid(),
+      productId: item.productId,
+      sales: item.quantity,
+      amount: item.salePrice * item.quantity,
+      profit: item.profit,
+    }));
+
+    await upsertProductsSummaries({ tx, input: soldProductSummaries });
 
     const saleSummary = {
       date: new Date(),
