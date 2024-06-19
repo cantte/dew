@@ -58,10 +58,19 @@ const createStore = async ({ ctx, input }: Options) => {
       where: eq(roles.name, "admin"),
     });
 
+    if (!adminRole) {
+      try {
+        tx.rollback();
+      } catch (error) {
+        throw new Error("Admin role not found");
+      }
+      return;
+    }
+
     await tx.insert(employeeStore).values({
       employeeId: user.id,
       storeId: storeId,
-      roleId: adminRole?.id,
+      roleId: adminRole.id,
     });
   });
 };
