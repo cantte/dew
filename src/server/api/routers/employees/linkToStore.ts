@@ -3,10 +3,8 @@ import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { linkToStoreInput } from "~/server/api/schemas/employees";
 import {
-  employeeStore,
   employees,
-  roles,
-  userPreferences,
+  userPreferences
 } from "~/server/db/schema";
 
 type Options = {
@@ -59,22 +57,6 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
           storeId: input.storeId,
         },
       });
-
-    const employeeRole = await tx.query.roles.findFirst({
-      columns: {
-        id: true,
-      },
-      where: eq(roles.name, "employee"),
-    });
-
-    await tx
-      .insert(employeeStore)
-      .values({
-        employeeId: input.employeeId,
-        storeId: input.storeId,
-        roleId: employeeRole?.id,
-      })
-      .onConflictDoNothing();
   });
 };
 
