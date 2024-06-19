@@ -3,9 +3,11 @@ import {
   boolean,
   date,
   index,
+  integer,
   real,
   text,
   timestamp,
+  unique,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -65,6 +67,28 @@ export const productsDiscounts = createTable(
   (productDiscount) => ({
     productIdIdx: index("product_discount_product_id_idx").on(
       productDiscount.productId,
+    ),
+  }),
+);
+
+export const productSummaries = createTable(
+  "product_summary",
+  {
+    id: uuid("id").notNull().primaryKey(),
+    productId: uuid("product_id")
+      .notNull()
+      .references(() => products.id),
+    sales: integer("sales").notNull(),
+    amount: real("amount").notNull(),
+    profit: real("profit").notNull(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+  },
+  (productSummary) => ({
+    productIdIdx: unique("product_summary_product_id_idx").on(
+      productSummary.productId,
     ),
   }),
 );
