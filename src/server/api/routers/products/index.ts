@@ -8,6 +8,7 @@ import findProductById from "~/server/api/routers/products/findById";
 import findProductForSale from "~/server/api/routers/products/findForSale";
 import linkProductToStores from "~/server/api/routers/products/linkToStores";
 import listProducts from "~/server/api/routers/products/list";
+import searchMostSoldProducts from "~/server/api/routers/products/mostSold";
 import productsOverview from "~/server/api/routers/products/overview";
 import searchProducts from "~/server/api/routers/products/search";
 import searchProductDiscounts from "~/server/api/routers/products/searchDiscount";
@@ -106,6 +107,9 @@ const productsRouter = router({
     .query(async ({ ctx, input }) => {
       return await searchProductSummary({ ctx, input });
     }),
+  mostSold: authedProcedure.query(async ({ ctx }) => {
+    return await searchMostSoldProducts({ ctx });
+  }),
 });
 
 export default productsRouter;

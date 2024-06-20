@@ -9,7 +9,7 @@ import {
 import { api } from "~/trpc/server";
 
 const MostSoldProducts = async () => {
-  const mostSoldProducts = await api.sale.mostSoldProducts();
+  const mostSoldProducts = await api.product.mostSold();
 
   return (
     <div className="flex flex-col space-y-2">
@@ -32,7 +32,7 @@ const MostSoldProducts = async () => {
               <TableBody>
                 {mostSoldProducts.map((product) => (
                   <TableRow key={product.id}>
-                    <TableCell>{product.name}</TableCell>
+                    <TableCell>{product.name ?? "No encontrado"}</TableCell>
                     <TableCell>
                       {Intl.NumberFormat("es-CO").format(product.quantity)}
                     </TableCell>
