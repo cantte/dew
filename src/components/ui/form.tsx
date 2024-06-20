@@ -1,17 +1,17 @@
-import * as React from "react";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
+import * as React from "react";
 import {
   Controller,
+  FormProvider,
+  useFormContext,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
-  FormProvider,
-  useFormContext,
 } from "react-hook-form";
 
-import { cn } from "~/lib/utils";
 import { Label } from "~/components/ui/label";
+import { cn } from "~/lib/utils";
 
 const Form = FormProvider;
 
@@ -32,8 +32,9 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
+  const name = React.useMemo(() => props.name, [props.name]);
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider value={{ name: name }}>
       <Controller {...props} />
     </FormFieldContext.Provider>
   );
@@ -75,9 +76,11 @@ const FormItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const id = React.useId();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const wrapId = React.useMemo(() => id, []);
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext.Provider value={{ id: wrapId }}>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   );
@@ -166,12 +169,12 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = "FormMessage";
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
-  FormMessage,
   FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
 };

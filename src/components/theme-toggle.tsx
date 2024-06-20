@@ -2,6 +2,7 @@
 
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useMemo } from "react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +14,16 @@ import {
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
+  const icon = useMemo(() => {
+    if (theme === "light") {
+      return <Sun className="h-3 w-3" />;
+    }
+    if (theme === "dark") {
+      return <Moon className="h-3 w-3" />;
+    }
+    return <Monitor className="h-3 w-3" />;
+  }, [theme]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,13 +32,7 @@ export function ThemeToggle() {
           className="flex h-7 w-full justify-between gap-1"
         >
           <span className="ml-1 whitespace-nowrap text-xs">Cambiar tema</span>
-          {theme === "light" ? (
-            <Sun className="h-3 w-3" />
-          ) : theme === "dark" ? (
-            <Moon className="h-3 w-3" />
-          ) : (
-            <Monitor className="h-3 w-3" />
-          )}
+          {icon}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

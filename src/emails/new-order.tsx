@@ -20,18 +20,11 @@ type Props = {
   store: string;
 };
 
-const NewSaleCustomerEmail = ({
-  name,
-  total,
-  products,
-  date,
-  url,
-  store,
-}: Props) => {
+const NewOrderEmail = ({ name, total, products, date, url, store }: Props) => {
   return (
     <Html>
       <Head />
-      <Preview>Nueva venta registrada</Preview>
+      <Preview>Nueva orden registrada</Preview>
       <Tailwind config={tailwindConfig}>
         <Body className="mx-auto my-auto px-2 font-sans">
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
@@ -43,7 +36,7 @@ const NewSaleCustomerEmail = ({
             </Text>
 
             <Text className="scroll-m-20 text-xl font-semibold tracking-tight">
-              Señor(a) {name}, hemos registrado una nueva compra en nuestro
+              Señor(a) {name}, hemos registrado una nueva orden en nuestro
               sistema en la tienda {store}.
             </Text>
 
@@ -52,7 +45,7 @@ const NewSaleCustomerEmail = ({
                 Has compadro un total de{" "}
                 {Intl.NumberFormat("es-CO").format(products || 0)}
                 {products === 1 ? " producto" : " productos"}. El total de tu
-                compra es de{" "}
+                orden es de{" "}
                 {Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
@@ -60,7 +53,7 @@ const NewSaleCustomerEmail = ({
                 .
               </Text>
               <Text>
-                Puedes ver el detalle de tu compra dando clic en el siguiente
+                Puedes ver el detalle de tu orden dando clic en el siguiente
                 enlace:
               </Text>
 
@@ -69,7 +62,7 @@ const NewSaleCustomerEmail = ({
                   className="rounded-md bg-primary px-4 py-2 text-center text-sm font-medium text-white"
                   href={url}
                 >
-                  Ver detalle de la compra
+                  Ver detalle de la orden
                 </Button>
               </Container>
             </Container>
@@ -90,4 +83,4 @@ const NewSaleCustomerEmail = ({
   );
 };
 
-export default NewSaleCustomerEmail;
+export default NewOrderEmail;

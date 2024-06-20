@@ -31,7 +31,7 @@ const MobileNav = () => {
                 return (
                   <MobileLink
                     href={item.href}
-                    key={index}
+                    key={`${item.href}-${index}`}
                     onOpenChange={setOpen}
                   >
                     <Button
@@ -48,7 +48,10 @@ const MobileNav = () => {
               }
 
               return (
-                <div key={index} className="flex flex-col space-y-3 pt-6">
+                <div
+                  key={`${item.href}-${index}`}
+                  className="flex flex-col space-y-3 pt-6"
+                >
                   <h4 className="font-medium">{item.title}</h4>
                   {item?.items?.length &&
                     item.items.map((item) => (

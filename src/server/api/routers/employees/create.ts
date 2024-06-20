@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { TypeOf } from "zod";
 import EmployeeStoreInvitationEmail from "~/emails/employee-store-invitation";
+import uuid from "~/lib/uuid";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { createEmployeeInput } from "~/server/api/schemas/employees";
 import { employeeStore, employees, roles, stores } from "~/server/db/schema";
@@ -14,10 +15,13 @@ type Options = {
 const createEmployee = async ({ ctx, input }: Options) => {
   const { storeId, ...data } = input;
   await ctx.db.transaction(async (tx) => {
+    const employeeId = uuid();
+
     await tx
       .insert(employees)
       .values({
         ...data,
+        id: employeeId,
         createdBy: ctx.session.user.id,
       })
       .onConflictDoUpdate({
@@ -49,7 +53,7 @@ const createEmployee = async ({ ctx, input }: Options) => {
     await tx
       .insert(employeeStore)
       .values({
-        employeeId: input.id,
+        employeeId: employeeId,
         storeId: input.storeId,
         roleId: employeeRole.id,
       })
@@ -89,8 +93,8 @@ const createEmployee = async ({ ctx, input }: Options) => {
         employeeName: data.name,
         storeName: store.name,
         url: process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}/stores/${storeId}/accept-invitation?employeeId=${input.id}`
-          : `http://localhost:3000/stores/${storeId}/accept-invitation?employeeId=${input.id}`,
+          ? `https://${process.env.VERCEL_URL}/stores/${storeId}/accept-invitation?employeeId=${employeeId}`
+          : `http://localhost:3000/stores/${storeId}/accept-invitation?employeeId=${employeeId}`,
       }),
     });
   });

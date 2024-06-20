@@ -9,7 +9,7 @@ type Options = {
   input: TypeOf<typeof findEmployeeInput>;
 };
 
-const findEmployee = async ({ ctx, input }: Options) => {
+const findEmployeeById = async ({ ctx, input }: Options) => {
   return ctx.db.query.employees.findFirst({
     columns: {
       id: true,
@@ -18,8 +18,8 @@ const findEmployee = async ({ ctx, input }: Options) => {
       email: true,
       phone: true,
     },
-    where: eq(employees.code, input.code),
+    where: eq(employees.id, input.code),
   });
 };
 
-export default findEmployee;
+export default findEmployeeById;

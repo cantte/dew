@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createEmployeeInput = z.object({
-  id: z.string().min(1).max(36),
+  code: z.string().min(1).max(36).optional(),
   name: z.string().min(1).max(128),
   email: z.string().max(255),
   phone: z.string().max(32).optional(),
@@ -21,5 +21,5 @@ export const linkToStoreInput = z.object({
 });
 
 export const findEmployeeInput = z.object({
-  id: z.string().min(1).max(36),
+  code: z.string().min(1).max(36),
 });

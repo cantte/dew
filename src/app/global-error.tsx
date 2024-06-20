@@ -8,13 +8,13 @@ type Props = {
   error: unknown;
 };
 
-export default function GlobalError({ error }: Props) {
+export default function GlobalError({ error }: Readonly<Props>) {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
 
   return (
-    <html>
+    <html lang="en">
       <body>
         <Error statusCode={500} title="An unexpected error has occurred" />
       </body>

@@ -10,6 +10,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { createTable } from "~/server/db/schema/base";
+import { stores } from "~/server/db/schema/stores";
 
 export const users = createTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
@@ -89,6 +90,11 @@ export const verificationTokens = createTable(
 );
 
 export const userPreferences = createTable("user_preference", {
-  userId: varchar("user_id", { length: 255 }).notNull().primaryKey(),
-  storeId: uuid("store_id").notNull(),
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .references(() => users.id),
+  storeId: uuid("store_id")
+    .notNull()
+    .references(() => stores.id),
 });

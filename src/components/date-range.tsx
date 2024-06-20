@@ -2,7 +2,10 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { type HTMLAttributes } from "react";
-import { type DateRange, type SelectRangeEventHandler } from "react-day-picker";
+import {
+  type DateRange as DateRangeType,
+  type SelectRangeEventHandler,
+} from "react-day-picker";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import {
@@ -12,16 +15,12 @@ import {
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
 
-type DateRangeFilterProps = HTMLAttributes<HTMLDivElement> & {
-  selected?: DateRange;
+type Props = HTMLAttributes<HTMLDivElement> & {
+  selected?: DateRangeType;
   onSelectRange?: SelectRangeEventHandler;
 };
 
-const DateRange = ({
-  className,
-  selected,
-  onSelectRange,
-}: DateRangeFilterProps) => {
+const DateRange = ({ className, selected, onSelectRange }: Props) => {
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>

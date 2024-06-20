@@ -1,6 +1,5 @@
 import { relations, sql } from "drizzle-orm";
 import {
-  index,
   primaryKey,
   timestamp,
   unique,
@@ -16,6 +15,7 @@ export const employees = createTable(
   "employee",
   {
     id: uuid("id").notNull().primaryKey(),
+    code: varchar("code", { length: 32 }),
     name: varchar("name", { length: 128 }).notNull(),
     email: varchar("email", { length: 255 }).notNull(),
     phone: varchar("phone", { length: 32 }),
@@ -29,8 +29,11 @@ export const employees = createTable(
     updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
   },
   (employee) => ({
-    createdByIdx: index("employee_created_by_idx").on(employee.createdBy),
-    uniqueEmail: unique("employee_email_unique").on(employee.email),
+    uniqueEmailPhoneCode: unique("employee_email_phone_code_unique").on(
+      employee.email,
+      employee.phone,
+      employee.code,
+    ),
   }),
 );
 
