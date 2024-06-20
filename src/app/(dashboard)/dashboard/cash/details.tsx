@@ -2,9 +2,9 @@
 
 import { endOfDay, startOfDay } from "date-fns";
 import { Fragment, useState } from "react";
+import type { DateRange } from "react-day-picker";
 import CashRegisterActions from "~/app/(dashboard)/dashboard/cash/actions";
 import CashRegisterTransactions from "~/app/(dashboard)/dashboard/cash/transactions";
-import type DateRange from "~/components/date-range";
 import DateRangeFilter from "~/components/date-range-filter";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { api } from "~/trpc/react";
