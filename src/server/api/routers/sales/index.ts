@@ -3,7 +3,6 @@ import publicProcedure from "~/server/api/procedures/public";
 import createSale from "~/server/api/routers/sales/create";
 import findSale from "~/server/api/routers/sales/find";
 import listSales from "~/server/api/routers/sales/list";
-import mostSoldProducts from "~/server/api/routers/sales/mostSoldProducts";
 import getSalesOverview from "~/server/api/routers/sales/overview";
 import generateSalesReport from "~/server/api/routers/sales/report";
 import { byStoreInput } from "~/server/api/schemas/common";
@@ -36,9 +35,6 @@ const salesRouter = router({
     .query(async ({ ctx, input }) => {
       return await findSale({ ctx, input });
     }),
-  mostSoldProducts: authedProcedure.query(async ({ ctx }) => {
-    return await mostSoldProducts({ ctx });
-  }),
   report: authedProcedure
     .input(getSalesOverviewInput)
     .query(async ({ ctx, input }) => {
