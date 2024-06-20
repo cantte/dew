@@ -1,13 +1,13 @@
 import {
-    Body,
-    Button,
-    Container,
-    Head,
-    Hr,
-    Html,
-    Preview,
-    Tailwind,
-    Text,
+  Body,
+  Button,
+  Container,
+  Head,
+  Hr,
+  Html,
+  Preview,
+  Tailwind,
+  Text,
 } from "@react-email/components";
 import tailwindConfig from "~/config/email/tailwind";
 
