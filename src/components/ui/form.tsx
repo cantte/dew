@@ -32,9 +32,10 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
-  const name = React.useMemo(() => props.name, [props.name]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const providerProps = React.useMemo(() => ({ name: props.name }), []);
   return (
-    <FormFieldContext.Provider value={{ name: name }}>
+    <FormFieldContext.Provider value={providerProps}>
       <Controller {...props} />
     </FormFieldContext.Provider>
   );
@@ -77,10 +78,10 @@ const FormItem = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const id = React.useId();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const wrapId = React.useMemo(() => id, []);
+  const providerProps = React.useMemo(() => ({ id }), []);
 
   return (
-    <FormItemContext.Provider value={{ id: wrapId }}>
+    <FormItemContext.Provider value={providerProps}>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   );
