@@ -57,7 +57,7 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
     );
   }
 
-  const employee = await api.employee.find({ code: employeeId as string });
+  const employee = await api.employee.findById({ code: employeeId as string });
   if (!employee) {
     return (
       <div className="w-full max-w-7xl">
