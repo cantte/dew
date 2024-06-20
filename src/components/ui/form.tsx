@@ -76,9 +76,11 @@ const FormItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const id = React.useId();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const wrapId = React.useMemo(() => id, []);
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext.Provider value={{ id: wrapId }}>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   );
