@@ -14,7 +14,7 @@ export default function GlobalError({ error }: Readonly<Props>) {
   }, [error]);
 
   return (
-    <html>
+    <html lang="en">
       <body>
         <Error statusCode={500} title="An unexpected error has occurred" />
       </body>
