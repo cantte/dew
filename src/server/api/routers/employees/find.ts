@@ -13,11 +13,12 @@ const findEmployee = async ({ ctx, input }: Options) => {
   return ctx.db.query.employees.findFirst({
     columns: {
       id: true,
+      code: true,
       name: true,
       email: true,
       phone: true,
     },
-    where: eq(employees.id, input.id),
+    where: eq(employees.code, input.code),
   });
 };
 

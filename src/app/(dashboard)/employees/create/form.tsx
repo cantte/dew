@@ -63,11 +63,11 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
     createEmployee.mutate(data);
   };
 
-  const employeeId = useDebounce(form.watch("id"), 1000);
+  const employeeCode = useDebounce(form.watch("code"), 1000);
   const { data: employee } = api.employee.find.useQuery(
-    { id: employeeId },
+    { code: employeeCode ?? "" },
     {
-      enabled: employeeId !== "",
+      enabled: employeeCode !== "",
     },
   );
 
@@ -77,6 +77,17 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
       setIsOpen(true);
     }
   }, [employee]);
+
+  const loadEmployee = () => {
+    form.reset({
+      code: employeeCode,
+      name: employee?.name,
+      email: employee?.email,
+      phone: employee?.phone !== null ? employee?.phone : undefined,
+      storeId,
+    });
+    setIsOpen(false);
+  };
 
   return (
     <Fragment>
@@ -91,10 +102,7 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction
-              autoFocus
-              onClick={() => form.reset(employee as FormValues)}
-            >
+            <AlertDialogAction autoFocus onClick={loadEmployee}>
               Cargar datos
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -107,7 +115,7 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
         >
           <FormField
             control={form.control}
-            name="id"
+            name="code"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Identificación</FormLabel>
