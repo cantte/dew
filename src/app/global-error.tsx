@@ -8,7 +8,7 @@ type Props = {
   error: unknown;
 };
 
-export default function GlobalError({ error }: Props) {
+export default function GlobalError({ error }: Readonly<Props>) {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
