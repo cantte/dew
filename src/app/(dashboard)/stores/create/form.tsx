@@ -39,7 +39,12 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
   useEffect(() => {
     if (createStore.isSuccess) {
       router.refresh();
-      onSuccess?.();
+      if (onSuccess) {
+        onSuccess();
+        return;
+      }
+
+      router.push("/dashboard");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createStore.isSuccess, router]);
