@@ -164,15 +164,19 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
 
           <FormDescription>
             Escanea el código de barras del producto o ingresa el código de
-            forma manual. Presiona enter para agregar el producto a la lista.
+            forma manual y presiona{" "}
+            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+              <span className="text-xs">Enter</span>K
+            </kbd>{" "}
+            para agregar el producto a la lista.
           </FormDescription>
 
           <FormDescription>
-            Presiona{" "}
+            Si deseas buscar un producto por nombre{" "}
             <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
               <span className="text-xs">Ctrl +</span>K
             </kbd>{" "}
-            para buscar un producto.
+            para abrir el buscador.
           </FormDescription>
 
           {isFindingProduct && (
