@@ -8,11 +8,11 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "dev": "next dev",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint": "biome lint",
     "start": "next start",
     "email": "dotenv \"email dev --dir src/emails --port 3500\"",
-    "format:check": "prettier --check .",
-    "format": "prettier --write ."
+    "format:check": "biome format",
+    "format": "biome format --write ."
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.1",
