@@ -5,7 +5,7 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { type z } from 'zod'
+import type { z } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Form,
@@ -20,7 +20,7 @@ import { Textarea } from '~/components/ui/textarea'
 import { useToast } from '~/components/ui/use-toast'
 import { updateProductInput } from '~/server/api/schemas/products'
 import { api } from '~/trpc/react'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   product: NonNullable<RouterOutputs['product']['findById']>

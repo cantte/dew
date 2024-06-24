@@ -1,5 +1,5 @@
 import { CircleUserRound } from 'lucide-react'
-import { type User } from 'next-auth'
+import type { User } from 'next-auth'
 import SignOutButton from '~/components/signout-button'
 import { ThemeToggle } from '~/components/theme-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'

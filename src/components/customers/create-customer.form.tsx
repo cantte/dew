@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { type z } from 'zod'
+import type { z } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Form,

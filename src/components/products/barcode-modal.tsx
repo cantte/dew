@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { type Product } from '~/app/(dashboard)/dashboard/products/columns'
+import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
 import Barcode from '~/components/barcode'
 import {
   Dialog,

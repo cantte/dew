@@ -6,7 +6,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { type z } from 'zod'
+import type { z } from 'zod'
 import {
   AlertDialog,
   AlertDialogAction,

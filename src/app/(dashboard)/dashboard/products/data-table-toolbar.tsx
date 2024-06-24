@@ -1,7 +1,7 @@
 'use client'
 
 import { Cross2Icon } from '@radix-ui/react-icons'
-import { type Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
 import { mkConfig } from 'export-to-csv'
 import { FileDown, FileUp } from 'lucide-react'
 import { useMemo } from 'react'

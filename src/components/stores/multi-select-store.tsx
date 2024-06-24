@@ -7,7 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   stores: RouterOutputs['store']['list']

@@ -1,9 +1,9 @@
 'use client'
 
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import DataTableRowActions from '~/app/(dashboard)/dashboard/products/data-table-row-actions'
 import { Badge } from '~/components/ui/badge'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 export type Product = RouterOutputs['product']['list'][number]
 

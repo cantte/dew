@@ -1,9 +1,9 @@
 'use client'
 
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import UpdateEmployeeModal from '~/app/(dashboard)/dashboard/employees/update.modal'
 import { Badge } from '~/components/ui/badge'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 export type Employee = RouterOutputs['employee']['byStore'][number]
 

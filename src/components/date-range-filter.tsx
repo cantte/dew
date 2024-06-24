@@ -8,7 +8,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from 'date-fns'
-import { type DateRange as DateRangePicker } from 'react-day-picker'
+import type { DateRange as DateRangePicker } from 'react-day-picker'
 import DateRange from '~/components/date-range'
 import { Button } from '~/components/ui/button'
 

@@ -8,7 +8,7 @@ import {
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core'
-import { type AdapterAccount } from 'next-auth/adapters'
+import type { AdapterAccount } from 'next-auth/adapters'
 import { createTable } from '~/server/db/schema/base'
 import { stores } from '~/server/db/schema/stores'
 

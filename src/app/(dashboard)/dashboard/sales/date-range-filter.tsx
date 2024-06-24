@@ -1,9 +1,9 @@
 import { CalendarIcon } from '@radix-ui/react-icons'
-import { type Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { useEffect, type HTMLAttributes } from 'react'
-import { type DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { Button } from '~/components/ui/button'
 import { Calendar } from '~/components/ui/calendar'
 import {

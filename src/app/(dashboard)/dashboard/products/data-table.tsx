@@ -11,7 +11,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { type Product } from '~/app/(dashboard)/dashboard/products/columns'
+import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
 import ProductsDataTableToolbar from '~/app/(dashboard)/dashboard/products/data-table-toolbar'
 import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'

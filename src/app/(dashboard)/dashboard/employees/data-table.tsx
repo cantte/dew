@@ -9,7 +9,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { type Employee } from '~/app/(dashboard)/dashboard/employees/columns'
+import type { Employee } from '~/app/(dashboard)/dashboard/employees/columns'
 import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'
 import { api } from '~/trpc/react'

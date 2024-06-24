@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { type Product } from '~/app/(dashboard)/dashboard/products/columns'
+import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
 import ConfirmDialog from '~/components/confirm-dialog'
 import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 import { api } from '~/trpc/react'

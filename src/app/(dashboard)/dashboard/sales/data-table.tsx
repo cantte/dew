@@ -12,7 +12,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { type Sale } from '~/app/(dashboard)/dashboard/sales/columns'
+import type { Sale } from '~/app/(dashboard)/dashboard/sales/columns'
 import SalesDataTableToolbar from '~/app/(dashboard)/dashboard/sales/data-table-toolbar'
 import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'

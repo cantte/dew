@@ -3,7 +3,7 @@
 import { Badge } from '~/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { ScrollArea } from '~/components/ui/scroll-area'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   transactions: RouterOutputs['cashRegister']['transactions']['list']

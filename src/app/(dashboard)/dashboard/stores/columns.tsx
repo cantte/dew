@@ -1,8 +1,8 @@
 'use client'
 
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import UpdateStoreModal from '~/components/stores/update-store.modal'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 export type Store = RouterOutputs['store']['list'][number]
 

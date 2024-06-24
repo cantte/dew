@@ -1,10 +1,10 @@
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
-import { type HTMLAttributes } from 'react'
-import {
-  type DateRange as DateRangeType,
-  type SelectRangeEventHandler,
+import type { HTMLAttributes } from 'react'
+import type {
+  DateRange as DateRangeType,
+  SelectRangeEventHandler,
 } from 'react-day-picker'
 import { Button } from '~/components/ui/button'
 import { Calendar } from '~/components/ui/calendar'

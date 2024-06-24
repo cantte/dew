@@ -1,6 +1,6 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import BackButton from '~/components/back-button'
 import Footer from '~/components/footer'
 import { Badge } from '~/components/ui/badge'

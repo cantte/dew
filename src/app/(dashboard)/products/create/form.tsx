@@ -6,7 +6,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { type z } from 'zod'
+import type { z } from 'zod'
 import MultiSelectStore from '~/components/stores/multi-select-store'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
@@ -25,7 +25,7 @@ import { Textarea } from '~/components/ui/textarea'
 import { useToast } from '~/components/ui/use-toast'
 import { createProductInput } from '~/server/api/schemas/products'
 import { api } from '~/trpc/react'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   storeId: string

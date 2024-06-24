@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from '~/components/ui/select'
 import { api } from '~/trpc/react'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   currentStore: RouterOutputs['store']['find']

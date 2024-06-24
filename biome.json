@@ -47,7 +47,8 @@
         "useAwait": "off",
         "useNamespaceKeyword": "error"
       }
-    }
+    },
+    "ignore": ["**/pnpm-lock.yaml", ".next/**"]
   },
   "javascript": {
     "formatter": {

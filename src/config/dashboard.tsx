@@ -7,7 +7,7 @@ import {
   Store,
   Users,
 } from 'lucide-react'
-import { type SidebarNavItem } from '~/types/nav'
+import type { SidebarNavItem } from '~/types/nav'
 
 type DashboardConfig = {
   mainNav: SidebarNavItem[]

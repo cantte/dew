@@ -5,8 +5,8 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import { useMediaQuery } from '@uidotdev/usehooks'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
-import { type z } from 'zod'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import type { z } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Dialog,
@@ -62,6 +62,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
   const router = useRouter()
   const utils = api.useUtils()
   const { toast } = useToast()
+
   useEffect(() => {
     if (createCashRegisterTransaction.isSuccess) {
       setOpen(false)
@@ -74,7 +75,6 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
         description: 'La transacción se realizó con éxito.',
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createCashRegisterTransaction.isSuccess])
 
   useEffect(() => {

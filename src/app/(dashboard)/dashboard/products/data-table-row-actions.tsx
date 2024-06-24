@@ -1,9 +1,9 @@
 'use client'
 
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { type Row } from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
 import NextLink from 'next/link'
-import { type Product } from '~/app/(dashboard)/dashboard/products/columns'
+import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
 import BarcodeModal from '~/components/products/barcode-modal'
 import CreateProductDiscountDialog from '~/components/products/create-discount'
 import DeleteProductModal from '~/components/products/delete-modal'

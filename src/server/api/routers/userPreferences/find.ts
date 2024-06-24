@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { type TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import { userPreferences } from '~/server/db/schema'
 
 const findUserPreference = async (ctx: TRPCAuthedContext) => {

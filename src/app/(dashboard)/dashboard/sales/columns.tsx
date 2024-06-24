@@ -1,12 +1,12 @@
 'use client'
 
 import { EyeOpenIcon } from '@radix-ui/react-icons'
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import NextLink from 'next/link'
-import { type DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { Button } from '~/components/ui/button'
 import { paymentMethods } from '~/server/api/schemas/sales'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 export type Sale = RouterOutputs['sale']['list'][number]
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { Cross2Icon } from '@radix-ui/react-icons'
-import { type Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 import DateRangeFilter from '~/app/(dashboard)/dashboard/sales/date-range-filter'

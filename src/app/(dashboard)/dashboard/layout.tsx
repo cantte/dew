@@ -1,7 +1,7 @@
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import DashboardSidebar from '~/app/(dashboard)/dashboard/sidebar'
 import AccountNav from '~/components/account-nav'
 import MobileNav from '~/components/mobile-nav'

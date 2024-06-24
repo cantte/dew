@@ -1,6 +1,6 @@
 'use client'
 
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import OrderRowActions from '~/app/(dashboard)/dashboard/orders/row-actions'
 import { Badge } from '~/components/ui/badge'
 import { orderStatus } from '~/constants'

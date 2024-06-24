@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw, SquarePen } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { type TypeOf } from 'zod'
+import type { TypeOf } from 'zod'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import { Button } from '~/components/ui/button'
 import {
@@ -25,7 +25,7 @@ import { Input } from '~/components/ui/input'
 import { useToast } from '~/components/ui/use-toast'
 import { updateStoreInput } from '~/server/api/schemas/stores'
 import { api } from '~/trpc/react'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   store: NonNullable<RouterOutputs['store']['list'][number]>

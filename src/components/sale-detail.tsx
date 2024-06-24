@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '~/components/ui/table'
 import { paymentMethods } from '~/server/api/schemas/sales'
-import { type RouterOutputs } from '~/trpc/shared'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   sale: NonNullable<RouterOutputs['sale']['find']>
