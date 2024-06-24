@@ -46,6 +46,9 @@
         "noUnsafeDeclarationMerging": "error",
         "useAwait": "off",
         "useNamespaceKeyword": "error"
+      },
+      "nursery": {
+        "useSortedClasses": "warn"
       }
     },
     "ignore": ["**/pnpm-lock.yaml", ".next/**"]
