@@ -3,7 +3,6 @@ import { RotateCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
-import { type ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import {
@@ -35,9 +34,10 @@ import {
 import { useToast } from "~/components/ui/use-toast";
 import { updateInventoryInput } from "~/server/api/schemas/inventory";
 import { api } from "~/trpc/react";
+import type { RouterOutputs } from "~/trpc/shared";
 
 type Props = {
-  product: ProductInventory;
+  product: RouterOutputs["product"]["list"][number];
 };
 
 type FormValues = z.infer<typeof updateInventoryInput>;
