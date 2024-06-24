@@ -9,7 +9,7 @@ type Options = {
   input: TypeOf<typeof byCodeProductInput>;
 };
 
-const existsProduct = async ({ ctx, input }: Options) => {
+const checkProductExistence = async ({ ctx, input }: Options) => {
   return ctx.db.query.products.findFirst({
     columns: {
       code: true,
@@ -21,4 +21,4 @@ const existsProduct = async ({ ctx, input }: Options) => {
   });
 };
 
-export default existsProduct;
+export default checkProductExistence;

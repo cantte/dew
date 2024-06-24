@@ -2,7 +2,7 @@ import authedProcedure from "~/server/api/procedures/authed";
 import createProduct from "~/server/api/routers/products/create";
 import createProductDiscount from "~/server/api/routers/products/createDiscount";
 import deleteProduct from "~/server/api/routers/products/delete";
-import existsProduct from "~/server/api/routers/products/exists";
+import checkProductExistence from "~/server/api/routers/products/exists";
 import findProduct from "~/server/api/routers/products/find";
 import findProductById from "~/server/api/routers/products/findById";
 import findProductForSale from "~/server/api/routers/products/findForSale";
@@ -18,13 +18,13 @@ import getProductSuggestions from "~/server/api/routers/products/suggestions";
 import updateProduct from "~/server/api/routers/products/update";
 import { byStoreInput } from "~/server/api/schemas/common";
 import {
-  byCodeProductInput,
-  byProductIdInput,
-  createProductDiscountInput,
-  createProductInput,
-  linkToStoresInput,
-  searchProductsInput,
-  updateProductInput,
+    byCodeProductInput,
+    byProductIdInput,
+    createProductDiscountInput,
+    createProductInput,
+    linkToStoresInput,
+    searchProductsInput,
+    updateProductInput,
 } from "~/server/api/schemas/products";
 import { router } from "~/server/api/trpc";
 
@@ -40,7 +40,7 @@ const productsRouter = router({
   exists: authedProcedure
     .input(byCodeProductInput)
     .query(async ({ ctx, input }) => {
-      return await existsProduct({ ctx, input });
+      return await checkProductExistence({ ctx, input });
     }),
   find: authedProcedure
     .input(byCodeProductInput)
