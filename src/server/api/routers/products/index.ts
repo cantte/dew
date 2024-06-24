@@ -1,4 +1,5 @@
 import authedProcedure from "~/server/api/procedures/authed";
+import bulkCreateProduct from "~/server/api/routers/products/bulkCreate";
 import createProduct from "~/server/api/routers/products/create";
 import createProductDiscount from "~/server/api/routers/products/createDiscount";
 import deleteProduct from "~/server/api/routers/products/delete";
@@ -18,13 +19,14 @@ import getProductSuggestions from "~/server/api/routers/products/suggestions";
 import updateProduct from "~/server/api/routers/products/update";
 import { byStoreInput } from "~/server/api/schemas/common";
 import {
-    byCodeProductInput,
-    byProductIdInput,
-    createProductDiscountInput,
-    createProductInput,
-    linkToStoresInput,
-    searchProductsInput,
-    updateProductInput,
+  bulkCreateProductInput,
+  byCodeProductInput,
+  byProductIdInput,
+  createProductDiscountInput,
+  createProductInput,
+  linkToStoresInput,
+  searchProductsInput,
+  updateProductInput,
 } from "~/server/api/schemas/products";
 import { router } from "~/server/api/trpc";
 
@@ -33,6 +35,11 @@ const productsRouter = router({
     .input(createProductInput)
     .mutation(async ({ ctx, input }) => {
       await createProduct({ ctx, input });
+    }),
+  bulkCreate: authedProcedure
+    .input(bulkCreateProductInput)
+    .mutation(async ({ ctx, input }) => {
+      await bulkCreateProduct({ ctx, input });
     }),
   list: authedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
     return await listProducts({ ctx, input });

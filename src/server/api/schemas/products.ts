@@ -11,6 +11,19 @@ export const createProductInput = z.object({
   stores: z.array(z.string().uuid()).min(1),
 });
 
+export const bulkCreateProductInput = z.object({
+  products: z.array(
+    z.object({
+      code: z.string().min(1).max(255),
+      name: z.string().min(1).max(255),
+      description: z.string().optional(),
+      purchasePrice: z.coerce.number().min(0),
+      salePrice: z.coerce.number().min(0),
+    }),
+  ),
+  store: z.string().uuid(),
+});
+
 export const updateProductInput = z.object({
   id: z.string().min(1).max(255),
   name: z.string().min(1).max(255),
