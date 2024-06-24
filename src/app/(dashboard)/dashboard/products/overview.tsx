@@ -5,15 +5,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { type RouterOutputs } from "~/trpc/shared";
+import { api } from "~/trpc/server";
 
 type Props = {
-  overview: NonNullable<RouterOutputs["product"]["overview"]>;
+  storeId: string;
 };
 
-const ProductsOverview = ({ overview }: Props) => {
+const ProductsOverview = async ({ storeId }: Props) => {
+  const overview = await api.product.overview({
+    storeId: storeId,
+  });
+
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-wrap items-center space-x-4">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

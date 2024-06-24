@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RotateCw, SquarePen } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -67,7 +68,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
         description: "Inventario actualizado correctamente",
       });
 
-      void utils.inventory.list.invalidate();
+      void utils.product.list.invalidate();
       setIsOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,14 +83,14 @@ const UpdateInventoryModal = ({ product }: Props) => {
       {!canUpdateInventory.isPending && canUpdateInventory.data ? (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button variant="secondary" size="icon">
-              <SquarePen className="h-4 w-4" />
-            </Button>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <span className="text-sm">Actualizar inventario</span>
+            </DropdownMenuItem>
           </DialogTrigger>
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Modificar existencia</DialogTitle>
+              <DialogTitle>Actualizar inventario</DialogTitle>
               <DialogDescription>
                 Producto <strong>{product.name}</strong>, cantidad actual{" "}
                 <strong>{product.quantity}</strong>

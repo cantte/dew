@@ -2,11 +2,8 @@
 
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { type Table } from "@tanstack/react-table";
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { api } from "~/trpc/react";
 
 type DataTableToolbarProps<TData> = {
   table: Table<TData>;
@@ -16,10 +13,6 @@ const ProductsDataTableToolbar = <TData,>({
   table,
 }: DataTableToolbarProps<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0;
-
-  const canCreateProduct = api.rbac.checkPermissions.useQuery({
-    permissions: ["product:create"],
-  });
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -43,19 +36,6 @@ const ProductsDataTableToolbar = <TData,>({
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
-      </div>
-
-      <div className="flex space-x-2">
-        {!canCreateProduct.isPending && canCreateProduct.data ? (
-          <Button asChild size="sm" className="h-7 gap-1">
-            <Link href="/products/create">
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Crear producto
-              </span>
-            </Link>
-          </Button>
-        ) : null}
       </div>
     </div>
   );

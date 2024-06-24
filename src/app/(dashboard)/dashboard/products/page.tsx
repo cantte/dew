@@ -1,8 +1,11 @@
+import { Suspense } from "react";
 import { columns } from "~/app/(dashboard)/dashboard/products/columns";
+import CreateProductButton from "~/app/(dashboard)/dashboard/products/create-button";
 import ProductDataTable from "~/app/(dashboard)/dashboard/products/data-table";
 import ProductsOverview from "~/app/(dashboard)/dashboard/products/overview";
 import NotEnoughPermissions from "~/components/not-enough-permissions";
 import NotFoundStoreAlert from "~/components/stores/not-found.alert";
+import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/server";
 
 const ProductsPage = async () => {
@@ -24,13 +27,17 @@ const ProductsPage = async () => {
     storeId: store.id,
   });
 
-  const overview = await api.product.overview({
-    storeId: store.id,
-  });
-
   return (
     <div className="space-y-4">
-      <ProductsOverview overview={overview} />
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <Suspense fallback={<Skeleton className="h-8 w-10" />}>
+          <ProductsOverview storeId={store.id} />
+        </Suspense>
+
+        <Suspense fallback={<Skeleton className="h-8 w-10" />}>
+          <CreateProductButton />
+        </Suspense>
+      </div>
 
       <ProductDataTable columns={columns} data={products} storeId={store.id} />
     </div>

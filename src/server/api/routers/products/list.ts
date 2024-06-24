@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import type { TypeOf } from "zod";
 import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
 import type { byStoreInput } from "~/server/api/schemas/common";
@@ -18,6 +18,9 @@ const listProducts = async ({ ctx, input }: Options) => {
       description: products.description,
       purchasePrice: products.purchasePrice,
       salePrice: products.salePrice,
+      quantity: inventory.quantity,
+      stock: inventory.stock,
+      isLowStock: sql<boolean>`inventory.quantity <= inventory.stock`,
       createdAt: products.createdAt,
     })
     .from(products)

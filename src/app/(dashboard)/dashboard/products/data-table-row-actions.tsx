@@ -8,6 +8,7 @@ import BarcodeModal from "~/components/products/barcode-modal";
 import CreateProductDiscountDialog from "~/components/products/create-discount";
 import DeleteProductModal from "~/components/products/delete-modal";
 import LinkToStoresModal from "~/components/products/link-to-stores-modal";
+import UpdateInventoryModal from "~/components/products/update-inventory-modal";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -30,6 +31,10 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
     permissions: ["product:update"],
   });
 
+  const canUpdateInventory = api.rbac.checkPermissions.useQuery({
+    permissions: ["inventory:update"],
+  });
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,7 +47,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-[160px]">
+      <DropdownMenuContent align="end" className="w-[250px]">
         {!canEditProduct.isPending && canEditProduct.data ? (
           <>
             <DropdownMenuItem asChild>
@@ -57,6 +62,10 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 
         {!canDeleteProduct.isPending && canDeleteProduct.data ? (
           <DeleteProductModal product={row.original} />
+        ) : null}
+
+        {!canUpdateInventory.isPending && canUpdateInventory.data ? (
+          <UpdateInventoryModal product={row.original} />
         ) : null}
 
         <BarcodeModal product={row.original} />

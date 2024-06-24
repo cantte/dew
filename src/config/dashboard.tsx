@@ -1,5 +1,4 @@
 import {
-  Box,
   Coins,
   Home,
   Package,
@@ -25,11 +24,6 @@ export const dashboardConfig: DashboardConfig = {
       title: "Productos",
       href: "/dashboard/products",
       icon: <ShoppingBasket className="h-4 w-4" />,
-    },
-    {
-      title: "Inventario",
-      href: "/dashboard/inventory",
-      icon: <Box className="h-4 w-4" />,
     },
     {
       title: "Ventas",
