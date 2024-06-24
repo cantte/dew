@@ -21,7 +21,6 @@ const listProducts = async ({ ctx, input }: Options) => {
       quantity: inventory.quantity,
       stock: inventory.stock,
       isLowStock: sql<boolean>`inventory.quantity <= inventory.stock`,
-      createdAt: products.createdAt,
     })
     .from(products)
     .innerJoin(inventory, eq(products.id, inventory.productId))
