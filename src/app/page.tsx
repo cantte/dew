@@ -15,7 +15,7 @@ export default async function Home() {
       <div className="flex flex-col">
         <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-semibold">dew</span>
+            <span className='font-semibold text-lg'>dew</span>
             <Badge>beta</Badge>
           </div>
 
@@ -50,7 +50,7 @@ export default async function Home() {
                   <span>sin complicaciones</span>
                 </h1>
                 <div className="text-center sm:px-20">
-                  <span className="text-[17px] font-normal tracking-[-0.16px] text-muted-foreground md:text-xl">
+                  <span className='font-normal text-[17px] text-muted-foreground tracking-[-0.16px] md:text-xl'>
                     Evita el papeleo y lleva el control de tus ventas de manera
                     eficiente.
                   </span>
