@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { signOut } from "next-auth/react";
-import { Button } from "~/components/ui/button";
+import { signOut } from 'next-auth/react'
+import { Button } from '~/components/ui/button'
 
 const SignOutButton = () => {
   return (
@@ -13,7 +13,7 @@ const SignOutButton = () => {
     >
       Cerrar sesión
     </Button>
-  );
-};
+  )
+}
 
-export default SignOutButton;
+export default SignOutButton

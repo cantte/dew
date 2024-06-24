@@ -1,22 +1,22 @@
-"use client";
+'use client'
 
-import { History } from "lucide-react";
-import { Suspense } from "react";
-import OrderHistory from "~/components/orders/history";
-import { Button } from "~/components/ui/button";
+import { History } from 'lucide-react'
+import { Suspense } from 'react'
+import OrderHistory from '~/components/orders/history'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/dialog'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  order: NonNullable<RouterOutputs["order"]["find"]>;
-  disabled: boolean;
-};
+  order: NonNullable<RouterOutputs['order']['find']>
+  disabled: boolean
+}
 
 const OrderHistoryDialog = ({ order, disabled }: Props) => {
   return (
@@ -38,7 +38,7 @@ const OrderHistoryDialog = ({ order, disabled }: Props) => {
         </Suspense>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default OrderHistoryDialog;
+export default OrderHistoryDialog

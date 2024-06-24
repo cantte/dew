@@ -1,7 +1,7 @@
-import DefaultLoading from "~/components/default-loading";
+import DefaultLoading from '~/components/default-loading'
 
 const Loading = () => {
-  return <DefaultLoading />;
-};
+  return <DefaultLoading />
+}
 
-export default Loading;
+export default Loading

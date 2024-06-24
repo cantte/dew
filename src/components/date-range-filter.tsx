@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   endOfDay,
@@ -7,44 +7,44 @@ import {
   startOfDay,
   startOfMonth,
   startOfWeek,
-} from "date-fns";
-import { type DateRange as DateRangePicker } from "react-day-picker";
-import DateRange from "~/components/date-range";
-import { Button } from "~/components/ui/button";
+} from 'date-fns'
+import { type DateRange as DateRangePicker } from 'react-day-picker'
+import DateRange from '~/components/date-range'
+import { Button } from '~/components/ui/button'
 
 type Props = {
-  selected: DateRangePicker | undefined;
-  onSelectRange: (range: DateRangePicker | undefined) => void;
-};
+  selected: DateRangePicker | undefined
+  onSelectRange: (range: DateRangePicker | undefined) => void
+}
 
 const DateRangeFilter = ({ selected, onSelectRange }: Props) => {
-  const today = new Date();
+  const today = new Date()
   const setToday = () => {
     onSelectRange({
       from: startOfDay(today),
       to: endOfDay(today),
-    });
-  };
+    })
+  }
 
   const setThisWeek = () => {
-    const start = startOfWeek(today, { weekStartsOn: 1 });
-    const end = endOfWeek(today, { weekStartsOn: 1 });
+    const start = startOfWeek(today, { weekStartsOn: 1 })
+    const end = endOfWeek(today, { weekStartsOn: 1 })
 
     onSelectRange({
       from: start,
       to: end,
-    });
-  };
+    })
+  }
 
   const setThisMonth = () => {
-    const start = startOfMonth(today);
-    const end = endOfMonth(today);
+    const start = startOfMonth(today)
+    const end = endOfMonth(today)
 
     onSelectRange({
       from: start,
       to: end,
-    });
-  };
+    })
+  }
 
   return (
     <div className="flex flex-col justify-between space-y-2 md:flex-row md:items-center md:space-x-2 md:space-y-0">
@@ -76,7 +76,7 @@ const DateRangeFilter = ({ selected, onSelectRange }: Props) => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DateRangeFilter;
+export default DateRangeFilter

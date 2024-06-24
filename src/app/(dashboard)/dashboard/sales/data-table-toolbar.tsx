@@ -1,26 +1,26 @@
-"use client";
+'use client'
 
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { type Table } from "@tanstack/react-table";
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
-import DateRangeFilter from "~/app/(dashboard)/dashboard/sales/date-range-filter";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { api } from "~/trpc/react";
+import { Cross2Icon } from '@radix-ui/react-icons'
+import { type Table } from '@tanstack/react-table'
+import { PlusCircle } from 'lucide-react'
+import Link from 'next/link'
+import DateRangeFilter from '~/app/(dashboard)/dashboard/sales/date-range-filter'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { api } from '~/trpc/react'
 
 type DataTableToolbarProps<TData> = {
-  table: Table<TData>;
-};
+  table: Table<TData>
+}
 
 const SalesDataTableToolbar = <TData,>({
   table,
 }: DataTableToolbarProps<TData>) => {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0
 
   const canCreateSale = api.rbac.checkPermissions.useQuery({
-    permissions: ["sale:create"],
-  });
+    permissions: ['sale:create'],
+  })
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -28,10 +28,10 @@ const SalesDataTableToolbar = <TData,>({
         <Input
           placeholder="Buscar por cliente"
           value={
-            (table.getColumn("customer")?.getFilterValue() as string) ?? ""
+            (table.getColumn('customer')?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
-            table.getColumn("customer")?.setFilterValue(event.target.value)
+            table.getColumn('customer')?.setFilterValue(event.target.value)
           }
           className="w-[150px] lg:w-[250px]"
         />
@@ -63,7 +63,7 @@ const SalesDataTableToolbar = <TData,>({
         ) : null}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SalesDataTableToolbar;
+export default SalesDataTableToolbar

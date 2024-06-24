@@ -1,13 +1,13 @@
-import { api } from "~/trpc/server";
+import { api } from '~/trpc/server'
 
 type Props = {
-  id: string;
-};
+  id: string
+}
 
 const ProductDiscounts = async ({ id }: Props) => {
   const discounts = await api.product.searchDiscounts({
     id: id,
-  });
+  })
 
   return (
     <>
@@ -21,17 +21,17 @@ const ProductDiscounts = async ({ id }: Props) => {
             <li key={discount.id} className="flex flex-col space-y-0.5">
               <div className="flex w-full items-center justify-between">
                 <span className="text-muted-foreground">
-                  {discount.isPercentage ? "Por porcentaje" : "Por valor"}
+                  {discount.isPercentage ? 'Por porcentaje' : 'Por valor'}
                 </span>
                 <span>
                   {discount.isPercentage
-                    ? `${Intl.NumberFormat("es-CO", {
-                        style: "percent",
+                    ? `${Intl.NumberFormat('es-CO', {
+                        style: 'percent',
                         minimumFractionDigits: 2,
                       }).format(discount.discount / 100)}`
-                    : `${Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                    : `${Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(discount.discount)}`}
                 </span>
               </div>
@@ -39,16 +39,16 @@ const ProductDiscounts = async ({ id }: Props) => {
               <div className="flex w-full items-center justify-between">
                 <span></span>
                 <small className="text-muted-foreground">
-                  {Intl.DateTimeFormat("es-CO", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }).format(Date.parse(discount.startDate))}{" "}
-                  -{" "}
-                  {Intl.DateTimeFormat("es-CO", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
+                  {Intl.DateTimeFormat('es-CO', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  }).format(Date.parse(discount.startDate))}{' '}
+                  -{' '}
+                  {Intl.DateTimeFormat('es-CO', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
                   }).format(Date.parse(discount.endDate))}
                 </small>
               </div>
@@ -57,7 +57,7 @@ const ProductDiscounts = async ({ id }: Props) => {
         </ul>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ProductDiscounts;
+export default ProductDiscounts

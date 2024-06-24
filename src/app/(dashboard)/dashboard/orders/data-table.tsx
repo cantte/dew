@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   getCoreRowModel,
@@ -10,31 +10,31 @@ import {
   useReactTable,
   type ColumnDef,
   type ColumnFiltersState,
-} from "@tanstack/react-table";
-import { useState } from "react";
-import type { Order } from "~/app/(dashboard)/dashboard/orders/columns";
-import OrdersDataTableToolbar from "~/app/(dashboard)/dashboard/orders/data-table-toolbar";
-import DataTable from "~/components/data-table";
-import DataTablePagination from "~/components/data-table-pagination";
-import { api } from "~/trpc/react";
+} from '@tanstack/react-table'
+import { useState } from 'react'
+import type { Order } from '~/app/(dashboard)/dashboard/orders/columns'
+import OrdersDataTableToolbar from '~/app/(dashboard)/dashboard/orders/data-table-toolbar'
+import DataTable from '~/components/data-table'
+import DataTablePagination from '~/components/data-table-pagination'
+import { api } from '~/trpc/react'
 
 type Props<TValue> = {
-  columns: ColumnDef<Order, TValue>[];
-  data: Order[];
-  storeId: string;
-};
+  columns: ColumnDef<Order, TValue>[]
+  data: Order[]
+  storeId: string
+}
 
 const OrdersDataTable = <TValue,>({
   columns,
   data,
   storeId,
 }: Props<TValue>) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const { data: orders } = api.order.list.useQuery(
     { storeId },
     { initialData: data },
-  );
+  )
 
   const table = useReactTable<Order>({
     data: orders,
@@ -49,7 +49,7 @@ const OrdersDataTable = <TValue,>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
+  })
 
   return (
     <div className="space-y-2">
@@ -57,7 +57,7 @@ const OrdersDataTable = <TValue,>({
       <DataTable table={table} />
       <DataTablePagination table={table} />
     </div>
-  );
-};
+  )
+}
 
-export default OrdersDataTable;
+export default OrdersDataTable

@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { type z } from "zod";
-import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
-import MultiSelectStore from "~/components/stores/multi-select-store";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { type z } from 'zod'
+import { type Product } from '~/app/(dashboard)/dashboard/products/columns'
+import MultiSelectStore from '~/components/stores/multi-select-store'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -15,66 +15,66 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
-import { Form, FormField, FormItem, FormMessage } from "~/components/ui/form";
-import { useToast } from "~/components/ui/use-toast";
-import { linkToStoresInput } from "~/server/api/schemas/products";
-import { api } from "~/trpc/react";
+} from '~/components/ui/dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
+import { Form, FormField, FormItem, FormMessage } from '~/components/ui/form'
+import { useToast } from '~/components/ui/use-toast'
+import { linkToStoresInput } from '~/server/api/schemas/products'
+import { api } from '~/trpc/react'
 
 type Props = {
-  product: Product;
-};
+  product: Product
+}
 
-type FormValues = z.infer<typeof linkToStoresInput>;
+type FormValues = z.infer<typeof linkToStoresInput>
 
 const LinkToStoresModal = ({ product }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const form = useForm<FormValues>({
     defaultValues: {
       id: product.id,
     },
     resolver: zodResolver(linkToStoresInput),
-  });
+  })
 
-  const linkToStores = api.product.linkToStores.useMutation();
+  const linkToStores = api.product.linkToStores.useMutation()
   const onSubmit = (values: FormValues) => {
-    linkToStores.mutate(values);
-  };
+    linkToStores.mutate(values)
+  }
 
-  const utils = api.useUtils();
-  const { toast } = useToast();
+  const utils = api.useUtils()
+  const { toast } = useToast()
   useEffect(() => {
     if (linkToStores.isSuccess) {
       toast({
-        title: "Éxito",
-        description: "El producto ha sido agregado a las tiendas",
-      });
+        title: 'Éxito',
+        description: 'El producto ha sido agregado a las tiendas',
+      })
 
-      void utils.product.list.invalidate();
-      setIsOpen(false);
+      void utils.product.list.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [linkToStores.isSuccess]);
+  }, [linkToStores.isSuccess])
 
-  const { data: stores } = api.store.list.useQuery();
+  const { data: stores } = api.store.list.useQuery()
 
-  const selectedStores = form.watch("stores", []);
+  const selectedStores = form.watch('stores', [])
   const setSelectedStores = (value: Array<string>) =>
-    form.setValue("stores", value);
+    form.setValue('stores', value)
   const { data: productStores } = api.product.stores.useQuery({
     id: product.id,
-  });
+  })
 
   useEffect(() => {
     if (!productStores) {
-      return;
+      return
     }
 
-    setSelectedStores(productStores.map((store) => store.id));
+    setSelectedStores(productStores.map((store) => store.id))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productStores]);
+  }, [productStores])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -88,7 +88,7 @@ const LinkToStoresModal = ({ product }: Props) => {
         <DialogHeader>
           <DialogTitle>Agregar a tiendas</DialogTitle>
           <DialogDescription>
-            Selecciona las tiendas a las que quieres agregar el producto{" "}
+            Selecciona las tiendas a las que quieres agregar el producto{' '}
             <strong>{product.name}</strong>
             {linkToStores.error && (
               <Alert variant="destructive" className="mt-4">
@@ -150,7 +150,7 @@ const LinkToStoresModal = ({ product }: Props) => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default LinkToStoresModal;
+export default LinkToStoresModal

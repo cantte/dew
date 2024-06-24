@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   Tooltip as ChartTooltip,
@@ -6,42 +6,42 @@ import {
   LineChart,
   ResponsiveContainer,
   type TooltipProps,
-} from "recharts";
+} from 'recharts'
 import type {
   NameType,
   ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
-import ValueDateTooltip from "~/components/dashboard/value-date-tooltip";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+} from 'recharts/types/component/DefaultTooltipContent'
+import ValueDateTooltip from '~/components/dashboard/value-date-tooltip'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 
 const Tooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
   if (active && payload) {
-    const firstPayload = payload[0];
+    const firstPayload = payload[0]
 
     if (!firstPayload) {
-      return null;
+      return null
     }
 
-    const value = +(firstPayload.value ?? 0);
+    const value = +(firstPayload.value ?? 0)
     const date = new Date(
-      (firstPayload.payload as { date: string }).date + "T00:00:00", // Prevents timezone issues
-    );
+      (firstPayload.payload as { date: string }).date + 'T00:00:00', // Prevents timezone issues
+    )
 
-    return <ValueDateTooltip value={value} date={date} />;
+    return <ValueDateTooltip value={value} date={date} />
   }
-  return null;
-};
+  return null
+}
 
 type Props = {
-  title: string;
-  value: number;
-  valueImprovement: number;
+  title: string
+  value: number
+  valueImprovement: number
 
   summary: {
-    date: string;
-    total: number;
-  }[];
-};
+    date: string
+    total: number
+  }[]
+}
 
 const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
   return (
@@ -51,17 +51,17 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">
-          {Intl.NumberFormat("es-CO", {
-            style: "currency",
-            currency: "COP",
+          {Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP',
           }).format(value)}
         </div>
         <p className="text-xs text-muted-foreground">
-          {valueImprovement > 0 ? "+" : ""}
-          {Intl.NumberFormat("es-CO", {
-            style: "percent",
+          {valueImprovement > 0 ? '+' : ''}
+          {Intl.NumberFormat('es-CO', {
+            style: 'percent',
             minimumFractionDigits: 2,
-          }).format(valueImprovement)}{" "}
+          }).format(valueImprovement)}{' '}
           respecto al mes anterior
         </p>
 
@@ -84,11 +84,11 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
                   dataKey="total"
                   activeDot={{
                     r: 6,
-                    style: { fill: "hsl(var(--primary))", opacity: 0.25 },
+                    style: { fill: 'hsl(var(--primary))', opacity: 0.25 },
                   }}
                   style={
                     {
-                      stroke: "hsl(var(--primary))",
+                      stroke: 'hsl(var(--primary))',
                     } as React.CSSProperties
                   }
                 />
@@ -98,7 +98,7 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
         )}
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default LineChartCard;
+export default LineChartCard

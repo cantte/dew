@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import LineChartCard from "~/components/line-chart-card";
-import type { RouterOutputs } from "~/trpc/shared";
+import LineChartCard from '~/components/line-chart-card'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  profit: number;
-  profitImprovement: number;
+  profit: number
+  profitImprovement: number
 
-  profitData: RouterOutputs["sale"]["report"]["totalProfitPerDay"];
-};
+  profitData: RouterOutputs['sale']['report']['totalProfitPerDay']
+}
 
 const TotalProfit = ({ profit, profitImprovement, profitData }: Props) => {
   return (
@@ -18,7 +18,7 @@ const TotalProfit = ({ profit, profitImprovement, profitData }: Props) => {
       valueImprovement={profitImprovement}
       summary={profitData}
     />
-  );
-};
+  )
+}
 
-export default TotalProfit;
+export default TotalProfit

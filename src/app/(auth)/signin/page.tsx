@@ -1,22 +1,22 @@
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import SignInButton from "~/components/signin-button";
-import { buttonVariants } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
-import { authOptions } from "~/server/auth";
+import { ChevronLeftIcon } from '@radix-ui/react-icons'
+import { getServerSession } from 'next-auth'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import SignInButton from '~/components/signin-button'
+import { buttonVariants } from '~/components/ui/button'
+import { cn } from '~/lib/utils'
+import { authOptions } from '~/server/auth'
 
 export const metadata = {
-  title: "dew | iniciar sesión",
-  description: "software de facturación",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
-};
+  title: 'dew | iniciar sesión',
+  description: 'software de facturación',
+  icons: [{ rel: 'icon', url: '/favicon.ico' }],
+}
 
 const SignInPage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
   if (session) {
-    return redirect("/");
+    return redirect('/')
   }
 
   return (
@@ -24,8 +24,8 @@ const SignInPage = async () => {
       <Link
         href="/"
         className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-4 top-4 md:left-8 md:top-8",
+          buttonVariants({ variant: 'ghost' }),
+          'absolute left-4 top-4 md:left-8 md:top-8',
         )}
       >
         <>
@@ -44,7 +44,7 @@ const SignInPage = async () => {
         <SignInButton />
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default SignInPage;
+export default SignInPage

@@ -1,15 +1,15 @@
-import { Skeleton } from "~/components/ui/skeleton";
-import { getOrderStatusLabel } from "~/lib/utils";
-import { api } from "~/trpc/react";
+import { Skeleton } from '~/components/ui/skeleton'
+import { getOrderStatusLabel } from '~/lib/utils'
+import { api } from '~/trpc/react'
 
 type Props = {
-  orderId: string;
-};
+  orderId: string
+}
 
 const OrderHistory = ({ orderId }: Props) => {
   const { data: history, isPending } = api.order.history.useQuery({
     id: orderId,
-  });
+  })
 
   return (
     <>
@@ -29,12 +29,12 @@ const OrderHistory = ({ orderId }: Props) => {
                   {getOrderStatusLabel(h.status)}
                 </div>
                 <div className="text-muted-foreground">
-                  {Intl.DateTimeFormat("es-CO", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
+                  {Intl.DateTimeFormat('es-CO', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
                   }).format(h.createdAt)}
                 </div>
               </li>
@@ -43,7 +43,7 @@ const OrderHistory = ({ orderId }: Props) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default OrderHistory;
+export default OrderHistory

@@ -1,18 +1,18 @@
-import { sql } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import uuid from "~/lib/uuid";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { upsertOrderSummaryInput } from "~/server/api/schemas/orders";
-import { orderSummary } from "~/server/db/schema/orders";
+import { sql } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import uuid from '~/lib/uuid'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { upsertOrderSummaryInput } from '~/server/api/schemas/orders'
+import { orderSummary } from '~/server/db/schema/orders'
 
 type DbTransaction = Parameters<
-  Parameters<TRPCAuthedContext["db"]["transaction"]>[0]
->[0];
+  Parameters<TRPCAuthedContext['db']['transaction']>[0]
+>[0]
 
 type Options = {
-  tx: DbTransaction;
-  input: TypeOf<typeof upsertOrderSummaryInput>;
-};
+  tx: DbTransaction
+  input: TypeOf<typeof upsertOrderSummaryInput>
+}
 
 const upsertOrderSummary = async ({ tx, input }: Options) => {
   await tx
@@ -22,7 +22,7 @@ const upsertOrderSummary = async ({ tx, input }: Options) => {
       id: uuid(),
       customers: 1,
       orders: 1,
-      date: input.date.toISOString().split("T")[0],
+      date: input.date.toISOString().split('T')[0],
     })
     .onConflictDoUpdate({
       target: [orderSummary.date, orderSummary.storeId],
@@ -33,7 +33,7 @@ const upsertOrderSummary = async ({ tx, input }: Options) => {
         customers: sql`1 + EXCLUDED.customers`,
         orders: sql`1 + EXCLUDED.orders`,
       },
-    });
-};
+    })
+}
 
-export default upsertOrderSummary;
+export default upsertOrderSummary

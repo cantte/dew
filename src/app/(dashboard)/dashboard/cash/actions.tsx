@@ -1,20 +1,20 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { type z } from "zod";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useMediaQuery } from '@uidotdev/usehooks'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type z } from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
 import {
   Drawer,
   DrawerClose,
@@ -23,7 +23,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "~/components/ui/drawer";
+} from '~/components/ui/drawer'
 import {
   Form,
   FormControl,
@@ -31,17 +31,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
-import { createCashRegisterTransactionInput } from "~/server/api/schemas/cashRegisters";
-import { api } from "~/trpc/react";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { useToast } from '~/components/ui/use-toast'
+import { createCashRegisterTransactionInput } from '~/server/api/schemas/cashRegisters'
+import { api } from '~/trpc/react'
 
 type Props = {
-  cashRegisterId: string;
-};
+  cashRegisterId: string
+}
 
-type FormValues = z.infer<typeof createCashRegisterTransactionInput>;
+type FormValues = z.infer<typeof createCashRegisterTransactionInput>
 
 const CashRegisterActions = ({ cashRegisterId }: Props) => {
   const form = useForm<FormValues>({
@@ -49,55 +49,55 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
       cashRegisterId: cashRegisterId,
     },
     resolver: zodResolver(createCashRegisterTransactionInput),
-  });
+  })
 
   const createCashRegisterTransaction =
-    api.cashRegister.transactions.create.useMutation();
+    api.cashRegister.transactions.create.useMutation()
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    createCashRegisterTransaction.mutate(values);
-  };
+    createCashRegisterTransaction.mutate(values)
+  }
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const router = useRouter();
-  const utils = api.useUtils();
-  const { toast } = useToast();
+  const router = useRouter()
+  const utils = api.useUtils()
+  const { toast } = useToast()
   useEffect(() => {
     if (createCashRegisterTransaction.isSuccess) {
-      setOpen(false);
-      router.refresh();
-      void utils.cashRegister.transactions.list.invalidate();
-      form.reset();
+      setOpen(false)
+      router.refresh()
+      void utils.cashRegister.transactions.list.invalidate()
+      form.reset()
 
       toast({
-        title: "Éxito",
-        description: "La transacción se realizó con éxito.",
-      });
+        title: 'Éxito',
+        description: 'La transacción se realizó con éxito.',
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createCashRegisterTransaction.isSuccess]);
+  }, [createCashRegisterTransaction.isSuccess])
 
   useEffect(() => {
     if (createCashRegisterTransaction.error) {
-      form.setError("amount", {
-        type: "manual",
+      form.setError('amount', {
+        type: 'manual',
         message: createCashRegisterTransaction.error.message,
-      });
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createCashRegisterTransaction.error]);
+  }, [createCashRegisterTransaction.error])
 
   const inTransaction = () => {
-    setOpen(true);
-    form.setValue("type", "IN");
-  };
+    setOpen(true)
+    form.setValue('type', 'IN')
+  }
 
   const outTransaction = () => {
-    setOpen(true);
-    form.setValue("type", "OUT");
-  };
+    setOpen(true)
+    form.setValue('type', 'OUT')
+  }
 
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery('(min-width: 768px)')
   return (
     <div className="flex justify-between">
       <Button size="sm" className="text-sm" onClick={inTransaction}>
@@ -117,12 +117,12 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {form.watch("type") === "IN" ? "Ingreso" : "Egreso"}
+                {form.watch('type') === 'IN' ? 'Ingreso' : 'Egreso'}
               </DialogTitle>
               <DialogDescription>
-                {form.watch("type") === "IN"
-                  ? "Registra un ingreso en la caja."
-                  : "Registra un egreso en la caja."}
+                {form.watch('type') === 'IN'
+                  ? 'Registra un ingreso en la caja.'
+                  : 'Registra un egreso en la caja.'}
               </DialogDescription>
             </DialogHeader>
             <div>
@@ -169,12 +169,12 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
           <DrawerContent>
             <DrawerHeader className="text-left">
               <DrawerTitle>
-                {form.watch("type") === "IN" ? "Ingreso" : "Egreso"}
+                {form.watch('type') === 'IN' ? 'Ingreso' : 'Egreso'}
               </DrawerTitle>
               <DrawerDescription>
-                {form.watch("type") === "IN"
-                  ? "Registra un ingreso en la caja."
-                  : "Registra un egreso en la caja."}
+                {form.watch('type') === 'IN'
+                  ? 'Registra un ingreso en la caja.'
+                  : 'Registra un egreso en la caja.'}
               </DrawerDescription>
             </DrawerHeader>
             <div className="px-4">
@@ -224,7 +224,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
         </Drawer>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CashRegisterActions;
+export default CashRegisterActions

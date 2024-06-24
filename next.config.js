@@ -2,16 +2,16 @@
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
-await import("./src/env.js");
+await import('./src/env.js')
 
 /** @type {import("next").NextConfig} */
-const coreConfig = {};
+const coreConfig = {}
 
-import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from '@sentry/nextjs'
 
 const config = withSentryConfig(coreConfig, {
-  org: "cantte",
-  project: "dew",
+  org: 'cantte',
+  project: 'dew',
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -36,6 +36,6 @@ const config = withSentryConfig(coreConfig, {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
-});
+})
 
-export default config;
+export default config

@@ -1,4 +1,4 @@
 export type ProductDiscount = {
-  isPercentage: boolean;
-  discount: number;
-};
+  isPercentage: boolean
+  discount: number
+}

@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useDebounce } from "@uidotdev/usehooks";
-import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useDebounce } from '@uidotdev/usehooks'
+import { useEffect, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { type z } from "zod";
-import MultiSelectStore from "~/components/stores/multi-select-store";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
+import { type z } from 'zod'
+import MultiSelectStore from '~/components/stores/multi-select-store'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 
 import {
   Form,
@@ -19,95 +19,95 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Textarea } from "~/components/ui/textarea";
-import { useToast } from "~/components/ui/use-toast";
-import { createProductInput } from "~/server/api/schemas/products";
-import { api } from "~/trpc/react";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
+import { useToast } from '~/components/ui/use-toast'
+import { createProductInput } from '~/server/api/schemas/products'
+import { api } from '~/trpc/react'
+import { type RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  storeId: string;
+  storeId: string
 
-  stores: RouterOutputs["store"]["list"];
-};
+  stores: RouterOutputs['store']['list']
+}
 
-type FormValues = z.infer<typeof createProductInput>;
+type FormValues = z.infer<typeof createProductInput>
 
 const CreateProductForm = ({ storeId, stores }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(createProductInput),
     defaultValues: {
-      code: "",
-      name: "",
+      code: '',
+      name: '',
       stores: [storeId],
     },
-  });
+  })
 
   const currentStore = useMemo(
     () => stores.find((store) => store.id === storeId),
     [stores, storeId],
-  );
+  )
 
-  const selectedStores = form.watch("stores", []);
+  const selectedStores = form.watch('stores', [])
   const setSelectedStores = (value: Array<string>) =>
-    form.setValue("stores", value);
+    form.setValue('stores', value)
 
   useEffect(() => {
     if (!currentStore) {
-      return;
+      return
     }
 
-    setSelectedStores([currentStore.id]);
+    setSelectedStores([currentStore.id])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStore]);
+  }, [currentStore])
 
-  const createProduct = api.product.create.useMutation();
+  const createProduct = api.product.create.useMutation()
 
-  const { toast } = useToast();
+  const { toast } = useToast()
   useEffect(() => {
     if (createProduct.isSuccess) {
       toast({
-        title: "Éxito",
-        description: "El producto se creó con éxito.",
-      });
+        title: 'Éxito',
+        description: 'El producto se creó con éxito.',
+      })
 
       form.reset({
         stores: [storeId],
-      });
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createProduct.isSuccess]);
+  }, [createProduct.isSuccess])
 
   const onSubmit = (data: FormValues) => {
-    createProduct.mutate(data);
-  };
+    createProduct.mutate(data)
+  }
 
-  const code = useDebounce(form.watch("code"), 1000);
+  const code = useDebounce(form.watch('code'), 1000)
   const { data: exists, error } = api.product.exists.useQuery(
     { code: code },
     {
-      enabled: code !== "" && code !== undefined,
+      enabled: code !== '' && code !== undefined,
     },
-  );
+  )
 
   useEffect(() => {
     if (error) {
-      if (error.message.includes("undefined")) {
-        form.clearErrors("code");
-        return;
+      if (error.message.includes('undefined')) {
+        form.clearErrors('code')
+        return
       }
     }
 
     if (exists !== undefined && exists.code === code) {
-      form.setError("code", {
-        type: "manual",
-        message: "El código ya existe",
-      });
+      form.setError('code', {
+        type: 'manual',
+        message: 'El código ya existe',
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [exists, error]);
+  }, [exists, error])
 
   return (
     <Form {...form}>
@@ -244,7 +244,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default CreateProductForm;
+export default CreateProductForm

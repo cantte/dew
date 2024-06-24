@@ -1,45 +1,45 @@
-import { useEffect, useState } from "react";
-import ConfirmDialog from "~/components/confirm-dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
-import { orderStatus } from "~/constants";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+import { useEffect, useState } from 'react'
+import ConfirmDialog from '~/components/confirm-dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
+import { orderStatus } from '~/constants'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
-type Order = RouterOutputs["order"]["list"][number];
+type Order = RouterOutputs['order']['list'][number]
 
 type Props = {
-  order: Order;
-};
+  order: Order
+}
 
 const ConfirmMoveOrderStatusDialog = ({ order }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const moveToNextStatus = api.order.moveToNextStatus.useMutation();
+  const moveToNextStatus = api.order.moveToNextStatus.useMutation()
 
   const handleMove = () => {
     moveToNextStatus.mutate({
       id: order.id,
-    });
-  };
+    })
+  }
 
-  const utils = api.useUtils();
+  const utils = api.useUtils()
 
   useEffect(() => {
     if (moveToNextStatus.isSuccess) {
-      void utils.order.list.invalidate();
-      setIsOpen(false);
+      void utils.order.list.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moveToNextStatus.isSuccess]);
+  }, [moveToNextStatus.isSuccess])
 
-  const currentStatus = order.status;
-  const nextStatus = orderStatus.find((s) => s.id === currentStatus)?.next;
+  const currentStatus = order.status
+  const nextStatus = orderStatus.find((s) => s.id === currentStatus)?.next
 
   if (!nextStatus) {
-    return null;
+    return null
   }
 
-  const nextStatusLabel = orderStatus.find((s) => s.id === nextStatus)?.label;
+  const nextStatusLabel = orderStatus.find((s) => s.id === nextStatus)?.label
 
   return (
     <>
@@ -59,7 +59,7 @@ const ConfirmMoveOrderStatusDialog = ({ order }: Props) => {
         onConfirm={handleMove}
       />
     </>
-  );
-};
+  )
+}
 
-export default ConfirmMoveOrderStatusDialog;
+export default ConfirmMoveOrderStatusDialog

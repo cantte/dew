@@ -1,14 +1,14 @@
-import { useDebounce } from "@uidotdev/usehooks";
-import { BadgePercent, MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import type { TypeOf } from "zod";
-import FindProduct from "~/app/(dashboard)/sales/create/find-product";
-import UpdateSalePriceDialog from "~/app/(dashboard)/sales/create/update-sale-price.dialog";
-import { Button } from "~/components/ui/button";
-import { FormDescription } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { useDebounce } from '@uidotdev/usehooks'
+import { BadgePercent, MinusIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import type { TypeOf } from 'zod'
+import FindProduct from '~/app/(dashboard)/sales/create/find-product'
+import UpdateSalePriceDialog from '~/app/(dashboard)/sales/create/update-sale-price.dialog'
+import { Button } from '~/components/ui/button'
+import { FormDescription } from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { Label } from '~/components/ui/label'
 import {
   Table,
   TableBody,
@@ -16,37 +16,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from '~/components/ui/table'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
-import type { createSaleInput } from "~/server/api/schemas/sales";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/tooltip'
+import type { createSaleInput } from '~/server/api/schemas/sales'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
-export type FormValues = TypeOf<typeof createSaleInput>;
-type Product = RouterOutputs["product"]["findForSale"];
+export type FormValues = TypeOf<typeof createSaleInput>
+type Product = RouterOutputs['product']['findForSale']
 
 type Props = {
-  suggestions: RouterOutputs["product"]["suggestions"];
+  suggestions: RouterOutputs['product']['suggestions']
 
-  onContinue: (selectedProducts: Product[]) => void;
-};
+  onContinue: (selectedProducts: Product[]) => void
+}
 
 const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
-  const form = useFormContext<FormValues>();
+  const form = useFormContext<FormValues>()
 
-  const [productCode, setProductCode] = useState("");
-  const finalProductCode = useDebounce(productCode, 1000);
-  const [productSelected, setProductSelected] = useState(false);
+  const [productCode, setProductCode] = useState('')
+  const finalProductCode = useDebounce(productCode, 1000)
+  const [productSelected, setProductSelected] = useState(false)
 
   const resetProduct = () => {
-    setProductCode("");
-    setProductSelected(false);
-  };
+    setProductCode('')
+    setProductSelected(false)
+  }
 
   const {
     data: product,
@@ -57,16 +57,16 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
     {
       enabled:
         finalProductCode !== undefined &&
-        finalProductCode !== "" &&
+        finalProductCode !== '' &&
         productSelected,
     },
-  );
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  )
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
 
   useEffect(() => {
     if (findProductError) {
-      if (findProductError.message.includes("undefined")) {
-        return;
+      if (findProductError.message.includes('undefined')) {
+        return
       }
     }
 
@@ -74,19 +74,19 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
       product !== undefined &&
       product !== null &&
       productSelected &&
-      product.quantity > 0;
+      product.quantity > 0
 
     if (!canAddProduct) {
-      return;
+      return
     }
 
-    const items = form.getValues("items");
-    const exists = items.find((item) => item.productId === product.id);
+    const items = form.getValues('items')
+    const exists = items.find((item) => item.productId === product.id)
     if (exists) {
-      exists.quantity += 1;
-      resetProduct();
-      calculateAmount();
-      return;
+      exists.quantity += 1
+      resetProduct()
+      calculateAmount()
+      return
     }
 
     items.push({
@@ -95,46 +95,46 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
       salePrice: product.finalPrice,
       purchasePrice: product.purchasePrice,
       profit: product.finalPrice - product.purchasePrice,
-    });
-    setSelectedProducts([...selectedProducts, product]);
+    })
+    setSelectedProducts([...selectedProducts, product])
 
-    resetProduct();
-    form.setValue("items", items);
-    calculateAmount();
+    resetProduct()
+    form.setValue('items', items)
+    calculateAmount()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product, findProductError, productSelected]);
+  }, [product, findProductError, productSelected])
 
   const calculateAmount = () => {
-    const items = form.getValues("items");
+    const items = form.getValues('items')
     const amount = items.reduce(
       (acc, item) => acc + item.quantity * item.salePrice,
       0,
-    );
-    form.setValue("amount", amount);
-    form.setValue("payment", amount);
-  };
+    )
+    form.setValue('amount', amount)
+    form.setValue('payment', amount)
+  }
 
   const getProductName = (productId: string) => {
-    const product = selectedProducts.find((p) => p?.id === productId);
-    return product?.name ?? "Error";
-  };
+    const product = selectedProducts.find((p) => p?.id === productId)
+    return product?.name ?? 'Error'
+  }
 
   const hasDiscounts = (productId: string) => {
-    const product = selectedProducts.find((p) => p?.id === productId);
+    const product = selectedProducts.find((p) => p?.id === productId)
 
     if (!product) {
-      return false;
+      return false
     }
 
-    return product.discounts.length > 0;
-  };
+    return product.discounts.length > 0
+  }
 
   const onSelectProduct = (productCode: string) => {
-    setProductCode(productCode);
-    setProductSelected(true);
-  };
+    setProductCode(productCode)
+    setProductSelected(true)
+  }
 
-  const hasItems = form.watch("items").length > 0;
+  const hasItems = form.watch('items').length > 0
 
   return (
     <div className="flex w-full grow flex-col space-y-4">
@@ -151,10 +151,10 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
               disabled={isFindingProduct}
               onChange={(e) => setProductCode(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setProductSelected(true);
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setProductSelected(true)
                 }
               }}
             />
@@ -164,18 +164,18 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
 
           <FormDescription>
             Escanea el código de barras del producto o ingresa el código de
-            forma manual y presiona enter{" "}
+            forma manual y presiona enter{' '}
             <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
               <span className="text-xs">&#8629;</span>
-            </kbd>{" "}
+            </kbd>{' '}
             para agregar el producto a la lista.
           </FormDescription>
 
           <FormDescription>
-            Si deseas buscar un producto por nombre presiona{" "}
+            Si deseas buscar un producto por nombre presiona{' '}
             <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
               <span className="text-xs">Ctrl +</span>K
-            </kbd>{" "}
+            </kbd>{' '}
             para abrir el buscador.
           </FormDescription>
 
@@ -198,7 +198,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
             </TableHeader>
 
             <TableBody>
-              {form.watch("items").map((item, index) => (
+              {form.watch('items').map((item, index) => (
                 <TableRow key={item.productId}>
                   <TableCell>
                     <div className="flex flex-row items-center space-x-2">
@@ -224,17 +224,17 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                       type="button"
                       disabled={item.quantity === 1}
                       onClick={() => {
-                        const items = form.getValues("items");
-                        items[index]!.quantity -= 1;
-                        form.setValue("items", items);
-                        calculateAmount();
+                        const items = form.getValues('items')
+                        items[index]!.quantity -= 1
+                        form.setValue('items', items)
+                        calculateAmount()
                       }}
                     >
                       <MinusIcon className="h-4 w-4" />
                     </Button>
 
                     <span>
-                      {Intl.NumberFormat("es-CO").format(item.quantity)}
+                      {Intl.NumberFormat('es-CO').format(item.quantity)}
                     </span>
 
                     <Button
@@ -242,10 +242,10 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                       variant="secondary"
                       type="button"
                       onClick={() => {
-                        const items = form.getValues("items");
-                        items[index]!.quantity += 1;
-                        form.setValue("items", items);
-                        calculateAmount();
+                        const items = form.getValues('items')
+                        items[index]!.quantity += 1
+                        form.setValue('items', items)
+                        calculateAmount()
                       }}
                     >
                       <PlusIcon className="h-4 w-4" />
@@ -254,9 +254,9 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                   <TableCell>
                     <div className="flex items-center space-x-1">
                       <span>
-                        {Intl.NumberFormat("es-CO", {
-                          style: "currency",
-                          currency: "COP",
+                        {Intl.NumberFormat('es-CO', {
+                          style: 'currency',
+                          currency: 'COP',
                         }).format(item.salePrice)}
                       </span>
 
@@ -267,9 +267,9 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(item.quantity * item.salePrice)}
                   </TableCell>
                   <TableCell>
@@ -278,10 +278,10 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                       size="icon"
                       type="button"
                       onClick={() => {
-                        const items = form.getValues("items");
-                        items.splice(index, 1);
-                        form.setValue("items", items);
-                        calculateAmount();
+                        const items = form.getValues('items')
+                        items.splice(index, 1)
+                        form.setValue('items', items)
+                        calculateAmount()
                       }}
                     >
                       <TrashIcon className="h-4 w-4" />
@@ -303,9 +303,9 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                     Productos vendidos
                   </span>
                   <span>
-                    {Intl.NumberFormat("es-CO").format(
+                    {Intl.NumberFormat('es-CO').format(
                       form
-                        .watch("items")
+                        .watch('items')
                         .reduce((acc, item) => acc + item.quantity, 0),
                     )}
                   </span>
@@ -313,10 +313,10 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Total</span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
-                    }).format(form.watch("amount") ?? 0)}
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
+                    }).format(form.watch('amount') ?? 0)}
                   </span>
                 </li>
               </ul>
@@ -333,7 +333,7 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SelectProductsStep;
+export default SelectProductsStep

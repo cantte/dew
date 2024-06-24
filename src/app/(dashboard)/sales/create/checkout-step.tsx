@@ -1,8 +1,8 @@
-import { MinusIcon, PlusIcon, RotateCw, TrashIcon } from "lucide-react";
-import { useFormContext } from "react-hook-form";
-import type { TypeOf } from "zod";
-import UpdateSalePriceDialog from "~/app/(dashboard)/sales/create/update-sale-price.dialog";
-import { Button } from "~/components/ui/button";
+import { MinusIcon, PlusIcon, RotateCw, TrashIcon } from 'lucide-react'
+import { useFormContext } from 'react-hook-form'
+import type { TypeOf } from 'zod'
+import UpdateSalePriceDialog from '~/app/(dashboard)/sales/create/update-sale-price.dialog'
+import { Button } from '~/components/ui/button'
 import {
   FormControl,
   FormDescription,
@@ -10,16 +10,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { Separator } from "~/components/ui/separator";
+} from '~/components/ui/select'
+import { Separator } from '~/components/ui/separator'
 import {
   Table,
   TableBody,
@@ -27,49 +27,49 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from '~/components/ui/table'
 import {
   paymentMethods,
   type createSaleInput,
   type PaymentMethod,
-} from "~/server/api/schemas/sales";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/server/api/schemas/sales'
+import type { RouterOutputs } from '~/trpc/shared'
 
-export type FormValues = TypeOf<typeof createSaleInput>;
-type Product = RouterOutputs["product"]["findForSale"];
-type Customer = RouterOutputs["customer"]["find"];
+export type FormValues = TypeOf<typeof createSaleInput>
+type Product = RouterOutputs['product']['findForSale']
+type Customer = RouterOutputs['customer']['find']
 
 type Props = {
-  isCreating: boolean;
-  selectedProducts: Product[];
-  customer?: Customer;
-};
+  isCreating: boolean
+  selectedProducts: Product[]
+  customer?: Customer
+}
 
 const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
-  const form = useFormContext<FormValues>();
+  const form = useFormContext<FormValues>()
 
   const calculateAmount = () => {
-    const items = form.getValues("items");
+    const items = form.getValues('items')
     const amount = items.reduce(
       (acc, item) => acc + item.quantity * item.salePrice,
       0,
-    );
-    form.setValue("amount", amount);
-    form.setValue("payment", amount);
-  };
+    )
+    form.setValue('amount', amount)
+    form.setValue('payment', amount)
+  }
 
   const getProductName = (productId: string) => {
-    const product = selectedProducts.find((p) => p?.id === productId);
-    return product?.name ?? "Producto no encontrado";
-  };
+    const product = selectedProducts.find((p) => p?.id === productId)
+    return product?.name ?? 'Producto no encontrado'
+  }
 
   const onSelectPaymentMethod = (value: string) => {
-    form.setValue("paymentMethod", value as PaymentMethod);
-    form.setValue("payment", form.watch("amount"));
-  };
+    form.setValue('paymentMethod', value as PaymentMethod)
+    form.setValue('payment', form.watch('amount'))
+  }
 
-  const amount = form.watch("amount");
-  const payment = form.watch("payment");
+  const amount = form.watch('amount')
+  const payment = form.watch('payment')
 
   return (
     <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
@@ -85,7 +85,7 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
           </TableHeader>
 
           <TableBody>
-            {form.watch("items").map((item, index) => (
+            {form.watch('items').map((item, index) => (
               <TableRow key={item.productId}>
                 <TableCell>{getProductName(item.productId)}</TableCell>
                 <TableCell className="flex items-center space-x-3">
@@ -95,17 +95,17 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                     type="button"
                     disabled={item.quantity === 1}
                     onClick={() => {
-                      const items = form.getValues("items");
-                      items[index]!.quantity -= 1;
-                      form.setValue("items", items);
-                      calculateAmount();
+                      const items = form.getValues('items')
+                      items[index]!.quantity -= 1
+                      form.setValue('items', items)
+                      calculateAmount()
                     }}
                   >
                     <MinusIcon className="h-4 w-4" />
                   </Button>
 
                   <span>
-                    {Intl.NumberFormat("es-CO").format(item.quantity)}
+                    {Intl.NumberFormat('es-CO').format(item.quantity)}
                   </span>
 
                   <Button
@@ -113,10 +113,10 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                     variant="secondary"
                     type="button"
                     onClick={() => {
-                      const items = form.getValues("items");
-                      items[index]!.quantity += 1;
-                      form.setValue("items", items);
-                      calculateAmount();
+                      const items = form.getValues('items')
+                      items[index]!.quantity += 1
+                      form.setValue('items', items)
+                      calculateAmount()
                     }}
                   >
                     <PlusIcon className="h-4 w-4" />
@@ -125,9 +125,9 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                 <TableCell>
                   <div className="flex items-center space-x-1">
                     <span>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(item.salePrice)}
                     </span>
 
@@ -138,9 +138,9 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  {Intl.NumberFormat("es-CO", {
-                    style: "currency",
-                    currency: "COP",
+                  {Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
                   }).format(item.quantity * item.salePrice)}
                 </TableCell>
                 <TableCell>
@@ -149,9 +149,9 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                     size="icon"
                     type="button"
                     onClick={() => {
-                      const items = form.getValues("items");
-                      items.splice(index, 1);
-                      form.setValue("items", items);
+                      const items = form.getValues('items')
+                      items.splice(index, 1)
+                      form.setValue('items', items)
                     }}
                   >
                     <TrashIcon className="h-4 w-4" />
@@ -172,9 +172,9 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                   Productos vendidos
                 </span>
                 <span>
-                  {Intl.NumberFormat("es-CO").format(
+                  {Intl.NumberFormat('es-CO').format(
                     form
-                      .watch("items")
+                      .watch('items')
                       .reduce((acc, item) => acc + item.quantity, 0),
                   )}
                 </span>
@@ -182,10 +182,10 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Total</span>
                 <span>
-                  {Intl.NumberFormat("es-CO", {
-                    style: "currency",
-                    currency: "COP",
-                  }).format(form.watch("amount") ?? 0)}
+                  {Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                  }).format(form.watch('amount') ?? 0)}
                 </span>
               </li>
             </ul>
@@ -194,7 +194,7 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
 
             <div className="font-semibold">Cliente</div>
             <p className="text-muted-foreground">
-              {customer ? `${customer.name} (${customer.id})` : "Mostrador"}
+              {customer ? `${customer.name} (${customer.id})` : 'Mostrador'}
             </p>
 
             <Separator className="my-2" />
@@ -202,11 +202,11 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
             <div className="space-y-2">
               <div className="font-semibold">Método de pago</div>
               <Select
-                value={form.watch("paymentMethod")}
+                value={form.watch('paymentMethod')}
                 onValueChange={onSelectPaymentMethod}
               >
                 <SelectTrigger>
-                  <SelectValue defaultValue={form.watch("paymentMethod")} />
+                  <SelectValue defaultValue={form.watch('paymentMethod')} />
                 </SelectTrigger>
                 <SelectContent>
                   {paymentMethods.map((method) => (
@@ -217,7 +217,7 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                 </SelectContent>
               </Select>
 
-              {form.watch("paymentMethod") === "Cash" && (
+              {form.watch('paymentMethod') === 'Cash' && (
                 <FormField
                   control={form.control}
                   name="payment"
@@ -231,10 +231,10 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                       <FormMessage />
 
                       <FormDescription>
-                        Cambio:{" "}
-                        {Intl.NumberFormat("es-CO", {
-                          style: "currency",
-                          currency: "COP",
+                        Cambio:{' '}
+                        {Intl.NumberFormat('es-CO', {
+                          style: 'currency',
+                          currency: 'COP',
                         }).format(payment - amount)}
                       </FormDescription>
                     </FormItem>
@@ -250,7 +250,7 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CheckoutStep;
+export default CheckoutStep

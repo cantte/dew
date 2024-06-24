@@ -1,20 +1,20 @@
-import { CircleUserRound } from "lucide-react";
-import { type User } from "next-auth";
-import SignOutButton from "~/components/signout-button";
-import { ThemeToggle } from "~/components/theme-toggle";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
+import { CircleUserRound } from 'lucide-react'
+import { type User } from 'next-auth'
+import SignOutButton from '~/components/signout-button'
+import { ThemeToggle } from '~/components/theme-toggle'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
+import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from '~/components/ui/dropdown-menu'
 
 type Props = {
-  user: User;
-};
+  user: User
+}
 
 const AccountNav = ({ user }: Props) => {
   return (
@@ -23,10 +23,10 @@ const AccountNav = ({ user }: Props) => {
         <Button className="rounded-full" size="icon" variant="ghost">
           <Avatar className="h-8 w-8">
             {user.image ? (
-              <AvatarImage src={user.image} alt={user.name ?? "D"} />
+              <AvatarImage src={user.image} alt={user.name ?? 'D'} />
             ) : (
               <AvatarFallback>
-                <span className="sr-only">{user.name ?? "D"}</span>
+                <span className="sr-only">{user.name ?? 'D'}</span>
                 <CircleUserRound className="h-4 w-4" />
               </AvatarFallback>
             )}
@@ -52,7 +52,7 @@ const AccountNav = ({ user }: Props) => {
         <SignOutButton />
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-export default AccountNav;
+export default AccountNav

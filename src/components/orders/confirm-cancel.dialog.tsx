@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
-import ConfirmDialog from "~/components/confirm-dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+import { useEffect, useState } from 'react'
+import ConfirmDialog from '~/components/confirm-dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
-type Order = RouterOutputs["order"]["list"][number];
+type Order = RouterOutputs['order']['list'][number]
 
 type Props = {
-  order: Order;
-};
+  order: Order
+}
 
 const ConfirmCancelOrderDialog = ({ order }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const cancelOrder = api.order.cancel.useMutation();
+  const cancelOrder = api.order.cancel.useMutation()
 
   const handleCancel = () => {
     cancelOrder.mutate({
       id: order.id,
-    });
-  };
+    })
+  }
 
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   useEffect(() => {
     if (cancelOrder.isSuccess) {
-      void utils.order.list.invalidate();
-      setIsOpen(false);
+      void utils.order.list.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cancelOrder.isSuccess]);
+  }, [cancelOrder.isSuccess])
 
   return (
     <>
@@ -48,7 +48,7 @@ const ConfirmCancelOrderDialog = ({ order }: Props) => {
         onConfirm={handleCancel}
       />
     </>
-  );
-};
+  )
+}
 
-export default ConfirmCancelOrderDialog;
+export default ConfirmCancelOrderDialog

@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { RotateCw, SquarePen } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { type TypeOf } from "zod";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { RotateCw, SquarePen } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type TypeOf } from 'zod'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -20,21 +20,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
-import { updateStoreInput } from "~/server/api/schemas/stores";
-import { api } from "~/trpc/react";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { useToast } from '~/components/ui/use-toast'
+import { updateStoreInput } from '~/server/api/schemas/stores'
+import { api } from '~/trpc/react'
+import { type RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  store: NonNullable<RouterOutputs["store"]["list"][number]>;
-};
+  store: NonNullable<RouterOutputs['store']['list'][number]>
+}
 
-type FormValues = TypeOf<typeof updateStoreInput>;
+type FormValues = TypeOf<typeof updateStoreInput>
 
 const UpdateStoreModal = ({ store }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
       id: store.id,
@@ -43,27 +43,27 @@ const UpdateStoreModal = ({ store }: Props) => {
       phone: store.phone ?? undefined,
     },
     resolver: zodResolver(updateStoreInput),
-  });
+  })
 
-  const updateStore = api.store.update.useMutation();
+  const updateStore = api.store.update.useMutation()
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    updateStore.mutate(values);
-  };
+    updateStore.mutate(values)
+  }
 
-  const utils = api.useUtils();
-  const { toast } = useToast();
+  const utils = api.useUtils()
+  const { toast } = useToast()
   useEffect(() => {
     if (updateStore.isSuccess) {
       toast({
-        title: "Éxito",
-        description: "Tienda actualizada correctamente",
-      });
+        title: 'Éxito',
+        description: 'Tienda actualizada correctamente',
+      })
 
-      void utils.store.list.invalidate();
-      setIsOpen(false);
+      void utils.store.list.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateStore.isSuccess]);
+  }, [updateStore.isSuccess])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -143,7 +143,7 @@ const UpdateStoreModal = ({ store }: Props) => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default UpdateStoreModal;
+export default UpdateStoreModal

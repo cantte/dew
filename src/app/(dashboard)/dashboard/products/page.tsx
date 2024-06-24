@@ -1,31 +1,31 @@
-import { Suspense } from "react";
-import { columns } from "~/app/(dashboard)/dashboard/products/columns";
-import CreateProductButton from "~/app/(dashboard)/dashboard/products/create-button";
-import ProductDataTable from "~/app/(dashboard)/dashboard/products/data-table";
-import ProductsOverview from "~/app/(dashboard)/dashboard/products/overview";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import NotFoundStoreAlert from "~/components/stores/not-found.alert";
-import { Skeleton } from "~/components/ui/skeleton";
-import { api } from "~/trpc/server";
+import { Suspense } from 'react'
+import { columns } from '~/app/(dashboard)/dashboard/products/columns'
+import CreateProductButton from '~/app/(dashboard)/dashboard/products/create-button'
+import ProductDataTable from '~/app/(dashboard)/dashboard/products/data-table'
+import ProductsOverview from '~/app/(dashboard)/dashboard/products/overview'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import NotFoundStoreAlert from '~/components/stores/not-found.alert'
+import { Skeleton } from '~/components/ui/skeleton'
+import { api } from '~/trpc/server'
 
 const ProductsPage = async () => {
-  const store = await api.store.findCurrent();
+  const store = await api.store.findCurrent()
 
   if (!store) {
-    return <NotFoundStoreAlert />;
+    return <NotFoundStoreAlert />
   }
 
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["product:view"],
-  });
+    permissions: ['product:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
   const products = await api.product.list({
     storeId: store.id,
-  });
+  })
 
   return (
     <div className="space-y-4">
@@ -41,7 +41,7 @@ const ProductsPage = async () => {
 
       <ProductDataTable columns={columns} data={products} storeId={store.id} />
     </div>
-  );
-};
+  )
+}
 
-export default ProductsPage;
+export default ProductsPage

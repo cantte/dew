@@ -8,16 +8,16 @@ import {
   Preview,
   Tailwind,
   Text,
-} from "@react-email/components";
+} from '@react-email/components'
 
 type Props = {
-  name: string;
-  total: number;
-  products: number;
-  date: Date;
-  url: string;
-  store: string;
-};
+  name: string
+  total: number
+  products: number
+  date: Date
+  url: string
+  store: string
+}
 
 const NewOrderEmail = ({ name, total, products, date, url, store }: Props) => {
   return (
@@ -28,9 +28,9 @@ const NewOrderEmail = ({ name, total, products, date, url, store }: Props) => {
         <Body className="mx-auto my-auto px-2 font-sans">
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Text className="text-xs">
-              {Intl.DateTimeFormat("es-CO", {
-                dateStyle: "full",
-                timeStyle: "short",
+              {Intl.DateTimeFormat('es-CO', {
+                dateStyle: 'full',
+                timeStyle: 'short',
               }).format(date ?? new Date())}
             </Text>
 
@@ -41,13 +41,13 @@ const NewOrderEmail = ({ name, total, products, date, url, store }: Props) => {
 
             <Container>
               <Text>
-                Has compadro un total de{" "}
-                {Intl.NumberFormat("es-CO").format(products || 0)}
-                {products === 1 ? " producto" : " productos"}. El total de tu
-                orden es de{" "}
-                {Intl.NumberFormat("es-CO", {
-                  style: "currency",
-                  currency: "COP",
+                Has compadro un total de{' '}
+                {Intl.NumberFormat('es-CO').format(products || 0)}
+                {products === 1 ? ' producto' : ' productos'}. El total de tu
+                orden es de{' '}
+                {Intl.NumberFormat('es-CO', {
+                  style: 'currency',
+                  currency: 'COP',
                 }).format(total || 0)}
                 .
               </Text>
@@ -79,7 +79,7 @@ const NewOrderEmail = ({ name, total, products, date, url, store }: Props) => {
         </Body>
       </Tailwind>
     </Html>
-  );
-};
+  )
+}
 
-export default NewOrderEmail;
+export default NewOrderEmail

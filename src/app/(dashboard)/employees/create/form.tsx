@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useDebounce } from "@uidotdev/usehooks";
-import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { type z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useDebounce } from '@uidotdev/usehooks'
+import { useRouter } from 'next/navigation'
+import { Fragment, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { type z } from 'zod'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,8 +16,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "~/components/ui/alert-dialog";
-import { Button } from "~/components/ui/button";
+} from '~/components/ui/alert-dialog'
+import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -25,17 +25,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
-import { createEmployeeInput } from "~/server/api/schemas/employees";
-import { api } from "~/trpc/react";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { useToast } from '~/components/ui/use-toast'
+import { createEmployeeInput } from '~/server/api/schemas/employees'
+import { api } from '~/trpc/react'
 
 type Props = {
-  storeId: string;
-};
+  storeId: string
+}
 
-type FormValues = z.infer<typeof createEmployeeInput>;
+type FormValues = z.infer<typeof createEmployeeInput>
 
 const CreateEmployeeForm = ({ storeId }: Props) => {
   const form = useForm<FormValues>({
@@ -43,40 +43,40 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
       storeId,
     },
     resolver: zodResolver(createEmployeeInput),
-  });
+  })
 
-  const createEmployee = api.employee.create.useMutation();
-  const { toast } = useToast();
-  const route = useRouter();
+  const createEmployee = api.employee.create.useMutation()
+  const { toast } = useToast()
+  const route = useRouter()
   useEffect(() => {
     if (createEmployee.isSuccess) {
       toast({
-        title: "Empleado creado",
-        description: "El empleado ha sido creado exitosamente.",
-      });
-      route.push("/dashboard/employees");
+        title: 'Empleado creado',
+        description: 'El empleado ha sido creado exitosamente.',
+      })
+      route.push('/dashboard/employees')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createEmployee.isSuccess]);
+  }, [createEmployee.isSuccess])
 
   const onSubmit = (data: FormValues) => {
-    createEmployee.mutate(data);
-  };
+    createEmployee.mutate(data)
+  }
 
-  const employeeCode = useDebounce(form.watch("code"), 1000);
+  const employeeCode = useDebounce(form.watch('code'), 1000)
   const { data: employee } = api.employee.find.useQuery(
-    { code: employeeCode ?? "" },
+    { code: employeeCode ?? '' },
     {
-      enabled: employeeCode !== "",
+      enabled: employeeCode !== '',
     },
-  );
+  )
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   useEffect(() => {
     if (employee) {
-      setIsOpen(true);
+      setIsOpen(true)
     }
-  }, [employee]);
+  }, [employee])
 
   const loadEmployee = () => {
     form.reset({
@@ -85,9 +85,9 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
       email: employee?.email,
       phone: employee?.phone !== null ? employee?.phone : undefined,
       storeId,
-    });
-    setIsOpen(false);
-  };
+    })
+    setIsOpen(false)
+  }
 
   return (
     <Fragment>
@@ -182,7 +182,7 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
         </form>
       </Form>
     </Fragment>
-  );
-};
+  )
+}
 
-export default CreateEmployeeForm;
+export default CreateEmployeeForm

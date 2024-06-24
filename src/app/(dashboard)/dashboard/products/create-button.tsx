@@ -1,15 +1,15 @@
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import { api } from "~/trpc/server";
+import { PlusCircle } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '~/components/ui/button'
+import { api } from '~/trpc/server'
 
 const CreateProductButton = async () => {
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["product:create"],
-  });
+    permissions: ['product:create'],
+  })
 
   if (!hasPermissions) {
-    return null;
+    return null
   }
 
   return (
@@ -21,7 +21,7 @@ const CreateProductButton = async () => {
         </span>
       </Link>
     </Button>
-  );
-};
+  )
+}
 
-export default CreateProductButton;
+export default CreateProductButton

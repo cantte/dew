@@ -1,30 +1,30 @@
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import ProductSummary from "~/app/(dashboard)/dashboard/products/[id]/product-summary";
-import { Badge } from "~/components/ui/badge";
+import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
+import ProductSummary from '~/app/(dashboard)/dashboard/products/[id]/product-summary'
+import { Badge } from '~/components/ui/badge'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
-import { Skeleton } from "~/components/ui/skeleton";
-import { api } from "~/trpc/server";
+} from '~/components/ui/card'
+import { Separator } from '~/components/ui/separator'
+import { Skeleton } from '~/components/ui/skeleton'
+import { api } from '~/trpc/server'
 
 type Props = {
-  id: string;
-};
+  id: string
+}
 
 const ProductDetails = async ({ id }: Props) => {
-  const product = await api.product.findById({ id: id });
+  const product = await api.product.findById({ id: id })
 
   if (!product) {
-    return notFound();
+    return notFound()
   }
 
-  const stores = await api.product.stores({ id: id });
+  const stores = await api.product.stores({ id: id })
 
   return (
     <Card className="rounded shadow-none">
@@ -59,18 +59,18 @@ const ProductDetails = async ({ id }: Props) => {
                     Precio de compra
                   </span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(product.purchasePrice)}
                   </span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Precio de venta</span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(product.salePrice)}
                   </span>
                 </li>
@@ -79,9 +79,9 @@ const ProductDetails = async ({ id }: Props) => {
                     Ganancia estimada por unidad
                   </span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(product.salePrice - product.purchasePrice)}
                   </span>
                 </li>
@@ -97,8 +97,8 @@ const ProductDetails = async ({ id }: Props) => {
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
 const ProductSummaryFallback = () => {
   return (
@@ -111,7 +111,7 @@ const ProductSummaryFallback = () => {
         <Skeleton className="h-5 w-full" />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProductDetails;
+export default ProductDetails

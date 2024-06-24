@@ -1,6 +1,6 @@
-import { useDebounce } from "@uidotdev/usehooks";
-import { CommandLoading } from "cmdk";
-import { useEffect, useState } from "react";
+import { useDebounce } from '@uidotdev/usehooks'
+import { CommandLoading } from 'cmdk'
+import { useEffect, useState } from 'react'
 import {
   Command,
   CommandDialog,
@@ -10,66 +10,66 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "~/components/ui/command";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/command'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
-type SearchedProduct = NonNullable<RouterOutputs["product"]["search"]>[number];
+type SearchedProduct = NonNullable<RouterOutputs['product']['search']>[number]
 
 type Props = {
-  suggestions: RouterOutputs["product"]["suggestions"];
+  suggestions: RouterOutputs['product']['suggestions']
 
-  onSelect: (productCode: string) => void;
-};
+  onSelect: (productCode: string) => void
+}
 
 const FindProduct = ({ onSelect, suggestions }: Props) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen((open) => !open)
       }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+    }
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [])
 
-  const [query, setQuery] = useState("");
-  const finalQuery = useDebounce(query, 250);
+  const [query, setQuery] = useState('')
+  const finalQuery = useDebounce(query, 250)
 
-  const store = api.store.findCurrent.useQuery();
+  const store = api.store.findCurrent.useQuery()
   const search = api.product.search.useQuery(
     {
       query: finalQuery,
-      storeId: store.data?.id ?? "",
+      storeId: store.data?.id ?? '',
     },
     {
       enabled: open && finalQuery.length > 0 && store.data !== undefined,
     },
-  );
+  )
 
-  const [products, setProducts] = useState<SearchedProduct[]>([]);
+  const [products, setProducts] = useState<SearchedProduct[]>([])
   useEffect(() => {
     if (search.data) {
-      setProducts(search.data);
+      setProducts(search.data)
     }
-  }, [search.data]);
+  }, [search.data])
 
   const handleSelect = (value: string) => {
-    const [id] = value.split("@");
-    const product = products.find((product) => product.id === id);
+    const [id] = value.split('@')
+    const product = products.find((product) => product.id === id)
     if (product) {
-      onSelect(product.code);
+      onSelect(product.code)
     }
 
-    const suggestion = suggestions.find((product) => product.id === id);
+    const suggestion = suggestions.find((product) => product.id === id)
     if (suggestion) {
-      onSelect(suggestion.code);
+      onSelect(suggestion.code)
     }
 
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
@@ -120,7 +120,7 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
         </CommandList>
       </Command>
     </CommandDialog>
-  );
-};
+  )
+}
 
-export default FindProduct;
+export default FindProduct

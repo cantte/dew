@@ -1,10 +1,10 @@
-import { useDebounce } from "@uidotdev/usehooks";
-import { Info } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import type { TypeOf } from "zod";
-import CreateCustomerModal from "~/components/customers/create-customer.modal";
-import { Button } from "~/components/ui/button";
+import { useDebounce } from '@uidotdev/usehooks'
+import { Info } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import type { TypeOf } from 'zod'
+import CreateCustomerModal from '~/components/customers/create-customer.modal'
+import { Button } from '~/components/ui/button'
 import {
   FormControl,
   FormDescription,
@@ -12,29 +12,29 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
-import type { createSaleInput } from "~/server/api/schemas/sales";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/popover'
+import type { createSaleInput } from '~/server/api/schemas/sales'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
-export type FormValues = TypeOf<typeof createSaleInput>;
+export type FormValues = TypeOf<typeof createSaleInput>
 
-type Customer = RouterOutputs["customer"]["find"];
+type Customer = RouterOutputs['customer']['find']
 
 type Props = {
-  onContinue: (customer?: Customer) => void;
-};
+  onContinue: (customer?: Customer) => void
+}
 
 const SelectCustomerStep = ({ onContinue }: Props) => {
-  const form = useFormContext<FormValues>();
+  const form = useFormContext<FormValues>()
 
-  const customerId = useDebounce(form.watch("customerId"), 1000);
+  const customerId = useDebounce(form.watch('customerId'), 1000)
   const {
     data: customer,
     error: findCustomerError,
@@ -42,34 +42,34 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
   } = api.customer.find.useQuery(
     { id: customerId },
     {
-      enabled: customerId !== undefined && customerId !== "",
+      enabled: customerId !== undefined && customerId !== '',
     },
-  );
+  )
 
   useEffect(() => {
     if (findCustomerError) {
-      if (findCustomerError.message.includes("undefined")) {
-        form.setError("customerId", {
-          type: "manual",
-          message: "El cliente no existe",
-        });
-        return;
+      if (findCustomerError.message.includes('undefined')) {
+        form.setError('customerId', {
+          type: 'manual',
+          message: 'El cliente no existe',
+        })
+        return
       }
     }
 
     if (customer) {
-      form.setValue("customerId", customer.id);
-      form.clearErrors("customerId");
+      form.setValue('customerId', customer.id)
+      form.clearErrors('customerId')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customer, findCustomerError]);
+  }, [customer, findCustomerError])
 
   const handleContinueWithoutCustomer = () => {
-    form.setValue("customerId", "000000");
-    onContinue();
-  };
+    form.setValue('customerId', '000000')
+    onContinue()
+  }
   const [isOpenCreateCustomerModal, setIsOpenCreateCustomerModal] =
-    useState(false);
+    useState(false)
 
   return (
     <div>
@@ -127,7 +127,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
 
             <FormMessage />
 
-            {findCustomerError?.message.includes("undefined") && (
+            {findCustomerError?.message.includes('undefined') && (
               <Button
                 type="button"
                 onClick={() => setIsOpenCreateCustomerModal(true)}
@@ -140,7 +140,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
         )}
       />
     </div>
-  );
-};
+  )
+}
 
-export default SelectCustomerStep;
+export default SelectCustomerStep

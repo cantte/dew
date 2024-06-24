@@ -1,28 +1,28 @@
-"use client";
+'use client'
 
-import { Monitor, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useMemo } from "react";
-import { Button } from "~/components/ui/button";
+import { Monitor, Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { useMemo } from 'react'
+import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from '~/components/ui/dropdown-menu'
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
 
   const icon = useMemo(() => {
-    if (theme === "light") {
-      return <Sun className="h-3 w-3" />;
+    if (theme === 'light') {
+      return <Sun className="h-3 w-3" />
     }
-    if (theme === "dark") {
-      return <Moon className="h-3 w-3" />;
+    if (theme === 'dark') {
+      return <Moon className="h-3 w-3" />
     }
-    return <Monitor className="h-3 w-3" />;
-  }, [theme]);
+    return <Monitor className="h-3 w-3" />
+  }, [theme])
 
   return (
     <DropdownMenu>
@@ -38,26 +38,26 @@ export function ThemeToggle() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem
           className="flex h-7 w-full justify-between gap-1"
-          onClick={() => setTheme("light")}
+          onClick={() => setTheme('light')}
         >
           <span>Claro</span>
           <Sun className="h-3 w-3" />
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex h-7 w-full justify-between gap-1"
-          onClick={() => setTheme("dark")}
+          onClick={() => setTheme('dark')}
         >
           <span>Oscuro</span>
           <Moon className="h-3 w-3" />
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex h-7 w-full justify-between gap-1"
-          onClick={() => setTheme("system")}
+          onClick={() => setTheme('system')}
         >
           <span>Sistema</span>
           <Monitor className="h-3 w-3" />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

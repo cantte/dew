@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { type z } from "zod";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { type z } from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -13,17 +13,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { createCustomerInput } from "~/server/api/schemas/customers";
-import { api } from "~/trpc/react";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { createCustomerInput } from '~/server/api/schemas/customers'
+import { api } from '~/trpc/react'
 
 type CreateCustomerFormProps = {
-  id?: string;
-  onCreate: () => void;
-};
+  id?: string
+  onCreate: () => void
+}
 
-type CreateCustomerFormValues = z.infer<typeof createCustomerInput>;
+type CreateCustomerFormValues = z.infer<typeof createCustomerInput>
 
 const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
   const form = useForm<CreateCustomerFormValues>({
@@ -31,21 +31,21 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
     defaultValues: {
       id,
     },
-  });
+  })
 
-  const createCustomer = api.customer.create.useMutation();
+  const createCustomer = api.customer.create.useMutation()
 
   useEffect(() => {
     if (createCustomer.isSuccess) {
-      form.reset();
-      onCreate();
+      form.reset()
+      onCreate()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createCustomer.isSuccess]);
+  }, [createCustomer.isSuccess])
 
   const onSubmit = (data: CreateCustomerFormValues) => {
-    createCustomer.mutate(data);
-  };
+    createCustomer.mutate(data)
+  }
 
   return (
     <Form {...form}>
@@ -121,7 +121,7 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default CreateCustomerForm;
+export default CreateCustomerForm

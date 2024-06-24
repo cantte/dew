@@ -8,13 +8,13 @@ import {
   Preview,
   Tailwind,
   Text,
-} from "@react-email/components";
+} from '@react-email/components'
 
 type Props = {
-  employeeName: string;
-  storeName: string;
-  url: string;
-};
+  employeeName: string
+  storeName: string
+  url: string
+}
 
 const EmployeeStoreInvitationEmail = ({
   employeeName,
@@ -59,7 +59,7 @@ const EmployeeStoreInvitationEmail = ({
         </Body>
       </Tailwind>
     </Html>
-  );
-};
+  )
+}
 
-export default EmployeeStoreInvitationEmail;
+export default EmployeeStoreInvitationEmail

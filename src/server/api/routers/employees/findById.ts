@@ -1,13 +1,13 @@
-import { eq } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { findEmployeeInput } from "~/server/api/schemas/employees";
-import { employees } from "~/server/db/schema";
+import { eq } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { findEmployeeInput } from '~/server/api/schemas/employees'
+import { employees } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof findEmployeeInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof findEmployeeInput>
+}
 
 const findEmployeeById = async ({ ctx, input }: Options) => {
   return ctx.db.query.employees.findFirst({
@@ -19,7 +19,7 @@ const findEmployeeById = async ({ ctx, input }: Options) => {
       phone: true,
     },
     where: eq(employees.id, input.code),
-  });
-};
+  })
+}
 
-export default findEmployeeById;
+export default findEmployeeById

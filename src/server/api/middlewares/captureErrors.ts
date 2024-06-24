@@ -1,21 +1,21 @@
-import { captureException as SentryCaptureException } from "@sentry/nextjs";
-import { middleware } from "~/server/api/trpc";
+import { captureException as SentryCaptureException } from '@sentry/nextjs'
+import { middleware } from '~/server/api/trpc'
 
 const captureErrors = middleware(async ({ next }) => {
-  const result = await next();
+  const result = await next()
 
   if (result && !result.ok) {
-    const cause = result.error.cause;
+    const cause = result.error.cause
 
     if (!cause) {
-      return result;
+      return result
     }
 
-    SentryCaptureException(cause);
-    throw cause;
+    SentryCaptureException(cause)
+    throw cause
   }
 
-  return result;
-});
+  return result
+})
 
-export default captureErrors;
+export default captureErrors

@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { RotateCw } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import ConfirmDialog from "~/components/confirm-dialog";
-import OrderHistoryDialog from "~/components/orders/history.dialog";
-import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
+import { RotateCw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import ConfirmDialog from '~/components/confirm-dialog'
+import OrderHistoryDialog from '~/components/orders/history.dialog'
+import { Button } from '~/components/ui/button'
+import { Separator } from '~/components/ui/separator'
 import {
   Table,
   TableBody,
@@ -14,41 +14,41 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
-import { orderStatus } from "~/constants";
-import { paymentMethods } from "~/server/api/schemas/sales";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/table'
+import { orderStatus } from '~/constants'
+import { paymentMethods } from '~/server/api/schemas/sales'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  order: NonNullable<RouterOutputs["order"]["find"]>;
-};
+  order: NonNullable<RouterOutputs['order']['find']>
+}
 
 const OrderDetail = ({ order }: Props) => {
-  const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
+  const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false)
 
-  const moveToNextStatus = api.order.moveToNextStatus.useMutation();
+  const moveToNextStatus = api.order.moveToNextStatus.useMutation()
 
   const handleMove = () => {
     moveToNextStatus.mutate({
       id: order.id,
-    });
-  };
+    })
+  }
 
-  const utils = api.useUtils();
-  const router = useRouter();
+  const utils = api.useUtils()
+  const router = useRouter()
   useEffect(() => {
     if (moveToNextStatus.isSuccess) {
-      void utils.order.list.invalidate();
-      setIsOpenConfirmDialog(false);
-      router.refresh();
+      void utils.order.list.invalidate()
+      setIsOpenConfirmDialog(false)
+      router.refresh()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moveToNextStatus.isSuccess]);
+  }, [moveToNextStatus.isSuccess])
 
-  const currentStatus = order.status;
-  const nextStatus = orderStatus.find((s) => s.id === currentStatus)?.next;
-  const nextStatusLabel = orderStatus.find((s) => s.id === nextStatus)?.label;
+  const currentStatus = order.status
+  const nextStatus = orderStatus.find((s) => s.id === currentStatus)?.next
+  const nextStatusLabel = orderStatus.find((s) => s.id === nextStatus)?.label
 
   return (
     <>
@@ -78,21 +78,21 @@ const OrderDetail = ({ order }: Props) => {
                 {order.orderItems.map((item) => (
                   <TableRow key={item.id}>
                     <TableCell>
-                      {item.product?.name ?? "No encontrado"}
+                      {item.product?.name ?? 'No encontrado'}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO").format(item.quantity)}
+                      {Intl.NumberFormat('es-CO').format(item.quantity)}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(item.salePrice)}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(item.quantity * item.salePrice)}
                     </TableCell>
                   </TableRow>
@@ -111,7 +111,7 @@ const OrderDetail = ({ order }: Props) => {
                       Productos vendidos
                     </span>
                     <span>
-                      {Intl.NumberFormat("es-CO").format(
+                      {Intl.NumberFormat('es-CO').format(
                         order.orderItems.reduce(
                           (acc, item) => acc + item.quantity,
                           0,
@@ -122,9 +122,9 @@ const OrderDetail = ({ order }: Props) => {
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Total</span>
                     <span>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(order.amount)}
                     </span>
                   </li>
@@ -136,7 +136,7 @@ const OrderDetail = ({ order }: Props) => {
                 <p className="text-muted-foreground">
                   {order.customer
                     ? `${order.customer.name} (${order.customer.id})`
-                    : "Mostrador"}
+                    : 'Mostrador'}
                 </p>
 
                 <Separator className="my-2" />
@@ -146,7 +146,7 @@ const OrderDetail = ({ order }: Props) => {
                   <p className="text-muted-foreground">
                     {paymentMethods.find(
                       (method) => method.value === order.paymentMethod,
-                    )?.label ?? "Desconocido"}
+                    )?.label ?? 'Desconocido'}
                   </p>
                 </div>
 
@@ -154,27 +154,27 @@ const OrderDetail = ({ order }: Props) => {
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Total a pagar</span>
                     <span>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(order.amount)}
                     </span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Pago recibido</span>
                     <span>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(order.payment)}
                     </span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Cambio</span>
                     <span>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(order.payment - order.amount)}
                     </span>
                   </li>
@@ -203,7 +203,7 @@ const OrderDetail = ({ order }: Props) => {
                 disabled={moveToNextStatus.isPending}
               />
 
-              {order.status !== "cancelled" && order.status !== "delivered" && (
+              {order.status !== 'cancelled' && order.status !== 'delivered' && (
                 <Button
                   className="w-full"
                   disabled={moveToNextStatus.isPending}
@@ -220,7 +220,7 @@ const OrderDetail = ({ order }: Props) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default OrderDetail;
+export default OrderDetail

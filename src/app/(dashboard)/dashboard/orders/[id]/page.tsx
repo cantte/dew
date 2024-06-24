@@ -1,41 +1,41 @@
-import { notFound } from "next/navigation";
-import BackButton from "~/components/back-button";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import OrderDetail from "~/components/orders/detail";
-import { Badge } from "~/components/ui/badge";
+import { notFound } from 'next/navigation'
+import BackButton from '~/components/back-button'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import OrderDetail from '~/components/orders/detail'
+import { Badge } from '~/components/ui/badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { orderStatus } from "~/constants";
-import { api } from "~/trpc/server";
+} from '~/components/ui/tooltip'
+import { orderStatus } from '~/constants'
+import { api } from '~/trpc/server'
 
 type Props = {
   params: {
-    id: string;
-  };
-};
+    id: string
+  }
+}
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 const OrderDetailPage = async ({ params }: Props) => {
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["order:view"],
-  });
+    permissions: ['order:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
-  const order = await api.order.find({ id: params.id });
+  const order = await api.order.find({ id: params.id })
 
   if (!order) {
-    return notFound();
+    return notFound()
   }
 
-  const status = orderStatus.find((status) => status.id === order.status);
+  const status = orderStatus.find((status) => status.id === order.status)
 
   return (
     <div className="flex flex-col items-start space-y-4">
@@ -46,12 +46,12 @@ const OrderDetailPage = async ({ params }: Props) => {
           <Tooltip>
             <TooltipTrigger>
               <Badge variant="outline">
-                {Intl.DateTimeFormat("es-CO", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
+                {Intl.DateTimeFormat('es-CO', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
                 }).format(new Date(order.createdAt))}
               </Badge>
             </TooltipTrigger>
@@ -61,7 +61,7 @@ const OrderDetailPage = async ({ params }: Props) => {
 
         {status && (
           <Badge
-            variant={order.status === "cancelled" ? "destructive" : "default"}
+            variant={order.status === 'cancelled' ? 'destructive' : 'default'}
           >
             {status.label}
           </Badge>
@@ -70,7 +70,7 @@ const OrderDetailPage = async ({ params }: Props) => {
 
       <OrderDetail order={order} />
     </div>
-  );
-};
+  )
+}
 
-export default OrderDetailPage;
+export default OrderDetailPage

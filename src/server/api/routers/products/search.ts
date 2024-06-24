@@ -1,13 +1,13 @@
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { searchProductsInput } from "~/server/api/schemas/products";
-import { inventory, products } from "~/server/db/schema";
+import { and, desc, eq, isNull, sql } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { searchProductsInput } from '~/server/api/schemas/products'
+import { inventory, products } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof searchProductsInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof searchProductsInput>
+}
 
 const searchProducts = async ({ ctx, input }: Options) => {
   return ctx.db
@@ -26,7 +26,7 @@ const searchProducts = async ({ ctx, input }: Options) => {
         sql`to_tsvector(${products.name}) @@ to_tsquery(${input.query})`,
       ),
     )
-    .orderBy(desc(products.createdAt));
-};
+    .orderBy(desc(products.createdAt))
+}
 
-export default searchProducts;
+export default searchProducts

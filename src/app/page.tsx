@@ -1,14 +1,14 @@
-import { ArrowRightIcon } from "@radix-ui/react-icons";
-import NextLink from "next/link";
-import Footer from "~/components/footer";
-import FeaturesSection from "~/components/home/features";
-import SignInButton from "~/components/signin-button";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { getServerAuthSession } from "~/server/auth";
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import NextLink from 'next/link'
+import Footer from '~/components/footer'
+import FeaturesSection from '~/components/home/features'
+import SignInButton from '~/components/signin-button'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
+import { getServerAuthSession } from '~/server/auth'
 
 export default async function Home() {
-  const session = await getServerAuthSession();
+  const session = await getServerAuthSession()
 
   return (
     <div className="min-h-screen w-full overflow-hidden">
@@ -45,8 +45,8 @@ export default async function Home() {
             <div className="flex grow flex-col justify-center">
               <div className="max-w-[725px] text-center">
                 <h1 className="mb-8 text-[38px] leading-[46px] md:text-[70px] md:leading-[85px]">
-                  <span>Lleva un registro de tus</span>{" "}
-                  <span className="text-primary-text">ventas</span>{" "}
+                  <span>Lleva un registro de tus</span>{' '}
+                  <span className="text-primary-text">ventas</span>{' '}
                   <span>sin complicaciones</span>
                 </h1>
                 <div className="text-center sm:px-20">
@@ -76,5 +76,5 @@ export default async function Home() {
         <Footer />
       </div>
     </div>
-  );
+  )
 }

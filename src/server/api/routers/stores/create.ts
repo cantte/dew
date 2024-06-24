@@ -1,29 +1,29 @@
-import { eq } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import uuid from "~/lib/uuid";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { createStoreInput } from "~/server/api/schemas/stores";
+import { eq } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import uuid from '~/lib/uuid'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { createStoreInput } from '~/server/api/schemas/stores'
 import {
   employeeStore,
   employees,
   roles,
   stores,
   userPreferences,
-} from "~/server/db/schema";
+} from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof createStoreInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof createStoreInput>
+}
 
 const createStore = async ({ ctx, input }: Options) => {
   await ctx.db.transaction(async (tx) => {
-    const storeId = uuid();
+    const storeId = uuid()
     await tx.insert(stores).values({
       ...input,
       id: storeId,
       createdBy: ctx.session.user.id,
-    });
+    })
 
     await tx
       .insert(userPreferences)
@@ -36,43 +36,43 @@ const createStore = async ({ ctx, input }: Options) => {
         set: {
           storeId,
         },
-      });
+      })
 
-    const user = ctx.session.user;
+    const user = ctx.session.user
 
     await tx
       .insert(employees)
       .values({
         id: user.id,
-        name: user.name ?? "Sin nombre",
-        email: user.email ?? "Sin email",
+        name: user.name ?? 'Sin nombre',
+        email: user.email ?? 'Sin email',
         userId: user.id,
         createdBy: user.id,
       })
-      .onConflictDoNothing();
+      .onConflictDoNothing()
 
     const adminRole = await tx.query.roles.findFirst({
       columns: {
         id: true,
       },
-      where: eq(roles.name, "admin"),
-    });
+      where: eq(roles.name, 'admin'),
+    })
 
     if (!adminRole) {
       try {
-        tx.rollback();
+        tx.rollback()
       } catch (error) {
-        throw new Error("Admin role not found");
+        throw new Error('Admin role not found')
       }
-      return;
+      return
     }
 
     await tx.insert(employeeStore).values({
       employeeId: user.id,
       storeId: storeId,
       roleId: adminRole.id,
-    });
-  });
-};
+    })
+  })
+}
 
-export default createStore;
+export default createStore

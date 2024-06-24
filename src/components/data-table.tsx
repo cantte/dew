@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import { flexRender, type Table as TanStackTable } from "@tanstack/react-table";
+import { flexRender, type Table as TanStackTable } from '@tanstack/react-table'
 import {
   Table,
   TableBody,
@@ -8,11 +8,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from '~/components/ui/table'
 
 type DataTableProps<TData> = {
-  table: TanStackTable<TData>;
-};
+  table: TanStackTable<TData>
+}
 
 const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
   return (
@@ -31,7 +31,7 @@ const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
                           header.getContext(),
                         )}
                   </TableHead>
-                );
+                )
               })}
             </TableRow>
           ))}
@@ -42,7 +42,7 @@ const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
+                data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -64,7 +64,7 @@ const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
         </TableBody>
       </Table>
     </div>
-  );
-};
+  )
+}
 
-export default DataTable;
+export default DataTable

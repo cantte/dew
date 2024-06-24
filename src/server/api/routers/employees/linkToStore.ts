@@ -1,13 +1,13 @@
-import { eq, isNotNull } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { linkToStoreInput } from "~/server/api/schemas/employees";
-import { employees, userPreferences } from "~/server/db/schema";
+import { eq, isNotNull } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { linkToStoreInput } from '~/server/api/schemas/employees'
+import { employees, userPreferences } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof linkToStoreInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof linkToStoreInput>
+}
 
 const linkEmployeeToStore = async ({ ctx, input }: Options) => {
   await ctx.db.transaction(async (tx) => {
@@ -16,22 +16,22 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
         hasUser: isNotNull(employees.userId).mapWith(Boolean),
       })
       .from(employees)
-      .where(eq(employees.id, input.employeeId));
+      .where(eq(employees.id, input.employeeId))
 
     if (result.length === 0) {
       try {
-        tx.rollback();
+        tx.rollback()
       } catch (error) {
-        throw new Error("Employee not found");
+        throw new Error('Employee not found')
       }
     }
 
-    const employee = result.at(0);
+    const employee = result.at(0)
     if (employee!.hasUser) {
       try {
-        tx.rollback();
+        tx.rollback()
       } catch (error) {
-        throw new Error("Employee already linked to a user");
+        throw new Error('Employee already linked to a user')
       }
     }
 
@@ -40,7 +40,7 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
       .set({
         userId: ctx.session.user.id,
       })
-      .where(eq(employees.id, input.employeeId));
+      .where(eq(employees.id, input.employeeId))
 
     await tx
       .insert(userPreferences)
@@ -53,8 +53,8 @@ const linkEmployeeToStore = async ({ ctx, input }: Options) => {
         set: {
           storeId: input.storeId,
         },
-      });
-  });
-};
+      })
+  })
+}
 
-export default linkEmployeeToStore;
+export default linkEmployeeToStore

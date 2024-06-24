@@ -1,13 +1,13 @@
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { byStoreInput } from "~/server/api/schemas/common";
-import { inventory, products } from "~/server/db/schema";
+import { and, desc, eq, isNull, sql } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { byStoreInput } from '~/server/api/schemas/common'
+import { inventory, products } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byStoreInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byStoreInput>
+}
 
 const listProducts = async ({ ctx, input }: Options) => {
   return await ctx.db
@@ -27,7 +27,7 @@ const listProducts = async ({ ctx, input }: Options) => {
     .where(
       and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
     )
-    .orderBy(desc(products.createdAt));
-};
+    .orderBy(desc(products.createdAt))
+}
 
-export default listProducts;
+export default listProducts

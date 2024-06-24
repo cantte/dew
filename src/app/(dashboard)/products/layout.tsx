@@ -1,11 +1,11 @@
-import DefaultLayout from "~/components/default-layout";
+import DefaultLayout from '~/components/default-layout'
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const Layout = ({ children }: Props) => {
-  return <DefaultLayout>{children}</DefaultLayout>;
-};
+  return <DefaultLayout>{children}</DefaultLayout>
+}
 
-export default Layout;
+export default Layout

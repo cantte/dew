@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { type z } from "zod";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type z } from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -14,19 +14,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Textarea } from "~/components/ui/textarea";
-import { useToast } from "~/components/ui/use-toast";
-import { updateProductInput } from "~/server/api/schemas/products";
-import { api } from "~/trpc/react";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
+import { useToast } from '~/components/ui/use-toast'
+import { updateProductInput } from '~/server/api/schemas/products'
+import { api } from '~/trpc/react'
+import { type RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  product: NonNullable<RouterOutputs["product"]["findById"]>;
-};
+  product: NonNullable<RouterOutputs['product']['findById']>
+}
 
-type FormValues = z.infer<typeof updateProductInput>;
+type FormValues = z.infer<typeof updateProductInput>
 
 const EditProductForm = ({ product }: Props) => {
   const form = useForm<FormValues>({
@@ -38,25 +38,25 @@ const EditProductForm = ({ product }: Props) => {
       salePrice: product.salePrice ?? undefined,
     },
     resolver: zodResolver(updateProductInput),
-  });
-  const updateProduct = api.product.update.useMutation();
+  })
+  const updateProduct = api.product.update.useMutation()
 
-  const router = useRouter();
-  const { toast } = useToast();
+  const router = useRouter()
+  const { toast } = useToast()
   useEffect(() => {
     if (updateProduct.isSuccess) {
       toast({
-        title: "Producto actualizado",
-        description: "El producto ha sido actualizado exitosamente.",
-      });
-      router.refresh();
+        title: 'Producto actualizado',
+        description: 'El producto ha sido actualizado exitosamente.',
+      })
+      router.refresh()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateProduct.isSuccess]);
+  }, [updateProduct.isSuccess])
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    updateProduct.mutate(data);
-  };
+    updateProduct.mutate(data)
+  }
 
   return (
     <Form {...form}>
@@ -138,7 +138,7 @@ const EditProductForm = ({ product }: Props) => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default EditProductForm;
+export default EditProductForm

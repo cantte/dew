@@ -1,52 +1,52 @@
-"use client";
+'use client'
 
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { type Table } from "@tanstack/react-table";
-import { mkConfig } from "export-to-csv";
-import { FileDown, FileUp } from "lucide-react";
-import { useMemo } from "react";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { exportToCsv, type ExportableToCsv } from "~/lib/csv";
+import { Cross2Icon } from '@radix-ui/react-icons'
+import { type Table } from '@tanstack/react-table'
+import { mkConfig } from 'export-to-csv'
+import { FileDown, FileUp } from 'lucide-react'
+import { useMemo } from 'react'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { exportToCsv, type ExportableToCsv } from '~/lib/csv'
 
 type DataTableToolbarProps<TData extends ExportableToCsv> = {
-  table: Table<TData>;
-};
+  table: Table<TData>
+}
 
 const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
   table,
 }: DataTableToolbarProps<TData>) => {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0
 
   const exportConfing = useMemo(
     () =>
       mkConfig({
-        fieldSeparator: ",",
-        decimalSeparator: ".",
+        fieldSeparator: ',',
+        decimalSeparator: '.',
         useKeysAsHeaders: true,
         filename: `productos-${new Date().toISOString()}`,
       }),
     [],
-  );
+  )
 
   const exportData = () => {
     const rows = table
       .getFilteredRowModel()
       .rows.map((row) => row.original)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(({ id, ...data }) => data);
+      .map(({ id, ...data }) => data)
 
-    exportToCsv(exportConfing, rows);
-  };
+    exportToCsv(exportConfing, rows)
+  }
 
   return (
     <div className="ml-auto flex items-center gap-2">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Buscar producto"
-          value={(table.getColumn("code")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn('code')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn("code")?.setFilterValue(event.target.value)
+            table.getColumn('code')?.setFilterValue(event.target.value)
           }
           className="w-[150px] lg:w-[250px]"
         />
@@ -83,7 +83,7 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsDataTableToolbar;
+export default ProductsDataTableToolbar

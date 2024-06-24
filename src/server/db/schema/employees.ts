@@ -1,63 +1,63 @@
-import { relations, sql } from "drizzle-orm";
+import { relations, sql } from 'drizzle-orm'
 import {
   primaryKey,
   timestamp,
   unique,
   uuid,
   varchar,
-} from "drizzle-orm/pg-core";
-import { users } from "~/server/db/schema/auth";
-import { createTable } from "~/server/db/schema/base";
-import { roles } from "~/server/db/schema/rbac";
-import { stores } from "~/server/db/schema/stores";
+} from 'drizzle-orm/pg-core'
+import { users } from '~/server/db/schema/auth'
+import { createTable } from '~/server/db/schema/base'
+import { roles } from '~/server/db/schema/rbac'
+import { stores } from '~/server/db/schema/stores'
 
 export const employees = createTable(
-  "employee",
+  'employee',
   {
-    id: uuid("id").notNull().primaryKey(),
-    code: varchar("code", { length: 32 }),
-    name: varchar("name", { length: 128 }).notNull(),
-    email: varchar("email", { length: 255 }).notNull(),
-    phone: varchar("phone", { length: 32 }),
-    userId: varchar("user_id", { length: 255 }).references(() => users.id),
-    createdBy: varchar("created_by", { length: 255 })
+    id: uuid('id').notNull().primaryKey(),
+    code: varchar('code', { length: 32 }),
+    name: varchar('name', { length: 128 }).notNull(),
+    email: varchar('email', { length: 255 }).notNull(),
+    phone: varchar('phone', { length: 32 }),
+    userId: varchar('user_id', { length: 255 }).references(() => users.id),
+    createdBy: varchar('created_by', { length: 255 })
       .notNull()
       .references(() => users.id),
-    createdAt: timestamp("created_at")
+    createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
   },
   (employee) => ({
-    uniqueEmailPhoneCode: unique("employee_email_phone_code_unique").on(
+    uniqueEmailPhoneCode: unique('employee_email_phone_code_unique').on(
       employee.email,
       employee.phone,
       employee.code,
     ),
   }),
-);
+)
 
 export const employeeRelations = relations(employees, ({ many, one }) => ({
   stores: many(stores),
   user: one(users, { fields: [employees.userId], references: [users.id] }),
-}));
+}))
 
 export const employeeStore = createTable(
-  "employee_store",
+  'employee_store',
   {
-    employeeId: uuid("employee_id")
+    employeeId: uuid('employee_id')
       .notNull()
       .references(() => employees.id),
-    storeId: uuid("store_id")
+    storeId: uuid('store_id')
       .notNull()
       .references(() => stores.id),
-    roleId: uuid("role_id")
+    roleId: uuid('role_id')
       .notNull()
       .references(() => roles.id),
-    createdAt: timestamp("created_at")
+    createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
   },
   (employeeStore) => ({
     compoundKey: primaryKey({
@@ -68,7 +68,7 @@ export const employeeStore = createTable(
       ],
     }),
   }),
-);
+)
 
 export const employeeStoreRelations = relations(employeeStore, ({ one }) => ({
   employee: one(employees, {
@@ -83,4 +83,4 @@ export const employeeStoreRelations = relations(employeeStore, ({ one }) => ({
     fields: [employeeStore.roleId],
     references: [roles.id],
   }),
-}));
+}))

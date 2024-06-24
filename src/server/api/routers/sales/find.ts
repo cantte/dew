@@ -1,13 +1,13 @@
-import { eq } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { findSaleInput } from "~/server/api/schemas/sales";
-import type { TRPCContextInner } from "~/server/api/trpc";
-import { sales } from "~/server/db/schema";
+import { eq } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { findSaleInput } from '~/server/api/schemas/sales'
+import type { TRPCContextInner } from '~/server/api/trpc'
+import { sales } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCContextInner;
-  input: TypeOf<typeof findSaleInput>;
-};
+  ctx: TRPCContextInner
+  input: TypeOf<typeof findSaleInput>
+}
 
 const findSale = async ({ ctx, input }: Options) => {
   return await ctx.db.query.sales.findFirst({
@@ -30,7 +30,7 @@ const findSale = async ({ ctx, input }: Options) => {
       },
     },
     where: eq(sales.code, input.code),
-  });
-};
+  })
+}
 
-export default findSale;
+export default findSale

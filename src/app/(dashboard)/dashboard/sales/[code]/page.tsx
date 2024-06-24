@@ -1,35 +1,35 @@
-import { notFound } from "next/navigation";
-import BackButton from "~/components/back-button";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import SaleDetail from "~/components/sale-detail";
-import { Badge } from "~/components/ui/badge";
+import { notFound } from 'next/navigation'
+import BackButton from '~/components/back-button'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import SaleDetail from '~/components/sale-detail'
+import { Badge } from '~/components/ui/badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { api } from "~/trpc/server";
+} from '~/components/ui/tooltip'
+import { api } from '~/trpc/server'
 
 type Props = {
   params: {
-    code: string;
-  };
-};
+    code: string
+  }
+}
 
 const SaleDetailPage = async ({ params }: Props) => {
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["sale:view"],
-  });
+    permissions: ['sale:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
-  const sale = await api.sale.find({ code: params.code });
+  const sale = await api.sale.find({ code: params.code })
 
   if (!sale) {
-    return notFound();
+    return notFound()
   }
 
   return (
@@ -40,12 +40,12 @@ const SaleDetailPage = async ({ params }: Props) => {
           <Tooltip>
             <TooltipTrigger>
               <Badge variant="outline">
-                {Intl.DateTimeFormat("es-CO", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
+                {Intl.DateTimeFormat('es-CO', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
                 }).format(new Date(sale.createdAt))}
               </Badge>
             </TooltipTrigger>
@@ -56,7 +56,7 @@ const SaleDetailPage = async ({ params }: Props) => {
 
       <SaleDetail sale={sale} />
     </div>
-  );
-};
+  )
+}
 
-export default SaleDetailPage;
+export default SaleDetailPage

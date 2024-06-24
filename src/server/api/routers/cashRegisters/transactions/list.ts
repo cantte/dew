@@ -1,13 +1,13 @@
-import { and, between, desc, eq } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { listCashRegisterTransactionsInput } from "~/server/api/schemas/cashRegisters";
-import { cashRegisterTransactions } from "~/server/db/schema";
+import { and, between, desc, eq } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { listCashRegisterTransactionsInput } from '~/server/api/schemas/cashRegisters'
+import { cashRegisterTransactions } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof listCashRegisterTransactionsInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof listCashRegisterTransactionsInput>
+}
 
 const listCashRegisterTransactions = async ({ ctx, input }: Options) => {
   return await ctx.db.query.cashRegisterTransactions.findMany({
@@ -19,7 +19,7 @@ const listCashRegisterTransactions = async ({ ctx, input }: Options) => {
       between(cashRegisterTransactions.createdAt, input.from, input.to),
     ),
     orderBy: [desc(cashRegisterTransactions.createdAt)],
-  });
-};
+  })
+}
 
-export default listCashRegisterTransactions;
+export default listCashRegisterTransactions

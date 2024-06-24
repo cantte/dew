@@ -1,25 +1,25 @@
-import { notFound } from "next/navigation";
-import SaleDetail from "~/components/sale-detail";
-import { Badge } from "~/components/ui/badge";
+import { notFound } from 'next/navigation'
+import SaleDetail from '~/components/sale-detail'
+import { Badge } from '~/components/ui/badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { api } from "~/trpc/server";
+} from '~/components/ui/tooltip'
+import { api } from '~/trpc/server'
 
 type Props = {
   params: {
-    code: string;
-  };
-};
+    code: string
+  }
+}
 
 const CustomerSaleDetailPage = async ({ params }: Props) => {
-  const sale = await api.sale.findPublic({ code: params.code });
+  const sale = await api.sale.findPublic({ code: params.code })
 
   if (!sale) {
-    return notFound();
+    return notFound()
   }
 
   return (
@@ -30,12 +30,12 @@ const CustomerSaleDetailPage = async ({ params }: Props) => {
             <Tooltip>
               <TooltipTrigger>
                 <Badge variant="outline">
-                  {Intl.DateTimeFormat("es-CO", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
+                  {Intl.DateTimeFormat('es-CO', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
                   }).format(new Date(sale.createdAt))}
                 </Badge>
               </TooltipTrigger>
@@ -47,7 +47,7 @@ const CustomerSaleDetailPage = async ({ params }: Props) => {
         <SaleDetail sale={sale} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CustomerSaleDetailPage;
+export default CustomerSaleDetailPage

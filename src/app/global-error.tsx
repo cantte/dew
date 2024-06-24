@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import * as Sentry from "@sentry/nextjs";
-import Error from "next/error";
-import { useEffect } from "react";
+import * as Sentry from '@sentry/nextjs'
+import Error from 'next/error'
+import { useEffect } from 'react'
 
 type Props = {
-  error: unknown;
-};
+  error: unknown
+}
 
 export default function GlobalError({ error }: Readonly<Props>) {
   useEffect(() => {
-    Sentry.captureException(error);
-  }, [error]);
+    Sentry.captureException(error)
+  }, [error])
 
   return (
     <html lang="en">
@@ -19,5 +19,5 @@ export default function GlobalError({ error }: Readonly<Props>) {
         <Error statusCode={500} title="An unexpected error has occurred" />
       </body>
     </html>
-  );
+  )
 }

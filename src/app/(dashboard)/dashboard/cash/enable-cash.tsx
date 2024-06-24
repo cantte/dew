@@ -1,29 +1,29 @@
-"use client";
+'use client'
 
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Button } from "~/components/ui/button";
-import { api } from "~/trpc/react";
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { Button } from '~/components/ui/button'
+import { api } from '~/trpc/react'
 
 type Props = {
-  storeId: string;
-};
+  storeId: string
+}
 
 const EnableCashButton = ({ storeId }: Props) => {
-  const createCash = api.cashRegister.create.useMutation();
+  const createCash = api.cashRegister.create.useMutation()
 
   const handleClick = () => {
-    createCash.mutate({ storeId });
-  };
+    createCash.mutate({ storeId })
+  }
 
-  const router = useRouter();
+  const router = useRouter()
   useEffect(() => {
     if (createCash.isSuccess) {
-      router.refresh();
+      router.refresh()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createCash.isSuccess]);
+  }, [createCash.isSuccess])
 
   return (
     <Button
@@ -37,7 +37,7 @@ const EnableCashButton = ({ storeId }: Props) => {
       )}
       Habilitar caja registradora
     </Button>
-  );
-};
+  )
+}
 
-export default EnableCashButton;
+export default EnableCashButton

@@ -5,18 +5,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
-import { api } from "~/trpc/server";
+} from '~/components/ui/table'
+import { api } from '~/trpc/server'
 
 const LowStockProducts = async () => {
-  const store = await api.store.findCurrent();
+  const store = await api.store.findCurrent()
   if (!store) {
-    return null;
+    return null
   }
 
   const lowStockProducts = await api.inventory.lowStock({
     storeId: store.id,
-  });
+  })
 
   return (
     <>
@@ -41,10 +41,10 @@ const LowStockProducts = async () => {
                   <TableRow key={product.id}>
                     <TableCell>{product.name}</TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO").format(product.quantity)}
+                      {Intl.NumberFormat('es-CO').format(product.quantity)}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO").format(product.stock)}
+                      {Intl.NumberFormat('es-CO').format(product.stock)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -54,7 +54,7 @@ const LowStockProducts = async () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default LowStockProducts;
+export default LowStockProducts
