@@ -24,7 +24,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    name: Run ESLint
+    name: lint project
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,9 +33,9 @@ jobs:
 
       - run: pnpm lint
 
-  prettier:
+  check-formatting:
     runs-on: ubuntu-latest
-    name: Run Prettier
+    name: check formatting
     steps:
       - uses: actions/checkout@v4
         with:
