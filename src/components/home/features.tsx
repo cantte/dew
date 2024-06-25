@@ -5,9 +5,9 @@ import {
   ShoppingCart,
   Store,
   UserRound,
-} from "lucide-react";
-import React from "react";
-import MotionOnView from "~/components/motion-on-view";
+} from 'lucide-react'
+import React from 'react'
+import MotionOnView from '~/components/motion-on-view'
 
 const FeaturesSection = () => {
   return (
@@ -26,7 +26,7 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Visualiza tus <span className="text-primary-text">tiendas</span>{" "}
+              Visualiza tus <span className="text-primary-text">tiendas</span>{' '}
               de forma intuitiva
             </h4>
 
@@ -49,7 +49,7 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Gestiona tu inventario de{" "}
+              Gestiona tu inventario de{' '}
               <span className="text-primary-text">productos</span> con precisión
             </h4>
 
@@ -99,7 +99,7 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Registra a tus <span className="text-primary-text">clientes</span>{" "}
+              Registra a tus <span className="text-primary-text">clientes</span>{' '}
               una vez
             </h4>
 
@@ -125,7 +125,7 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Gestiona tus transacciones con nuestra{" "}
+              Gestiona tus transacciones con nuestra{' '}
               <span className="text-primary-text">caja registradora</span>
             </h4>
 
@@ -152,7 +152,7 @@ const FeaturesSection = () => {
 
           <div className="flex flex-col space-y-2">
             <h4 className="text-3xl">
-              Análisis profundo con nuestros{" "}
+              Análisis profundo con nuestros{' '}
               <span className="text-primary-text">reportes</span>
             </h4>
 
@@ -171,7 +171,7 @@ const FeaturesSection = () => {
         </div>
       </MotionOnView>
     </section>
-  );
-};
+  )
+}
 
-export default FeaturesSection;
+export default FeaturesSection

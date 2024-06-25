@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
-import Barcode from "~/components/barcode";
+import { useState } from 'react'
+import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
+import Barcode from '~/components/barcode'
 import {
   Dialog,
   DialogContent,
@@ -8,15 +8,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
+} from '~/components/ui/dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 
 type Props = {
-  product: Product;
-};
+  product: Product
+}
 
 const BarcodeModal = ({ product }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -43,7 +43,7 @@ const BarcodeModal = ({ product }: Props) => {
         </div>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default BarcodeModal;
+export default BarcodeModal

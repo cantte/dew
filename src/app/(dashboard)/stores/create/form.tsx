@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { type z } from "zod";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import type { z } from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -14,40 +14,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { createStoreInput } from "~/server/api/schemas/stores";
-import { api } from "~/trpc/react";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { createStoreInput } from '~/server/api/schemas/stores'
+import { api } from '~/trpc/react'
 
-export type CreateStoreFormProps = z.infer<typeof createStoreInput>;
+export type CreateStoreFormProps = z.infer<typeof createStoreInput>
 
 type Props = {
-  onSuccess?: () => void;
-};
+  onSuccess?: () => void
+}
 
 const CreateStoreForm = ({ onSuccess }: Props) => {
   const form = useForm<CreateStoreFormProps>({
     resolver: zodResolver(createStoreInput),
-  });
+  })
 
-  const createStore = api.store.create.useMutation();
+  const createStore = api.store.create.useMutation()
   const onSubmit: SubmitHandler<CreateStoreFormProps> = (data) => {
-    createStore.mutate(data);
-  };
+    createStore.mutate(data)
+  }
 
-  const router = useRouter();
+  const router = useRouter()
   useEffect(() => {
     if (createStore.isSuccess) {
-      router.refresh();
+      router.refresh()
       if (onSuccess) {
-        onSuccess();
-        return;
+        onSuccess()
+        return
       }
 
-      router.push("/dashboard");
+      router.push('/dashboard')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createStore.isSuccess, router]);
+  }, [createStore.isSuccess, router])
 
   return (
     <Form {...form}>
@@ -105,7 +105,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default CreateStoreForm;
+export default CreateStoreForm

@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
-import { type SidebarNavItem } from "~/types/nav";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Button } from '~/components/ui/button'
+import { cn } from '~/lib/utils'
+import type { SidebarNavItem } from '~/types/nav'
 
 type DashboardSidebarProps = {
-  items: SidebarNavItem[];
-};
+  items: SidebarNavItem[]
+}
 
 const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return items.length > 0 ? (
     <>
@@ -23,10 +23,10 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
               asChild
               variant="ghost"
               className={cn(
-                "flex w-full items-center justify-start gap-3 transition-all hover:bg-background",
+                'flex w-full items-center justify-start gap-3 transition-all hover:bg-background',
                 pathname === item.href
-                  ? "bg-accent font-medium text-foreground hover:bg-accent"
-                  : "text-muted-foreground",
+                  ? 'bg-accent font-medium text-foreground hover:bg-accent'
+                  : 'text-muted-foreground',
               )}
             >
               <Link href={item.href}>
@@ -34,10 +34,10 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
                 <span>{item.title}</span>
               </Link>
             </Button>
-          );
+          )
         }
         return (
-          <div key={`${index}-${item.title}`} className={cn("pb-4")}>
+          <div key={`${index}-${item.title}`} className={cn('pb-4')}>
             <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
               {item.title}
             </h4>
@@ -45,16 +45,16 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
               <DashboardSidebarItem items={item.items} pathname={pathname} />
             )}
           </div>
-        );
+        )
       })}
     </>
-  ) : null;
-};
+  ) : null
+}
 
 type DashboardSidebarItemProps = {
-  items: SidebarNavItem[];
-  pathname: string | null;
-};
+  items: SidebarNavItem[]
+  pathname: string | null
+}
 
 export const DashboardSidebarItem = ({
   items,
@@ -68,11 +68,11 @@ export const DashboardSidebarItem = ({
             key={`${index}-${item.href}`}
             href={item.href}
             className={cn(
-              "group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline",
-              item.disabled && "cursor-not-allowed opacity-60",
+              'group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline',
+              item.disabled && 'cursor-not-allowed opacity-60',
               pathname === item.href
-                ? "font-medium text-foreground"
-                : "text-muted-foreground",
+                ? 'font-medium text-foreground'
+                : 'text-muted-foreground',
             )}
           >
             {item.title}
@@ -86,8 +86,8 @@ export const DashboardSidebarItem = ({
           <span
             key={`${index}-${item.title}`}
             className={cn(
-              "flex w-full cursor-not-allowed items-center rounded-md p-2 text-muted-foreground hover:underline",
-              item.disabled && "cursor-not-allowed opacity-60",
+              'flex w-full cursor-not-allowed items-center rounded-md p-2 text-muted-foreground hover:underline',
+              item.disabled && 'cursor-not-allowed opacity-60',
             )}
           >
             {item.title}
@@ -100,7 +100,7 @@ export const DashboardSidebarItem = ({
         ),
       )}
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default DashboardSidebar;
+export default DashboardSidebar

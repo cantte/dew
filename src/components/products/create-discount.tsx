@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarDays, RotateCw } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import type { TypeOf } from "zod";
-import { Button } from "~/components/ui/button";
-import { Calendar } from "~/components/ui/calendar";
-import { Checkbox } from "~/components/ui/checkbox";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CalendarDays, RotateCw } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import type { TypeOf } from 'zod'
+import { Button } from '~/components/ui/button'
+import { Calendar } from '~/components/ui/calendar'
+import { Checkbox } from '~/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -13,8 +13,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
+} from '~/components/ui/dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 import {
   Form,
   FormControl,
@@ -23,27 +23,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
-import { useToast } from "~/components/ui/use-toast";
-import { cn } from "~/lib/utils";
-import { createProductDiscountInput } from "~/server/api/schemas/products";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/popover'
+import { useToast } from '~/components/ui/use-toast'
+import { cn } from '~/lib/utils'
+import { createProductDiscountInput } from '~/server/api/schemas/products'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  product: RouterOutputs["product"]["list"][number];
-};
+  product: RouterOutputs['product']['list'][number]
+}
 
-type FormValues = TypeOf<typeof createProductDiscountInput>;
+type FormValues = TypeOf<typeof createProductDiscountInput>
 
 const CreateProductDiscountDialog = ({ product }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
       productId: product.id,
@@ -51,26 +51,26 @@ const CreateProductDiscountDialog = ({ product }: Props) => {
       discount: 0,
     },
     resolver: zodResolver(createProductDiscountInput),
-  });
+  })
 
-  const createProductDiscount = api.product.createDiscount.useMutation();
+  const createProductDiscount = api.product.createDiscount.useMutation()
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    createProductDiscount.mutate(values);
-  };
+    createProductDiscount.mutate(values)
+  }
 
-  const { toast } = useToast();
+  const { toast } = useToast()
   useEffect(() => {
     if (createProductDiscount.isSuccess) {
       toast({
-        title: "Éxito",
-        description: "Descuento creado correctamente",
-      });
+        title: 'Éxito',
+        description: 'Descuento creado correctamente',
+      })
 
-      form.reset();
-      setIsOpen(false);
+      form.reset()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createProductDiscount.isSuccess]);
+  }, [createProductDiscount.isSuccess])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -121,7 +121,7 @@ const CreateProductDiscountDialog = ({ product }: Props) => {
                     <Input type="number" {...field} />
                   </FormControl>
 
-                  {form.watch("isPercentage") && (
+                  {form.watch('isPercentage') && (
                     <FormDescription>
                       Ingrese un valor de 0 a 100
                     </FormDescription>
@@ -144,17 +144,17 @@ const CreateProductDiscountDialog = ({ product }: Props) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
-                            variant={"outline"}
+                            variant={'outline'}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground",
+                              'w-full pl-3 text-left font-normal',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value ? (
-                              Intl.DateTimeFormat("es-CO", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
+                              Intl.DateTimeFormat('es-CO', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
                               }).format(field.value)
                             ) : (
                               <span>Seleccione una fecha</span>
@@ -189,17 +189,17 @@ const CreateProductDiscountDialog = ({ product }: Props) => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
-                            variant={"outline"}
+                            variant={'outline'}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground",
+                              'w-full pl-3 text-left font-normal',
+                              !field.value && 'text-muted-foreground',
                             )}
                           >
                             {field.value ? (
-                              Intl.DateTimeFormat("es-CO", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
+                              Intl.DateTimeFormat('es-CO', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
                               }).format(field.value)
                             ) : (
                               <span>Seleccione una fecha</span>
@@ -234,7 +234,7 @@ const CreateProductDiscountDialog = ({ product }: Props) => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default CreateProductDiscountDialog;
+export default CreateProductDiscountDialog

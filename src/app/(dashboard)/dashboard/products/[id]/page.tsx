@@ -1,27 +1,27 @@
-import { Suspense } from "react";
-import ProductDetails from "~/app/(dashboard)/dashboard/products/[id]/product-details";
-import ProductDiscounts from "~/app/(dashboard)/dashboard/products/[id]/product-discounts";
-import ProductInventoryDetail from "~/app/(dashboard)/dashboard/products/[id]/product-inventory-detail";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import { Separator } from "~/components/ui/separator";
-import { Skeleton } from "~/components/ui/skeleton";
-import { api } from "~/trpc/server";
+import { Suspense } from 'react'
+import ProductDetails from '~/app/(dashboard)/dashboard/products/[id]/product-details'
+import ProductDiscounts from '~/app/(dashboard)/dashboard/products/[id]/product-discounts'
+import ProductInventoryDetail from '~/app/(dashboard)/dashboard/products/[id]/product-inventory-detail'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import { Separator } from '~/components/ui/separator'
+import { Skeleton } from '~/components/ui/skeleton'
+import { api } from '~/trpc/server'
 
 type Props = {
   params: {
-    id: string;
-  };
-};
+    id: string
+  }
+}
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 const ProductDetailPage = async ({ params }: Props) => {
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["product:view"],
-  });
+    permissions: ['product:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
   return (
@@ -51,8 +51,8 @@ const ProductDetailPage = async ({ params }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const ProductDetailsFallback = () => {
   return (
@@ -61,8 +61,8 @@ const ProductDetailsFallback = () => {
       <Skeleton className="h-10 w-full" />
       <Skeleton className="h-10 w-full" />
     </div>
-  );
-};
+  )
+}
 
 const ProductInventoryDetailFallback = () => {
   return (
@@ -74,8 +74,8 @@ const ProductInventoryDetailFallback = () => {
         <Skeleton className="h-5 w-full" />
       </div>
     </>
-  );
-};
+  )
+}
 
 const ProductDiscountsFallback = () => {
   return (
@@ -87,7 +87,7 @@ const ProductDiscountsFallback = () => {
         <Skeleton className="h-5 w-full" />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProductDetailPage;
+export default ProductDetailPage

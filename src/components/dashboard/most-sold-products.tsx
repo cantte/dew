@@ -5,11 +5,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
-import { api } from "~/trpc/server";
+} from '~/components/ui/table'
+import { api } from '~/trpc/server'
 
 const MostSoldProducts = async () => {
-  const mostSoldProducts = await api.product.mostSold();
+  const mostSoldProducts = await api.product.mostSold()
 
   return (
     <div className="flex flex-col space-y-2">
@@ -32,20 +32,20 @@ const MostSoldProducts = async () => {
               <TableBody>
                 {mostSoldProducts.map((product) => (
                   <TableRow key={product.id}>
-                    <TableCell>{product.name ?? "No encontrado"}</TableCell>
+                    <TableCell>{product.name ?? 'No encontrado'}</TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO").format(product.quantity)}
+                      {Intl.NumberFormat('es-CO').format(product.quantity)}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(product.amount)}
                     </TableCell>
                     <TableCell>
-                      {Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
+                      {Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
                       }).format(product.profit)}
                     </TableCell>
                   </TableRow>
@@ -61,7 +61,7 @@ const MostSoldProducts = async () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MostSoldProducts;
+export default MostSoldProducts

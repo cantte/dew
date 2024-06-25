@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import { ViewVerticalIcon } from "@radix-ui/react-icons";
-import Link, { type LinkProps } from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { Button } from "~/components/ui/button";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
-import { dashboardConfig } from "~/config/dashboard";
-import { cn } from "~/lib/utils";
+import { ViewVerticalIcon } from '@radix-ui/react-icons'
+import Link, { type LinkProps } from 'next/link'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import { Button } from '~/components/ui/button'
+import { ScrollArea } from '~/components/ui/scroll-area'
+import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
+import { dashboardConfig } from '~/config/dashboard'
+import { cn } from '~/lib/utils'
 
 const MobileNav = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -37,14 +37,14 @@ const MobileNav = () => {
                     <Button
                       variant="ghost"
                       className={cn(
-                        "flex w-full items-center justify-start gap-3 transition-all hover:bg-background",
+                        'flex w-full items-center justify-start gap-3 transition-all hover:bg-background',
                       )}
                     >
                       {item.icon}
                       <span>{item.title}</span>
                     </Button>
                   </MobileLink>
-                );
+                )
               }
 
               return (
@@ -71,20 +71,20 @@ const MobileNav = () => {
                       </React.Fragment>
                     ))}
                 </div>
-              );
+              )
             })}
           </div>
         </ScrollArea>
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}
 
 type MobileLinkProps = LinkProps & {
-  onOpenChange?: (open: boolean) => void;
-  children: React.ReactNode;
-  className?: string;
-};
+  onOpenChange?: (open: boolean) => void
+  children: React.ReactNode
+  className?: string
+}
 
 const MobileLink = ({
   href,
@@ -93,21 +93,21 @@ const MobileLink = ({
   className,
   ...props
 }: MobileLinkProps) => {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <Link
       href={href}
       onClick={() => {
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        router.push(href.toString());
-        onOpenChange?.(false);
+        router.push(href.toString())
+        onOpenChange?.(false)
       }}
       className={cn(className)}
       {...props}
     >
       {children}
     </Link>
-  );
-};
+  )
+}
 
-export default MobileNav;
+export default MobileNav

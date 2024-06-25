@@ -1,13 +1,13 @@
-import { and, count, eq, isNull, sql } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { byStoreInput } from "~/server/api/schemas/common";
-import { inventory, products } from "~/server/db/schema";
+import { and, count, eq, isNull, sql } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { byStoreInput } from '~/server/api/schemas/common'
+import { inventory, products } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byStoreInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byStoreInput>
+}
 
 const productsOverview = async ({ ctx, input }: Options) => {
   const result = await ctx.db
@@ -20,27 +20,27 @@ const productsOverview = async ({ ctx, input }: Options) => {
     .innerJoin(inventory, eq(products.id, inventory.productId))
     .where(
       and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
-    );
+    )
 
   if (result.length === 0) {
     return {
       products: 0,
       value: 0,
       cost: 0,
-    };
+    }
   }
 
-  const response = result[0];
+  const response = result[0]
 
   if (response === undefined) {
     return {
       products: 0,
       value: 0,
       cost: 0,
-    };
+    }
   }
 
-  return response;
-};
+  return response
+}
 
-export default productsOverview;
+export default productsOverview

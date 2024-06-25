@@ -1,28 +1,28 @@
-import { Info } from "lucide-react";
-import { Badge } from "~/components/ui/badge";
+import { Info } from 'lucide-react'
+import { Badge } from '~/components/ui/badge'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
+} from '~/components/ui/popover'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
+} from '~/components/ui/tooltip'
 
 type Indicator = {
-  title: string;
-  tooltip: string;
-  value: string;
-};
+  title: string
+  tooltip: string
+  value: string
+}
 
 type Props = {
-  indicators: Indicator[];
+  indicators: Indicator[]
 
-  info?: string;
-};
+  info?: string
+}
 
 const BadgeIndicators = ({ indicators, info }: Props) => {
   return (
@@ -53,7 +53,7 @@ const BadgeIndicators = ({ indicators, info }: Props) => {
         </Popover>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default BadgeIndicators;
+export default BadgeIndicators

@@ -1,7 +1,7 @@
-import { Info } from "lucide-react";
-import NextLink from "next/link";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import { Info } from 'lucide-react'
+import NextLink from 'next/link'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { Button } from '~/components/ui/button'
 
 const NotFoundStoreAlert = () => {
   return (
@@ -17,7 +17,7 @@ const NotFoundStoreAlert = () => {
         </Button>
       </AlertDescription>
     </Alert>
-  );
-};
+  )
+}
 
-export default NotFoundStoreAlert;
+export default NotFoundStoreAlert

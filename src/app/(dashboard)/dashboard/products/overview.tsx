@@ -1,24 +1,28 @@
-import { Badge } from "~/components/ui/badge";
+import { Badge } from '~/components/ui/badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/tooltip'
+import { api } from '~/trpc/server'
 
 type Props = {
-  overview: NonNullable<RouterOutputs["product"]["overview"]>;
-};
+  storeId: string
+}
 
-const ProductsOverview = ({ overview }: Props) => {
+const ProductsOverview = async ({ storeId }: Props) => {
+  const overview = await api.product.overview({
+    storeId: storeId,
+  })
+
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-wrap items-center space-x-4">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <Badge variant="secondary">
-              Productos: {Intl.NumberFormat("es-CO").format(overview.products)}
+              Productos: {Intl.NumberFormat('es-CO').format(overview.products)}
             </Badge>
           </TooltipTrigger>
           <TooltipContent>
@@ -31,10 +35,10 @@ const ProductsOverview = ({ overview }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Badge variant="secondary">
-              Valor total:{" "}
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
+              Valor total:{' '}
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
               }).format(overview.value)}
             </Badge>
           </TooltipTrigger>
@@ -48,10 +52,10 @@ const ProductsOverview = ({ overview }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Badge variant="secondary">
-              Costo total:{" "}
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
+              Costo total:{' '}
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
               }).format(overview.cost)}
             </Badge>
           </TooltipTrigger>
@@ -65,10 +69,10 @@ const ProductsOverview = ({ overview }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Badge variant="secondary">
-              Utilidad:{" "}
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
+              Utilidad:{' '}
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
               }).format(overview.value - overview.cost)}
             </Badge>
           </TooltipTrigger>
@@ -78,7 +82,7 @@ const ProductsOverview = ({ overview }: Props) => {
         </Tooltip>
       </TooltipProvider>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsOverview;
+export default ProductsOverview

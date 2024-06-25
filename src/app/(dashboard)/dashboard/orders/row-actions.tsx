@@ -1,20 +1,20 @@
-import type { Row } from "@tanstack/react-table";
-import { Ellipsis } from "lucide-react";
-import Link from "next/link";
-import type { Order } from "~/app/(dashboard)/dashboard/orders/columns";
-import ConfirmCancelOrderDialog from "~/components/orders/confirm-cancel.dialog";
-import ConfirmMoveOrderStatusDialog from "~/components/orders/confirm-move-status.dialog";
-import { Button } from "~/components/ui/button";
+import type { Row } from '@tanstack/react-table'
+import { Ellipsis } from 'lucide-react'
+import Link from 'next/link'
+import type { Order } from '~/app/(dashboard)/dashboard/orders/columns'
+import ConfirmCancelOrderDialog from '~/components/orders/confirm-cancel.dialog'
+import ConfirmMoveOrderStatusDialog from '~/components/orders/confirm-move-status.dialog'
+import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from '~/components/ui/dropdown-menu'
 
 type Props = {
-  row: Row<Order>;
-};
+  row: Row<Order>
+}
 
 const OrderRowActions = ({ row }: Props) => {
   return (
@@ -35,8 +35,8 @@ const OrderRowActions = ({ row }: Props) => {
             Ver detalles
           </Link>
         </DropdownMenuItem>
-        {row.original.status !== "cancelled" &&
-          row.original.status !== "delivered" && (
+        {row.original.status !== 'cancelled' &&
+          row.original.status !== 'delivered' && (
             <>
               <ConfirmMoveOrderStatusDialog order={row.original} />
               <ConfirmCancelOrderDialog order={row.original} />
@@ -44,7 +44,7 @@ const OrderRowActions = ({ row }: Props) => {
           )}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-export default OrderRowActions;
+export default OrderRowActions

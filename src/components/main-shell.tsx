@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import { type ReactNode } from "react";
-import BackButton from "~/components/back-button";
-import Footer from "~/components/footer";
-import { Badge } from "~/components/ui/badge";
+import type { ReactNode } from 'react'
+import BackButton from '~/components/back-button'
+import Footer from '~/components/footer'
+import { Badge } from '~/components/ui/badge'
 
 type Props = {
-  title: string;
-  children: ReactNode;
-};
+  title: string
+  children: ReactNode
+}
 
 const MainShell = ({ title, children }: Props) => {
   return (
@@ -34,7 +34,7 @@ const MainShell = ({ title, children }: Props) => {
 
       <Footer />
     </main>
-  );
-};
+  )
+}
 
-export default MainShell;
+export default MainShell

@@ -1,11 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { RotateCw, SquarePen } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { type z } from "zod";
-import { type ProductInventory } from "~/app/(dashboard)/dashboard/inventory/columns";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { RotateCw } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import type { z } from 'zod'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -13,7 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 import {
   Form,
   FormControl,
@@ -22,76 +22,77 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { useToast } from "~/components/ui/use-toast";
-import { updateInventoryInput } from "~/server/api/schemas/inventory";
-import { api } from "~/trpc/react";
+} from '~/components/ui/select'
+import { useToast } from '~/components/ui/use-toast'
+import { updateInventoryInput } from '~/server/api/schemas/inventory'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  product: ProductInventory;
-};
+  product: RouterOutputs['product']['list'][number]
+}
 
-type FormValues = z.infer<typeof updateInventoryInput>;
+type FormValues = z.infer<typeof updateInventoryInput>
 
 const UpdateInventoryModal = ({ product }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
       id: product.id,
       stock: product.stock,
       quantity: 0,
-      operation: "add",
+      operation: 'add',
     },
     resolver: zodResolver(updateInventoryInput),
-  });
+  })
 
-  const updateProductQuantity = api.inventory.update.useMutation();
+  const updateProductQuantity = api.inventory.update.useMutation()
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    updateProductQuantity.mutate(values);
-  };
+    updateProductQuantity.mutate(values)
+  }
 
-  const utils = api.useUtils();
-  const { toast } = useToast();
+  const utils = api.useUtils()
+  const { toast } = useToast()
   useEffect(() => {
     if (updateProductQuantity.isSuccess) {
       toast({
-        title: "Éxito",
-        description: "Inventario actualizado correctamente",
-      });
+        title: 'Éxito',
+        description: 'Inventario actualizado correctamente',
+      })
 
-      void utils.inventory.list.invalidate();
-      setIsOpen(false);
+      void utils.product.list.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateProductQuantity.isSuccess]);
+  }, [updateProductQuantity.isSuccess])
 
   const canUpdateInventory = api.rbac.checkPermissions.useQuery({
-    permissions: ["inventory:update"],
-  });
+    permissions: ['inventory:update'],
+  })
 
   return (
     <>
       {!canUpdateInventory.isPending && canUpdateInventory.data ? (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button variant="secondary" size="icon">
-              <SquarePen className="h-4 w-4" />
-            </Button>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <span className="text-sm">Actualizar inventario</span>
+            </DropdownMenuItem>
           </DialogTrigger>
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Modificar existencia</DialogTitle>
+              <DialogTitle>Actualizar inventario</DialogTitle>
               <DialogDescription>
-                Producto <strong>{product.name}</strong>, cantidad actual{" "}
+                Producto <strong>{product.name}</strong>, cantidad actual{' '}
                 <strong>{product.quantity}</strong>
                 {updateProductQuantity.error && (
                   <Alert variant="destructive" className="mt-4">
@@ -190,7 +191,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
         </Dialog>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default UpdateInventoryModal;
+export default UpdateInventoryModal

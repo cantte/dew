@@ -1,32 +1,32 @@
-import { useEffect, useState } from "react";
-import { type Product } from "~/app/(dashboard)/dashboard/products/columns";
-import ConfirmDialog from "~/components/confirm-dialog";
-import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
-import { api } from "~/trpc/react";
+import { useEffect, useState } from 'react'
+import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
+import ConfirmDialog from '~/components/confirm-dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
+import { api } from '~/trpc/react'
 
 type Props = {
-  product: Product;
-};
+  product: Product
+}
 
 const DeleteProductModal = ({ product }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const deleteProduct = api.product.delete.useMutation();
+  const deleteProduct = api.product.delete.useMutation()
 
   const handleDelete = () => {
     deleteProduct.mutate({
       id: product.id,
-    });
-  };
+    })
+  }
 
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   useEffect(() => {
     if (deleteProduct.isSuccess) {
-      void utils.product.list.invalidate();
-      setIsOpen(false);
+      void utils.product.list.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteProduct.isSuccess]);
+  }, [deleteProduct.isSuccess])
 
   return (
     <>
@@ -45,7 +45,7 @@ const DeleteProductModal = ({ product }: Props) => {
         description="¿Estás seguro que deseas eliminar este producto?"
       />
     </>
-  );
-};
+  )
+}
 
-export default DeleteProductModal;
+export default DeleteProductModal

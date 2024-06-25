@@ -1,27 +1,27 @@
-import CreateSaleForm from "~/app/(dashboard)/sales/create/form";
-import BackButton from "~/components/back-button";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import NotFoundStoreAlert from "~/components/stores/not-found.alert";
-import { api } from "~/trpc/server";
+import CreateSaleForm from '~/app/(dashboard)/sales/create/form'
+import BackButton from '~/components/back-button'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import NotFoundStoreAlert from '~/components/stores/not-found.alert'
+import { api } from '~/trpc/server'
 
 const CreateSalePage = async () => {
-  const store = await api.store.findCurrent();
+  const store = await api.store.findCurrent()
 
   if (!store) {
-    return <NotFoundStoreAlert />;
+    return <NotFoundStoreAlert />
   }
 
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["sale:create", "product:view"],
-  });
+    permissions: ['sale:create', 'product:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
   const suggestions = await api.product.suggestions({
     storeId: store.id,
-  });
+  })
 
   return (
     <div className="w-full max-w-7xl">
@@ -35,7 +35,7 @@ const CreateSalePage = async () => {
         <CreateSaleForm storeId={store.id} suggestions={suggestions} />
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default CreateSalePage;
+export default CreateSalePage

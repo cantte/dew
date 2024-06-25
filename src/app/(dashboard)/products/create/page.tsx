@@ -1,33 +1,33 @@
-import { redirect } from "next/navigation";
-import CreateProductForm from "~/app/(dashboard)/products/create/form";
-import BackButton from "~/components/back-button";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import NotFoundStoreAlert from "~/components/stores/not-found.alert";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import { redirect } from 'next/navigation'
+import CreateProductForm from '~/app/(dashboard)/products/create/form'
+import BackButton from '~/components/back-button'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import NotFoundStoreAlert from '~/components/stores/not-found.alert'
+import { getServerAuthSession } from '~/server/auth'
+import { api } from '~/trpc/server'
 
 const CreateProductPage = async () => {
-  const session = await getServerAuthSession();
+  const session = await getServerAuthSession()
 
   if (!session) {
-    return redirect("/api/auth/signin");
+    return redirect('/api/auth/signin')
   }
 
-  const store = await api.store.findCurrent();
+  const store = await api.store.findCurrent()
 
   if (!store) {
-    return <NotFoundStoreAlert />;
+    return <NotFoundStoreAlert />
   }
 
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["product:create"],
-  });
+    permissions: ['product:create'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
-  const stores = await api.store.list();
+  const stores = await api.store.list()
 
   return (
     <div className="w-full max-w-7xl">
@@ -41,7 +41,7 @@ const CreateProductPage = async () => {
         <CreateProductForm storeId={store.id} stores={stores} />
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default CreateProductPage;
+export default CreateProductPage

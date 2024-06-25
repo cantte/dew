@@ -1,16 +1,16 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { RotateCw, SquarePen } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import type { TypeOf } from "zod";
-import { Button } from "~/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { RotateCw, SquarePen } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import type { TypeOf } from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -18,21 +18,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
-import { updateEmployeeInput } from "~/server/api/schemas/employees";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import { useToast } from '~/components/ui/use-toast'
+import { updateEmployeeInput } from '~/server/api/schemas/employees'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  employee: NonNullable<RouterOutputs["employee"]["byStore"][number]>;
-};
+  employee: NonNullable<RouterOutputs['employee']['byStore'][number]>
+}
 
-type FormValues = TypeOf<typeof updateEmployeeInput>;
+type FormValues = TypeOf<typeof updateEmployeeInput>
 
 const UpdateEmployeeModal = ({ employee }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
       id: employee.id,
@@ -41,31 +41,31 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
       phone: employee.phone ?? undefined,
     },
     resolver: zodResolver(updateEmployeeInput),
-  });
+  })
 
-  const updateEmployee = api.employee.update.useMutation();
+  const updateEmployee = api.employee.update.useMutation()
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    updateEmployee.mutate(values);
-  };
+    updateEmployee.mutate(values)
+  }
 
-  const utils = api.useUtils();
-  const { toast } = useToast();
+  const utils = api.useUtils()
+  const { toast } = useToast()
   useEffect(() => {
     if (updateEmployee.isSuccess) {
       toast({
-        title: "Éxito",
-        description: "Empleado actualizado correctamente",
-      });
+        title: 'Éxito',
+        description: 'Empleado actualizado correctamente',
+      })
 
-      void utils.employee.byStore.invalidate();
-      setIsOpen(false);
+      void utils.employee.byStore.invalidate()
+      setIsOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateEmployee.isSuccess]);
+  }, [updateEmployee.isSuccess])
 
   const canUpdateEmployee = api.rbac.checkPermissions.useQuery({
-    permissions: ["employee:update"],
-  });
+    permissions: ['employee:update'],
+  })
 
   return (
     <>
@@ -142,7 +142,7 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
         </Dialog>
       )}
     </>
-  );
-};
+  )
+}
 
-export default UpdateEmployeeModal;
+export default UpdateEmployeeModal

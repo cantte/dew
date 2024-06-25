@@ -1,16 +1,16 @@
-import { and, desc, eq, gt, isNull, lt } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { byProductIdInput } from "~/server/api/schemas/products";
-import { productsDiscounts } from "~/server/db/schema";
+import { and, desc, eq, gt, isNull, lt } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { byProductIdInput } from '~/server/api/schemas/products'
+import { productsDiscounts } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byProductIdInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byProductIdInput>
+}
 
 const searchProductDiscounts = async ({ ctx, input }: Options) => {
-  const today = new Date().toISOString().split("T")[0]!;
+  const today = new Date().toISOString().split('T')[0]!
 
   return await ctx.db.query.productsDiscounts.findMany({
     where: and(
@@ -20,7 +20,7 @@ const searchProductDiscounts = async ({ ctx, input }: Options) => {
       gt(productsDiscounts.endDate, today),
     ),
     orderBy: [desc(productsDiscounts.startDate)],
-  });
-};
+  })
+}
 
-export default searchProductDiscounts;
+export default searchProductDiscounts

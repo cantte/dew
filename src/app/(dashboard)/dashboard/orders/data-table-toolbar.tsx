@@ -1,29 +1,29 @@
-import type { Table } from "@tanstack/react-table";
-import { FilterX, PlusCircle } from "lucide-react";
-import Link from "next/link";
-import DataTableFacetedFilter from "~/components/data-table-faceted-filter";
-import { Button } from "~/components/ui/button";
-import { orderStatus } from "~/constants";
-import { api } from "~/trpc/react";
+import type { Table } from '@tanstack/react-table'
+import { FilterX, PlusCircle } from 'lucide-react'
+import Link from 'next/link'
+import DataTableFacetedFilter from '~/components/data-table-faceted-filter'
+import { Button } from '~/components/ui/button'
+import { orderStatus } from '~/constants'
+import { api } from '~/trpc/react'
 
 type Props<TData> = {
-  table: Table<TData>;
-};
+  table: Table<TData>
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0
 
   const canCreateOrder = api.rbac.checkPermissions.useQuery({
-    permissions: ["order:create"],
-  });
+    permissions: ['order:create'],
+  })
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="flex flex-1 items-center space-x-2">
-        {table.getColumn("status") && (
+        {table.getColumn('status') && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
+            column={table.getColumn('status')}
             title="Estado"
             options={orderStatus}
           />
@@ -53,7 +53,7 @@ const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
         ) : null}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrdersDataTableToolbar;
+export default OrdersDataTableToolbar

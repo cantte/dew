@@ -1,13 +1,13 @@
-import { eq } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { byOrderIdInput } from "~/server/api/schemas/orders";
-import { orders } from "~/server/db/schema/orders";
+import { eq } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { byOrderIdInput } from '~/server/api/schemas/orders'
+import { orders } from '~/server/db/schema/orders'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byOrderIdInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byOrderIdInput>
+}
 
 const findOrder = async ({ ctx, input }: Options) => {
   return await ctx.db.query.orders.findFirst({
@@ -30,7 +30,7 @@ const findOrder = async ({ ctx, input }: Options) => {
       },
     },
     where: eq(orders.id, input.id),
-  });
-};
+  })
+}
 
-export default findOrder;
+export default findOrder

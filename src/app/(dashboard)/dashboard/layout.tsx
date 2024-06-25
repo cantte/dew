@@ -1,36 +1,36 @@
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { type ReactNode } from "react";
-import DashboardSidebar from "~/app/(dashboard)/dashboard/sidebar";
-import AccountNav from "~/components/account-nav";
-import MobileNav from "~/components/mobile-nav";
-import SelectStore from "~/components/stores/select-store";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { Separator } from "~/components/ui/separator";
-import { dashboardConfig } from "~/config/dashboard";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import { PlusCircle } from 'lucide-react'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import type { ReactNode } from 'react'
+import DashboardSidebar from '~/app/(dashboard)/dashboard/sidebar'
+import AccountNav from '~/components/account-nav'
+import MobileNav from '~/components/mobile-nav'
+import SelectStore from '~/components/stores/select-store'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
+import { ScrollArea } from '~/components/ui/scroll-area'
+import { Separator } from '~/components/ui/separator'
+import { dashboardConfig } from '~/config/dashboard'
+import { getServerAuthSession } from '~/server/auth'
+import { api } from '~/trpc/server'
 
 type DashboardLayoutProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
-  const session = await getServerAuthSession();
+  const session = await getServerAuthSession()
 
   if (session === null) {
-    return redirect("/api/auth/signin");
+    return redirect('/api/auth/signin')
   }
 
-  const store = await api.store.findCurrent();
-  const stores = await api.store.list();
+  const store = await api.store.findCurrent()
+  const stores = await api.store.list()
 
   const canCreateStore = await api.rbac.checkPermissions({
-    permissions: ["store:create"],
-  });
+    permissions: ['store:create'],
+  })
 
   return (
     <div className="grid min-h-screen w-full overflow-hidden md:grid-cols-[280px_1fr]">
@@ -91,7 +91,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         </main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations, sql } from 'drizzle-orm'
 import {
   date,
   index,
@@ -10,53 +10,53 @@ import {
   unique,
   uuid,
   varchar,
-} from "drizzle-orm/pg-core";
-import { users } from "~/server/db/schema/auth";
-import { createTable } from "~/server/db/schema/base";
-import { customers } from "~/server/db/schema/customers";
-import { products } from "~/server/db/schema/products";
-import { stores } from "~/server/db/schema/stores";
+} from 'drizzle-orm/pg-core'
+import { users } from '~/server/db/schema/auth'
+import { createTable } from '~/server/db/schema/base'
+import { customers } from '~/server/db/schema/customers'
+import { products } from '~/server/db/schema/products'
+import { stores } from '~/server/db/schema/stores'
 
-export const orderStatuses = pgEnum("order_status", [
-  "pending",
-  "processing",
-  "shipped",
-  "delivered",
-  "cancelled",
-]);
+export const orderStatuses = pgEnum('order_status', [
+  'pending',
+  'processing',
+  'shipped',
+  'delivered',
+  'cancelled',
+])
 
 export const orders = createTable(
-  "order",
+  'order',
   {
-    id: uuid("id").notNull().primaryKey(),
-    customerId: varchar("customer_id", { length: 32 })
+    id: uuid('id').notNull().primaryKey(),
+    customerId: varchar('customer_id', { length: 32 })
       .notNull()
       .references(() => customers.id),
-    storeId: uuid("store_id")
+    storeId: uuid('store_id')
       .notNull()
       .references(() => stores.id),
-    amount: real("amount").notNull(),
-    paymentMethod: varchar("payment_method", { length: 32 })
+    amount: real('amount').notNull(),
+    paymentMethod: varchar('payment_method', { length: 32 })
       .notNull()
-      .default("cash"),
-    payment: real("payment").notNull(),
-    status: orderStatuses("status").notNull().default("pending"),
-    address: text("address"),
-    phone: varchar("phone", { length: 32 }),
-    createdBy: varchar("created_by", { length: 255 })
+      .default('cash'),
+    payment: real('payment').notNull(),
+    status: orderStatuses('status').notNull().default('pending'),
+    address: text('address'),
+    phone: varchar('phone', { length: 32 }),
+    createdBy: varchar('created_by', { length: 255 })
       .notNull()
       .references(() => users.id),
-    createdAt: timestamp("created_at")
+    createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
   },
   (order) => ({
-    customerIdIdx: index("order_customer_id_idx").on(order.customerId),
-    storeIdIdx: index("order_store_id_idx").on(order.storeId),
-    createdByIdx: index("order_created_by_idx").on(order.createdBy),
+    customerIdIdx: index('order_customer_id_idx').on(order.customerId),
+    storeIdIdx: index('order_store_id_idx').on(order.storeId),
+    createdByIdx: index('order_created_by_idx').on(order.createdBy),
   }),
-);
+)
 
 export const orderRelations = relations(orders, ({ one, many }) => ({
   customer: one(customers, {
@@ -68,36 +68,36 @@ export const orderRelations = relations(orders, ({ one, many }) => ({
     references: [stores.id],
   }),
   orderItems: many(orderItems),
-}));
+}))
 
 export const orderItems = createTable(
-  "order_item",
+  'order_item',
   {
-    id: uuid("id").notNull().primaryKey(),
-    orderId: uuid("order_id")
+    id: uuid('id').notNull().primaryKey(),
+    orderId: uuid('order_id')
       .notNull()
       .references(() => orders.id),
-    productId: uuid("product_id")
+    productId: uuid('product_id')
       .notNull()
       .references(() => products.id),
-    quantity: integer("quantity").notNull(),
-    purchasePrice: real("purchase_price").notNull(),
-    salePrice: real("sale_price").notNull(),
-    profit: real("profit").notNull(),
-    createdBy: varchar("created_by", { length: 255 })
+    quantity: integer('quantity').notNull(),
+    purchasePrice: real('purchase_price').notNull(),
+    salePrice: real('sale_price').notNull(),
+    profit: real('profit').notNull(),
+    createdBy: varchar('created_by', { length: 255 })
       .notNull()
       .references(() => users.id),
-    createdAt: timestamp("created_at")
+    createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
   },
   (orderItem) => ({
-    orderIdIdx: index("order_item_order_id_idx").on(orderItem.orderId),
-    productIdIdx: index("order_item_product_id_idx").on(orderItem.productId),
-    createdByIdx: index("order_item_created_by_idx").on(orderItem.createdBy),
+    orderIdIdx: index('order_item_order_id_idx').on(orderItem.orderId),
+    productIdIdx: index('order_item_product_id_idx').on(orderItem.productId),
+    createdByIdx: index('order_item_created_by_idx').on(orderItem.createdBy),
   }),
-);
+)
 
 export const orderItemsRelations = relations(orderItems, ({ one }) => ({
   order: one(orders, { fields: [orderItems.orderId], references: [orders.id] }),
@@ -105,54 +105,52 @@ export const orderItemsRelations = relations(orderItems, ({ one }) => ({
     fields: [orderItems.productId],
     references: [products.id],
   }),
-}));
+}))
 
 export const orderHistory = createTable(
-  "order_history",
+  'order_history',
   {
-    id: uuid("id").notNull().primaryKey(),
-    orderId: uuid("order_id")
+    id: uuid('id').notNull().primaryKey(),
+    orderId: uuid('order_id')
       .notNull()
       .references(() => orders.id),
-    status: orderStatuses("status").notNull(),
-    createdBy: varchar("created_by", { length: 255 }).notNull(),
-    createdAt: timestamp("created_at")
+    status: orderStatuses('status').notNull(),
+    createdBy: varchar('created_by', { length: 255 }).notNull(),
+    createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
   (orderHistory) => ({
-    orderIdIdx: index("order_history_order_id_idx").on(orderHistory.orderId),
-    createdByIdx: index("order_history_created_by_idx").on(
+    orderIdIdx: index('order_history_order_id_idx').on(orderHistory.orderId),
+    createdByIdx: index('order_history_created_by_idx').on(
       orderHistory.createdBy,
     ),
   }),
-);
+)
 
 export const orderSummary = createTable(
-  "order_summary",
+  'order_summary',
   {
-    id: uuid("id").notNull().primaryKey(),
-    date: date("date")
-      .notNull()
-      .default(sql`CURRENT_DATE`),
-    amount: real("amount").notNull(),
-    profit: real("profit").notNull(),
-    orders: integer("orders").notNull(),
-    customers: integer("customers").notNull(),
-    products: integer("products").notNull(),
-    storeId: uuid("store_id")
+    id: uuid('id').notNull().primaryKey(),
+    date: date('date').notNull().default(sql`CURRENT_DATE`),
+    amount: real('amount').notNull(),
+    profit: real('profit').notNull(),
+    orders: integer('orders').notNull(),
+    customers: integer('customers').notNull(),
+    products: integer('products').notNull(),
+    storeId: uuid('store_id')
       .notNull()
       .references(() => stores.id),
-    createdAt: timestamp("created_at")
+    createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").$onUpdateFn(() => new Date()),
+    updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
   },
   (orderSummary) => ({
-    storeIdIdx: index("order_summary_store_id_idx").on(orderSummary.storeId),
-    uniqueDateStoreId: unique("order_summary_date_store_id_unique").on(
+    storeIdIdx: index('order_summary_store_id_idx').on(orderSummary.storeId),
+    uniqueDateStoreId: unique('order_summary_date_store_id_unique').on(
       orderSummary.date,
       orderSummary.storeId,
     ),
   }),
-);
+)

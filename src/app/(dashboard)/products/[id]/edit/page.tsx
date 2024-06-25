@@ -1,39 +1,39 @@
-import { notFound, redirect } from "next/navigation";
-import EditProductForm from "~/app/(dashboard)/products/[id]/edit/form";
-import BackButton from "~/components/back-button";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
-
-export const fetchCache = "force-no-store";
+import { unstable_noStore as noStore } from 'next/cache'
+import { notFound, redirect } from 'next/navigation'
+import EditProductForm from '~/app/(dashboard)/products/[id]/edit/form'
+import BackButton from '~/components/back-button'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import { getServerAuthSession } from '~/server/auth'
+import { api } from '~/trpc/server'
 
 type Props = {
   params: {
-    id: string;
-  };
-};
+    id: string
+  }
+}
 
 const EditProductPage = async ({ params }: Props) => {
-  const session = await getServerAuthSession();
+  noStore()
+  const session = await getServerAuthSession()
 
   if (session === null) {
-    return redirect("/api/auth/signin");
+    return redirect('/api/auth/signin')
   }
 
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["product:update", "product:view"],
-  });
+    permissions: ['product:update', 'product:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
   const product = await api.product.findById({
     id: params.id,
-  });
+  })
 
   if (product === null || product === undefined) {
-    return notFound();
+    return notFound()
   }
 
   return (
@@ -46,7 +46,7 @@ const EditProductPage = async ({ params }: Props) => {
         <EditProductForm product={product} />
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default EditProductPage;
+export default EditProductPage

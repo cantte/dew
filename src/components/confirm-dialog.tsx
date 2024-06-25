@@ -1,4 +1,4 @@
-import { RotateCw } from "lucide-react";
+import { RotateCw } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -7,18 +7,18 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "~/components/ui/alert-dialog";
-import { Button } from "~/components/ui/button";
+} from '~/components/ui/alert-dialog'
+import { Button } from '~/components/ui/button'
 
 type Props = {
-  isOpen: boolean;
-  title: string;
-  description: string;
-  pending?: boolean;
+  isOpen: boolean
+  title: string
+  description: string
+  pending?: boolean
 
-  onClose: () => void;
-  onConfirm: () => void;
-};
+  onClose: () => void
+  onConfirm: () => void
+}
 
 const ConfirmDialog = ({
   isOpen,
@@ -46,7 +46,7 @@ const ConfirmDialog = ({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-};
+  )
+}
 
-export default ConfirmDialog;
+export default ConfirmDialog

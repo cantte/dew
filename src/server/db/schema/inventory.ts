@@ -1,27 +1,27 @@
-import { relations } from "drizzle-orm";
-import { integer, primaryKey, uuid } from "drizzle-orm/pg-core";
-import { createTable } from "~/server/db/schema/base";
-import { products } from "~/server/db/schema/products";
-import { stores } from "~/server/db/schema/stores";
+import { relations } from 'drizzle-orm'
+import { integer, primaryKey, uuid } from 'drizzle-orm/pg-core'
+import { createTable } from '~/server/db/schema/base'
+import { products } from '~/server/db/schema/products'
+import { stores } from '~/server/db/schema/stores'
 
 export const inventory = createTable(
-  "inventory",
+  'inventory',
   {
-    storeId: uuid("store_id")
+    storeId: uuid('store_id')
       .notNull()
       .references(() => stores.id),
-    productId: uuid("product_id")
+    productId: uuid('product_id')
       .notNull()
       .references(() => products.id),
-    stock: integer("stock").notNull(),
-    quantity: integer("quantity").notNull().default(0),
+    stock: integer('stock').notNull(),
+    quantity: integer('quantity').notNull().default(0),
   },
   (inventory) => ({
     compoundKey: primaryKey({
       columns: [inventory.storeId, inventory.productId],
     }),
   }),
-);
+)
 
 export const inventoryRelations = relations(inventory, ({ one }) => ({
   store: one(stores, {
@@ -32,4 +32,4 @@ export const inventoryRelations = relations(inventory, ({ one }) => ({
     fields: [inventory.productId],
     references: [products.id],
   }),
-}));
+}))

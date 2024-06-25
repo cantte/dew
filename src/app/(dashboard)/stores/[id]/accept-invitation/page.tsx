@@ -1,19 +1,19 @@
-import { InfoIcon } from "lucide-react";
-import { redirect } from "next/navigation";
-import AcceptStoreInvitation from "~/app/(dashboard)/stores/[id]/accept-invitation/accept-invitation";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import { InfoIcon } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import AcceptStoreInvitation from '~/app/(dashboard)/stores/[id]/accept-invitation/accept-invitation'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { getServerAuthSession } from '~/server/auth'
+import { api } from '~/trpc/server'
 
 type Props = {
   params: {
-    id: string;
-  };
-  searchParams?: Record<string, string | string[] | undefined>;
-};
+    id: string
+  }
+  searchParams?: Record<string, string | string[] | undefined>
+}
 
 const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
-  const employeeId = searchParams?.employeeId;
+  const employeeId = searchParams?.employeeId
   if (!employeeId) {
     return (
       <div className="w-full max-w-7xl">
@@ -25,17 +25,17 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
           </AlertDescription>
         </Alert>
       </div>
-    );
+    )
   }
 
-  const session = await getServerAuthSession();
+  const session = await getServerAuthSession()
   if (!session) {
     return redirect(
       `/api/auth/signin?callbackUrl=/stores/${params.id}/accept-invitation?employeeId=${employeeId as string}`,
-    );
+    )
   }
 
-  const store = await api.store.find({ id: params.id });
+  const store = await api.store.find({ id: params.id })
   if (!store) {
     return (
       <div className="w-full max-w-7xl">
@@ -45,10 +45,10 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
           <AlertDescription>Tienda no encontrada.</AlertDescription>
         </Alert>
       </div>
-    );
+    )
   }
 
-  const employee = await api.employee.findById({ code: employeeId as string });
+  const employee = await api.employee.findById({ code: employeeId as string })
   if (!employee) {
     return (
       <div className="w-full max-w-7xl">
@@ -58,7 +58,7 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
           <AlertDescription>Empleado no encontrado.</AlertDescription>
         </Alert>
       </div>
-    );
+    )
   }
 
   return (
@@ -69,7 +69,7 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
             Aceptar invitación
           </h3>
           <p className="leading-7 text-muted-foreground">
-            Has sido invitado a la tienda <strong>{store.name}</strong> como{" "}
+            Has sido invitado a la tienda <strong>{store.name}</strong> como{' '}
             <strong>{employee.name}</strong>.
           </p>
         </div>
@@ -84,7 +84,7 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AcceptStoreInvitationPage;
+export default AcceptStoreInvitationPage

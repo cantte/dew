@@ -1,13 +1,13 @@
-import { desc, eq } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { byStoreInput } from "~/server/api/schemas/common";
-import { sales } from "~/server/db/schema";
+import { desc, eq } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { byStoreInput } from '~/server/api/schemas/common'
+import { sales } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byStoreInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byStoreInput>
+}
 
 const listSales = async ({ ctx, input }: Options) => {
   return await ctx.db.query.sales.findMany({
@@ -21,7 +21,7 @@ const listSales = async ({ ctx, input }: Options) => {
     },
     orderBy: [desc(sales.createdAt)],
     where: eq(sales.storeId, input.storeId),
-  });
-};
+  })
+}
 
-export default listSales;
+export default listSales

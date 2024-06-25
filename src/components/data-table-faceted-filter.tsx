@@ -1,7 +1,7 @@
-import type { Column } from "@tanstack/react-table";
-import { Check, Filter } from "lucide-react";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
+import type { Column } from '@tanstack/react-table'
+import { Check, Filter } from 'lucide-react'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 import {
   Command,
   CommandEmpty,
@@ -10,34 +10,34 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "~/components/ui/command";
+} from '~/components/ui/command'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
-import { Separator } from "~/components/ui/separator";
-import { cn } from "~/lib/utils";
+} from '~/components/ui/popover'
+import { Separator } from '~/components/ui/separator'
+import { cn } from '~/lib/utils'
 
 type Option = {
-  label: string;
-  id: string;
-};
+  label: string
+  id: string
+}
 
 type Props<TData, TValue> = {
-  column?: Column<TData, TValue>;
-  title?: string;
+  column?: Column<TData, TValue>
+  title?: string
 
-  options: ReadonlyArray<Option>;
-};
+  options: ReadonlyArray<Option>
+}
 
 const DataTableFacetedFilter = <TData, TValue>({
   column,
   title,
   options,
 }: Props<TData, TValue>) => {
-  const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() as string[]);
+  const facets = column?.getFacetedUniqueValues()
+  const selectedValues = new Set(column?.getFilterValue() as string[])
 
   return (
     <Popover>
@@ -87,31 +87,31 @@ const DataTableFacetedFilter = <TData, TValue>({
             <CommandEmpty>No se encontraron resultados.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const isSelected = selectedValues.has(option.id);
+                const isSelected = selectedValues.has(option.id)
                 return (
                   <CommandItem
                     key={option.id}
                     onSelect={() => {
                       if (isSelected) {
-                        selectedValues.delete(option.id);
+                        selectedValues.delete(option.id)
                       } else {
-                        selectedValues.add(option.id);
+                        selectedValues.add(option.id)
                       }
-                      const filterValues = Array.from(selectedValues);
+                      const filterValues = Array.from(selectedValues)
                       column?.setFilterValue(
                         filterValues.length ? filterValues : undefined,
-                      );
+                      )
                     }}
                   >
                     <div
                       className={cn(
-                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                        'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                         isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible",
+                          ? 'bg-primary text-primary-foreground'
+                          : 'opacity-50 [&_svg]:invisible',
                       )}
                     >
-                      <Check className={cn("h-4 w-4")} />
+                      <Check className={cn('h-4 w-4')} />
                     </div>
                     <span>{option.label}</span>
                     {facets?.get(option.id) && (
@@ -120,7 +120,7 @@ const DataTableFacetedFilter = <TData, TValue>({
                       </span>
                     )}
                   </CommandItem>
-                );
+                )
               })}
             </CommandGroup>
             {selectedValues.size > 0 && (
@@ -140,7 +140,7 @@ const DataTableFacetedFilter = <TData, TValue>({
         </Command>
       </PopoverContent>
     </Popover>
-  );
-};
+  )
+}
 
-export default DataTableFacetedFilter;
+export default DataTableFacetedFilter

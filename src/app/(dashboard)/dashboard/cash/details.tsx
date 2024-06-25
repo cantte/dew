@@ -1,26 +1,26 @@
-"use client";
+'use client'
 
-import { endOfDay, startOfDay } from "date-fns";
-import { Fragment, useState } from "react";
-import type { DateRange } from "react-day-picker";
-import CashRegisterActions from "~/app/(dashboard)/dashboard/cash/actions";
-import CashRegisterTransactions from "~/app/(dashboard)/dashboard/cash/transactions";
-import DateRangeFilter from "~/components/date-range-filter";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { api } from "~/trpc/react";
-import type { RouterOutputs } from "~/trpc/shared";
+import { endOfDay, startOfDay } from 'date-fns'
+import { Fragment, useState } from 'react'
+import type { DateRange } from 'react-day-picker'
+import CashRegisterActions from '~/app/(dashboard)/dashboard/cash/actions'
+import CashRegisterTransactions from '~/app/(dashboard)/dashboard/cash/transactions'
+import DateRangeFilter from '~/components/date-range-filter'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  transactions: RouterOutputs["cashRegister"]["transactions"]["list"];
-  cashRegisterId: string;
-};
+  transactions: RouterOutputs['cashRegister']['transactions']['list']
+  cashRegisterId: string
+}
 
 const CashRegisterDetails = ({ transactions, cashRegisterId }: Props) => {
-  const today = new Date();
+  const today = new Date()
   const [date, setDate] = useState<DateRange | undefined>({
     from: startOfDay(today),
     to: endOfDay(today),
-  });
+  })
 
   const { data: allTransactions } = api.cashRegister.transactions.list.useQuery(
     {
@@ -31,15 +31,15 @@ const CashRegisterDetails = ({ transactions, cashRegisterId }: Props) => {
     {
       initialData: transactions,
     },
-  );
+  )
 
   const inAmount = allTransactions
-    .filter((t) => t.type === "IN")
-    .reduce((acc, t) => acc + t.amount, 0);
+    .filter((t) => t.type === 'IN')
+    .reduce((acc, t) => acc + t.amount, 0)
 
   const outAmount = allTransactions
-    .filter((t) => t.type === "OUT")
-    .reduce((acc, t) => acc + t.amount, 0);
+    .filter((t) => t.type === 'OUT')
+    .reduce((acc, t) => acc + t.amount, 0)
 
   return (
     <Fragment>
@@ -54,9 +54,9 @@ const CashRegisterDetails = ({ transactions, cashRegisterId }: Props) => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-success-text">
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
               }).format(+inAmount)}
             </div>
           </CardContent>
@@ -68,9 +68,9 @@ const CashRegisterDetails = ({ transactions, cashRegisterId }: Props) => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-destructive">
-              {Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
               }).format(+outAmount)}
             </div>
           </CardContent>
@@ -81,7 +81,7 @@ const CashRegisterDetails = ({ transactions, cashRegisterId }: Props) => {
 
       <CashRegisterTransactions transactions={allTransactions} />
     </Fragment>
-  );
-};
+  )
+}
 
-export default CashRegisterDetails;
+export default CashRegisterDetails

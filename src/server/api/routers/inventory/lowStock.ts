@@ -1,13 +1,13 @@
-import { and, desc, eq, isNull, lte } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { byStoreInput } from "~/server/api/schemas/common";
-import { inventory, products } from "~/server/db/schema";
+import { and, desc, eq, isNull, lte } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { byStoreInput } from '~/server/api/schemas/common'
+import { inventory, products } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byStoreInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byStoreInput>
+}
 
 const lowStockInventory = async ({ ctx, input }: Options) => {
   return ctx.db
@@ -27,7 +27,7 @@ const lowStockInventory = async ({ ctx, input }: Options) => {
         lte(inventory.quantity, inventory.stock),
       ),
     )
-    .orderBy(desc(products.createdAt));
-};
+    .orderBy(desc(products.createdAt))
+}
 
-export default lowStockInventory;
+export default lowStockInventory

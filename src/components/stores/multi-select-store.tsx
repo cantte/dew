@@ -1,20 +1,20 @@
-"use client";
+'use client'
 
-import { Button } from "~/components/ui/button";
+import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/dropdown-menu'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  stores: RouterOutputs["store"]["list"];
-  selectedStores: Array<string>;
+  stores: RouterOutputs['store']['list']
+  selectedStores: Array<string>
 
-  onSelectedChange: (value: Array<string>) => void;
-};
+  onSelectedChange: (value: Array<string>) => void
+}
 
 const MultiSelectStore = ({
   stores,
@@ -22,25 +22,25 @@ const MultiSelectStore = ({
   onSelectedChange,
 }: Props) => {
   const onSelect = (storeId: string) => {
-    const store = stores.find((store) => store.id === storeId);
+    const store = stores.find((store) => store.id === storeId)
 
     if (!store) {
-      return;
+      return
     }
 
     const exists = selectedStores.some(
       (currentStore) => currentStore === store.id,
-    );
+    )
 
     if (!exists) {
-      onSelectedChange([...selectedStores, store.id]);
-      return;
+      onSelectedChange([...selectedStores, store.id])
+      return
     }
 
     onSelectedChange(
       selectedStores.filter((currentStore) => currentStore !== store.id),
-    );
-  };
+    )
+  }
 
   return (
     <div>
@@ -55,7 +55,7 @@ const MultiSelectStore = ({
           {stores?.map((store) => {
             const isSelected = selectedStores.some(
               (currentStore) => currentStore === store.id,
-            );
+            )
 
             return (
               <DropdownMenuCheckboxItem
@@ -65,12 +65,12 @@ const MultiSelectStore = ({
               >
                 {store.name}
               </DropdownMenuCheckboxItem>
-            );
+            )
           })}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  );
-};
+  )
+}
 
-export default MultiSelectStore;
+export default MultiSelectStore

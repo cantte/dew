@@ -1,15 +1,15 @@
-import { and, eq, isNull } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import { applyDiscount } from "~/lib/utils";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import searchProductDiscounts from "~/server/api/routers/products/searchDiscount";
-import type { byCodeProductInput } from "~/server/api/schemas/products";
-import { inventory, products } from "~/server/db/schema";
+import { and, eq, isNull } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import { applyDiscount } from '~/lib/utils'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import searchProductDiscounts from '~/server/api/routers/products/searchDiscount'
+import type { byCodeProductInput } from '~/server/api/schemas/products'
+import { inventory, products } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof byCodeProductInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof byCodeProductInput>
+}
 
 const findProductForSale = async ({ ctx, input }: Options) => {
   const result = await ctx.db
@@ -30,16 +30,16 @@ const findProductForSale = async ({ ctx, input }: Options) => {
         isNull(products.deletedAt),
         eq(products.createdBy, ctx.session.user.id),
       ),
-    );
+    )
 
   if (result.length === 0) {
-    return null;
+    return null
   }
 
-  const product = result[0];
+  const product = result[0]
 
   if (!product) {
-    return null;
+    return null
   }
 
   const discounts = await searchProductDiscounts({
@@ -47,13 +47,13 @@ const findProductForSale = async ({ ctx, input }: Options) => {
     input: {
       id: product.id,
     },
-  });
+  })
 
   return {
     ...product,
     finalPrice: applyDiscount(product.salePrice, discounts),
     discounts: discounts,
-  };
-};
+  }
+}
 
-export default findProductForSale;
+export default findProductForSale

@@ -1,71 +1,71 @@
-"use client";
+'use client'
 
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { PlusCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import CreateStoreForm from "~/app/(dashboard)/stores/create/form";
+import { useMediaQuery } from '@uidotdev/usehooks'
+import { PlusCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import CreateStoreForm from '~/app/(dashboard)/stores/create/form'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-} from "~/components/ui/drawer";
+} from '~/components/ui/drawer'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { api } from "~/trpc/react";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/select'
+import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  currentStore: RouterOutputs["store"]["find"];
-  stores: RouterOutputs["store"]["list"];
+  currentStore: RouterOutputs['store']['find']
+  stores: RouterOutputs['store']['list']
 
-  canCreateStore: boolean;
-};
+  canCreateStore: boolean
+}
 
 const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
-  const [value, setValue] = useState(currentStore?.id);
-  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(currentStore?.id)
+  const [open, setOpen] = useState(false)
 
-  const updateUserPreference = api.userPreference.update.useMutation();
+  const updateUserPreference = api.userPreference.update.useMutation()
   const onSelect = (value: string) => {
-    if (value === "new-store") {
-      setOpen(true);
-      return;
+    if (value === 'new-store') {
+      setOpen(true)
+      return
     }
 
-    setValue(value);
-    updateUserPreference.mutate({ storeId: value });
-  };
+    setValue(value)
+    updateUserPreference.mutate({ storeId: value })
+  }
 
-  const router = useRouter();
+  const router = useRouter()
   useEffect(() => {
     if (updateUserPreference.isSuccess) {
-      router.refresh();
+      router.refresh()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateUserPreference.isSuccess]);
+  }, [updateUserPreference.isSuccess])
 
   useEffect(() => {
-    setValue(currentStore?.id);
-  }, [currentStore]);
+    setValue(currentStore?.id)
+  }, [currentStore])
 
   const onSuccessfulCreate = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   return (
     <>
@@ -122,7 +122,7 @@ const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
         </Drawer>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SelectStore;
+export default SelectStore

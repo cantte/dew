@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import { Badge } from "~/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { type RouterOutputs } from "~/trpc/shared";
+import { Badge } from '~/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { ScrollArea } from '~/components/ui/scroll-area'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  transactions: RouterOutputs["cashRegister"]["transactions"]["list"];
-};
+  transactions: RouterOutputs['cashRegister']['transactions']['list']
+}
 
 const CashRegisterTransactions = ({ transactions }: Props) => {
   return (
@@ -26,25 +26,25 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
             <Card key={transaction.id} className="mb-2 shadow-none">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pb-1 pt-2">
                 <CardTitle className="text-2xl font-bold">
-                  {Intl.NumberFormat("es-CO", {
-                    style: "currency",
-                    currency: "COP",
+                  {Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
                   }).format(transaction.amount)}
                 </CardTitle>
 
                 <Badge
                   variant={
-                    transaction.type === "IN" ? "success" : "destructive"
+                    transaction.type === 'IN' ? 'success' : 'destructive'
                   }
                 >
-                  {transaction.type === "IN" ? "Ingreso" : "Egreso"}
+                  {transaction.type === 'IN' ? 'Ingreso' : 'Egreso'}
                 </Badge>
               </CardHeader>
               <CardContent className="px-6 pb-2">
                 <div className="text-sm text-muted-foreground">
-                  {Intl.DateTimeFormat("es-CO", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
+                  {Intl.DateTimeFormat('es-CO', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
                   }).format(new Date(transaction.createdAt))}
                 </div>
 
@@ -55,11 +55,11 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
                 </div>
               </CardContent>
             </Card>
-          );
+          )
         })}
       </ScrollArea>
     </div>
-  );
-};
+  )
+}
 
-export default CashRegisterTransactions;
+export default CashRegisterTransactions

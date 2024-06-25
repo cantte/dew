@@ -1,21 +1,21 @@
-import { ArrowRightIcon } from "@radix-ui/react-icons";
-import NextLink from "next/link";
-import Footer from "~/components/footer";
-import FeaturesSection from "~/components/home/features";
-import SignInButton from "~/components/signin-button";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { getServerAuthSession } from "~/server/auth";
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import NextLink from 'next/link'
+import Footer from '~/components/footer'
+import FeaturesSection from '~/components/home/features'
+import SignInButton from '~/components/signin-button'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
+import { getServerAuthSession } from '~/server/auth'
 
 export default async function Home() {
-  const session = await getServerAuthSession();
+  const session = await getServerAuthSession()
 
   return (
     <div className="min-h-screen w-full overflow-hidden">
       <div className="flex flex-col">
         <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-semibold">dew</span>
+            <span className="font-semibold text-lg">dew</span>
             <Badge>beta</Badge>
           </div>
 
@@ -45,12 +45,12 @@ export default async function Home() {
             <div className="flex grow flex-col justify-center">
               <div className="max-w-[725px] text-center">
                 <h1 className="mb-8 text-[38px] leading-[46px] md:text-[70px] md:leading-[85px]">
-                  <span>Lleva un registro de tus</span>{" "}
-                  <span className="text-primary-text">ventas</span>{" "}
+                  <span>Lleva un registro de tus</span>{' '}
+                  <span className="text-primary-text">ventas</span>{' '}
                   <span>sin complicaciones</span>
                 </h1>
                 <div className="text-center sm:px-20">
-                  <span className="text-[17px] font-normal tracking-[-0.16px] text-muted-foreground md:text-xl">
+                  <span className="font-normal text-[17px] text-muted-foreground tracking-[-0.16px] md:text-xl">
                     Evita el papeleo y lleva el control de tus ventas de manera
                     eficiente.
                   </span>
@@ -76,5 +76,5 @@ export default async function Home() {
         <Footer />
       </div>
     </div>
-  );
+  )
 }

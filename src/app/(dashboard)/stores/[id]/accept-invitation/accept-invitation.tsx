@@ -1,34 +1,34 @@
-"use client";
+'use client'
 
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
-import { api } from "~/trpc/react";
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { Button } from '~/components/ui/button'
+import { api } from '~/trpc/react'
 
 type Props = {
-  storeId: string;
-  employeeId: string;
-};
+  storeId: string
+  employeeId: string
+}
 
 const AcceptStoreInvitation = ({ storeId, employeeId }: Props) => {
-  const linkEmployeeToStore = api.employee.linkToStore.useMutation();
+  const linkEmployeeToStore = api.employee.linkToStore.useMutation()
 
   const acceptInvitation = () => {
     linkEmployeeToStore.mutate({
       storeId,
       employeeId,
-    });
-  };
+    })
+  }
 
-  const router = useRouter();
+  const router = useRouter()
   useEffect(() => {
     if (linkEmployeeToStore.isSuccess) {
-      router.push(`/dashboard`);
+      router.push(`/dashboard`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [linkEmployeeToStore.isSuccess]);
+  }, [linkEmployeeToStore.isSuccess])
 
   return (
     <>
@@ -54,7 +54,7 @@ const AcceptStoreInvitation = ({ storeId, employeeId }: Props) => {
         </Alert>
       )}
     </>
-  );
-};
+  )
+}
 
-export default AcceptStoreInvitation;
+export default AcceptStoreInvitation

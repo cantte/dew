@@ -1,8 +1,8 @@
-import { Pen } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import type { TypeOf } from "zod";
-import { Button } from "~/components/ui/button";
+import { Pen } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import type { TypeOf } from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,42 +11,42 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import type { createSaleInput } from "~/server/api/schemas/sales";
+} from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
+import type { createSaleInput } from '~/server/api/schemas/sales'
 
-type FormValues = TypeOf<typeof createSaleInput>;
+type FormValues = TypeOf<typeof createSaleInput>
 
 type Props = {
-  productName: string;
-  index: number;
-};
+  productName: string
+  index: number
+}
 
 const UpdateSalePriceDialog = ({ productName, index }: Props) => {
-  const [open, setOpen] = useState(false);
-  const form = useFormContext<FormValues>();
+  const [open, setOpen] = useState(false)
+  const form = useFormContext<FormValues>()
 
-  const { setValue } = form;
-  const items = form.getValues("items");
+  const { setValue } = form
+  const items = form.getValues('items')
   useEffect(() => {
     if (open) {
-      return;
+      return
     }
 
     const amount = items.reduce(
       (acc, item) => acc + item.quantity * item.salePrice,
       0,
-    );
-    setValue("amount", amount);
-    setValue("payment", amount);
-  }, [open, setValue, items]);
+    )
+    setValue('amount', amount)
+    setValue('payment', amount)
+  }, [open, setValue, items])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -59,7 +59,7 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
         <DialogHeader>
           <DialogTitle>Actualizar precio de venta</DialogTitle>
           <DialogDescription>
-            Estás a punto de actualizar el precio de venta del producto{" "}
+            Estás a punto de actualizar el precio de venta del producto{' '}
             <strong>{productName}</strong>
           </DialogDescription>
         </DialogHeader>
@@ -86,7 +86,7 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default UpdateSalePriceDialog;
+export default UpdateSalePriceDialog

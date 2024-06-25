@@ -1,11 +1,11 @@
-import Link from "next/link";
-import Footer from "~/components/footer";
-import { ThemeToggle } from "~/components/theme-toggle";
-import { Badge } from "~/components/ui/badge";
+import Link from 'next/link'
+import Footer from '~/components/footer'
+import { ThemeToggle } from '~/components/theme-toggle'
+import { Badge } from '~/components/ui/badge'
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const DefaultLayout = ({ children }: Props) => {
   return (
@@ -33,7 +33,7 @@ const DefaultLayout = ({ children }: Props) => {
         <Footer />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DefaultLayout;
+export default DefaultLayout

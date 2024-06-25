@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import CreateCustomerForm from "~/components/customers/create-customer.form";
+import CreateCustomerForm from '~/components/customers/create-customer.form'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "~/components/ui/dialog";
+} from '~/components/ui/dialog'
 
 type CreateCustomerModalProps = {
-  open: boolean;
-  id?: string;
-  onOpenChange: (open: boolean) => void;
-};
+  open: boolean
+  id?: string
+  onOpenChange: (open: boolean) => void
+}
 
 const CreateCustomerModal = ({
   open,
@@ -29,7 +29,7 @@ const CreateCustomerModal = ({
         <CreateCustomerForm id={id} onCreate={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default CreateCustomerModal;
+export default CreateCustomerModal

@@ -1,13 +1,13 @@
-import { and, between, eq, sum } from "drizzle-orm";
-import type { TypeOf } from "zod";
-import type { TRPCAuthedContext } from "~/server/api/procedures/authed";
-import type { getOrderOverviewInput } from "~/server/api/schemas/orders";
-import { orderSummary } from "~/server/db/schema";
+import { and, between, eq, sum } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import type { getOrderOverviewInput } from '~/server/api/schemas/orders'
+import { orderSummary } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCAuthedContext;
-  input: TypeOf<typeof getOrderOverviewInput>;
-};
+  ctx: TRPCAuthedContext
+  input: TypeOf<typeof getOrderOverviewInput>
+}
 
 const getOrderOverview = async ({ ctx, input }: Options) => {
   const result = await ctx.db
@@ -23,7 +23,7 @@ const getOrderOverview = async ({ ctx, input }: Options) => {
         eq(orderSummary.storeId, input.storeId),
         between(orderSummary.createdAt, input.from, input.to),
       ),
-    );
+    )
 
   if (!result) {
     return {
@@ -31,10 +31,10 @@ const getOrderOverview = async ({ ctx, input }: Options) => {
       customers: 0,
       orders: 0,
       products: 0,
-    };
+    }
   }
 
-  const summary = result[0];
+  const summary = result[0]
 
   if (!summary) {
     return {
@@ -42,7 +42,7 @@ const getOrderOverview = async ({ ctx, input }: Options) => {
       customers: 0,
       orders: 0,
       products: 0,
-    };
+    }
   }
 
   return {
@@ -50,7 +50,7 @@ const getOrderOverview = async ({ ctx, input }: Options) => {
     customers: summary.customers ?? 0,
     orders: summary.orders ?? 0,
     products: summary.products ?? 0,
-  };
-};
+  }
+}
 
-export default getOrderOverview;
+export default getOrderOverview

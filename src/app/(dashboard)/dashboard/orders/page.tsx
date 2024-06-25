@@ -1,30 +1,30 @@
-import { Suspense } from "react";
-import { columns } from "~/app/(dashboard)/dashboard/orders/columns";
-import OrdersDataTable from "~/app/(dashboard)/dashboard/orders/data-table";
-import NotEnoughPermissions from "~/components/not-enough-permissions";
-import OrdersOverview from "~/components/orders/overview";
-import NotFoundStoreAlert from "~/components/stores/not-found.alert";
-import { Skeleton } from "~/components/ui/skeleton";
-import { api } from "~/trpc/server";
+import { Suspense } from 'react'
+import { columns } from '~/app/(dashboard)/dashboard/orders/columns'
+import OrdersDataTable from '~/app/(dashboard)/dashboard/orders/data-table'
+import NotEnoughPermissions from '~/components/not-enough-permissions'
+import OrdersOverview from '~/components/orders/overview'
+import NotFoundStoreAlert from '~/components/stores/not-found.alert'
+import { Skeleton } from '~/components/ui/skeleton'
+import { api } from '~/trpc/server'
 
 const OrdersPage = async () => {
-  const store = await api.store.findCurrent();
+  const store = await api.store.findCurrent()
 
   if (store === undefined) {
-    return <NotFoundStoreAlert />;
+    return <NotFoundStoreAlert />
   }
 
   const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ["order:view"],
-  });
+    permissions: ['order:view'],
+  })
 
   if (!hasPermissions) {
-    return <NotEnoughPermissions />;
+    return <NotEnoughPermissions />
   }
 
   const orders = await api.order.list({
     storeId: store.id,
-  });
+  })
 
   return (
     <div className="space-y-4">
@@ -34,7 +34,7 @@ const OrdersPage = async () => {
 
       <OrdersDataTable columns={columns} data={orders} storeId={store.id} />
     </div>
-  );
-};
+  )
+}
 
-export default OrdersPage;
+export default OrdersPage

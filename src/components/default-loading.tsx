@@ -1,4 +1,4 @@
-import { Skeleton } from "~/components/ui/skeleton";
+import { Skeleton } from '~/components/ui/skeleton'
 
 const DefaultLoading = () => {
   return (
@@ -6,7 +6,7 @@ const DefaultLoading = () => {
       <Skeleton className="h-4 w-1/2" />
       <Skeleton className="h-4 w-1/3" />
     </div>
-  );
-};
+  )
+}
 
-export default DefaultLoading;
+export default DefaultLoading

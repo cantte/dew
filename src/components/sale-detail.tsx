@@ -1,4 +1,4 @@
-import { Separator } from "~/components/ui/separator";
+import { Separator } from '~/components/ui/separator'
 import {
   Table,
   TableBody,
@@ -6,13 +6,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
-import { paymentMethods } from "~/server/api/schemas/sales";
-import { type RouterOutputs } from "~/trpc/shared";
+} from '~/components/ui/table'
+import { paymentMethods } from '~/server/api/schemas/sales'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
-  sale: NonNullable<RouterOutputs["sale"]["find"]>;
-};
+  sale: NonNullable<RouterOutputs['sale']['find']>
+}
 
 const SaleDetail = ({ sale }: Props) => {
   return (
@@ -32,20 +32,20 @@ const SaleDetail = ({ sale }: Props) => {
             <TableBody>
               {sale.saleItems.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.product?.name ?? "No encontrado"}</TableCell>
+                  <TableCell>{item.product?.name ?? 'No encontrado'}</TableCell>
                   <TableCell>
-                    {Intl.NumberFormat("es-CO").format(item.quantity)}
+                    {Intl.NumberFormat('es-CO').format(item.quantity)}
                   </TableCell>
                   <TableCell>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(item.salePrice)}
                   </TableCell>
                   <TableCell>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(item.quantity * item.salePrice)}
                   </TableCell>
                 </TableRow>
@@ -64,7 +64,7 @@ const SaleDetail = ({ sale }: Props) => {
                     Productos vendidos
                   </span>
                   <span>
-                    {Intl.NumberFormat("es-CO").format(
+                    {Intl.NumberFormat('es-CO').format(
                       sale.saleItems.reduce(
                         (acc, item) => acc + item.quantity,
                         0,
@@ -75,9 +75,9 @@ const SaleDetail = ({ sale }: Props) => {
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Total</span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(sale.amount)}
                   </span>
                 </li>
@@ -89,7 +89,7 @@ const SaleDetail = ({ sale }: Props) => {
               <p className="text-muted-foreground">
                 {sale.customer
                   ? `${sale.customer.name} (${sale.customer.id})`
-                  : "Mostrador"}
+                  : 'Mostrador'}
               </p>
 
               <Separator className="my-2" />
@@ -99,7 +99,7 @@ const SaleDetail = ({ sale }: Props) => {
                 <p className="text-muted-foreground">
                   {paymentMethods.find(
                     (method) => method.value === sale.paymentMethod,
-                  )?.label ?? "Desconocido"}
+                  )?.label ?? 'Desconocido'}
                 </p>
               </div>
 
@@ -107,27 +107,27 @@ const SaleDetail = ({ sale }: Props) => {
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Total a pagar</span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(sale.amount)}
                   </span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Pago recibido</span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(sale.payment)}
                   </span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">Cambio</span>
                   <span>
-                    {Intl.NumberFormat("es-CO", {
-                      style: "currency",
-                      currency: "COP",
+                    {Intl.NumberFormat('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
                     }).format(sale.payment - sale.amount)}
                   </span>
                 </li>
@@ -137,7 +137,7 @@ const SaleDetail = ({ sale }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SaleDetail;
+export default SaleDetail

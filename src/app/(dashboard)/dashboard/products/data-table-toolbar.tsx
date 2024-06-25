@@ -1,34 +1,52 @@
-"use client";
+'use client'
 
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { type Table } from "@tanstack/react-table";
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { api } from "~/trpc/react";
+import { Cross2Icon } from '@radix-ui/react-icons'
+import type { Table } from '@tanstack/react-table'
+import { mkConfig } from 'export-to-csv'
+import { FileDown, FileUp } from 'lucide-react'
+import { useMemo } from 'react'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { exportToCsv, type ExportableToCsv } from '~/lib/csv'
 
-type DataTableToolbarProps<TData> = {
-  table: Table<TData>;
-};
+type DataTableToolbarProps<TData extends ExportableToCsv> = {
+  table: Table<TData>
+}
 
-const ProductsDataTableToolbar = <TData,>({
+const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
   table,
 }: DataTableToolbarProps<TData>) => {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0
 
-  const canCreateProduct = api.rbac.checkPermissions.useQuery({
-    permissions: ["product:create"],
-  });
+  const exportConfing = useMemo(
+    () =>
+      mkConfig({
+        fieldSeparator: ',',
+        decimalSeparator: '.',
+        useKeysAsHeaders: true,
+        filename: `productos-${new Date().toISOString()}`,
+      }),
+    [],
+  )
+
+  const exportData = () => {
+    const rows = table
+      .getFilteredRowModel()
+      .rows.map((row) => row.original)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .map(({ id, ...data }) => data)
+
+    exportToCsv(exportConfing, rows)
+  }
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2">
+    <div className="ml-auto flex items-center gap-2">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Buscar producto"
-          value={(table.getColumn("code")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn('code')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn("code")?.setFilterValue(event.target.value)
+            table.getColumn('code')?.setFilterValue(event.target.value)
           }
           className="w-[150px] lg:w-[250px]"
         />
@@ -45,20 +63,27 @@ const ProductsDataTableToolbar = <TData,>({
         )}
       </div>
 
-      <div className="flex space-x-2">
-        {!canCreateProduct.isPending && canCreateProduct.data ? (
-          <Button asChild size="sm" className="h-7 gap-1">
-            <Link href="/products/create">
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Crear producto
-              </span>
-            </Link>
-          </Button>
-        ) : null}
+      <div className="flex items-center space-x-2">
+        <Button size="sm" variant="secondary" className="h-7 gap-1">
+          <FileUp className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Importar
+          </span>
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          className="h-7 gap-1"
+          onClick={exportData}
+        >
+          <FileDown className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Exportar
+          </span>
+        </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsDataTableToolbar;
+export default ProductsDataTableToolbar

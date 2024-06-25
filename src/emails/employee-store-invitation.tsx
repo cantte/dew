@@ -8,14 +8,13 @@ import {
   Preview,
   Tailwind,
   Text,
-} from "@react-email/components";
-import tailwindConfig from "~/config/email/tailwind";
+} from '@react-email/components'
 
 type Props = {
-  employeeName: string;
-  storeName: string;
-  url: string;
-};
+  employeeName: string
+  storeName: string
+  url: string
+}
 
 const EmployeeStoreInvitationEmail = ({
   employeeName,
@@ -26,7 +25,7 @@ const EmployeeStoreInvitationEmail = ({
     <Html>
       <Head />
       <Preview>Invitación a la tienda</Preview>
-      <Tailwind config={tailwindConfig}>
+      <Tailwind>
         <Body className="mx-auto my-auto px-2 font-sans">
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Text className="scroll-m-20 text-xl font-semibold tracking-tight">
@@ -39,7 +38,7 @@ const EmployeeStoreInvitationEmail = ({
 
             <Container className="flex justify-center">
               <Button
-                className="rounded-md bg-primary px-4 py-2 text-center text-sm font-medium text-white"
+                className="rounded-md bg-[#690dab] px-4 py-2 text-center text-sm font-medium text-white"
                 href={url}
               >
                 Acceder a la tienda
@@ -60,7 +59,7 @@ const EmployeeStoreInvitationEmail = ({
         </Body>
       </Tailwind>
     </Html>
-  );
-};
+  )
+}
 
-export default EmployeeStoreInvitationEmail;
+export default EmployeeStoreInvitationEmail
