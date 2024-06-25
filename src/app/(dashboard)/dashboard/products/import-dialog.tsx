@@ -9,12 +9,12 @@ import type { TypeOf } from 'zod'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '~/components/ui/dialog'
 import { Form, FormField, FormItem, FormMessage } from '~/components/ui/form'
 import { Label } from '~/components/ui/label'
@@ -166,7 +166,7 @@ const ImportProductsDialog = () => {
         </DialogHeader>
 
         <div className="grid gap-2">
-          <div className='flex items-center justify-between'>
+          <div className="flex items-center justify-between">
             <div>
               {currentStore.data && (
                 <Badge variant="outline">{currentStore.data.name}</Badge>
