@@ -50,9 +50,11 @@ const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
   }
 
   const router = useRouter()
+  const utils = api.useUtils()
   useEffect(() => {
     if (updateUserPreference.isSuccess) {
       router.refresh()
+      void utils.store.findCurrent.invalidate()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateUserPreference.isSuccess])
