@@ -35,7 +35,7 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
       .getFilteredRowModel()
       .rows.map((row) => row.original)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(({ id, ...data }) => data)
+      .map(({ id, isLowStock, ...data }) => data)
 
     exportToCsv(exportConfing, rows)
   }
