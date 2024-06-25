@@ -87,7 +87,7 @@
     "autoprefixer": "^10.4.19",
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.22.7",
-    "eslint": "^8.57.0",
+    "eslint": "^9.5.0",
     "eslint-config-next": "^14.2.4",
     "eslint-plugin-drizzle": "^0.2.3",
     "pg": "^8.12.0",
