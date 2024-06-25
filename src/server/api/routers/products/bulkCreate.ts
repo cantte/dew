@@ -44,8 +44,8 @@ const bulkCreateProduct = async ({ ctx, input }: Options) => {
     const inventoryToInsert = productsToInsert.map((product) => ({
       storeId: store,
       productId: product.id,
-      stock: 0,
-      quantity: 0,
+      stock: product.stock,
+      quantity: product.quantity,
     }))
 
     await tx.insert(inventory).values(inventoryToInsert)
