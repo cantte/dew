@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { mkConfig } from 'export-to-csv'
-import { Download, FileUp, Upload } from 'lucide-react'
+import { Download, FileUp, RotateCw, Upload } from 'lucide-react'
 import Papa from 'papaparse'
 import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -18,6 +18,7 @@ import {
 } from '~/components/ui/dialog'
 import { Form, FormField, FormItem, FormMessage } from '~/components/ui/form'
 import { Label } from '~/components/ui/label'
+import { useToast } from '~/components/ui/use-toast'
 import { exportToCsv } from '~/lib/csv'
 import { bulkCreateProductInput } from '~/server/api/schemas/products'
 import { api } from '~/trpc/react'
@@ -50,9 +51,22 @@ const ImportProductsDialog = () => {
     bulkCreateProduct.mutate(data)
   }
 
+  const [open, setOpen] = useState(false)
+  const { toast } = useToast()
+  const utils = api.useUtils()
   useEffect(() => {
     if (bulkCreateProduct.isSuccess) {
+      toast({
+        title: 'Productos importados',
+        description: 'Los productos han sido importados correctamente',
+      })
+
+      setOpen(false)
+      setFile(undefined)
+
       form.reset()
+
+      void utils.product.list.invalidate()
     }
   }, [bulkCreateProduct.isSuccess])
 
@@ -141,7 +155,7 @@ const ImportProductsDialog = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="sm" variant="secondary" className="h-7 gap-1">
           <FileUp className="h-3.5 w-3.5" />
@@ -224,7 +238,12 @@ const ImportProductsDialog = () => {
                 )}
               />
 
-              <Button type="submit">Importar</Button>
+              <Button type="submit" disabled={bulkCreateProduct.isPending}>
+                {bulkCreateProduct.isPending && (
+                  <RotateCw className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Importar
+              </Button>
             </form>
           </Form>
         </div>
