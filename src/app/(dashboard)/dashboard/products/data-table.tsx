@@ -29,6 +29,7 @@ const ProductDataTable = <TValue,>({
   storeId,
 }: ProductDataTableProps<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const { data: products } = api.product.list.useQuery(
     { storeId: storeId },
@@ -42,8 +43,10 @@ const ProductDataTable = <TValue,>({
     columns,
     state: {
       columnFilters,
+      globalFilter,
     },
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),

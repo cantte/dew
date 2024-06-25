@@ -45,9 +45,9 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Buscar producto"
-          value={(table.getColumn('code')?.getFilterValue() as string) ?? ''}
+          value={table.getState().globalFilter}
           onChange={(event) =>
-            table.getColumn('code')?.setFilterValue(event.target.value)
+            table.setGlobalFilter(event.target.value)
           }
           className="w-[150px] lg:w-[250px]"
         />
