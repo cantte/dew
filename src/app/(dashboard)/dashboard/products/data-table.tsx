@@ -3,6 +3,7 @@
 import {
   type ColumnDef,
   type ColumnFiltersState,
+  type VisibilityState,
   getCoreRowModel,
   getFacetedRowModel,
   getFilteredRowModel,
@@ -29,6 +30,10 @@ const ProductDataTable = <TValue,>({
   storeId,
 }: ProductDataTableProps<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    isLowStock: false,
+  })
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const { data: products } = api.product.list.useQuery(
     { storeId: storeId },
@@ -42,8 +47,12 @@ const ProductDataTable = <TValue,>({
     columns,
     state: {
       columnFilters,
+      globalFilter,
+      columnVisibility,
     },
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
