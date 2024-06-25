@@ -78,4 +78,8 @@ export const columns: ColumnDef<Product>[] = [
       return <DataTableRowActions row={row} />
     },
   },
+  {
+    id: 'isLowStock',
+    accessorKey: 'isLowStock',
+  },
 ]
