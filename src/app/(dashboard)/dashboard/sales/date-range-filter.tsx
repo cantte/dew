@@ -2,7 +2,7 @@ import { CalendarIcon } from '@radix-ui/react-icons'
 import type { Table } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
-import { useEffect, type HTMLAttributes } from 'react'
+import { type HTMLAttributes, useEffect } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Button } from '~/components/ui/button'
 import { Calendar } from '~/components/ui/calendar'
@@ -41,7 +41,7 @@ const DateRangeFilter = <TData,>({
   }, [date])
 
   return (
-    <div className={cn('grid gap-2', className)}>
+    <div className={cn('grid gap-2')}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -50,6 +50,7 @@ const DateRangeFilter = <TData,>({
             className={cn(
               'w-[300px] justify-start text-left font-normal',
               !date && 'text-muted-foreground',
+              className
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

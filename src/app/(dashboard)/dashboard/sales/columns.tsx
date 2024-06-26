@@ -5,7 +5,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import NextLink from 'next/link'
 import type { DateRange } from 'react-day-picker'
 import { Button } from '~/components/ui/button'
-import { paymentMethods } from '~/server/api/schemas/sales'
+import { paymentMethods } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type Sale = RouterOutputs['sale']['list'][number]
@@ -44,10 +44,14 @@ export const columns: ColumnDef<Sale>[] = [
       return (
         <span>
           {paymentMethods.find(
-            (method) => method.value === row.original.paymentMethod,
+            (method) => method.id === row.original.paymentMethod,
           )?.label ?? 'Desconocido'}
         </span>
       )
+    },
+    filterFn: (row, id, value: string) => {
+      return value
+        .includes(row.getValue(id))
     },
   },
   {

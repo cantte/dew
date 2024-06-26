@@ -5,10 +5,10 @@ import { mkConfig } from 'export-to-csv'
 import { FileDown, FilterX } from 'lucide-react'
 import { useMemo } from 'react'
 import DateRangeFilter from '~/app/(dashboard)/dashboard/sales/date-range-filter'
+import DataTableFacetedFilter from '~/components/data-table-faceted-filter'
 import { Button } from '~/components/ui/button'
-import { Input } from '~/components/ui/input'
+import { paymentMethods } from '~/constants'
 import { type ExportableToCsv, exportToCsv } from '~/lib/csv'
-import { paymentMethods } from '~/server/api/schemas/sales'
 
 type Props<TData extends ExportableToCsv> = {
   table: Table<TData>
@@ -42,7 +42,7 @@ const SalesDataTableToolbar = <TData extends ExportableToCsv>({
         ...row,
         createdAt: new Date(createdAt as unknown as string).toLocaleString(),
         paymentMethod:
-          paymentMethods.find((method) => method.value === row.paymentMethod)
+          paymentMethods.find((method) => method.id === row.paymentMethod)
             ?.label ?? 'Desconocido',
       }))
 
@@ -52,18 +52,15 @@ const SalesDataTableToolbar = <TData extends ExportableToCsv>({
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder="Buscar por cliente"
-          value={
-            (table.getColumn('customer')?.getFilterValue() as string) ?? ''
-          }
-          onChange={(event) =>
-            table.getColumn('customer')?.setFilterValue(event.target.value)
-          }
-          className="w-[150px] lg:w-[250px]"
-        />
+        <DateRangeFilter table={table} className='h-8' />
 
-        <DateRangeFilter table={table} className="border-dashed" />
+        {table.getColumn('paymentMethod') && (
+          <DataTableFacetedFilter
+            column={table.getColumn('paymentMethod')}
+            title="Método de pago"
+            options={paymentMethods}
+          />
+        )}
 
         {isFiltered && (
           <Button
