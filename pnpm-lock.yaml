@@ -168,8 +168,8 @@ importers:
         specifier: ^2.12.7
         version: 2.12.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       resend:
-        specifier: ^3.3.0
-        version: 3.3.0
+        specifier: ^3.4.0
+        version: 3.4.0
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -4619,8 +4619,8 @@ packages:
     resolution: {integrity: sha512-nQFEv9gRw6SJAwWD2LrL0NmQvAcO7FBwJbwmr2ttPAacfy0xuiOjE5zt+zM4xDyuyvUaxBi/9gb2SoCyNEVJcw==}
     engines: {node: '>=8.6.0'}
 
-  resend@3.3.0:
-    resolution: {integrity: sha512-twDI+rORUQzJC546lEUKhsLKEuqWNFxthZ27kGiK+sR2Cq7CNsro/pgM0W7qT0OiXNLEFp0u3gkJ6kqocpWmYQ==}
+  resend@3.4.0:
+    resolution: {integrity: sha512-F3PVHdTHeLonSnrU5V6k8643LJ9QacLu3uI9M+BAFkmBmB1ELM2x7fdsziYZoSm6DmU6TKwiQCK0jf8dcNomcQ==}
     engines: {node: '>=18'}
 
   resolve-from@4.0.0:
@@ -9753,7 +9753,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  resend@3.3.0:
+  resend@3.4.0:
     dependencies:
       '@react-email/render': 0.0.15
 
