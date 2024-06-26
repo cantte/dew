@@ -10,11 +10,11 @@ import { Button } from '~/components/ui/button'
 import { paymentMethods } from '~/constants'
 import { type ExportableToCsv, exportToCsv } from '~/lib/csv'
 
-type Props<TData extends ExportableToCsv> = {
+type Props<TData> = {
   table: Table<TData>
 }
 
-const SalesDataTableToolbar = <TData extends ExportableToCsv>({
+const SalesDataTableToolbar = <TData,>({
   table,
 }: Props<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0
@@ -37,7 +37,7 @@ const SalesDataTableToolbar = <TData extends ExportableToCsv>({
   const exportData = () => {
     const rows = table
       .getFilteredRowModel()
-      .rows.map((row) => row.original)
+      .rows.map((row) => row.original as ExportableToCsv)
       .map(({ code, createdAt, ...row }) => ({
         ...row,
         createdAt: new Date(createdAt as unknown as string).toLocaleString(),
