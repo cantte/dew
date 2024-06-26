@@ -24,11 +24,7 @@ type Props<TValue> = {
   storeId: string
 }
 
-const SalesDataTable = <TValue,>({
-  columns,
-  data,
-  storeId,
-}: Props<TValue>) => {
+const SalesDataTable = <TValue,>({ columns, data, storeId }: Props<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const { data: sales } = api.sale.list.useQuery(

@@ -14,9 +14,7 @@ type Props<TData> = {
   table: Table<TData>
 }
 
-const SalesDataTableToolbar = <TData,>({
-  table,
-}: Props<TData>) => {
+const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0
 
   const resetFilters = () => {
