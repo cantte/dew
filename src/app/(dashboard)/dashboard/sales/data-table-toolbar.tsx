@@ -52,7 +52,7 @@ const SalesDataTableToolbar = <TData extends ExportableToCsv>({
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="flex flex-1 items-center space-x-2">
-        <DateRangeFilter table={table} className='h-8' />
+        <DateRangeFilter table={table} className="h-8" />
 
         {table.getColumn('paymentMethod') && (
           <DataTableFacetedFilter

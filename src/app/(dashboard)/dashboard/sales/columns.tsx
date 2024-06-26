@@ -50,8 +50,7 @@ export const columns: ColumnDef<Sale>[] = [
       )
     },
     filterFn: (row, id, value: string) => {
-      return value
-        .includes(row.getValue(id))
+      return value.includes(row.getValue(id))
     },
   },
   {
