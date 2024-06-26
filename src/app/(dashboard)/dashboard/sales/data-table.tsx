@@ -5,10 +5,10 @@ import {
   type ColumnFiltersState,
   getCoreRowModel,
   getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  type SortingState,
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -18,19 +18,14 @@ import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'
 import { api } from '~/trpc/react'
 
-type DataTableProps<TValue> = {
+type Props<TValue> = {
   columns: ColumnDef<Sale, TValue>[]
   data: Sale[]
   storeId: string
 }
 
-const SalesDataTable = <TValue,>({
-  columns,
-  data,
-  storeId,
-}: DataTableProps<TValue>) => {
+const SalesDataTable = <TValue,>({ columns, data, storeId }: Props<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [sorting, setSorting] = useState<SortingState>([])
 
   const { data: sales } = api.sale.list.useQuery(
     { storeId: storeId },
@@ -43,16 +38,15 @@ const SalesDataTable = <TValue,>({
     data: sales,
     columns,
     state: {
-      sorting,
       columnFilters,
     },
     onColumnFiltersChange: setColumnFilters,
-    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
   return (

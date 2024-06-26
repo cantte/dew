@@ -10,13 +10,13 @@ import { Input } from '~/components/ui/input'
 import { Toggle } from '~/components/ui/toggle'
 import { type ExportableToCsv, exportToCsv } from '~/lib/csv'
 
-type DataTableToolbarProps<TData extends ExportableToCsv> = {
+type Props<TData extends ExportableToCsv> = {
   table: Table<TData>
 }
 
 const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
   table,
-}: DataTableToolbarProps<TData>) => {
+}: Props<TData>) => {
   const isFiltered =
     table.getState().columnFilters.length > 0 ||
     table.getState().globalFilter !== ''

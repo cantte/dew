@@ -18,7 +18,7 @@ import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'
 import { api } from '~/trpc/react'
 
-type ProductDataTableProps<TValue> = {
+type Props<TValue> = {
   columns: ColumnDef<Product, TValue>[]
   data: Product[]
   storeId: string
@@ -28,7 +28,7 @@ const ProductDataTable = <TValue,>({
   columns,
   data,
   storeId,
-}: ProductDataTableProps<TValue>) => {
+}: Props<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     isLowStock: false,
