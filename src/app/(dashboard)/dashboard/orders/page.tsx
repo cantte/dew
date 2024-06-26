@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { columns } from '~/app/(dashboard)/dashboard/orders/columns'
+import CreateOrderButton from '~/app/(dashboard)/dashboard/orders/create-button'
 import OrdersDataTable from '~/app/(dashboard)/dashboard/orders/data-table'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import OrdersOverview from '~/components/orders/overview'
@@ -28,9 +29,15 @@ const OrdersPage = async () => {
 
   return (
     <div className="space-y-4">
-      <Suspense fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}>
-        <OrdersOverview />
-      </Suspense>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <Suspense fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}>
+          <OrdersOverview />
+        </Suspense>
+
+        <Suspense fallback={<Skeleton className="h-8 w-32" />}>
+          <CreateOrderButton />
+        </Suspense>
+      </div>
 
       <OrdersDataTable columns={columns} data={orders} storeId={store.id} />
     </div>

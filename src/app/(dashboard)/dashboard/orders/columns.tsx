@@ -3,8 +3,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import OrderRowActions from '~/app/(dashboard)/dashboard/orders/row-actions'
 import { Badge } from '~/components/ui/badge'
-import { orderStatus } from '~/constants'
-import { paymentMethods } from '~/server/api/schemas/sales'
+import { orderStatus, paymentMethods } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type Order = RouterOutputs['order']['list'][number]
@@ -14,11 +13,7 @@ export const columns: ColumnDef<Order>[] = [
     id: 'customer',
     header: 'Cliente',
     cell: ({ row }) => {
-      return (
-        <span>
-          {row.original.customer.id}, {row.original.customer.name}
-        </span>
-      )
+      return <span>{row.original.customer}</span>
     },
   },
   {
@@ -42,10 +37,13 @@ export const columns: ColumnDef<Order>[] = [
       return (
         <span>
           {paymentMethods.find(
-            (method) => method.value === row.original.paymentMethod,
+            (method) => method.id === row.original.paymentMethod,
           )?.label ?? 'Desconocido'}
         </span>
       )
+    },
+    filterFn: (row, id, value: string) => {
+      return value.includes(row.getValue(id))
     },
   },
   {
