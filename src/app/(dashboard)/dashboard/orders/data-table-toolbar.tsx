@@ -1,10 +1,11 @@
 import type { Table } from '@tanstack/react-table'
-import { FilterX, PlusCircle } from 'lucide-react'
-import Link from 'next/link'
+import { mkConfig } from 'export-to-csv'
+import { FileDown, FilterX } from 'lucide-react'
+import { useMemo } from 'react'
 import DataTableFacetedFilter from '~/components/data-table-faceted-filter'
 import { Button } from '~/components/ui/button'
-import { orderStatus } from '~/constants'
-import { api } from '~/trpc/react'
+import { orderStatus, paymentMethods } from '~/constants'
+import { type ExportableToCsv, exportToCsv } from '~/lib/csv'
 
 type Props<TData> = {
   table: Table<TData>
@@ -14,9 +15,38 @@ type Props<TData> = {
 const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0
 
-  const canCreateOrder = api.rbac.checkPermissions.useQuery({
-    permissions: ['order:create'],
-  })
+  const resetFilters = () => {
+    table.resetColumnFilters()
+  }
+
+  const exportConfing = useMemo(
+    () =>
+      mkConfig({
+        fieldSeparator: ',',
+        decimalSeparator: '.',
+        useKeysAsHeaders: true,
+        filename: `ordenes-${new Date().toISOString()}`,
+      }),
+    [],
+  )
+
+  const exportData = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const rows = table
+      .getFilteredRowModel()
+      .rows.map((row) => row.original as ExportableToCsv)
+      .map(({ code, createdAt, status, ...row }) => ({
+        ...row,
+        status:
+          orderStatus.find((s) => s.id === status)?.label ?? 'Desconocido',
+        paymentMethod:
+          paymentMethods.find((method) => method.id === row.paymentMethod)
+            ?.label ?? 'Desconocido',
+        createdAt: new Date(createdAt as unknown as string).toLocaleString(),
+      }))
+
+    exportToCsv(exportConfing, rows)
+  }
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -29,10 +59,18 @@ const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
           />
         )}
 
+        {table.getColumn('paymentMethod') && (
+          <DataTableFacetedFilter
+            column={table.getColumn('paymentMethod')}
+            title="Método de pago"
+            options={paymentMethods}
+          />
+        )}
+
         {isFiltered && (
           <Button
             variant="ghost"
-            onClick={() => table.resetColumnFilters()}
+            onClick={resetFilters}
             className="h-8 px-2 lg:px-3"
           >
             Limpiar filtros
@@ -40,17 +78,19 @@ const OrdersDataTableToolbar = <TData,>({ table }: Props<TData>) => {
           </Button>
         )}
       </div>
-      <div className="flex space-x-2">
-        {!canCreateOrder.isPending && canCreateOrder.data ? (
-          <Button asChild size="sm" className="h-7 gap-1">
-            <Link href="/orders/create">
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Nueva orden
-              </span>
-            </Link>
-          </Button>
-        ) : null}
+
+      <div className="flex items-center space-x-2">
+        <Button
+          size="sm"
+          variant="outline"
+          className="h-7 gap-1"
+          onClick={exportData}
+        >
+          <FileDown className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Exportar
+          </span>
+        </Button>
       </div>
     </div>
   )
