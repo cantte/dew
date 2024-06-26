@@ -15,19 +15,12 @@ export const columns: ColumnDef<Sale>[] = [
     id: 'customer',
     header: 'Cliente',
     cell: ({ row }) => {
-      return (
-        <span>
-          {row.original.customer.id}, {row.original.customer.name}
-        </span>
-      )
+      return <span>{row.original.customer}</span>
     },
     filterFn: (rows, id, value: string) => {
       const customer = rows.original.customer
 
-      return (
-        customer.id.includes(value) ||
-        customer.name.toLowerCase().includes(value.toLowerCase())
-      )
+      return customer.toLocaleUpperCase().includes(value.toLocaleUpperCase())
     },
   },
   {
