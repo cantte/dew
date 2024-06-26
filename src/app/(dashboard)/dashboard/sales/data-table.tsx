@@ -18,7 +18,7 @@ import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'
 import { api } from '~/trpc/react'
 
-type DataTableProps<TValue> = {
+type Props<TValue> = {
   columns: ColumnDef<Sale, TValue>[]
   data: Sale[]
   storeId: string
@@ -28,7 +28,7 @@ const SalesDataTable = <TValue,>({
   columns,
   data,
   storeId,
-}: DataTableProps<TValue>) => {
+}: Props<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const { data: sales } = api.sale.list.useQuery(
