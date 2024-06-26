@@ -1,8 +1,8 @@
-import { desc, eq } from 'drizzle-orm'
+import { desc, eq, sql } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { byStoreInput } from '~/server/api/schemas/common'
-import { sales } from '~/server/db/schema'
+import { customers, sales } from '~/server/db/schema'
 
 type Options = {
   ctx: TRPCAuthedContext
@@ -10,18 +10,18 @@ type Options = {
 }
 
 const listSales = async ({ ctx, input }: Options) => {
-  return await ctx.db.query.sales.findMany({
-    with: {
-      customer: {
-        columns: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-    orderBy: [desc(sales.createdAt)],
-    where: eq(sales.storeId, input.storeId),
-  })
+  return await ctx.db
+    .select({
+      code: sales.code,
+      customer: sql<string>`CONCAT(${customers.name}, ' (', ${customers.id}, ')')`,
+      amount: sales.amount,
+      paymentMethod: sales.paymentMethod,
+      createdAt: sales.createdAt,
+    })
+    .from(sales)
+    .innerJoin(customers, eq(customers.id, sales.customerId))
+    .where(eq(sales.storeId, input.storeId))
+    .orderBy(desc(sales.createdAt))
 }
 
 export default listSales
