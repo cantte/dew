@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
-import { paymentMethods } from '~/server/api/schemas/sales'
+import { paymentMethods } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
@@ -98,7 +98,7 @@ const SaleDetail = ({ sale }: Props) => {
                 <div className="font-semibold">Método de pago</div>
                 <p className="text-muted-foreground">
                   {paymentMethods.find(
-                    (method) => method.value === sale.paymentMethod,
+                    (method) => method.id === sale.paymentMethod,
                   )?.label ?? 'Desconocido'}
                 </p>
               </div>

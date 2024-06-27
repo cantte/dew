@@ -30,7 +30,7 @@ const CreateOrderForm = ({ storeId, suggestions }: Props) => {
     defaultValues: {
       storeId: storeId,
       items: [],
-      paymentMethod: 'Cash',
+      paymentMethod: 'cash',
     },
   })
 
