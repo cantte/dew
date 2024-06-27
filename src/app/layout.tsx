@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import '~/styles/globals.css'
 
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: Readonly<Props>) {
           <TRPCReactProvider>{children}</TRPCReactProvider>
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
         <Toaster />
       </body>
     </html>
