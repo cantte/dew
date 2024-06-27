@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './cashRegisters'
+export * from './common'
 export * from './customers'
 export * from './employees'
 export * from './inventory'
