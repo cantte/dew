@@ -11,6 +11,7 @@ import {
 } from 'drizzle-orm/pg-core'
 import { users } from '~/server/db/schema/auth'
 import { createTable } from '~/server/db/schema/base'
+import { paymentMethods } from '~/server/db/schema/common'
 import { customers } from '~/server/db/schema/customers'
 import { products } from '~/server/db/schema/products'
 import { stores } from '~/server/db/schema/stores'
@@ -23,9 +24,7 @@ export const sales = createTable(
       .notNull()
       .references(() => customers.id),
     amount: real('amount').notNull(),
-    paymentMethod: varchar('payment_method', { length: 32 })
-      .notNull()
-      .default('cash'),
+    paymentMethod: paymentMethods('payment_method').notNull().default('cash'),
     payment: real('payment').notNull(),
     storeId: uuid('store_id')
       .notNull()

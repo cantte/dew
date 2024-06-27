@@ -15,8 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
-import { orderStatus } from '~/constants'
-import { paymentMethods } from '~/server/api/schemas/sales'
+import { orderStatus, paymentMethods } from '~/constants'
 import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
 
@@ -145,7 +144,7 @@ const OrderDetail = ({ order }: Props) => {
                   <div className="font-semibold">Método de pago</div>
                   <p className="text-muted-foreground">
                     {paymentMethods.find(
-                      (method) => method.value === order.paymentMethod,
+                      (method) => method.id === order.paymentMethod,
                     )?.label ?? 'Desconocido'}
                   </p>
                 </div>

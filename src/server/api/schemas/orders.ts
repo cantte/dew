@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { paymentMethod } from '~/server/api/schemas/common'
 
 export const createOrderItemInput = z.object({
   productId: z.string().min(1).max(64),
@@ -12,12 +13,7 @@ export const createOrderInput = z.object({
   customerId: z.string().min(1).max(32),
   storeId: z.string().min(1).max(36),
   amount: z.coerce.number().min(0),
-  paymentMethod: z.enum([
-    'Cash',
-    'CreditCard',
-    'DebitCard',
-    'Transfer',
-  ] as const),
+  paymentMethod: paymentMethod,
   payment: z.coerce.number().min(0),
   address: z.string().min(1).max(255),
   phone: z.string().min(1).max(32),

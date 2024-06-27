@@ -28,8 +28,9 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
+import { paymentMethods } from '~/constants'
+import type { PaymentMethod } from '~/server/api/schemas/common'
 import type { createOrderInput } from '~/server/api/schemas/orders'
-import { paymentMethods, type PaymentMethod } from '~/server/api/schemas/sales'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type FormValues = TypeOf<typeof createOrderInput>
@@ -207,14 +208,14 @@ const CheckoutStep = ({ isCreating, selectedProducts, customer }: Props) => {
                 </SelectTrigger>
                 <SelectContent>
                   {paymentMethods.map((method) => (
-                    <SelectItem key={method.value} value={method.value}>
+                    <SelectItem key={method.id} value={method.id}>
                       {method.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
-              {form.watch('paymentMethod') === 'Cash' && (
+              {form.watch('paymentMethod') === 'cash' && (
                 <FormField
                   control={form.control}
                   name="payment"
