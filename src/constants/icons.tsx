@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Coins,
   Home,
@@ -39,9 +41,12 @@ const icons = [
   },
 ]
 
-export const getIcon = (id: string) => {
+export const getIcon = (id: string, className?: string) => {
   if (!id) return null
 
   const icon = icons.find((icon) => icon.id === id)
-  return icon?.icon ?? null
+
+  if (!icon) return null
+
+  return <icon.icon className={className} />
 }
