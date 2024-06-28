@@ -2,10 +2,10 @@ import { and, desc, eq } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import findCurrentStore from '~/server/api/routers/stores/findCurrent'
 import {
-    employeeStore,
-    employees,
-    menuItems,
-    roleMenuItems,
+  employeeStore,
+  employees,
+  menuItems,
+  roleMenuItems,
 } from '~/server/db/schema'
 
 type Options = {
