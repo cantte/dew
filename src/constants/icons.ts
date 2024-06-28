@@ -1,11 +1,11 @@
 import {
-    Coins,
-    Home,
-    Package,
-    ShoppingBasket,
-    ShoppingCart,
-    Store,
-    Users,
+  Coins,
+  Home,
+  Package,
+  ShoppingBasket,
+  ShoppingCart,
+  Store,
+  Users,
 } from 'lucide-react'
 
 const icons = [
@@ -40,6 +40,8 @@ const icons = [
 ]
 
 export const getIcon = (id: string) => {
+  if (!id) return null
+
   const icon = icons.find((icon) => icon.id === id)
   return icon?.icon ?? null
 }
