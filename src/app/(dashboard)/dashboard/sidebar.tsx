@@ -6,11 +6,11 @@ import { Button } from '~/components/ui/button'
 import { cn } from '~/lib/utils'
 import type { SidebarNavItem } from '~/types/nav'
 
-type DashboardSidebarProps = {
+type Props = {
   items: SidebarNavItem[]
 }
 
-const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ items }: Props) => {
   const pathname = usePathname()
 
   return items.length > 0 ? (
