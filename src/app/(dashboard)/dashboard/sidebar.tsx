@@ -38,7 +38,7 @@ const DashboardSidebar = ({ items }: DashboardSidebarProps) => {
         }
         return (
           <div key={`${index}-${item.title}`} className={cn('pb-4')}>
-            <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
+            <h4 className='mb-1 rounded-md px-2 py-1 font-semibold text-sm'>
               {item.title}
             </h4>
             {item?.items?.length && (
@@ -77,7 +77,7 @@ export const DashboardSidebarItem = ({
           >
             {item.title}
             {item.label && (
-              <span className="ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline">
+              <span className='ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-[#000000] text-xs leading-none no-underline group-hover:no-underline'>
                 {item.label}
               </span>
             )}
@@ -92,7 +92,7 @@ export const DashboardSidebarItem = ({
           >
             {item.title}
             {item.label && (
-              <span className="ml-2 rounded-md bg-muted px-1.5 py-0.5 text-xs leading-none text-muted-foreground no-underline group-hover:no-underline">
+              <span className='ml-2 rounded-md bg-muted px-1.5 py-0.5 text-muted-foreground text-xs leading-none no-underline group-hover:no-underline'>
                 {item.label}
               </span>
             )}
