@@ -18,7 +18,7 @@ export const menuItems = createTable(
     title: varchar('title', { length: 255 }).notNull(),
     href: varchar('href', { length: 255 }),
     icon: varchar('icon', { length: 30 }),
-    order: integer('order').notNull().default(0),
+    priority: integer('priority').notNull().default(0),
   },
   (menu) => ({
     parentIdIdx: index('menu_item_parent_id_idx').on(menu.parentId),
