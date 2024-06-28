@@ -14,11 +14,11 @@ import { dashboardConfig } from '~/config/dashboard'
 import { getServerAuthSession } from '~/server/auth'
 import { api } from '~/trpc/server'
 
-type DashboardLayoutProps = {
+type Props = {
   children: ReactNode
 }
 
-const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = async ({ children }: Props) => {
   const session = await getServerAuthSession()
 
   if (session === null) {
