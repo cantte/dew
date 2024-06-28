@@ -21,11 +21,11 @@ type Props = {
 const DashboardLayout = async ({ children }: Props) => {
   const session = await getServerAuthSession()
 
-  if (session === null) {
+  if (!session) {
     return redirect('/api/auth/signin')
   }
 
-  const store = await api.store.findCurrent()
+  const currentStore = await api.store.findCurrent()
   const stores = await api.store.list()
 
   const canCreateStore = await api.rbac.checkPermissions({
@@ -57,7 +57,7 @@ const DashboardLayout = async ({ children }: Props) => {
             <MobileNav />
 
             <SelectStore
-              currentStore={store}
+              currentStore={currentStore}
               stores={stores}
               canCreateStore={canCreateStore}
             />
