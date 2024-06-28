@@ -2,6 +2,7 @@ import cashRegistersRouter from '~/server/api/routers/cashRegisters'
 import customersRouter from '~/server/api/routers/customers'
 import employeesRouter from '~/server/api/routers/employees'
 import inventoryRouter from '~/server/api/routers/inventory'
+import { menusRouter } from '~/server/api/routers/menus'
 import ordersRouter from '~/server/api/routers/orders'
 import productsRouter from '~/server/api/routers/products'
 import rbacRouter from '~/server/api/routers/rbac'
@@ -21,6 +22,7 @@ export const appRouter = router({
   userPreference: userPreferencesRouter,
   employee: employeesRouter,
   rbac: rbacRouter,
+  menu: menusRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)
