@@ -38,12 +38,12 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
             <Link className="flex items-center gap-3" href="/">
-              <span className="text-lg font-semibold">dew</span>
+              <span className='font-semibold text-lg'>dew</span>
               <Badge>beta</Badge>
             </Link>
           </div>
           <div className="flex-1">
-            <nav className="grid items-start px-4 text-sm font-medium">
+            <nav className='grid items-start px-4 font-medium text-sm'>
               <ScrollArea>
                 <DashboardSidebar items={dashboardConfig.mainNav} />
               </ScrollArea>
