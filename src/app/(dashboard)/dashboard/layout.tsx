@@ -2,7 +2,10 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { type ReactNode, Suspense } from 'react'
 import CreateSaleButton from '~/app/(dashboard)/dashboard/sales/create-button'
-import DashboardSidebar from '~/app/(dashboard)/dashboard/sidebar'
+import {
+  DashboardServerSidebar,
+  DashboardServerSidebarFallback,
+} from '~/app/(dashboard)/dashboard/sidebar.server'
 import AccountNav from '~/components/account-nav'
 import MobileNav from '~/components/mobile-nav'
 import SelectStore from '~/components/stores/select-store'
@@ -10,7 +13,6 @@ import { Badge } from '~/components/ui/badge'
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
-import { dashboardConfig } from '~/config/dashboard'
 import { getServerAuthSession } from '~/server/auth'
 import { api } from '~/trpc/server'
 
@@ -45,7 +47,9 @@ const DashboardLayout = async ({ children }: Props) => {
           <div className="flex-1">
             <nav className="grid items-start px-4 font-medium text-sm">
               <ScrollArea>
-                <DashboardSidebar items={dashboardConfig.mainNav} />
+                <Suspense fallback={<DashboardServerSidebarFallback />}>
+                  <DashboardServerSidebar />
+                </Suspense>
               </ScrollArea>
             </nav>
           </div>
