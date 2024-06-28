@@ -1,10 +1,11 @@
 import { relations } from 'drizzle-orm'
 import {
-    type AnyPgColumn,
-    index,
-    integer,
-    uuid,
-    varchar,
+  type AnyPgColumn,
+  index,
+  integer,
+  primaryKey,
+  uuid,
+  varchar,
 } from 'drizzle-orm/pg-core'
 import { createTable } from '~/server/db/schema/base'
 import { roles } from '~/server/db/schema/rbac'
@@ -46,5 +47,8 @@ export const roleMenuItems = createTable(
     menuItemIdIdx: index('role_menu_item_menu_item_id_idx').on(
       roleMenuItem.menuItemId,
     ),
+    compoundKey: primaryKey({
+      columns: [roleMenuItem.roleId, roleMenuItem.menuItemId],
+    }),
   }),
 )
