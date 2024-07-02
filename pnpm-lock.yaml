@@ -78,8 +78,8 @@ importers:
         specifier: ^5.49.2
         version: 5.49.2(@tanstack/react-query@5.49.2(react@18.3.1))(react@18.3.1)
       '@tanstack/react-table':
-        specifier: ^8.17.3
-        version: 8.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^8.19.2
+        version: 8.19.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/client':
         specifier: 11.0.0-rc.433
         version: 11.0.0-rc.433(@trpc/server@11.0.0-rc.433)
@@ -2302,15 +2302,15 @@ packages:
     peerDependencies:
       react: ^18.0.0
 
-  '@tanstack/react-table@8.17.3':
-    resolution: {integrity: sha512-5gwg5SvPD3lNAXPuJJz1fOCEZYk9/GeBFH3w/hCgnfyszOIzwkwgp5I7Q4MJtn0WECp84b5STQUDdmvGi8m3nA==}
+  '@tanstack/react-table@8.19.2':
+    resolution: {integrity: sha512-itoSIAkA/Vsg+bjY23FSemcTyPhc5/1YjYyaMsr9QSH/cdbZnQxHVWrpWn0Sp2BWN71qkzR7e5ye8WuMmwyOjg==}
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  '@tanstack/table-core@8.17.3':
-    resolution: {integrity: sha512-mPBodDGVL+fl6d90wUREepHa/7lhsghg2A3vFpakEhrhtbIlgNAZiMr7ccTgak5qbHqF14Fwy+W1yFWQt+WmYQ==}
+  '@tanstack/table-core@8.19.2':
+    resolution: {integrity: sha512-KpRjhgehIhbfH78ARm/GJDXGnpdw4bCg3qas6yjWSi7czJhI/J6pWln7NHtmBkGE9ZbohiiNtLqwGzKmBfixig==}
     engines: {node: '>=12'}
 
   '@trpc/client@11.0.0-rc.433':
@@ -7198,13 +7198,13 @@ snapshots:
       '@tanstack/query-core': 5.49.1
       react: 18.3.1
 
-  '@tanstack/react-table@8.17.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-table@8.19.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/table-core': 8.17.3
+      '@tanstack/table-core': 8.19.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@tanstack/table-core@8.17.3': {}
+  '@tanstack/table-core@8.19.2': {}
 
   '@trpc/client@11.0.0-rc.433(@trpc/server@11.0.0-rc.433)':
     dependencies:
