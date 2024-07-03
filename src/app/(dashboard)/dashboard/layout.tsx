@@ -1,31 +1,33 @@
-import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import type { ReactNode } from 'react'
-import DashboardSidebar from '~/app/(dashboard)/dashboard/sidebar'
+import { type ReactNode, Suspense } from 'react'
+import CreateSaleButton from '~/app/(dashboard)/dashboard/sales/create-button'
+import {
+  DashboardServerSidebar,
+  DashboardServerSidebarFallback,
+} from '~/app/(dashboard)/dashboard/sidebar.server'
 import AccountNav from '~/components/account-nav'
 import MobileNav from '~/components/mobile-nav'
 import SelectStore from '~/components/stores/select-store'
 import { Badge } from '~/components/ui/badge'
-import { Button } from '~/components/ui/button'
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { Separator } from '~/components/ui/separator'
-import { dashboardConfig } from '~/config/dashboard'
+import { Skeleton } from '~/components/ui/skeleton'
 import { getServerAuthSession } from '~/server/auth'
 import { api } from '~/trpc/server'
 
-type DashboardLayoutProps = {
+type Props = {
   children: ReactNode
 }
 
-const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = async ({ children }: Props) => {
   const session = await getServerAuthSession()
 
-  if (session === null) {
+  if (!session) {
     return redirect('/api/auth/signin')
   }
 
-  const store = await api.store.findCurrent()
+  const currentStore = await api.store.findCurrent()
   const stores = await api.store.list()
 
   const canCreateStore = await api.rbac.checkPermissions({
@@ -38,14 +40,16 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
             <Link className="flex items-center gap-3" href="/">
-              <span className="text-lg font-semibold">dew</span>
+              <span className="font-semibold text-lg">dew</span>
               <Badge>beta</Badge>
             </Link>
           </div>
           <div className="flex-1">
-            <nav className="grid items-start px-4 text-sm font-medium">
+            <nav className="grid items-start px-4 font-medium text-sm">
               <ScrollArea>
-                <DashboardSidebar items={dashboardConfig.mainNav} />
+                <Suspense fallback={<DashboardServerSidebarFallback />}>
+                  <DashboardServerSidebar />
+                </Suspense>
               </ScrollArea>
             </nav>
           </div>
@@ -57,7 +61,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
             <MobileNav />
 
             <SelectStore
-              currentStore={store}
+              currentStore={currentStore}
               stores={stores}
               canCreateStore={canCreateStore}
             />
@@ -66,14 +70,9 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
           <nav className="flex items-center gap-3">
             <ul className="flex gap-2">
               <li className="flex items-center">
-                <Button asChild size="sm" className="mb-0 h-7 gap-1">
-                  <Link href="/sales/create">
-                    <PlusCircle className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Nueva venta
-                    </span>
-                  </Link>
-                </Button>
+                <Suspense fallback={<Skeleton className="h-8 w-32" />}>
+                  <CreateSaleButton />
+                </Suspense>
               </li>
 
               <li>
