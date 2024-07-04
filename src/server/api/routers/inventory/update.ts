@@ -38,6 +38,7 @@ const updateInventory = async ({ ctx, input }: Options) => {
           operation === 'add'
             ? productInventory.quantity + quantity
             : productInventory.quantity - quantity,
+        lowStockNotificationSended: false,
       })
       .where(eq(inventory.productId, id))
   })
