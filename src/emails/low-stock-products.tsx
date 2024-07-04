@@ -28,7 +28,7 @@ export const LowStockProducsEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>Invitación a la tienda</Preview>
+      <Preview>Productos con poco stock en la tienda {storeName}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto px-2 font-sans">
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-[#eaeaea] border-solid p-[20px]">
