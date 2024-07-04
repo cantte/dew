@@ -3,6 +3,7 @@ import type { TypeOf } from 'zod'
 import NewSale from '~/emails/new-sale'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { notifyLowStock } from '~/server/api/routers/inventory/notifyLowStock'
 import upsertProductsSummaries from '~/server/api/routers/products/upsertSummaries'
 import upsertSaleSummary from '~/server/api/routers/sales/upsertSummary'
 import type { createSaleInput } from '~/server/api/schemas/sales'
@@ -144,6 +145,8 @@ const createSale = async ({ ctx, input }: Options) => {
       }),
     })
   })
+
+  await notifyLowStock({ ctx, input: { storeId: input.storeId } })
 }
 
 export default createSale
