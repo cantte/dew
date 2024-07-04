@@ -63,8 +63,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-email/components':
-        specifier: 0.0.20
-        version: 0.0.20(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 0.0.21
+        version: 0.0.21(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@sentry/nextjs':
         specifier: 8.13.0
         version: 8.13.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.52.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.25.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.25.1)(next@14.2.4(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.90.1(esbuild@0.19.11))
@@ -1782,8 +1782,8 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  '@react-email/code-block@0.0.4':
-    resolution: {integrity: sha512-xjVLi/9dFNJ70N7hYme+21eQWa3b9/kgp4V+FKQJkQCuIMobxPRCIGM5jKD/0Vo2OqrE5chYv/dkg/aP8a8sPg==}
+  '@react-email/code-block@0.0.5':
+    resolution: {integrity: sha512-mmInpZsSIkNaYC1y40/S0XXrIqbTzrpllP6J1JMJuDOBG8l5T7pNl4V+gwfsSTvy9hVsuzQFmhHK8kVb1UXv3A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.2.0
@@ -1800,8 +1800,8 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  '@react-email/components@0.0.20':
-    resolution: {integrity: sha512-9grJ90RLv5ZPXq07YyQZ9A/OaM6QvGOD41Pl31I6s3UjFp7Jmxqr0wSUpuPhl0eKWriJU42E48okt4ugz29/hQ==}
+  '@react-email/components@0.0.21':
+    resolution: {integrity: sha512-fwGfH7FF+iuq+IdPcbEO5HoF0Pakk9big+fFW9+3kiyvbSNuo8Io1rhPTMLd8q41XomN4g7mgWovdAeS/8PHrA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.2.0
@@ -6422,7 +6422,7 @@ snapshots:
 
   '@radix-ui/react-slot@1.0.2(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.23.5
+      '@babel/runtime': 7.24.4
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.3.3)(react@18.3.1)
       react: 18.3.1
     optionalDependencies:
@@ -6699,7 +6699,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  '@react-email/code-block@0.0.4(react@18.3.1)':
+  '@react-email/code-block@0.0.5(react@18.3.1)':
     dependencies:
       prismjs: 1.29.0
       react: 18.3.1
@@ -6712,11 +6712,11 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  '@react-email/components@0.0.20(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@react-email/components@0.0.21(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@react-email/body': 0.0.8(react@18.3.1)
       '@react-email/button': 0.0.15(react@18.3.1)
-      '@react-email/code-block': 0.0.4(react@18.3.1)
+      '@react-email/code-block': 0.0.5(react@18.3.1)
       '@react-email/code-inline': 0.0.2(react@18.3.1)
       '@react-email/column': 0.0.10(react@18.3.1)
       '@react-email/container': 0.0.12(react@18.3.1)
