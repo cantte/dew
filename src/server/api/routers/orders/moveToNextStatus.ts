@@ -3,6 +3,7 @@ import type { TypeOf } from 'zod'
 import { orderStatus } from '~/constants'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { notifyLowStock } from '~/server/api/routers/inventory/notifyLowStock'
 import upsertOrderSummary from '~/server/api/routers/orders/upsertSummary'
 import upsertProductsSummaries from '~/server/api/routers/products/upsertSummaries'
 import type { byOrderIdInput } from '~/server/api/schemas/orders'
@@ -66,6 +67,8 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       }
 
       await upsertOrderSummary({ tx, input: orderSummary })
+
+      await notifyLowStock({ ctx, input: { storeId: order.storeId } })
     }
   })
 }
