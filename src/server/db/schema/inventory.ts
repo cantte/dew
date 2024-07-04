@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { integer, primaryKey, uuid } from 'drizzle-orm/pg-core'
+import { boolean, integer, primaryKey, uuid } from 'drizzle-orm/pg-core'
 import { createTable } from '~/server/db/schema/base'
 import { products } from '~/server/db/schema/products'
 import { stores } from '~/server/db/schema/stores'
@@ -15,6 +15,7 @@ export const inventory = createTable(
       .references(() => products.id),
     stock: integer('stock').notNull(),
     quantity: integer('quantity').notNull().default(0),
+    lowStockNotificationSended: boolean('low_stock_notification_sended'),
   },
   (inventory) => ({
     compoundKey: primaryKey({
