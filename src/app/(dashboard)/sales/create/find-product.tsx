@@ -1,6 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import { CommandLoading } from 'cmdk'
 import { useEffect, useState } from 'react'
+import { Badge } from '~/components/ui/badge'
 import {
   Command,
   CommandDialog,
@@ -89,7 +90,16 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
                     value={`${product.id}@${product.name}`}
                     onSelect={handleSelect}
                   >
-                    {product.name}
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <span>{product.name}</span>
+                        <Badge variant="outline">{product.code}</Badge>
+                      </div>
+
+                      <span className="text-muted-foreground text-xs">
+                        {product.description}
+                      </span>
+                    </div>
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -106,7 +116,16 @@ const FindProduct = ({ onSelect, suggestions }: Props) => {
                   value={`${product.id}@${product.name}`}
                   onSelect={handleSelect}
                 >
-                  {product.name}
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <span>{product.name}</span>
+                      <Badge variant="outline">{product.code}</Badge>
+                    </div>
+
+                    <span className="text-muted-foreground text-xs">
+                      {product.description}
+                    </span>
+                  </div>
                 </CommandItem>
               ))}
             </CommandGroup>
