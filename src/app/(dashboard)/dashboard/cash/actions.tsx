@@ -99,16 +99,11 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
 
   const isDesktop = useMediaQuery('(min-width: 768px)')
   return (
-    <div className="flex justify-between">
-      <Button size="sm" className="text-sm" onClick={inTransaction}>
+    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+      <Button size="lg" onClick={inTransaction}>
         Realizar ingreso
       </Button>
-      <Button
-        size="sm"
-        className="text-sm"
-        variant="outline"
-        onClick={outTransaction}
-      >
+      <Button variant="secondary" size="lg" onClick={outTransaction}>
         Realizar egreso
       </Button>
 
