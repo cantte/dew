@@ -1,5 +1,5 @@
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { endOfDay, startOfDay } from 'date-fns'
+import { endOfMonth, startOfMonth } from 'date-fns'
 import CashRegisterDetails from '~/app/(dashboard)/dashboard/cash/details'
 import EnableCash from '~/app/(dashboard)/dashboard/cash/enable-cash'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
@@ -57,8 +57,8 @@ const CashRegisterPage = async () => {
   const today = new Date()
   const transactions = await api.cashRegister.transactions.list({
     cashRegisterId: cashRegister.id,
-    from: startOfDay(today),
-    to: endOfDay(today),
+    from: startOfMonth(today),
+    to: endOfMonth(today),
   })
 
   return (
