@@ -11,6 +11,7 @@ export const stores = createTable(
     name: varchar('name', { length: 128 }).notNull(),
     address: text('address'),
     phone: varchar('phone', { length: 32 }),
+    nit: varchar('nit', { length: 10 }),
     createdBy: varchar('created_by', { length: 255 })
       .notNull()
       .references(() => users.id),
