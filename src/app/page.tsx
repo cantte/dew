@@ -1,15 +1,13 @@
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import NextLink from 'next/link'
+import { Suspense } from 'react'
 import Footer from '~/components/footer'
 import FeaturesSection from '~/components/home/features'
-import SignInButton from '~/components/signin-button'
+import { NavButton } from '~/components/home/nav-button'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
-import { getServerAuthSession } from '~/server/auth'
 
-export default async function Home() {
-  const session = await getServerAuthSession()
-
+export default function Home() {
   return (
     <div className="min-h-screen w-full overflow-hidden">
       <div className="flex flex-col">
@@ -20,23 +18,9 @@ export default async function Home() {
           </div>
 
           <nav className="flex items-center gap-3">
-            <ul className="flex gap-2">
-              {session !== null && (
-                <li className="inline-flex items-center justify-center">
-                  <Button size="sm" asChild>
-                    <NextLink href="/dashboard">
-                      Ir al panel de control
-                    </NextLink>
-                  </Button>
-                </li>
-              )}
-
-              {session === null && (
-                <li className="inline-flex items-center justify-center">
-                  <SignInButton />
-                </li>
-              )}
-            </ul>
+            <Suspense fallback={null}>
+              <NavButton />
+            </Suspense>
           </nav>
         </header>
 
