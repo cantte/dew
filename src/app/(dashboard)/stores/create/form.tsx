@@ -4,12 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -92,6 +93,25 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
               <FormControl>
                 <Input disabled={createStore.isPending} {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="nit"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>NIT</FormLabel>
+              <FormControl>
+                <Input disabled={createStore.isPending} {...field} />
+              </FormControl>
+
+              <FormDescription>
+                Digite el NIT sin guiones ni puntos.
+              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
