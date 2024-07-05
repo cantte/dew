@@ -44,6 +44,8 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       createdBy: ctx.session.user.id,
     })
 
+    await notifyOrderStatus({ ctx, input })
+
     if (nextStatus === 'delivered') {
       const items = await tx.query.orderItems.findMany({
         where: eq(orderItems.orderId, input.id),
@@ -70,8 +72,6 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       await upsertOrderSummary({ tx, input: orderSummary })
 
       await notifyLowStock({ ctx, input: { storeId: order.storeId } })
-
-      await notifyOrderStatus({ ctx, input })
     }
   })
 }
