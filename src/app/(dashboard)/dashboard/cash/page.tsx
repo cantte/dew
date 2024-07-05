@@ -36,7 +36,7 @@ const CashRegisterPage = async () => {
 
     return (
       <div className="space-y-4">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+        <h3 className='scroll-m-20 font-semibold text-2xl tracking-tight'>
           Caja registradora
         </h3>
 
@@ -65,12 +65,12 @@ const CashRegisterPage = async () => {
     <div className="flex h-[calc(100vh-7.5rem)] flex-col space-y-4">
       <Card className="border-dashed shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className='font-medium text-sm'>
             Saldo de la caja registradora
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <div className='font-bold text-2xl'>
             {Intl.NumberFormat('es-CO', {
               style: 'currency',
               currency: 'COP',
