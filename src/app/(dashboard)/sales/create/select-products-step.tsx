@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import FindProduct from '~/app/(dashboard)/sales/create/find-product'
 import UpdateSalePriceDialog from '~/app/(dashboard)/sales/create/update-sale-price.dialog'
+import KeyboardCommand from '~/components/keyboard-command'
 import { Button } from '~/components/ui/button'
 import { FormDescription } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
@@ -164,19 +165,13 @@ const SelectProductsStep = ({ onContinue, suggestions }: Props) => {
 
           <FormDescription>
             Escanea el código de barras del producto o ingresa el código de
-            forma manual y presiona enter{' '}
-            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100">
-              <span className="text-xs">&#8629;</span>
-            </kbd>{' '}
+            forma manual y presiona enter <KeyboardCommand command="&#8629;" />{' '}
             para agregar el producto a la lista.
           </FormDescription>
 
           <FormDescription>
             Si deseas buscar un producto por nombre presiona{' '}
-            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100">
-              <span className="text-xs">Ctrl +</span>K
-            </kbd>{' '}
-            para abrir el buscador.
+            <KeyboardCommand command="Ctrl + K" /> para abrir el buscador.
           </FormDescription>
 
           {isFindingProduct && (

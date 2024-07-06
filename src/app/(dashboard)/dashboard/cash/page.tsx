@@ -1,14 +1,16 @@
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { endOfDay, startOfDay } from 'date-fns'
+import { TrendingDown, TrendingUp } from 'lucide-react'
+import { Suspense } from 'react'
+import CashRegisterActions from '~/app/(dashboard)/dashboard/cash/actions'
 import CashRegisterDetails from '~/app/(dashboard)/dashboard/cash/details'
 import EnableCash from '~/app/(dashboard)/dashboard/cash/enable-cash'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
-const CashRegisterPage = async () => {
+export default async function CashRegisterPage() {
   const store = await api.store.findCurrent()
 
   if (!store) {
@@ -36,7 +38,7 @@ const CashRegisterPage = async () => {
 
     return (
       <div className="space-y-4">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+        <h3 className="scroll-m-20 font-semibold text-2xl tracking-tight">
           Caja registradora
         </h3>
 
@@ -54,37 +56,75 @@ const CashRegisterPage = async () => {
     )
   }
 
-  const today = new Date()
-  const transactions = await api.cashRegister.transactions.list({
-    cashRegisterId: cashRegister.id,
-    from: startOfDay(today),
-    to: endOfDay(today),
-  })
-
   return (
     <div className="flex h-[calc(100vh-7.5rem)] flex-col space-y-4">
-      <Card className="border-dashed shadow-none">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Saldo de la caja registradora
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">
-            {Intl.NumberFormat('es-CO', {
-              style: 'currency',
-              currency: 'COP',
-            }).format(+cashRegister.amount)}
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
+        <div className="col-span-2">
+          <div className="flex flex-col space-y-2 rounded border p-4">
+            <p className="font-medium text-muted-foreground text-sm">
+              Saldo actual
+            </p>
+            <h3 className="font-semibold text-2xl leading-none tracking-tight">
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+              }).format(cashRegister.amount)}
+            </h3>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      <CashRegisterDetails
-        transactions={transactions}
-        cashRegisterId={cashRegister.id}
-      />
+        <div className="col-span-1">
+          <div className="flex flex-col space-y-2 rounded border p-4">
+            <div className="flex items-center space-x-1">
+              <span className="rounded-full bg-secondary p-1">
+                <TrendingUp className="h-3 w-3 text-success-text" />
+              </span>
+              <p className="font-medium text-muted-foreground text-sm">
+                Ingresos totales
+              </p>
+            </div>
+            <h3 className="font-semibold text-2xl leading-none tracking-tight">
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+              }).format(cashRegister.inAmount)}
+            </h3>
+          </div>
+        </div>
+
+        <div className="col-span-1">
+          <div className="flex flex-col space-y-2 rounded border p-4">
+            <div className="flex items-center space-x-1">
+              <span className="rounded-full bg-secondary p-1">
+                <TrendingDown className="h-3 w-3 text-destructive" />
+              </span>
+              <p className="font-medium text-muted-foreground text-sm">
+                Egresos totales
+              </p>
+            </div>
+            <h3 className="font-semibold text-2xl leading-none tracking-tight">
+              {Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+              }).format(cashRegister.outAmount)}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <CashRegisterActions cashRegisterId={cashRegister.id} />
+
+      <Suspense fallback={<CashRegisterDetailsFallback />}>
+        <CashRegisterDetails cashRegisterId={cashRegister.id} />
+      </Suspense>
     </div>
   )
 }
 
-export default CashRegisterPage
+const CashRegisterDetailsFallback = () => {
+  return (
+    <div>
+      <Skeleton className="h-8 w-full" />
+    </div>
+  )
+}

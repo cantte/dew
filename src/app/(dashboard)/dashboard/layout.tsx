@@ -8,6 +8,7 @@ import {
 } from '~/app/(dashboard)/dashboard/sidebar.server'
 import AccountNav from '~/components/account-nav'
 import MobileNav from '~/components/mobile-nav'
+import { SentryFeedbackWidget } from '~/components/sentry-feedback-widget'
 import SelectStore from '~/components/stores/select-store'
 import { Badge } from '~/components/ui/badge'
 import { ScrollArea } from '~/components/ui/scroll-area'
@@ -89,6 +90,8 @@ const DashboardLayout = async ({ children }: Props) => {
           {children}
         </main>
       </div>
+
+      <SentryFeedbackWidget />
     </div>
   )
 }

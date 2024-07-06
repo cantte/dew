@@ -14,7 +14,7 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
     <div className="flex grow flex-col space-y-4 overflow-hidden">
       {transactions.length === 0 && (
         <div className="text-center">
-          <p className="text-xl text-muted-foreground">
+          <p className="text-muted-foreground text-xl">
             No hay transacciones para mostrar.
           </p>
         </div>
@@ -23,9 +23,9 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
       <ScrollArea className="grow">
         {transactions.map((transaction) => {
           return (
-            <Card key={transaction.id} className="mb-2 shadow-none">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pb-1 pt-2">
-                <CardTitle className="text-2xl font-bold">
+            <Card key={transaction.id} className="mb-2 rounded shadow-none">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pt-2 pb-1">
+                <CardTitle className="font-bold text-2xl">
                   {Intl.NumberFormat('es-CO', {
                     style: 'currency',
                     currency: 'COP',
@@ -41,14 +41,14 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
                 </Badge>
               </CardHeader>
               <CardContent className="px-6 pb-2">
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   {Intl.DateTimeFormat('es-CO', {
                     dateStyle: 'medium',
                     timeStyle: 'short',
                   }).format(new Date(transaction.createdAt))}
                 </div>
 
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   <Badge variant="secondary" className="mt-2">
                     {transaction.user.name}
                   </Badge>
