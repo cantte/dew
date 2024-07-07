@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import CreateProductForm from '~/app/(dashboard)/products/create/form'
+import CreateProductForm from '~/app/(dashboard)/dashboard/products/create/form'
 import BackButton from '~/components/back-button'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
@@ -30,16 +30,16 @@ const CreateProductPage = async () => {
   const stores = await api.store.list()
 
   return (
-    <div className="w-full max-w-7xl">
-      <div className="mb-4 mt-4 md:mt-0">
+    <div className='flex w-full flex-col items-center'>
+      <div className='space-y-4'>
         <BackButton />
+
+        <section className="flex flex-col gap-4">
+          <h1 className='font-bold text-xl'>Crear producto</h1>
+
+          <CreateProductForm storeId={store.id} stores={stores} />
+        </section>
       </div>
-
-      <section className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">Crear producto</h1>
-
-        <CreateProductForm storeId={store.id} stores={stores} />
-      </section>
     </div>
   )
 }
