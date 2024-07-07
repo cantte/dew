@@ -151,7 +151,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
                 <div className="mt-1.5 flex flex-row items-center justify-between">
                   {selectedStores.length > 0 && (
                     <div>
-                      <span className='text-muted-foreground text-xs'>
+                      <span className="text-muted-foreground text-xs">
                         Tiendas seleccionadas
                       </span>
                       <ul className="mt-1 flex flex-row space-x-2">

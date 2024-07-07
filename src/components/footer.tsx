@@ -3,10 +3,10 @@ import Link from 'next/link'
 const Footer = () => {
   return (
     <footer className="flex h-[80px] flex-col items-center justify-center text-center">
-      <span className='inline-flex items-center gap-2 font-normal text-muted-foreground text-sm'>
+      <span className="inline-flex items-center gap-2 font-normal text-muted-foreground text-sm">
         {new Date().getFullYear()} © dew
       </span>
-      <span className='inline-flex items-center gap-2 font-normal text-muted-foreground text-sm'>
+      <span className="inline-flex items-center gap-2 font-normal text-muted-foreground text-sm">
         Creado con <span className="text-red-500">❤</span> por
         <Link
           href="https://github.com/cantte"

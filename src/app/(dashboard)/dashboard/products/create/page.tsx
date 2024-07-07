@@ -30,12 +30,12 @@ const CreateProductPage = async () => {
   const stores = await api.store.list()
 
   return (
-    <div className='flex w-full flex-col items-center'>
-      <div className='space-y-4'>
+    <div className="flex w-full flex-col items-center">
+      <div className='w-full max-w-xl space-y-4'>
         <BackButton />
 
         <section className="flex flex-col gap-4">
-          <h1 className='font-bold text-xl'>Crear producto</h1>
+          <h1 className="font-bold text-xl">Crear producto</h1>
 
           <CreateProductForm storeId={store.id} stores={stores} />
         </section>

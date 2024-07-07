@@ -47,16 +47,16 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
   return (
     <Card className="shadow-none">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className='font-normal text-sm'>{title}</CardTitle>
+        <CardTitle className="font-normal text-sm">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className='font-bold text-2xl'>
+        <div className="font-bold text-2xl">
           {Intl.NumberFormat('es-CO', {
             style: 'currency',
             currency: 'COP',
           }).format(value)}
         </div>
-        <p className='text-muted-foreground text-xs'>
+        <p className="text-muted-foreground text-xs">
           {valueImprovement > 0 ? '+' : ''}
           {Intl.NumberFormat('es-CO', {
             style: 'percent',
