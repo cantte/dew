@@ -48,7 +48,7 @@ const BadgeIndicators = ({ indicators, info }: Props) => {
             <Info className="h-4 w-4" />
           </PopoverTrigger>
           <PopoverContent>
-            <span className="text-sm text-muted-foreground">{info}</span>
+            <span className='text-muted-foreground text-sm'>{info}</span>
           </PopoverContent>
         </Popover>
       )}
