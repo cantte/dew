@@ -255,17 +255,13 @@ const FeaturesSection = () => {
               <span className="rounded-full bg-primary/10 p-1">
                 <Check className="h-3 w-3 text-primary" />
               </span>
-              <span>
-                Identifica patrones y oportunidades de crecimiento.
-              </span>
+              <span>Identifica patrones y oportunidades de crecimiento.</span>
             </li>
             <li className="flex items-center space-x-2">
               <span className="rounded-full bg-primary/10 p-1">
                 <Check className="h-3 w-3 text-primary" />
               </span>
-              <span>
-                Optimiza tu stock basándote en datos reales.
-              </span>
+              <span>Optimiza tu stock basándote en datos reales.</span>
             </li>
             <li className="flex items-center space-x-2">
               <span className="rounded-full bg-primary/10 p-1">
