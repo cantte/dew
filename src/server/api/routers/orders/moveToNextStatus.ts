@@ -54,7 +54,7 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
         productId: item.productId,
         sales: item.quantity,
         amount: item.quantity * item.salePrice,
-        profit: item.profit,
+        profit: item.profit * item.quantity,
       }))
 
       await upsertProductsSummaries({ tx, input: deliveredProductSummaries })
@@ -62,7 +62,10 @@ const moveOrderToNextStatus = async ({ ctx, input }: Options) => {
       const orderSummary = {
         date: new Date(),
         amount: order.amount,
-        profit: items.reduce((acc, item) => acc + item.profit, 0),
+        profit: items.reduce(
+          (acc, item) => acc + item.profit * item.quantity,
+          0,
+        ),
         products: items.reduce((acc, item) => acc + item.quantity, 0),
         storeId: order.storeId,
       }
