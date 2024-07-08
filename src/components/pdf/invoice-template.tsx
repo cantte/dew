@@ -147,7 +147,8 @@ export const InvoicePDFTemplate = ({
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.info}>TOTAL:{' '}
+          <Text style={styles.info}>
+            TOTAL:{' '}
             {new Intl.NumberFormat('es-CO', {
               style: 'currency',
               currency: 'COP',
