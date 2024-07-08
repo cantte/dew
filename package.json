@@ -1,6 +1,6 @@
 {
   "name": "dew",
-  "version": "0.1.6-beta",
+  "version": "0.2.0-beta",
   "private": true,
   "type": "module",
   "scripts": {
