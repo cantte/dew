@@ -1,11 +1,15 @@
+import { renderToBuffer } from '@react-pdf/renderer'
 import { and, eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
+import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
 import NewSale from '~/emails/new-sale'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import findCustomer from '~/server/api/routers/customers/find'
 import { notifyLowStock } from '~/server/api/routers/inventory/notifyLowStock'
 import upsertProductsSummaries from '~/server/api/routers/products/upsertSummaries'
 import upsertSaleSummary from '~/server/api/routers/sales/upsertSummary'
+import findStore from '~/server/api/routers/stores/find'
 import type { createSaleInput } from '~/server/api/schemas/sales'
 import {
   customers,
@@ -105,32 +109,51 @@ const createSale = async ({ ctx, input }: Options) => {
     await upsertSaleSummary({ tx, input: saleSummary })
 
     // Send email to customer
-    const [customer] = await tx
-      .select({
-        email: customers.email,
-        name: customers.name,
-      })
-      .from(customers)
-      .where(eq(customers.id, input.customerId))
+    const customer = await findCustomer({
+      ctx,
+      input: { id: input.customerId },
+    })
 
-    if (customer === undefined) {
+    if (!customer) {
       return
     }
 
-    if (customer.email === null) {
+    if (!customer.email) {
       return
     }
 
-    const [store] = await tx
-      .select({
-        name: stores.name,
-      })
-      .from(stores)
-      .where(eq(stores.id, input.storeId))
+    const store = await findStore({ ctx, input: { id: input.storeId } })
 
-    if (store === undefined) {
+    if (!store) {
       return
     }
+
+    const today = new Date()
+    const fileStream = await renderToBuffer(
+      InvoicePDFTemplate({
+        id: code,
+        date: Intl.DateTimeFormat('es-CO', {
+          dateStyle: 'full',
+          timeStyle: 'short',
+        }).format(today),
+        customer: {
+          id: customer.id,
+          name: customer.name,
+          phone: customer.phone ?? undefined,
+        },
+        store: {
+          name: store.name,
+          nit: store.nit ?? 'No presenta',
+        },
+        products: input.items.map((item) => ({
+          id: item.productId,
+          name: item.productId, // TODO: Load product name from product
+          quantity: item.quantity,
+          price: item.salePrice,
+        })),
+        total: input.amount,
+      }),
+    )
 
     await resend.emails.send({
       from: process.env.RESEND_EMAIL!,
@@ -140,12 +163,18 @@ const createSale = async ({ ctx, input }: Options) => {
         name: customer.name,
         total: input.amount,
         products: input.items.reduce((acc, item) => item.quantity + acc, 0),
-        date: new Date(),
+        date: today,
         url: process.env.VERCEL_URL
           ? `https://${process.env.VERCEL_URL}/sales/c/${code}`
           : `http://localhost:3000/sales/c/${code}`,
         store: store.name,
       }),
+      attachments: [
+        {
+          filename: `factura-${code}.pdf`,
+          content: fileStream,
+        },
+      ],
     })
   })
 

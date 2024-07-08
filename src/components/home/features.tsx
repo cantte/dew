@@ -1,4 +1,5 @@
 import {
+  Check,
   Coins,
   LineChart,
   ShoppingBasket,
@@ -6,170 +7,273 @@ import {
   Store,
   UserRound,
 } from 'lucide-react'
-import React from 'react'
-import MotionOnView from '~/components/motion-on-view'
+import { Badge } from '~/components/ui/badge'
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="flex max-w-7xl flex-col space-y-8">
-      <MotionOnView>
-        <h2 className="text-center text-5xl font-semibold">
-          Características destacadas
+    <section id="features" className="flex max-w-7xl flex-col space-y-16">
+      <div className="flex w-full flex-col items-center space-y-4">
+        <Badge
+          className="bg-primary/10 text-primary-text hover:bg-primary/10"
+          aria-label="Características"
+        >
+          Características
+        </Badge>
+
+        <h2 className="text-center font-medium text-4xl">
+          Mira lo que puedes hacer con dew
         </h2>
-      </MotionOnView>
 
-      <MotionOnView>
-        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
-          <span className="rounded-full bg-primary p-3">
-            <Store className="h-8 w-8 text-primary-foreground" />
-          </span>
+        <p className="text-base text-muted-foreground leading-7">
+          Explora las características clave de dew y descubre cómo nuestra
+          plataforma puede ayudarte a llevar un control eficiente de tus ventas
+          y operaciones comerciales. Desde la gestión de tiendas y productos
+          hasta el seguimiento de ventas y la generación de reportes, dew te
+          ofrece una solución completa y fácil de usar para optimizar tu
+          negocio.
+        </p>
+      </div>
 
-          <div className="flex flex-col space-y-2">
-            <h4 className="text-3xl">
-              Visualiza tus <span className="text-primary-text">tiendas</span>{' '}
-              de forma intuitiva
-            </h4>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex w-full items-center space-x-4">
+            <span className="rounded-full bg-primary/10 p-3">
+              <Store className="h-4 w-4 text-primary" />
+            </span>
 
-            <p className="text-base leading-7 text-muted-foreground">
-              Explora y gestiona todas tus tiendas con una interfaz intuitiva y
-              fácil de usar. Mantén un control completo y eficiente de tus
-              múltiples ubicaciones desde una sola plataforma centralizada.
-              Optimiza la gestión de inventario, supervisa las ventas y analiza
-              el desempeño de cada tienda con total comodidad y claridad.
+            <p className="font-display font-semibold text-lg leading-6">
+              Gestión intuitiva de tus{' '}
+              <span className="text-primary-text">tiendas</span>
             </p>
           </div>
-        </div>
-      </MotionOnView>
 
-      <MotionOnView>
-        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
-          <span className="rounded-full bg-primary p-3">
-            <ShoppingBasket className="h-8 w-8 text-primary-foreground" />
+          <span className="text-muted-foreground text-sm leading-6">
+            Optimiza tu negocio con nuestra potente solución de gestión
+            multi-tienda. Controla inventario, ventas y rendimiento desde una
+            única plataforma intuitiva.
           </span>
 
-          <div className="flex flex-col space-y-2">
-            <h4 className="text-3xl">
-              Gestiona tu inventario de{' '}
-              <span className="text-primary-text">productos</span> con precisión
-            </h4>
+          <ul className="w-full space-y-2 text-muted-foreground text-sm">
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Registro y seguimiento de productos en todas tus tiendas.
+              </span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Control de empleados y asignación de roles y permisos.
+              </span>
+            </li>
+          </ul>
+        </div>
 
-            <p className="text-base leading-7 text-muted-foreground">
-              Obtén un control detallado y preciso de todos tus productos y su
-              inventario con nuestra potente herramienta de administración.
-              Desde la creación hasta la actualización y seguimiento, mantén tus
-              productos organizados y fácilmente accesibles. Optimiza tus
-              operaciones comerciales al monitorear el inventario en tiempo
-              real, recibir notificaciones de agotamiento y realizar ajustes
-              estratégicos para maximizar la eficiencia y la rentabilidad.
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex w-full items-center space-x-4">
+            <span className="rounded-full bg-primary/10 p-3">
+              <ShoppingBasket className="h-4 w-4 text-primary" />
+            </span>
+
+            <p className="font-display font-semibold text-lg leading-6">
+              Gestión de <span className="text-primary-text">inventario</span>{' '}
+              inteligente
             </p>
           </div>
-        </div>
-      </MotionOnView>
 
-      <MotionOnView>
-        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
-          <span className="rounded-full bg-primary p-3">
-            <ShoppingCart className="h-8 w-8 text-primary-foreground" />
+          <span className="text-muted-foreground text-sm leading-6">
+            Revoluciona tu negocio con nuestra plataforma de gestión de
+            inventario multi-tienda. Centraliza el control, maximiza las ventas
+            y minimiza los costos con estas características clave:
           </span>
 
-          <div className="flex flex-col space-y-2">
-            <h4 className="text-3xl">
-              Potencia tus <span className="text-primary-text">ventas</span> con
-              un seguimiento inteligente
-            </h4>
+          <ul className="w-full space-y-2 text-muted-foreground text-sm">
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Seguimiento en tiempo real del stock de productos en todas tus
+                tiendas.
+              </span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Alertas automáticas de productos con bajo stock o vencidos.
+              </span>
+            </li>
+          </ul>
+        </div>
 
-            <p className="text-base leading-7 text-muted-foreground">
-              Optimiza tus estrategias de venta con nuestro completo sistema de
-              seguimiento de ventas. Desde el punto de venta hasta el análisis
-              de datos, mantén un control preciso de cada transacción. Conoce en
-              tiempo real el rendimiento de tus ventas, identifica tendencias y
-              ajusta tu enfoque para maximizar tus ingresos. Con herramientas
-              analíticas avanzadas, toma decisiones informadas y aumenta la
-              rentabilidad de tu negocio de manera significativa.
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex w-full items-center space-x-4">
+            <span className="rounded-full bg-primary/10 p-3">
+              <ShoppingCart className="h-4 w-4 text-primary" />
+            </span>
+
+            <p className="font-display font-semibold text-lg leading-6">
+              Impulsa tus <span className="text-primary-text">ventas</span> con
+              seguimiento y análisis avanzado
             </p>
           </div>
-        </div>
-      </MotionOnView>
 
-      <MotionOnView>
-        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
-          <span className="rounded-full bg-primary p-3">
-            <UserRound className="h-8 w-8 text-primary-foreground" />
+          <span className="text-muted-foreground text-sm leading-6">
+            Maximiza tus ingresos con nuestro sistema inteligente de seguimiento
+            de ventas. Desde el punto de venta hasta el análisis predictivo,
+            obtén el control total de tu negocio.
           </span>
 
-          <div className="flex flex-col space-y-2">
-            <h4 className="text-3xl">
-              Registra a tus <span className="text-primary-text">clientes</span>{' '}
-              una vez
-            </h4>
+          <ul className="w-full space-y-2 text-muted-foreground text-sm">
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>Visualiza el rendimiento de ventas al instante.</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>Toma decisiones basadas en datos precisos.</span>
+            </li>
+          </ul>
+        </div>
 
-            <p className="text-base leading-7 text-muted-foreground">
-              Centraliza el registro de clientes con nuestra función de registro
-              global. Olvídate de los registros duplicados y el trabajo manual
-              repetitivo. Con nuestro sistema, los clientes se registran una vez
-              y su información está disponible globalmente. Esto te permite
-              acceder a perfiles completos en cualquier punto de contacto, desde
-              la primera interacción hasta el seguimiento posterior a la venta.
-              Simplifica la gestión de clientes y ofrece un servicio
-              personalizado y coherente en todo momento.
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex w-full items-center space-x-4">
+            <span className="rounded-full bg-primary/10 p-3">
+              <UserRound className="h-4 w-4 text-primary" />
+            </span>
+
+            <p className="font-display font-semibold text-lg leading-6">
+              Registro único de{' '}
+              <span className="text-primary-text">clientes</span>
             </p>
           </div>
-        </div>
-      </MotionOnView>
 
-      <MotionOnView>
-        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
-          <span className="rounded-full bg-primary p-3">
-            <Coins className="h-8 w-8 text-primary-foreground" />
+          <span className="text-muted-foreground text-sm leading-6">
+            Optimiza la gestión de clientes con nuestro innovador sistema de
+            registro global. Elimina duplicados, ahorra tiempo y ofrece una
+            experiencia personalizada en cada interacción.
           </span>
 
-          <div className="flex flex-col space-y-2">
-            <h4 className="text-3xl">
-              Gestiona tus transacciones con nuestra{' '}
-              <span className="text-primary-text">caja registradora</span>
-            </h4>
+          <ul className="w-full space-y-2 text-muted-foreground text-sm">
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Los clientes se registran una sola vez para todas tus
+                plataformas.
+              </span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Reduce el trabajo manual y minimiza errores en la gestión de
+                datos.
+              </span>
+            </li>
+          </ul>
+        </div>
 
-            <p className="text-base leading-7 text-muted-foreground">
-              Optimiza el flujo de efectivo de tu negocio con nuestra completa
-              caja registradora digital. Registra de manera eficiente cada
-              transacción, desde las ventas hasta los gastos, con total
-              precisión y seguridad. Nuestra caja registradora te permite llevar
-              un control detallado de tus ingresos y egresos, simplificando la
-              contabilidad y brindándote una visión clara de la salud financiera
-              de tu negocio. Con funciones avanzadas de informes y análisis,
-              toma decisiones informadas para impulsar el crecimiento y la
-              rentabilidad de tu empresa.
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex w-full items-center space-x-4">
+            <span className="rounded-full bg-primary/10 p-3">
+              <Coins className="h-4 w-4 text-primary" />
+            </span>
+
+            <p className="font-display font-semibold text-lg leading-6">
+              Caja <span className="text-primary-text">caja registradora</span>{' '}
+              digital: control total de tus finanzas
             </p>
           </div>
-        </div>
-      </MotionOnView>
 
-      <MotionOnView>
-        <div className="flex flex-col items-center justify-center space-y-2 md:flex-row md:space-x-6 md:space-y-0">
-          <span className="rounded-full bg-primary p-3">
-            <LineChart className="h-8 w-8 text-primary-foreground" />
+          <span className="text-muted-foreground text-sm leading-6">
+            Optimiza el flujo de efectivo y simplifica la contabilidad con
+            nuestra avanzada caja registradora digital. Gestiona cada
+            transacción con precisión y obtén insights valiosos para impulsar tu
+            negocio.
           </span>
 
-          <div className="flex flex-col space-y-2">
-            <h4 className="text-3xl">
-              Análisis profundo con nuestros{' '}
-              <span className="text-primary-text">reportes</span>
-            </h4>
+          <ul className="w-full space-y-2 text-muted-foreground text-sm">
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Documenta ventas y gastos con total exactitud y seguridad.
+              </span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>Monitorea ingresos y egresos en tiempo real.</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Facilita la gestión financiera y ahorra tiempo en tareas
+                administrativas.
+              </span>
+            </li>
+          </ul>
+        </div>
 
-            <p className="text-base leading-7 text-muted-foreground">
-              Desbloquea información valiosa sobre el rendimiento de tu negocio
-              con nuestros reportes personalizados. Más allá de simplemente
-              generar datos, nuestra herramienta de análisis te ofrece una
-              visión profunda de tus ventas y productos. Obtén insights
-              detallados sobre tendencias de ventas, comportamiento del cliente
-              y desempeño del inventario para tomar decisiones estratégicas
-              informadas. Con reportes intuitivos y fáciles de entender,
-              aprovecha al máximo tu información para impulsar el crecimiento y
-              la rentabilidad de tu empresa.
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex w-full items-center space-x-4">
+            <span className="rounded-full bg-primary/10 p-3">
+              <LineChart className="h-4 w-4 text-primary" />
+            </span>
+
+            <p className="font-display font-semibold text-lg leading-6">
+              <span className="text-primary-text">Reportes</span>{' '}
+              personalizados: insights poderosos para tu negocio
             </p>
           </div>
+
+          <span className="text-muted-foreground text-sm leading-6">
+            Transforma datos en decisiones estratégicas con nuestros análisis
+            avanzados. Descubre tendencias ocultas, comprende a tus clientes y
+            optimiza tu inventario para impulsar el crecimiento.
+          </span>
+
+          <ul className="w-full space-y-2 text-muted-foreground text-sm">
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>Identifica patrones y oportunidades de crecimiento.</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>Optimiza tu stock basándote en datos reales.</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="rounded-full bg-primary/10 p-1">
+                <Check className="h-3 w-3 text-primary" />
+              </span>
+              <span>
+                Visualiza información compleja de forma clara y accionable.
+              </span>
+            </li>
+          </ul>
         </div>
-      </MotionOnView>
+      </div>
     </section>
   )
 }
