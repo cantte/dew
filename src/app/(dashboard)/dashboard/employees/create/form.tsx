@@ -48,6 +48,8 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
   const createEmployee = api.employee.create.useMutation()
   const { toast } = useToast()
   const route = useRouter()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createEmployee.isSuccess) {
       toast({
@@ -56,7 +58,6 @@ const CreateEmployeeForm = ({ storeId }: Props) => {
       })
       route.push('/dashboard/employees')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createEmployee.isSuccess])
 
   const onSubmit = (data: FormValues) => {

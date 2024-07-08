@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import CreateEmployeeForm from '~/app/(dashboard)/employees/create/form'
+import CreateEmployeeForm from '~/app/(dashboard)/dashboard/employees/create/form'
 import BackButton from '~/components/back-button'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
@@ -28,16 +28,16 @@ const CreateEmployeePage = async () => {
   }
 
   return (
-    <div className="w-full max-w-7xl">
-      <div className="mb-4 mt-4 md:mt-0">
+    <div className="flex w-full flex-col items-center">
+      <div className="w-full max-w-xl space-y-4">
         <BackButton />
+
+        <section className="flex flex-col gap-4">
+          <h1 className="font-bold text-xl">Crear empleado</h1>
+
+          <CreateEmployeeForm storeId={store.id} />
+        </section>
       </div>
-
-      <section className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">Crear empleado</h1>
-
-        <CreateEmployeeForm storeId={store.id} />
-      </section>
     </div>
   )
 }

@@ -37,7 +37,7 @@ const EmployeesPage = async () => {
 
         {canCreateEmployee && (
           <Button asChild size="sm" className="h-7 gap-1">
-            <Link href="/employees/create">
+            <Link href="/dashboard/employees/create">
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Crear empleado

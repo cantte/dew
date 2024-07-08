@@ -13,7 +13,7 @@ const DefaultLayout = ({ children }: Props) => {
       <div className="flex min-h-screen flex-col">
         <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
           <Link className="flex items-center gap-3" href="/">
-            <span className="text-lg font-semibold">dew</span>
+            <span className="font-semibold text-lg">dew</span>
             <Badge>beta</Badge>
           </Link>
 

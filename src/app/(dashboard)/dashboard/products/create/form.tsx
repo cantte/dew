@@ -54,18 +54,19 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
   const setSelectedStores = (value: Array<string>) =>
     form.setValue('stores', value)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (!currentStore) {
       return
     }
 
     setSelectedStores([currentStore.id])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStore])
 
   const createProduct = api.product.create.useMutation()
 
   const { toast } = useToast()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createProduct.isSuccess) {
       toast({
@@ -77,7 +78,6 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
         stores: [storeId],
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createProduct.isSuccess])
 
   const onSubmit = (data: FormValues) => {
@@ -92,6 +92,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
     },
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (error) {
       if (error.message.includes('undefined')) {
@@ -150,7 +151,7 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
                 <div className="mt-1.5 flex flex-row items-center justify-between">
                   {selectedStores.length > 0 && (
                     <div>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-muted-foreground text-xs">
                         Tiendas seleccionadas
                       </span>
                       <ul className="mt-1 flex flex-row space-x-2">
@@ -201,8 +202,6 @@ const CreateProductForm = ({ storeId, stores }: Props) => {
         />
 
         <div>
-          <span className="text-gray-500">Precios</span>
-
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField
               control={form.control}

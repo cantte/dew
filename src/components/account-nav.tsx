@@ -36,10 +36,10 @@ const AccountNav = ({ user }: Props) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel className="flex flex-col space-y-1">
           <span>Mi cuenta</span>
-          <span className="text-xs font-light text-muted-foreground">
+          <span className="font-light text-muted-foreground text-xs">
             {user.name}
           </span>
-          <span className="text-xs font-light text-muted-foreground">
+          <span className="font-light text-muted-foreground text-xs">
             {user.email}
           </span>
         </DropdownMenuLabel>
