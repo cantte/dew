@@ -31,7 +31,7 @@ const CreateProductPage = async () => {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <div className='w-full max-w-xl space-y-4'>
+      <div className="w-full max-w-xl space-y-4">
         <BackButton />
 
         <section className="flex flex-col gap-4">
