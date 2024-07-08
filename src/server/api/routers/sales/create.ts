@@ -94,7 +94,10 @@ const createSale = async ({ ctx, input }: Options) => {
     const saleSummary = {
       date: new Date(),
       amount: input.amount,
-      profit: input.items.reduce((acc, item) => (item.profit * item.quantity) + acc, 0),
+      profit: input.items.reduce(
+        (acc, item) => item.profit * item.quantity + acc,
+        0,
+      ),
       products: input.items.reduce((acc, item) => item.quantity + acc, 0),
       storeId: input.storeId,
     }
