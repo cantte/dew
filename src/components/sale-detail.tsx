@@ -28,7 +28,7 @@ type Props = {
   sale: NonNullable<RouterOutputs['sale']['find']>
 }
 
-const SaleDetail = ({ sale }: Props) => {
+export const SaleDetail = ({ sale }: Props) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   const templateProps = useMemo(
     () => ({
@@ -215,5 +215,3 @@ const SaleDetail = ({ sale }: Props) => {
     </div>
   )
 }
-
-export default SaleDetail

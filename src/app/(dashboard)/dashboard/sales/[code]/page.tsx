@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import BackButton from '~/components/back-button'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
-import SaleDetail from '~/components/sale-detail'
+import { SaleDetail } from '~/components/sale-detail'
 import { api } from '~/trpc/server'
 
 type Props = {

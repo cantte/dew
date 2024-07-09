@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import SaleDetail from '~/components/sale-detail'
+import { SaleDetail } from '~/components/sale-detail'
 import { api } from '~/trpc/server'
 
 type Props = {
