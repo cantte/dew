@@ -4,18 +4,14 @@ import { Separator } from '~/components/ui/separator'
 import { paymentMethods } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
 import { Badge } from '~/components/ui/badge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '~/components/ui/tooltip'
 import { Button } from '~/components/ui/button'
 import { Printer } from 'lucide-react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
 import { useMemo } from 'react'
 import { SaleOrderItems } from '~/components/sale-order-items'
+import { formatToCurrency, formatToDateWithTime, formatToNumber } from '~/text/format'
+import { Tooltip } from '~/components/tooltip'
 
 type Props = {
   sale: NonNullable<RouterOutputs['sale']['find']>
@@ -26,13 +22,7 @@ export const SaleDetail = ({ sale }: Props) => {
   const templateProps = useMemo(
     () => ({
       id: sale.code,
-      date: Intl.DateTimeFormat('es-CO', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-      }).format(new Date(sale.createdAt)),
+      date: formatToDateWithTime('es-CO', new Date(sale.createdAt)),
       customer: {
         name: sale.customer?.name ?? 'Mostrador',
         id: sale.customer?.id ?? 'No encontrado',
@@ -56,22 +46,11 @@ export const SaleDetail = ({ sale }: Props) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Badge variant="outline">
-                {Intl.DateTimeFormat('es-CO', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                }).format(new Date(sale.createdAt))}
-              </Badge>
-            </TooltipTrigger>
-            <TooltipContent>Fecha de creación de la venta</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip title='Fecha de creación de la venta'>
+          <Badge variant="outline">
+            {formatToDateWithTime('es-CO', new Date(sale.createdAt))}
+          </Badge>
+        </Tooltip>
 
         <PDFDownloadLink document={<InvoicePDFTemplate {...templateProps} />}>
           <Button variant="outline" size="sm" className="h-7 gap-1">
@@ -98,21 +77,13 @@ export const SaleDetail = ({ sale }: Props) => {
                       Productos vendidos
                     </span>
                     <span>
-                      {Intl.NumberFormat('es-CO').format(
-                        sale.saleItems.reduce(
-                          (acc, item) => acc + item.quantity,
-                          0,
-                        ),
-                      )}
+                      {formatToNumber('es-CO', sale.saleItems.length)}
                     </span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Total</span>
                     <span>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(sale.amount)}
+                      {formatToCurrency('es-CO', sale.amount)}
                     </span>
                   </li>
                 </ul>
@@ -141,28 +112,19 @@ export const SaleDetail = ({ sale }: Props) => {
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Total a pagar</span>
                     <span>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(sale.amount)}
+                      {formatToCurrency('es-CO', sale.amount)}
                     </span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Pago recibido</span>
                     <span>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(sale.payment)}
+                      {formatToCurrency('es-CO', sale.payment)}
                     </span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Cambio</span>
                     <span>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(sale.payment - sale.amount)}
+                      {formatToCurrency('es-CO', sale.payment - sale.amount)}
                     </span>
                   </li>
                 </ul>
