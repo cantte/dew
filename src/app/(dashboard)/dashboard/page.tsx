@@ -17,14 +17,14 @@ const DashboardPage = async () => {
   }
 
   return (
-    <main className="space-y-4">
+    <main className="grid gap-4">
       <Tabs defaultValue="sales">
         <TabsList>
           <TabsTrigger value="sales">Resumen de ventas</TabsTrigger>
           <TabsTrigger value="orders">Resumen de ordenes</TabsTrigger>
         </TabsList>
         <TabsContent value="sales">
-          <div className="space-y-4">
+          <div className="grid gap-4">
             <Suspense
               fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
             >
@@ -40,7 +40,7 @@ const DashboardPage = async () => {
         </TabsContent>
 
         <TabsContent value="orders">
-          <div className="space-y-4">
+          <div className="grid gap-4">
             <Suspense
               fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
             >

@@ -28,7 +28,7 @@ const OrdersPage = async () => {
   })
 
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Suspense fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}>
           <OrdersOverview />

@@ -26,12 +26,12 @@ type Props = {
 
 const BadgeIndicators = ({ indicators, info }: Props) => {
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-wrap gap-2">
       {indicators.map((indicator) => (
         <TooltipProvider key={`${indicator.title}-${indicator.value}`}>
           <Tooltip>
             <TooltipTrigger>
-              <Badge variant="secondary">
+              <Badge variant="secondary" className="col-span-1">
                 {indicator.title}: {indicator.value}
               </Badge>
             </TooltipTrigger>

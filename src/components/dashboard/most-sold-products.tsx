@@ -12,7 +12,7 @@ const MostSoldProducts = async () => {
   const mostSoldProducts = await api.product.mostSold()
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="grid grid-cols-1 gap-2">
       <span className="font-semibold tracking-tight">
         Productos más vendidos
       </span>

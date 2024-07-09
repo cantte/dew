@@ -21,7 +21,7 @@ const LowStockProducts = async () => {
   return (
     <>
       {lowStockProducts.length > 0 && (
-        <div className="flex flex-col space-y-2">
+        <div className="grid grid-cols-1 gap-2">
           <span className="font-semibold tracking-tight">
             Productos bajos en stock
           </span>

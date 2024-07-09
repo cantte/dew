@@ -31,7 +31,7 @@ const EmployeesPage = async () => {
   })
 
   return (
-    <div className="space-y-2">
+    <div className="grid gap-2">
       <div className="flex justify-between">
         <span></span>
 
