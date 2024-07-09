@@ -1,15 +1,15 @@
-export const toCurrency = (locale: string, value: number) => {
+export const formatToCurrency = (locale: string, value: number) => {
   return Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'COP',
   }).format(value)
 }
 
-export const toNumber = (locale: string, value: number) => {
+export const formatToNumber = (locale: string, value: number) => {
   return Intl.NumberFormat(locale).format(value)
 }
 
-export const toFullDate = (locale: string, date: Date) => {
+export const formatToDateWithTime = (locale: string, date: Date) => {
   return Intl.DateTimeFormat(locale, {
     day: 'numeric',
     month: 'short',
@@ -19,7 +19,7 @@ export const toFullDate = (locale: string, date: Date) => {
   }).format(date)
 }
 
-export const toShortDate = (locale: string, date: Date) => {
+export const formatToDateShort = (locale: string, date: Date) => {
   return Intl.DateTimeFormat(locale, {
     day: 'numeric',
     month: 'short',
