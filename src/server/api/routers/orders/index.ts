@@ -1,4 +1,5 @@
 import authedProcedure from '~/server/api/procedures/authed'
+import publicProcedure from '~/server/api/procedures/public'
 import cancelOrder from '~/server/api/routers/orders/cancel'
 import createOrder from '~/server/api/routers/orders/create'
 import findOrder from '~/server/api/routers/orders/find'
@@ -37,6 +38,11 @@ const ordersRouter = router({
   find: authedProcedure.input(byOrderIdInput).query(async ({ ctx, input }) => {
     return await findOrder({ ctx, input })
   }),
+  findPublic: publicProcedure
+    .input(byOrderIdInput)
+    .query(async ({ ctx, input }) => {
+      return await findOrder({ ctx, input })
+    }),
   history: authedProcedure
     .input(byOrderIdInput)
     .query(async ({ ctx, input }) => {
