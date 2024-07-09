@@ -5,16 +5,9 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import ConfirmDialog from '~/components/confirm-dialog'
 import OrderHistoryDialog from '~/components/orders/history.dialog'
+import { SaleOrderItems } from '~/components/sale-order-items'
 import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '~/components/ui/table'
 import { orderStatus, paymentMethods } from '~/constants'
 import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
@@ -36,13 +29,14 @@ const OrderDetail = ({ order }: Props) => {
 
   const utils = api.useUtils()
   const router = useRouter()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no needed
   useEffect(() => {
     if (moveToNextStatus.isSuccess) {
       void utils.order.list.invalidate()
       setIsOpenConfirmDialog(false)
       router.refresh()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moveToNextStatus.isSuccess])
 
   const currentStatus = order.status
@@ -62,42 +56,8 @@ const OrderDetail = ({ order }: Props) => {
 
       <div className="flex min-h-[calc(100vh-20rem)] w-full flex-col space-y-4">
         <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="rounded border p-4 md:col-span-2">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Producto</TableHead>
-                  <TableHead>Cantidad</TableHead>
-                  <TableHead>Precio de venta</TableHead>
-                  <TableHead>Total</TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {order.orderItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      {item.product?.name ?? 'No encontrado'}
-                    </TableCell>
-                    <TableCell>
-                      {Intl.NumberFormat('es-CO').format(item.quantity)}
-                    </TableCell>
-                    <TableCell>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(item.salePrice)}
-                    </TableCell>
-                    <TableCell>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(item.quantity * item.salePrice)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <div className="md:col-span-2">
+            <SaleOrderItems items={order.orderItems} />
           </div>
 
           <div className="flex flex-col justify-between gap-4 rounded border p-4">

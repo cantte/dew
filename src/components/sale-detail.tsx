@@ -1,14 +1,6 @@
 'use client'
 
 import { Separator } from '~/components/ui/separator'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '~/components/ui/table'
 import { paymentMethods } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
 import { Badge } from '~/components/ui/badge'
@@ -23,6 +15,7 @@ import { Printer } from 'lucide-react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
 import { useMemo } from 'react'
+import { SaleOrderItems } from '~/components/sale-order-items'
 
 type Props = {
   sale: NonNullable<RouterOutputs['sale']['find']>
@@ -91,42 +84,8 @@ export const SaleDetail = ({ sale }: Props) => {
       </div>
       <div className="flex min-h-[calc(100vh-20rem)] w-full flex-col space-y-4">
         <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="rounded border p-4 md:col-span-2">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Producto</TableHead>
-                  <TableHead>Cantidad</TableHead>
-                  <TableHead>Precio de venta</TableHead>
-                  <TableHead>Total</TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {sale.saleItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      {item.product?.name ?? 'No encontrado'}
-                    </TableCell>
-                    <TableCell>
-                      {Intl.NumberFormat('es-CO').format(item.quantity)}
-                    </TableCell>
-                    <TableCell>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(item.salePrice)}
-                    </TableCell>
-                    <TableCell>
-                      {Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                      }).format(item.quantity * item.salePrice)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <div className="md:col-span-2">
+            <SaleOrderItems items={sale.saleItems} />
           </div>
 
           <div className="flex flex-col justify-between gap-4 rounded border p-4">
