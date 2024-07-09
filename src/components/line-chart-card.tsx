@@ -1,10 +1,14 @@
 'use client'
 
+import { TrendingDown, TrendingUp } from 'lucide-react'
 import {
+  CartesianGrid,
   Tooltip as ChartTooltip,
+  LabelList,
   Line,
   LineChart,
-  ResponsiveContainer,
+  XAxis,
+  YAxis,
   type TooltipProps,
 } from 'recharts'
 import type {
@@ -12,7 +16,20 @@ import type {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent'
 import ValueDateTooltip from '~/components/dashboard/value-date-tooltip'
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '~/components/ui/card'
+import {
+  ChartContainer,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '~/components/ui/chart'
+import { formatToCurrency, formatToShortMonth } from '~/text/format'
 
 const Tooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
   if (active && payload) {
@@ -43,60 +60,101 @@ type Props = {
   }[]
 }
 
+const chartConfig = {
+  total: {
+    label: 'Total',
+    color: 'hsl(var(--chart-1))',
+  },
+} satisfies ChartConfig
+
 const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
   return (
     <Card className="shadow-none">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="font-normal text-sm">{title}</CardTitle>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{formatToCurrency('es-CO', value)}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="font-bold text-2xl">
-          {Intl.NumberFormat('es-CO', {
-            style: 'currency',
-            currency: 'COP',
-          }).format(value)}
-        </div>
-        <p className="text-muted-foreground text-xs">
+        {summary.length > 0 && (
+          <ChartContainer
+            config={chartConfig}
+            className="max-h-[200px] min-h-[80px] w-full"
+          >
+            <LineChart
+              accessibilityLayer
+              data={summary}
+              margin={{
+                top: 20,
+                left: 12,
+                right: 12,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) =>
+                  new Date(value as unknown as string).getDate().toString()
+                }
+              />
+
+              <ChartTooltip
+                cursor={false}
+                content={
+                  <ChartTooltipContent
+                    indicator="line"
+                    labelFormatter={(value) =>
+                      formatToShortMonth(
+                        'es-CO',
+                        new Date(value as unknown as string),
+                      )
+                    }
+                    valueFormatter={(value) =>
+                      formatToCurrency('es-CO', value as number)
+                    }
+                  />
+                }
+              />
+
+              <Line
+                dataKey="total"
+                type="natural"
+                stroke="var(--color-total)"
+                strokeWidth={2}
+                dot={false}
+              >
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                  formatter={(value: unknown) =>
+                    formatToCurrency('es-CO', value as number)
+                  }
+                />
+              </Line>
+            </LineChart>
+          </ChartContainer>
+        )}
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
           {valueImprovement > 0 ? '+' : ''}
           {Intl.NumberFormat('es-CO', {
             style: 'percent',
             minimumFractionDigits: 2,
           }).format(valueImprovement)}{' '}
-          respecto al mes anterior
-        </p>
-
-        {summary.length > 0 && (
-          <div className="h-[80px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={summary}
-                margin={{
-                  top: 5,
-                  right: 10,
-                  left: 10,
-                  bottom: 0,
-                }}
-              >
-                <ChartTooltip content={<Tooltip />} />
-                <Line
-                  type="monotone"
-                  strokeWidth={2}
-                  dataKey="total"
-                  activeDot={{
-                    r: 6,
-                    style: { fill: 'hsl(var(--primary))', opacity: 0.25 },
-                  }}
-                  style={
-                    {
-                      stroke: 'hsl(var(--primary))',
-                    } as React.CSSProperties
-                  }
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </CardContent>
+          respecto al mes anterior{' '}
+          {valueImprovement > 0 ? (
+            <TrendingUp className="h-4 w-4" />
+          ) : (
+            <TrendingDown className="h-4 w-4" />
+          )}
+        </div>
+      </CardFooter>
     </Card>
   )
 }
