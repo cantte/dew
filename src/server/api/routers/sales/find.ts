@@ -16,6 +16,7 @@ const findSale = async ({ ctx, input }: Options) => {
         columns: {
           id: true,
           name: true,
+          phone: true,
         },
       },
       saleItems: {
@@ -26,6 +27,12 @@ const findSale = async ({ ctx, input }: Options) => {
               name: true,
             },
           },
+        },
+      },
+      store: {
+        columns: {
+          name: true,
+          nit: true,
         },
       },
     },

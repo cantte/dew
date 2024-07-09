@@ -1,11 +1,11 @@
 import { eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
-import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { byOrderIdInput } from '~/server/api/schemas/orders'
+import type { TRPCContextInner } from '~/server/api/trpc'
 import { orders } from '~/server/db/schema/orders'
 
 type Options = {
-  ctx: TRPCAuthedContext
+  ctx: TRPCContextInner
   input: TypeOf<typeof byOrderIdInput>
 }
 
