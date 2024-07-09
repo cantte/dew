@@ -139,6 +139,7 @@ const ChartTooltipContent = React.forwardRef<
       }
 
       const [item] = payload
+      //@ts-expect-error - TS doesn't know that item is defined
       const key = `${labelKey || item.dataKey || item.name || 'value'}`
       const itemConfig = getPayloadConfigFromPayload(config, item, key)
       const value =
