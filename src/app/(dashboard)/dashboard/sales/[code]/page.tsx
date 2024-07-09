@@ -2,13 +2,6 @@ import { notFound } from 'next/navigation'
 import BackButton from '~/components/back-button'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import SaleDetail from '~/components/sale-detail'
-import { Badge } from '~/components/ui/badge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '~/components/ui/tooltip'
 import { api } from '~/trpc/server'
 
 type Props = {
@@ -33,25 +26,9 @@ const SaleDetailPage = async ({ params }: Props) => {
   }
 
   return (
-    <div className="flex flex-col items-start space-y-4">
-      <BackButton />
-      <div className="flex items-center justify-center gap-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Badge variant="outline">
-                {Intl.DateTimeFormat('es-CO', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                }).format(new Date(sale.createdAt))}
-              </Badge>
-            </TooltipTrigger>
-            <TooltipContent>Fecha de creación de la venta</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+    <div className="grid gap-4">
+      <div>
+        <BackButton />
       </div>
 
       <SaleDetail sale={sale} />
