@@ -26,3 +26,10 @@ export const formatToDateShort = (locale: string, date: Date) => {
     year: 'numeric',
   }).format(date)
 }
+
+export const formatToShortMonth = (locale: string, date: Date) => {
+  return Intl.DateTimeFormat(locale, {
+    month: 'short',
+    day: 'numeric',
+  }).format(date)
+}
