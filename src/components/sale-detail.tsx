@@ -10,7 +10,11 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
 import { useMemo } from 'react'
 import { SaleOrderItems } from '~/components/sale-order-items'
-import { formatToCurrency, formatToDateWithTime, formatToNumber } from '~/text/format'
+import {
+  formatToCurrency,
+  formatToDateWithTime,
+  formatToNumber,
+} from '~/text/format'
 import { Tooltip } from '~/components/tooltip'
 
 type Props = {
@@ -46,7 +50,7 @@ export const SaleDetail = ({ sale }: Props) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <Tooltip title='Fecha de creación de la venta'>
+        <Tooltip title="Fecha de creación de la venta">
           <Badge variant="outline">
             {formatToDateWithTime('es-CO', new Date(sale.createdAt))}
           </Badge>
@@ -82,9 +86,7 @@ export const SaleDetail = ({ sale }: Props) => {
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Total</span>
-                    <span>
-                      {formatToCurrency('es-CO', sale.amount)}
-                    </span>
+                    <span>{formatToCurrency('es-CO', sale.amount)}</span>
                   </li>
                 </ul>
 
@@ -111,15 +113,11 @@ export const SaleDetail = ({ sale }: Props) => {
                 <ul className="grid gap-3">
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Total a pagar</span>
-                    <span>
-                      {formatToCurrency('es-CO', sale.amount)}
-                    </span>
+                    <span>{formatToCurrency('es-CO', sale.amount)}</span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Pago recibido</span>
-                    <span>
-                      {formatToCurrency('es-CO', sale.payment)}
-                    </span>
+                    <span>{formatToCurrency('es-CO', sale.payment)}</span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Cambio</span>
