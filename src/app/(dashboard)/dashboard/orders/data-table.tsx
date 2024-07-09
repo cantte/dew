@@ -52,7 +52,7 @@ const OrdersDataTable = <TValue,>({
   })
 
   return (
-    <div className="space-y-2">
+    <div className="grid grid-cols-1 gap-2">
       <OrdersDataTableToolbar table={table} />
       <DataTable table={table} />
       <DataTablePagination table={table} />
