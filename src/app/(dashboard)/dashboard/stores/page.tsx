@@ -15,16 +15,12 @@ const StoresPage = async () => {
   const stores = await api.store.list()
 
   return (
-    <div>
-      <div className="flex justify-between">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          Tiendas
-        </h3>
-      </div>
+    <div className="grid gap-4">
+      <h3 className='scroll-m-20 font-semibold text-xl tracking-tight'>
+        Tiendas
+      </h3>
 
-      <div className="mt-4">
-        <StoreDataTable columns={columns} data={stores} />
-      </div>
+      <StoreDataTable columns={columns} data={stores} />
     </div>
   )
 }
