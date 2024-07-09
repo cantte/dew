@@ -22,6 +22,8 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
     table.getState().globalFilter !== ''
 
   const [showLowStock, setShowLowStock] = useState(false)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no needed
   useEffect(() => {
     if (showLowStock) {
       table.setColumnFilters([{ id: 'isLowStock', value: true }])
@@ -59,39 +61,43 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
   }
 
   return (
-    <div className="ml-auto flex items-center gap-2">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
+      <div className="grid grid-flow-row grid-cols-1 gap-2 md:grid-cols-3">
         <Input
           placeholder="Buscar producto"
           value={table.getState().globalFilter}
           onChange={(event) => table.setGlobalFilter(event.target.value)}
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="col-span-1 h-8"
         />
 
-        <Toggle
-          variant="outline"
-          size="sm"
-          className="border-dashed text-xs"
-          pressed={showLowStock}
-          onPressedChange={setShowLowStock}
-        >
-          <Filter className="mr-2 h-4 w-4" />
-          Productos con stock bajo
-        </Toggle>
+        <div className="col-span-2">
+          <div className="flex flex-col gap-2 md:flex-row">
+            <Toggle
+              variant="outline"
+              size="sm"
+              className="border-dashed text-xs"
+              pressed={showLowStock}
+              onPressedChange={setShowLowStock}
+            >
+              <Filter className="mr-2 h-4 w-4" />
+              Productos con stock bajo
+            </Toggle>
 
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={resetFilters}
-            className="h-8 px-2 lg:px-3"
-          >
-            Limpiar filtros
-            <FilterX className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+            {isFiltered && (
+              <Button
+                variant="ghost"
+                onClick={resetFilters}
+                className="h-8 px-2 lg:px-3"
+              >
+                Limpiar filtros
+                <FilterX className="ml-2 h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center justify-end space-x-2">
         <ImportProductsDialog />
 
         <Button
