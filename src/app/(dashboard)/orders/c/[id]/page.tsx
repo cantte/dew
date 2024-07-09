@@ -1,15 +1,23 @@
+import { notFound } from 'next/navigation'
+import OrderDetail from '~/components/orders/detail'
+import { api } from '~/trpc/server'
+
 type Props = {
   params: {
-    code: string
+    id: string
   }
 }
 
-const OrderDetailPage = async ({ params }: Props) => {
+export default async function OrderDetailPage({ params }: Props) {
+  const order = await api.order.findPublic({ id: params.id })
+
+  if (!order) {
+    return notFound()
+  }
+
   return (
-    <div>
-      <h1>Order Detail</h1>
+    <div className="grid w-full max-w-7xl">
+      <OrderDetail order={order} canUpdate={false} />
     </div>
   )
 }
-
-export default OrderDetailPage
