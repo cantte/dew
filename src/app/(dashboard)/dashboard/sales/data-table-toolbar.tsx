@@ -50,7 +50,7 @@ const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   return (
     <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
       <div className="grid grid-flow-row grid-cols-1 gap-2 md:grid-cols-3">
-        <DateRangeFilter table={table} className='col-span-1 h-8' />
+        <DateRangeFilter table={table} className="col-span-1 h-8" />
 
         <div className="col-span-2">
           <div className="flex flex-col gap-2 md:flex-row">

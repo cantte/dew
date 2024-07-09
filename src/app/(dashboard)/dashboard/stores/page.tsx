@@ -16,7 +16,7 @@ const StoresPage = async () => {
 
   return (
     <div className="grid gap-4">
-      <h3 className='scroll-m-20 font-semibold text-xl tracking-tight'>
+      <h3 className="scroll-m-20 font-semibold text-xl tracking-tight">
         Tiendas
       </h3>
 
