@@ -48,31 +48,35 @@ const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2">
-      <div className="flex flex-1 items-center space-x-2">
-        <DateRangeFilter table={table} className="h-8" />
+    <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
+      <div className="grid grid-flow-row grid-cols-1 gap-2 md:grid-cols-3">
+        <DateRangeFilter table={table} className='col-span-1 h-8' />
 
-        {table.getColumn('paymentMethod') && (
-          <DataTableFacetedFilter
-            column={table.getColumn('paymentMethod')}
-            title="Método de pago"
-            options={paymentMethods}
-          />
-        )}
+        <div className="col-span-2">
+          <div className="flex flex-col gap-2 md:flex-row">
+            {table.getColumn('paymentMethod') && (
+              <DataTableFacetedFilter
+                column={table.getColumn('paymentMethod')}
+                title="Método de pago"
+                options={paymentMethods}
+              />
+            )}
 
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={resetFilters}
-            className="h-8 px-2 lg:px-3"
-          >
-            Limpiar filtros
-            <FilterX className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+            {isFiltered && (
+              <Button
+                variant="ghost"
+                onClick={resetFilters}
+                className="h-8 px-2 lg:px-3"
+              >
+                Limpiar filtros
+                <FilterX className="ml-2 h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center justify-end space-x-2">
         <Button
           size="sm"
           variant="outline"
