@@ -59,6 +59,8 @@ const CreateSaleForm = ({ storeId, suggestions }: Props) => {
   }
 
   const { toast } = useToast()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: don't needed
   useEffect(() => {
     if (createSale.isSuccess) {
       toast({
@@ -70,7 +72,6 @@ const CreateSaleForm = ({ storeId, suggestions }: Props) => {
       setSelectedProducts([])
       goToStep('select-products')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createSale.isSuccess])
 
   return (
