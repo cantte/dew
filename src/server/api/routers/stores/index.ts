@@ -1,5 +1,6 @@
 import authedProcedure from '~/server/api/procedures/authed'
 import createStore from '~/server/api/routers/stores/create'
+import { deleteStore } from '~/server/api/routers/stores/delete'
 import findStore from '~/server/api/routers/stores/find'
 import findCurrentStore from '~/server/api/routers/stores/findCurrent'
 import listStores from '~/server/api/routers/stores/list'
@@ -31,6 +32,11 @@ const storesRouter = router({
   findCurrent: authedProcedure.query(async ({ ctx }) => {
     return await findCurrentStore({ ctx })
   }),
+  delete: authedProcedure
+    .input(findStoreInput)
+    .mutation(async ({ ctx, input }) => {
+      await deleteStore({ ctx, input })
+    }),
 })
 
 export default storesRouter

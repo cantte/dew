@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { RotateCw, SquarePen } from 'lucide-react'
+import { RotateCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import { Button } from '~/components/ui/button'
@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/ui/dialog'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 import {
   Form,
   FormControl,
@@ -68,9 +69,9 @@ const UpdateStoreModal = ({ store }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" size="icon">
-          <SquarePen className="h-4 w-4" />
-        </Button>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <span className="text-sm">Actualizar</span>
+        </DropdownMenuItem>
       </DialogTrigger>
 
       <DialogContent>

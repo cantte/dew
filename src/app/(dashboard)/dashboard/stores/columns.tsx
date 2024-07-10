@@ -1,6 +1,7 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
+import { StoreDataTableRowActions } from '~/app/(dashboard)/dashboard/stores/data-table-row-actions'
 import UpdateStoreModal from '~/components/stores/update-store.modal'
 import type { RouterOutputs } from '~/trpc/shared'
 
@@ -36,7 +37,7 @@ export const columns: ColumnDef<Store>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      return <UpdateStoreModal store={row.original} />
+      return <StoreDataTableRowActions row={row} />
     },
   },
 ]
