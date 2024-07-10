@@ -235,8 +235,8 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2
       drizzle-kit:
-        specifier: ^0.22.8
-        version: 0.22.8
+        specifier: ^0.23.0
+        version: 0.23.0
       eslint-config-next:
         specifier: ^14.2.5
         version: 14.2.5(eslint@9.5.0)(typescript@5.5.3)
@@ -3074,8 +3074,8 @@ packages:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
 
-  drizzle-kit@0.22.8:
-    resolution: {integrity: sha512-VjI4wsJjk3hSqHSa3TwBf+uvH6M6pRHyxyoVbt935GUzP9tUR/BRZ+MhEJNgryqbzN2Za1KP0eJMTgKEPsalYQ==}
+  drizzle-kit@0.23.0:
+    resolution: {integrity: sha512-w9jE97z193dd4jzAyj4Uv2SOh8Ydue70Ki6W0awy4bGM1aPXan6zD6Yv+nNTA6oGgNTDl2MJFxutjHG4fden5g==}
     hasBin: true
 
   drizzle-orm@0.31.4:
@@ -8241,7 +8241,7 @@ snapshots:
 
   dotenv@16.3.1: {}
 
-  drizzle-kit@0.22.8:
+  drizzle-kit@0.23.0:
     dependencies:
       '@esbuild-kit/esm-loader': 2.6.5
       esbuild: 0.19.11
