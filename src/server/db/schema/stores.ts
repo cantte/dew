@@ -19,6 +19,7 @@ export const stores = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
+    deletedAt: timestamp('deleted_at'),
   },
   (store) => ({
     createdByIdx: index('store_created_by_idx').on(store.createdBy),
