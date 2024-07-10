@@ -1,4 +1,4 @@
-import { and, eq, isNotNull } from 'drizzle-orm'
+import { and, eq, isNull } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import findUserPreference from '~/server/api/routers/userPreferences/find'
 import { stores } from '~/server/db/schema'
@@ -15,10 +15,7 @@ const findCurrentStore = async ({ ctx }: Options) => {
   }
 
   return ctx.db.query.stores.findFirst({
-    where: and(
-      eq(stores.id, userPreference.storeId),
-      isNotNull(stores.deletedAt),
-    ),
+    where: and(eq(stores.id, userPreference.storeId), isNull(stores.deletedAt)),
   })
 }
 
