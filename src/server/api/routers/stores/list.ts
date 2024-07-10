@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq, isNotNull } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import { employeeStore, employees, stores } from '~/server/db/schema'
 
@@ -18,7 +18,12 @@ const listStores = async ({ ctx }: Options) => {
     .from(employeeStore)
     .innerJoin(stores, eq(employeeStore.storeId, stores.id))
     .innerJoin(employees, eq(employeeStore.employeeId, employees.id))
-    .where(eq(employees.userId, ctx.session.user.id))
+    .where(
+      and(
+        eq(employees.userId, ctx.session.user.id),
+        isNotNull(stores.deletedAt),
+      ),
+    )
 }
 
 export default listStores
