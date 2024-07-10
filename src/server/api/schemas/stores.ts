@@ -4,7 +4,7 @@ export const createStoreInput = z.object({
   name: z.string().min(1).max(64),
   address: z.string().min(1).max(64),
   phone: z.string().min(1).max(32).optional(),
-  nit: z.string().min(10).max(10).optional(),
+  nit: z.string().min(10).max(32).optional(),
 })
 
 export const findStoreInput = z.object({
