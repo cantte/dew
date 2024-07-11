@@ -1,6 +1,6 @@
 {
   "name": "dew",
-  "version": "0.3.2-beta",
+  "version": "0.3.3-beta",
   "private": true,
   "type": "module",
   "scripts": {
@@ -37,8 +37,8 @@
     "@react-pdf/renderer": "^3.4.4",
     "@sentry/nextjs": "8.17.0",
     "@t3-oss/env-nextjs": "^0.10.1",
-    "@tanstack/react-query": "^5.50.1",
-    "@tanstack/react-query-devtools": "^5.50.1",
+    "@tanstack/react-query": "^5.51.1",
+    "@tanstack/react-query-devtools": "^5.51.1",
     "@tanstack/react-table": "^8.19.2",
     "@trpc/client": "11.0.0-rc.456",
     "@trpc/next": "11.0.0-rc.456",

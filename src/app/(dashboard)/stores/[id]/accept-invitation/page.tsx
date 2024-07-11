@@ -65,10 +65,10 @@ const AcceptStoreInvitationPage = async ({ params, searchParams }: Props) => {
     <div className="w-full max-w-7xl">
       <div className="flex flex-col space-y-4">
         <div>
-          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+          <h3 className="scroll-m-20 font-semibold text-2xl tracking-tight">
             Aceptar invitación
           </h3>
-          <p className="leading-7 text-muted-foreground">
+          <p className="text-muted-foreground leading-7">
             Has sido invitado a la tienda <strong>{store.name}</strong> como{' '}
             <strong>{employee.name}</strong>.
           </p>

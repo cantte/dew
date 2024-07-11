@@ -92,8 +92,8 @@ const createEmployee = async ({ ctx, input }: Options) => {
       react: EmployeeStoreInvitationEmail({
         employeeName: data.name,
         storeName: store.name,
-        url: process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}/stores/${storeId}/accept-invitation?employeeId=${employeeId}`
+        url: process.env.NEXT_PUBLIC_URL
+          ? `${process.env.NEXT_PUBLIC_URL}/stores/${storeId}/accept-invitation?employeeId=${employeeId}`
           : `http://localhost:3000/stores/${storeId}/accept-invitation?employeeId=${employeeId}`,
       }),
     })
