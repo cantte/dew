@@ -7,7 +7,10 @@ import {
   DashboardServerSidebarFallback,
 } from '~/app/(dashboard)/dashboard/sidebar.server'
 import AccountNav from '~/components/account-nav'
-import MobileNav from '~/components/mobile-nav'
+import {
+  MobileNavServer,
+  MobileNavServerFallback,
+} from '~/components/mobile-nav.server'
 import { SentryFeedbackWidget } from '~/components/sentry-feedback-widget'
 import SelectStore from '~/components/stores/select-store'
 import { Badge } from '~/components/ui/badge'
@@ -59,7 +62,9 @@ const DashboardLayout = async ({ children }: Props) => {
       <div className="flex flex-col">
         <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
           <div className="flex items-center gap-3">
-            <MobileNav />
+            <Suspense fallback={<MobileNavServerFallback />}>
+              <MobileNavServer />
+            </Suspense>
 
             <SelectStore
               currentStore={currentStore}
