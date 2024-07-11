@@ -25,12 +25,12 @@ const CreateSalePage = async () => {
 
   return (
     <div className="w-full max-w-7xl">
-      <div className='mt-4 mb-4 md:mt-0'>
+      <div className="mt-4 mb-4 md:mt-0">
         <BackButton />
       </div>
 
       <section className="flex flex-col gap-4">
-        <h1 className='font-bold text-2xl'>Crear venta</h1>
+        <h1 className="font-bold text-2xl">Crear venta</h1>
 
         <CreateSaleForm storeId={store.id} suggestions={suggestions} />
       </section>
