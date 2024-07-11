@@ -40,7 +40,7 @@ const EmployeesPage = async () => {
             <Link href="/dashboard/employees/create">
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Crear empleado
+                Agregar empleado
               </span>
             </Link>
           </Button>

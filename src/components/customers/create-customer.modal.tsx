@@ -23,7 +23,7 @@ const CreateCustomerModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Crear cliente</DialogTitle>
+          <DialogTitle>Registrar cliente</DialogTitle>
         </DialogHeader>
 
         <CreateCustomerForm id={id} onCreate={() => onOpenChange(false)} />

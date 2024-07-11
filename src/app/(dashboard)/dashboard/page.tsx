@@ -1,4 +1,6 @@
 import { Suspense } from 'react'
+import { GeneralOverview } from '~/components/dashboard/general-overview'
+import { GeneralReport } from '~/components/dashboard/general-report'
 import LowStockProducts from '~/components/dashboard/low-stock-products'
 import MostSoldProducts from '~/components/dashboard/most-sold-products'
 import OrdersReport from '~/components/dashboard/orders-report'
@@ -18,43 +20,63 @@ const DashboardPage = async () => {
 
   return (
     <main className="grid gap-4">
-      <Tabs defaultValue="sales">
-        <TabsList>
-          <TabsTrigger value="sales">Resumen de ventas</TabsTrigger>
-          <TabsTrigger value="orders">Resumen de ordenes</TabsTrigger>
-        </TabsList>
-        <TabsContent value="sales">
-          <div className="grid gap-4">
-            <Suspense
-              fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
-            >
-              <SalesOverview />
-            </Suspense>
+      <div className="space-y-2">
+        <span className="font-semibold tracking-tight">Reporte general</span>
 
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-              <Suspense fallback={<SalesReportFallback />}>
-                <SalesReport />
+        <Suspense fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}>
+          <GeneralOverview />
+        </Suspense>
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+          <Suspense fallback={<SalesReportFallback />}>
+            <GeneralReport />
+          </Suspense>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <span className="font-semibold tracking-tight">
+          Reporte de ventas y ordenes
+        </span>
+
+        <Tabs defaultValue="sales">
+          <TabsList>
+            <TabsTrigger value="sales">Ventas</TabsTrigger>
+            <TabsTrigger value="orders">Ordenes</TabsTrigger>
+          </TabsList>
+          <TabsContent value="sales">
+            <div className="grid gap-4">
+              <Suspense
+                fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
+              >
+                <SalesOverview />
               </Suspense>
+
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+                <Suspense fallback={<SalesReportFallback />}>
+                  <SalesReport />
+                </Suspense>
+              </div>
             </div>
-          </div>
-        </TabsContent>
+          </TabsContent>
 
-        <TabsContent value="orders">
-          <div className="grid gap-4">
-            <Suspense
-              fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
-            >
-              <OrdersOverview />
-            </Suspense>
-
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-              <Suspense fallback={<SalesReportFallback />}>
-                <OrdersReport />
+          <TabsContent value="orders">
+            <div className="grid gap-4">
+              <Suspense
+                fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
+              >
+                <OrdersOverview />
               </Suspense>
+
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+                <Suspense fallback={<SalesReportFallback />}>
+                  <OrdersReport />
+                </Suspense>
+              </div>
             </div>
-          </div>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+        </Tabs>
+      </div>
 
       <Suspense fallback={<Skeleton className="h-10 w-full" />}>
         <MostSoldProducts />

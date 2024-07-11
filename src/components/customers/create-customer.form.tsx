@@ -117,7 +117,7 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
           {createCustomer.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Crear
+          Registrar
         </Button>
       </form>
     </Form>

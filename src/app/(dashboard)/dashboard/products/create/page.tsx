@@ -35,7 +35,7 @@ const CreateProductPage = async () => {
         <BackButton />
 
         <section className="flex flex-col gap-4">
-          <h1 className="font-bold text-xl">Crear producto</h1>
+          <h1 className="font-bold text-xl">Agregar producto</h1>
 
           <CreateProductForm storeId={store.id} stores={stores} />
         </section>
