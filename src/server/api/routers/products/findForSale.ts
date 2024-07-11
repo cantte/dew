@@ -3,6 +3,7 @@ import type { TypeOf } from 'zod'
 import { applyDiscount } from '~/lib/utils'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import searchProductDiscounts from '~/server/api/routers/products/searchDiscount'
+import findCurrentStore from '~/server/api/routers/stores/findCurrent'
 import type { byCodeProductInput } from '~/server/api/schemas/products'
 import { inventory, products } from '~/server/db/schema'
 
@@ -12,6 +13,12 @@ type Options = {
 }
 
 const findProductForSale = async ({ ctx, input }: Options) => {
+  const store = await findCurrentStore({ ctx })
+
+  if (!store) {
+    return null
+  }
+
   const result = await ctx.db
     .select({
       id: products.id,
@@ -28,7 +35,7 @@ const findProductForSale = async ({ ctx, input }: Options) => {
       and(
         eq(products.code, input.code),
         isNull(products.deletedAt),
-        eq(products.createdBy, ctx.session.user.id),
+        eq(inventory.storeId, store.id),
       ),
     )
 
