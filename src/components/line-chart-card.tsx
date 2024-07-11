@@ -7,9 +7,8 @@ import {
   LabelList,
   Line,
   LineChart,
-  XAxis,
-  YAxis,
   type TooltipProps,
+  XAxis,
 } from 'recharts'
 import type {
   NameType,
@@ -25,9 +24,9 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltipContent,
-  type ChartConfig,
 } from '~/components/ui/chart'
 import { formatToCurrency, formatToShortMonth } from '~/text/format'
 
@@ -121,7 +120,7 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
 
               <Line
                 dataKey="total"
-                type="natural"
+                type="linear"
                 stroke="var(--color-total)"
                 strokeWidth={2}
                 dot={false}
