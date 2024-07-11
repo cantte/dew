@@ -7,6 +7,7 @@ import type { TypeOf } from 'zod'
 import CheckoutStep from '~/app/(dashboard)/orders/create/checkout-step'
 import SelectCustomerStep from '~/app/(dashboard)/sales/create/select-customer-step'
 import SelectProductsStep from '~/app/(dashboard)/sales/create/select-products-step'
+import { PreventNavigation } from '~/components/prevent-navigation'
 import { Form } from '~/components/ui/form'
 import { useToast } from '~/components/ui/use-toast'
 import { createOrderInput } from '~/server/api/schemas/orders'
@@ -73,34 +74,45 @@ const CreateOrderForm = ({ storeId, suggestions }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createOrder.isSuccess])
 
+  const items = form.watch('items').length
+  const prevent = form.formState.isDirty || items > 0
+
   return (
-    <Form {...form}>
-      <form
-        className="flex min-h-[calc(100vh-20rem)] flex-col space-y-4"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        {
+    <>
+      <PreventNavigation
+        prevent={prevent}
+        backHref="/dashboard"
+        reset={form.reset}
+      />
+
+      <Form {...form}>
+        <form
+          className="flex min-h-[calc(100vh-20rem)] flex-col space-y-4"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           {
-            'select-products': (
-              <SelectProductsStep
-                onContinue={handleFinishSelectProducts}
-                suggestions={suggestions}
-              />
-            ),
-            'select-customer': (
-              <SelectCustomerStep onContinue={handleFinishSelectCustomer} />
-            ),
-            checkout: (
-              <CheckoutStep
-                isCreating={createOrder.isPending}
-                selectedProducts={selectedProducts}
-                customer={selectedCustomer}
-              />
-            ),
-          }[step]
-        }
-      </form>
-    </Form>
+            {
+              'select-products': (
+                <SelectProductsStep
+                  onContinue={handleFinishSelectProducts}
+                  suggestions={suggestions}
+                />
+              ),
+              'select-customer': (
+                <SelectCustomerStep onContinue={handleFinishSelectCustomer} />
+              ),
+              checkout: (
+                <CheckoutStep
+                  isCreating={createOrder.isPending}
+                  selectedProducts={selectedProducts}
+                  customer={selectedCustomer}
+                />
+              ),
+            }[step]
+          }
+        </form>
+      </Form>
+    </>
   )
 }
 

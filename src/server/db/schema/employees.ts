@@ -27,6 +27,7 @@ export const employees = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
+    deletedAt: timestamp('deleted_at'),
   },
   (employee) => ({
     uniqueEmailPhoneCode: unique('employee_email_phone_code_unique').on(
