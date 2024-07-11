@@ -12,10 +12,10 @@ type Options = {
 const getSalesOverview = async ({ ctx, input }: Options) => {
   const result = await ctx.db
     .select({
-      amount: sum(saleSummary.amount),
-      customers: sum(saleSummary.customers),
-      sales: sum(saleSummary.sales),
-      products: sum(saleSummary.products),
+      amount: sum(saleSummary.amount).mapWith(Number),
+      customers: sum(saleSummary.customers).mapWith(Number),
+      sales: sum(saleSummary.sales).mapWith(Number),
+      products: sum(saleSummary.products).mapWith(Number),
     })
     .from(saleSummary)
     .where(
@@ -46,10 +46,10 @@ const getSalesOverview = async ({ ctx, input }: Options) => {
   }
 
   return {
-    revenue: summary.amount ?? 0,
-    customers: summary.customers ?? 0,
-    sales: summary.sales ?? 0,
-    products: summary.products ?? 0,
+    revenue: summary.amount,
+    customers: summary.customers,
+    sales: summary.sales,
+    products: summary.products,
   }
 }
 
