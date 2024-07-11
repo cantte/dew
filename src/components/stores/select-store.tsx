@@ -93,7 +93,7 @@ const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
             <SelectItem value="new-store">
               <div className="flex flex-row items-center">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                <span>Crear nueva tienda</span>
+                <span>Agregar nueva tienda</span>
               </div>
             </SelectItem>
           )}
@@ -104,7 +104,7 @@ const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Crear nueva tienda</DialogTitle>
+              <DialogTitle>Agregar nueva tienda</DialogTitle>
             </DialogHeader>
 
             <CreateStoreForm onSuccess={onSuccessfulCreate} />
@@ -114,7 +114,7 @@ const SelectStore = ({ currentStore, stores, canCreateStore }: Props) => {
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerContent>
             <DrawerHeader>
-              <DrawerTitle>Crear nueva tienda</DrawerTitle>
+              <DrawerTitle>Agregar nueva tienda</DrawerTitle>
             </DrawerHeader>
 
             <div className="px-4 py-1">

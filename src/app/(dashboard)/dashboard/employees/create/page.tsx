@@ -33,7 +33,7 @@ const CreateEmployeePage = async () => {
         <BackButton />
 
         <section className="flex flex-col gap-4">
-          <h1 className="font-bold text-xl">Crear empleado</h1>
+          <h1 className="font-bold text-xl">Agregar empleado</h1>
 
           <CreateEmployeeForm storeId={store.id} />
         </section>

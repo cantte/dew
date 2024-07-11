@@ -133,7 +133,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
                 onClick={() => setIsOpenCreateCustomerModal(true)}
                 variant="outline"
               >
-                Crear cliente
+                Registrar cliente
               </Button>
             )}
           </FormItem>

@@ -9,11 +9,11 @@ const NotFoundStoreAlert = () => {
       <Info className="h-4 w-4 text-muted-foreground" />
       <AlertTitle>Acción requerida</AlertTitle>
       <AlertDescription>
-        No ha registrado una tienda, por favor cree una tienda para poder
+        No ha registrado una tienda, por favor agregue una tienda para poder
         continuar.
         <br />
         <Button asChild size="sm" className="mt-2">
-          <NextLink href={`/stores/create`}>Crear tienda</NextLink>
+          <NextLink href={`/stores/create`}>Agregar tienda</NextLink>
         </Button>
       </AlertDescription>
     </Alert>
