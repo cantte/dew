@@ -63,8 +63,8 @@ const createOrder = async ({ ctx, input }: Options) => {
         total: input.amount,
         products: input.items.reduce((acc, item) => item.quantity + acc, 0),
         date: new Date(),
-        url: process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}/orders/c/${id}`
+        url: process.env.NEXT_PUBLIC_URL
+          ? `${process.env.NEXT_PUBLIC_URL}/orders/c/${id}`
           : `http://localhost:3000/orders/c/${id}`,
         store: store.name,
       }),

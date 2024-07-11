@@ -57,8 +57,8 @@ export const notifyLowStock = async ({ ctx, input }: Options) => {
     react: LowStockProducsEmail({
       storeName: owner.store,
       lowStockProducts: lowStockProducts,
-      url: process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}/dashboard/products`
+      url: process.env.NEXT_PUBLIC_URL
+        ? `${process.env.NEXT_PUBLIC_URL}/dashboard/products`
         : `http://localhost:3000/dashboard/products`,
     }),
   })

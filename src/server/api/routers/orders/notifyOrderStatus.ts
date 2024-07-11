@@ -46,8 +46,8 @@ export const notifyOrderStatus = async ({ ctx, input }: Options) => {
       name: order.customer,
       status: status,
       date: new Date(),
-      url: process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}/orders/c/${order.id}`
+      url: process.env.NEXT_PUBLIC_URL
+        ? `${process.env.NEXT_PUBLIC_URL}/orders/c/${order.id}`
         : `http://localhost:3000/orders/c/${order.id}`,
       store: order.store,
     }),

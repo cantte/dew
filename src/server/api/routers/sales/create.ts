@@ -11,13 +11,7 @@ import upsertProductsSummaries from '~/server/api/routers/products/upsertSummari
 import upsertSaleSummary from '~/server/api/routers/sales/upsertSummary'
 import findStore from '~/server/api/routers/stores/find'
 import type { createSaleInput } from '~/server/api/schemas/sales'
-import {
-  customers,
-  inventory,
-  saleItems,
-  sales,
-  stores,
-} from '~/server/db/schema'
+import { inventory, saleItems, sales } from '~/server/db/schema'
 import resend from '~/server/email/resend'
 
 type Options = {
@@ -164,8 +158,8 @@ const createSale = async ({ ctx, input }: Options) => {
         total: input.amount,
         products: input.items.reduce((acc, item) => item.quantity + acc, 0),
         date: today,
-        url: process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}/sales/c/${code}`
+        url: process.env.NEXT_PUBLIC_URL
+          ? `${process.env.NEXT_PUBLIC_URL}/sales/c/${code}`
           : `http://localhost:3000/sales/c/${code}`,
         store: store.name,
       }),
