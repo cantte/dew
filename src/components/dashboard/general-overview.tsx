@@ -48,7 +48,7 @@ export const GeneralOverview = async () => {
     },
     {
       title: 'Ingresos',
-      tooltip: 'Ingresos generados por las ordenes',
+      tooltip: 'Ingresos generados',
       value: Intl.NumberFormat('es-CO', {
         style: 'currency',
         currency: 'COP',
