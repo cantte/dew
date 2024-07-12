@@ -17,7 +17,7 @@ const icons = [
     icon: Home,
   },
   {
-    dashboard: 'dashboard',
+    id: 'dashboard',
     icon: LayoutDashboard,
   },
   {
