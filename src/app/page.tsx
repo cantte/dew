@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full overflow-hidden">
       <div className="flex flex-col">
-        <header className="flex h-14 items-center justify-between gap-4 border-b px-6 lg:h-[60px]">
+        <header className="flex h-14 items-center justify-between gap-4 border-b px-4">
           <div className="flex items-center gap-3">
             <span className="font-semibold text-lg">dew</span>
             <Badge>beta</Badge>
