@@ -4,7 +4,7 @@ import { ThemeToggle } from '~/components/theme-toggle'
 const Footer = () => {
   return (
     <footer className="flex items-center justify-center border-t py-4">
-      <div className="flex w-full max-w-7xl items-center justify-between">
+      <div className='flex w-full max-w-7xl flex-col items-center justify-between gap-4 md:flex-row'>
         <div className="flex flex-col items-center">
           <span className="inline-flex items-center gap-2 font-normal text-muted-foreground text-sm">
             {new Date().getFullYear()} © dew
