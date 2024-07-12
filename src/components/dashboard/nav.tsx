@@ -28,6 +28,8 @@ export const DashboardNav = ({ items, setOpen, isMobileNav }: Props) => {
     return null
   }
 
+  const isExpanded = isMobileNav || (!isMinimized && !isMobileNav)
+
   return (
     <nav className="grid items-start gap-2">
       <TooltipProvider>
@@ -41,14 +43,19 @@ export const DashboardNav = ({ items, setOpen, isMobileNav }: Props) => {
                     className={cn(
                       'flex items-center gap-2 overflow-hidden rounded-md py-2 font-light text-sm hover:bg-accent hover:text-accent-foreground',
                       pathname === item.href ? 'bg-accent' : 'transparent',
+                      isExpanded ? 'justify-start' : 'justify-center',
                     )}
                     onClick={() => {
                       if (setOpen) setOpen(false)
                     }}
                   >
-                    {item.icon && getIcon(item.icon, 'ml-3 size-5')}
+                    {item.icon &&
+                      getIcon(
+                        item.icon,
+                        cn('size-4', isExpanded ? 'ml-3' : 'ml-0'),
+                      )}
 
-                    {isMobileNav || (!isMinimized && !isMobileNav) ? (
+                    {isExpanded ? (
                       <span className="mr-2 truncate">{item.title}</span>
                     ) : (
                       ''

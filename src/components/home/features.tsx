@@ -14,7 +14,7 @@ const FeaturesSection = () => {
     <section id="features" className="flex max-w-7xl flex-col space-y-16">
       <div className="flex w-full flex-col items-center space-y-4">
         <Badge
-          className="bg-primary/10 text-primary-text hover:bg-primary/10"
+          className="bg-primary-text/10 text-primary-text hover:bg-primary-text/10"
           aria-label="Características"
         >
           Características
@@ -37,8 +37,8 @@ const FeaturesSection = () => {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
         <div className="flex flex-col items-center space-y-4">
           <div className="flex w-full items-center space-x-4">
-            <span className="rounded-full bg-primary/10 p-3">
-              <Store className="h-4 w-4 text-primary" />
+            <span className="rounded-full bg-primary-text/10 p-3">
+              <Store className="h-4 w-4 text-primary-text" />
             </span>
 
             <p className="font-display font-semibold text-lg leading-6">
@@ -55,16 +55,16 @@ const FeaturesSection = () => {
 
           <ul className="w-full space-y-2 text-muted-foreground text-sm">
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Registro y seguimiento de productos en todas tus tiendas.
               </span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Control de empleados y asignación de roles y permisos.
@@ -75,8 +75,8 @@ const FeaturesSection = () => {
 
         <div className="flex flex-col items-center space-y-4">
           <div className="flex w-full items-center space-x-4">
-            <span className="rounded-full bg-primary/10 p-3">
-              <ShoppingBasket className="h-4 w-4 text-primary" />
+            <span className="rounded-full bg-primary-text/10 p-3">
+              <ShoppingBasket className="h-4 w-4 text-primary-text" />
             </span>
 
             <p className="font-display font-semibold text-lg leading-6">
@@ -93,8 +93,8 @@ const FeaturesSection = () => {
 
           <ul className="w-full space-y-2 text-muted-foreground text-sm">
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Seguimiento en tiempo real del stock de productos en todas tus
@@ -102,8 +102,8 @@ const FeaturesSection = () => {
               </span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Alertas automáticas de productos con bajo stock o vencidos.
@@ -114,8 +114,8 @@ const FeaturesSection = () => {
 
         <div className="flex flex-col items-center space-y-4">
           <div className="flex w-full items-center space-x-4">
-            <span className="rounded-full bg-primary/10 p-3">
-              <ShoppingCart className="h-4 w-4 text-primary" />
+            <span className="rounded-full bg-primary-text/10 p-3">
+              <ShoppingCart className="h-4 w-4 text-primary-text" />
             </span>
 
             <p className="font-display font-semibold text-lg leading-6">
@@ -132,14 +132,14 @@ const FeaturesSection = () => {
 
           <ul className="w-full space-y-2 text-muted-foreground text-sm">
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>Visualiza el rendimiento de ventas al instante.</span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>Toma decisiones basadas en datos precisos.</span>
             </li>
@@ -148,8 +148,8 @@ const FeaturesSection = () => {
 
         <div className="flex flex-col items-center space-y-4">
           <div className="flex w-full items-center space-x-4">
-            <span className="rounded-full bg-primary/10 p-3">
-              <UserRound className="h-4 w-4 text-primary" />
+            <span className="rounded-full bg-primary-text/10 p-3">
+              <UserRound className="h-4 w-4 text-primary-text" />
             </span>
 
             <p className="font-display font-semibold text-lg leading-6">
@@ -166,8 +166,8 @@ const FeaturesSection = () => {
 
           <ul className="w-full space-y-2 text-muted-foreground text-sm">
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Los clientes se registran una sola vez para todas tus
@@ -175,8 +175,8 @@ const FeaturesSection = () => {
               </span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Reduce el trabajo manual y minimiza errores en la gestión de
@@ -188,8 +188,8 @@ const FeaturesSection = () => {
 
         <div className="flex flex-col items-center space-y-4">
           <div className="flex w-full items-center space-x-4">
-            <span className="rounded-full bg-primary/10 p-3">
-              <Coins className="h-4 w-4 text-primary" />
+            <span className="rounded-full bg-primary-text/10 p-3">
+              <Coins className="h-4 w-4 text-primary-text" />
             </span>
 
             <p className="font-display font-semibold text-lg leading-6">
@@ -207,22 +207,22 @@ const FeaturesSection = () => {
 
           <ul className="w-full space-y-2 text-muted-foreground text-sm">
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Documenta ventas y gastos con total exactitud y seguridad.
               </span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>Monitorea ingresos y egresos en tiempo real.</span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Facilita la gestión financiera y ahorra tiempo en tareas
@@ -234,8 +234,8 @@ const FeaturesSection = () => {
 
         <div className="flex flex-col items-center space-y-4">
           <div className="flex w-full items-center space-x-4">
-            <span className="rounded-full bg-primary/10 p-3">
-              <LineChart className="h-4 w-4 text-primary" />
+            <span className="rounded-full bg-primary-text/10 p-3">
+              <LineChart className="h-4 w-4 text-primary-text" />
             </span>
 
             <p className="font-display font-semibold text-lg leading-6">
@@ -252,20 +252,20 @@ const FeaturesSection = () => {
 
           <ul className="w-full space-y-2 text-muted-foreground text-sm">
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>Identifica patrones y oportunidades de crecimiento.</span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>Optimiza tu stock basándote en datos reales.</span>
             </li>
             <li className="flex items-center space-x-2">
-              <span className="rounded-full bg-primary/10 p-1">
-                <Check className="h-3 w-3 text-primary" />
+              <span className="rounded-full bg-primary-text/10 p-1">
+                <Check className="h-3 w-3 text-primary-text" />
               </span>
               <span>
                 Visualiza información compleja de forma clara y accionable.

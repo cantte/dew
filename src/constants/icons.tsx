@@ -3,6 +3,7 @@
 import {
   Coins,
   Home,
+  LayoutDashboard,
   Package,
   ShoppingBasket,
   ShoppingCart,
@@ -14,6 +15,10 @@ const icons = [
   {
     id: 'home',
     icon: Home,
+  },
+  {
+    id: 'dashboard',
+    icon: LayoutDashboard,
   },
   {
     id: 'shopping-basket',
