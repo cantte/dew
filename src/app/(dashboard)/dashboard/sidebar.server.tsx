@@ -1,4 +1,4 @@
-import DashboardClientSidebar from '~/app/(dashboard)/dashboard/sidebar.client'
+import { Sidebar } from '~/components/layout/sidebar'
 import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
@@ -7,7 +7,7 @@ export const DashboardServerSidebar = async () => {
 
   return (
     <div className="grid gap-1">
-      <DashboardClientSidebar items={items} />
+      <Sidebar items={items} />
     </div>
   )
 }

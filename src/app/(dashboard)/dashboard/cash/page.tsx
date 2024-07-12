@@ -57,7 +57,7 @@ export default async function CashRegisterPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-7.5rem)] flex-col space-y-4">
+    <div className="space-y-4">
       <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
         <div className="col-span-2">
           <div className="flex flex-col space-y-2 rounded border p-4">
