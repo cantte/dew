@@ -55,7 +55,7 @@ const MostSoldProducts = async () => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center">
-            <h3 className="text-2xl font-semibold">No hay productos</h3>
+            <h3 className="font-semibold text-2xl">No hay productos</h3>
             <p className="text-gray-500">No se han vendido productos aún</p>
           </div>
         )}

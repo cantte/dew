@@ -19,7 +19,7 @@ const DashboardPage = async () => {
   }
 
   return (
-    <main className="grid gap-4">
+    <>
       <div className="space-y-2">
         <span className="font-semibold tracking-tight">Reporte general</span>
 
@@ -85,7 +85,7 @@ const DashboardPage = async () => {
       <Suspense fallback={<Skeleton className="h-10 w-full" />}>
         <LowStockProducts />
       </Suspense>
-    </main>
+    </>
   )
 }
 

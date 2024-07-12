@@ -24,11 +24,9 @@ export const GeneralOverview = async () => {
     storeId: store.id,
   })
 
-  const customers =
-    Number(salesOverview.customers) + Number(ordersOverview.customers)
-  const revenue = Number(salesOverview.revenue) + Number(ordersOverview.revenue)
-  const products =
-    Number(salesOverview.products) + Number(ordersOverview.products)
+  const customers = salesOverview.customers + ordersOverview.customers
+  const revenue = salesOverview.revenue + ordersOverview.revenue
+  const products = salesOverview.products + ordersOverview.products
 
   const indicators = [
     {
@@ -48,7 +46,7 @@ export const GeneralOverview = async () => {
     },
     {
       title: 'Ingresos',
-      tooltip: 'Ingresos generados por las ordenes',
+      tooltip: 'Ingresos generados',
       value: Intl.NumberFormat('es-CO', {
         style: 'currency',
         currency: 'COP',

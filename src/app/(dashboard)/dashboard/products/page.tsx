@@ -28,7 +28,7 @@ const ProductsPage = async () => {
   })
 
   return (
-    <div className="grid gap-4">
+    <>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Suspense fallback={<Skeleton className="h-8 w-10" />}>
           <ProductsOverview storeId={store.id} />
@@ -40,7 +40,7 @@ const ProductsPage = async () => {
       </div>
 
       <ProductDataTable columns={columns} data={products} storeId={store.id} />
-    </div>
+    </>
   )
 }
 

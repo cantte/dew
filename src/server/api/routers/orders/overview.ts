@@ -12,10 +12,10 @@ type Options = {
 const getOrderOverview = async ({ ctx, input }: Options) => {
   const result = await ctx.db
     .select({
-      amount: sum(orderSummary.amount),
-      customers: sum(orderSummary.customers),
-      orders: sum(orderSummary.orders),
-      products: sum(orderSummary.products),
+      amount: sum(orderSummary.amount).mapWith(Number),
+      customers: sum(orderSummary.customers).mapWith(Number),
+      orders: sum(orderSummary.orders).mapWith(Number),
+      products: sum(orderSummary.products).mapWith(Number),
     })
     .from(orderSummary)
     .where(
@@ -46,10 +46,10 @@ const getOrderOverview = async ({ ctx, input }: Options) => {
   }
 
   return {
-    revenue: summary.amount ?? 0,
-    customers: summary.customers ?? 0,
-    orders: summary.orders ?? 0,
-    products: summary.products ?? 0,
+    revenue: summary.amount,
+    customers: summary.customers,
+    orders: summary.orders,
+    products: summary.products,
   }
 }
 
