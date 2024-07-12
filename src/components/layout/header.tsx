@@ -29,7 +29,7 @@ export const Header = async () => {
     <div className="fixed top-0 right-0 left-0 z-20 border-b bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
       <nav className="flex h-14 items-center justify-between px-4">
         <div className="hidden lg:block">
-          <Link className="flex items-center gap-3" href="/">
+          <Link className="mr-4 flex items-center gap-2" href="/">
             <span className="font-semibold text-lg">dew</span>
             <Badge>beta</Badge>
           </Link>

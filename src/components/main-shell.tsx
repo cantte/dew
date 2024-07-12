@@ -14,7 +14,7 @@ const MainShell = ({ title, children }: Props) => {
   return (
     <main className="relative z-20 mx-auto flex h-screen h-screen-ios max-w-7xl flex-col justify-between overflow-x-hidden px-4">
       <header className="flex h-[80px] items-center justify-between md:h-[100px]">
-        <div className="flex items-center gap-3">
+        <div className="mr-4 flex items-center gap-2">
           <span className="font-semibold text-lg">dew</span>
           <Badge>beta</Badge>
         </div>
