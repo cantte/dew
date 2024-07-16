@@ -6,6 +6,6 @@ type Store = {
 }
 
 export const useSidebar = create<Store>((set) => ({
-  isMinimized: false,
+  isMinimized: true,
   toggle: () => set((state) => ({ isMinimized: !state.isMinimized })),
 }))
