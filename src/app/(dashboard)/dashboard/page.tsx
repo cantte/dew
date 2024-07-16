@@ -24,7 +24,9 @@ const DashboardPage = async () => {
         <span className="font-semibold tracking-tight">Reporte general</span>
 
         <div className="grid gap-4">
-          <Suspense fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}>
+          <Suspense
+            fallback={<Skeleton className="h-5 w-full max-w-[450px]" />}
+          >
             <GeneralOverview />
           </Suspense>
 

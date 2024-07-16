@@ -48,7 +48,7 @@ const icons = [
   {
     id: 'pie-chart',
     icon: PieChart,
-  }
+  },
 ]
 
 export const getIcon = (id: string, className?: string) => {
