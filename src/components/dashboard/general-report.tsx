@@ -38,14 +38,14 @@ export const GeneralReport = async () => {
     salesReport.amountImprovement + ordersReport.amountImprovement
   const revenueData = salesReport.totalAmountPerDay.concat(
     ordersReport.totalAmountPerDay,
-  )
+  ).sort((a, b) => a.date.localeCompare(b.date))
 
   const profit = salesReport.totalProfit + ordersReport.totalProfit
   const profitImprovement =
     salesReport.profitImprovement + ordersReport.profitImprovement
   const profitData = salesReport.totalProfitPerDay.concat(
     ordersReport.totalProfitPerDay,
-  )
+  ).sort((a, b) => a.date.localeCompare(b.date))
 
   return (
     <>
