@@ -15,7 +15,7 @@ const CashRegisterDetails = async ({ cashRegisterId }: Props) => {
   })
 
   return (
-    <div className="!mt-8 space-y-4">
+    <div className="space-y-4">
       <div className="flex flex-col space-y-1">
         <h2 className="font-semibold text-xl tracking-tight">Movimientos</h2>
         <span className="text-muted-foreground text-sm">
