@@ -5,6 +5,7 @@ import {
   Home,
   LayoutDashboard,
   Package,
+  PieChart,
   ShoppingBasket,
   ShoppingCart,
   Store,
@@ -43,6 +44,10 @@ const icons = [
   {
     id: 'users',
     icon: Users,
+  },
+  {
+    id: 'pie-chart',
+    icon: PieChart,
   },
 ]
 

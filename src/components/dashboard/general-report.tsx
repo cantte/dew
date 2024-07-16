@@ -36,16 +36,16 @@ export const GeneralReport = async () => {
   const revenue = salesReport.totalAmount + ordersReport.totalAmount
   const revenueImprovement =
     salesReport.amountImprovement + ordersReport.amountImprovement
-  const revenueData = salesReport.totalAmountPerDay.concat(
-    ordersReport.totalAmountPerDay,
-  )
+  const revenueData = salesReport.totalAmountPerDay
+    .concat(ordersReport.totalAmountPerDay)
+    .sort((a, b) => a.date.localeCompare(b.date))
 
   const profit = salesReport.totalProfit + ordersReport.totalProfit
   const profitImprovement =
     salesReport.profitImprovement + ordersReport.profitImprovement
-  const profitData = salesReport.totalProfitPerDay.concat(
-    ordersReport.totalProfitPerDay,
-  )
+  const profitData = salesReport.totalProfitPerDay
+    .concat(ordersReport.totalProfitPerDay)
+    .sort((a, b) => a.date.localeCompare(b.date))
 
   return (
     <>

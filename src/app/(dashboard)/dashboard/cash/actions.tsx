@@ -99,11 +99,9 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
 
   const isDesktop = useMediaQuery('(min-width: 768px)')
   return (
-    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-      <Button size="lg" onClick={inTransaction}>
-        Realizar ingreso
-      </Button>
-      <Button variant="secondary" size="lg" onClick={outTransaction}>
+    <div className="grid grid-cols-2 gap-2">
+      <Button onClick={inTransaction}>Realizar ingreso</Button>
+      <Button variant="secondary" onClick={outTransaction}>
         Realizar egreso
       </Button>
 
