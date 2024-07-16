@@ -7,7 +7,6 @@ import {
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons'
 import type { Table } from '@tanstack/react-table'
-import React from 'react'
 import { Button } from '~/components/ui/button'
 import {
   Select,
@@ -26,7 +25,7 @@ const DataTablePagination = <TData,>({
 }: DataTablePaginationProps<TData>) => {
   return (
     <div className="flex items-center justify-end">
-      <div className="flex flex-col items-center gap-6 lg:gap-8">
+      <div className="flex flex-col items-end gap-2">
         <div className="flex items-center space-x-2">
           <p className="font-medium text-sm">Elementos por página</p>
           <Select
