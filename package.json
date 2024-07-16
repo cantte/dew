@@ -35,7 +35,7 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@react-email/components": "0.0.21",
     "@react-pdf/renderer": "^3.4.4",
-    "@sentry/nextjs": "8.17.0",
+    "@sentry/nextjs": "8.18.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-query": "^5.51.1",
     "@tanstack/react-query-devtools": "^5.51.1",
@@ -96,7 +96,7 @@
     "eslint-config-next": "^14.2.5",
     "pg": "^8.12.0",
     "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.5",
+    "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3"
   },
   "ct3aMetadata": {
