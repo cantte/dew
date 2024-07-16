@@ -45,7 +45,7 @@
     "@trpc/react-query": "11.0.0-rc.465",
     "@trpc/server": "11.0.0-rc.465",
     "@uidotdev/usehooks": "^2.4.1",
-    "@upstash/ratelimit": "^1.2.1",
+    "@upstash/ratelimit": "^2.0.0",
     "@upstash/redis": "^1.32.0",
     "@vercel/analytics": "^1.3.1",
     "@vercel/speed-insights": "^1.0.12",
