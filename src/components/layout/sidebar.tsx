@@ -4,6 +4,7 @@ import { ChevronLeft } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { DashboardNav } from '~/components/dashboard/nav'
+import { Button } from '~/components/ui/button'
 import { useSidebar } from '~/hooks/use-sidebar'
 import { cn } from '~/lib/utils'
 import type { RouterOutputs } from '~/trpc/shared'
@@ -34,13 +35,16 @@ export const Sidebar = ({ className, items }: Props) => {
         className,
       )}
     >
-      <ChevronLeft
-        className={cn(
-          '-right-3 absolute top-20 cursor-pointer rounded-full border bg-background text-3xl text-foreground',
-          isMinimized && 'rotate-180',
-        )}
+      <Button
+        variant="outline"
+        size="sm"
+        className="-right-5 absolute top-16 h-7 gap-1 bg-background"
         onClick={handleToggle}
-      />
+      >
+        <ChevronLeft
+          className={cn('h-3.5 w-3.5', isMinimized && 'rotate-180')}
+        />
+      </Button>
 
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
