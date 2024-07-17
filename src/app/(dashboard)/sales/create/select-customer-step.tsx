@@ -46,6 +46,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
     },
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (findCustomerError) {
       if (findCustomerError.message.includes('undefined')) {
@@ -61,7 +62,6 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
       form.setValue('customerId', customer.id)
       form.clearErrors('customerId')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customer, findCustomerError])
 
   const handleContinueWithoutCustomer = () => {
@@ -107,7 +107,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
                     <Info className="h-4 w-4" />
                   </PopoverTrigger>
                   <PopoverContent>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-muted-foreground text-sm">
                       Puedes continuar sin un cliente, se asociará la venta al
                       mostrador.
                     </span>
