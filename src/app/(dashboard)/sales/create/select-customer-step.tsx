@@ -65,7 +65,7 @@ const SelectCustomerStep = ({ onContinue }: Props) => {
   }, [customer, findCustomerError])
 
   const handleContinueWithoutCustomer = () => {
-    form.setValue('customerId', '000000')
+    form.setValue('customerId', '222222222222')
     onContinue()
   }
   const [isOpenCreateCustomerModal, setIsOpenCreateCustomerModal] =
