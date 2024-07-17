@@ -36,15 +36,34 @@ export const GeneralReport = async () => {
   const revenue = salesReport.totalAmount + ordersReport.totalAmount
   const revenueImprovement =
     salesReport.amountImprovement + ordersReport.amountImprovement
-  const revenueData = salesReport.totalAmountPerDay
-    .concat(ordersReport.totalAmountPerDay)
-    .sort((a, b) => a.date.localeCompare(b.date))
-
   const profit = salesReport.totalProfit + ordersReport.totalProfit
   const profitImprovement =
     salesReport.profitImprovement + ordersReport.profitImprovement
+
+  const revenueData = salesReport.totalAmountPerDay
+    .concat(ordersReport.totalAmountPerDay)
+    .reduce<{ date: string; total: number }[]>((acc, item) => {
+      const existingItem = acc.find((i) => i.date === item.date)
+      if (existingItem) {
+        existingItem.total += item.total
+      } else {
+        acc.push(item)
+      }
+      return acc
+    }, [])
+    .sort((a, b) => a.date.localeCompare(b.date))
+
   const profitData = salesReport.totalProfitPerDay
     .concat(ordersReport.totalProfitPerDay)
+    .reduce<{ date: string; total: number }[]>((acc, item) => {
+      const existingItem = acc.find((i) => i.date === item.date)
+      if (existingItem) {
+        existingItem.total += item.total
+      } else {
+        acc.push(item)
+      }
+      return acc
+    }, [])
     .sort((a, b) => a.date.localeCompare(b.date))
 
   return (
