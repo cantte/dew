@@ -12,3 +12,9 @@ export const paymentMethods = [
   { id: 'debitCard', label: 'Tarjeta de débito' },
   { id: 'transfer', label: 'Transferencia' },
 ] as const
+
+export const saleStatuses = [
+  { id: 'pending', label: 'Pendiente' },
+  { id: 'paid', label: 'Pagada' },
+  { id: 'cancelled', label: 'Cancelada' },
+] as const
