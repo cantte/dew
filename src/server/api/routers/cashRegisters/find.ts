@@ -19,7 +19,7 @@ const findCashRegister = async ({ ctx, input }: Options) => {
       outAmount: sql<number>`sum(${cashRegisterTransactions.amount}) filter (where ${cashRegisterTransactions.type} = 'OUT')`,
     })
     .from(cashRegisters)
-    .innerJoin(
+    .leftJoin(
       cashRegisterTransactions,
       eq(cashRegisters.id, cashRegisterTransactions.cashRegisterId),
     )
