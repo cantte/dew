@@ -14,7 +14,8 @@ type Options = {
 
 export const cancelSale = async ({ ctx, input }: Options) => {
   return await ctx.db.transaction(async (tx) => {
-    tx.update(sales)
+    await tx
+      .update(sales)
       .set({
         status: 'cancelled',
       })
@@ -26,6 +27,7 @@ export const cancelSale = async ({ ctx, input }: Options) => {
         amount: sales.amount,
         status: sales.status,
         store: sales.storeId,
+        createdAt: sales.createdAt,
       })
       .from(sales)
       .where(eq(sales.code, input.code))
@@ -70,7 +72,7 @@ export const cancelSale = async ({ ctx, input }: Options) => {
     await upsertProductsSummaries({ tx, input: soldProductSummaries })
 
     const saleSummary = {
-      date: new Date(),
+      date: sale.createdAt,
       amount: -sale.amount,
       profit: -items.reduce(
         (acc, item) => acc + item.profit * item.quantity,
