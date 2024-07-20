@@ -30,8 +30,8 @@ const upsertSaleSummary = async ({ tx, input }: Options) => {
         amount: sql`${saleSummary.amount} + EXCLUDED.amount`,
         profit: sql`${saleSummary.profit} + EXCLUDED.profit`,
         products: sql`${saleSummary.products} + EXCLUDED.products`,
-        customers: sql`1 + EXCLUDED.customers`,
-        sales: sql`1 + EXCLUDED.sales`,
+        customers: sql`${saleSummary.customers} + EXCLUDED.customers`,
+        sales: sql`${saleSummary.sales} + EXCLUDED.sales`,
       },
     })
 }

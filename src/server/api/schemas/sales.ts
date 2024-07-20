@@ -38,5 +38,7 @@ export const upsertSaleSummaryInput = z.object({
   amount: z.coerce.number().min(0),
   profit: z.coerce.number().min(0),
   products: z.coerce.number().min(0),
+  customers: z.coerce.number().min(0),
+  sales: z.coerce.number().min(0),
   storeId: z.string().uuid(),
 })
