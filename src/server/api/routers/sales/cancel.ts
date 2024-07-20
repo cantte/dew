@@ -1,14 +1,15 @@
 import { and, eq, sql } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import uuid from '~/lib/uuid'
+import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { makeCashMovement } from '~/server/api/routers/cashRegisters/make-cash-movement'
 import upsertProductsSummaries from '~/server/api/routers/products/upsertSummaries'
 import upsertSaleSummary from '~/server/api/routers/sales/upsertSummary'
 import type { findSaleInput } from '~/server/api/schemas/sales'
-import type { TRPCContextInner } from '~/server/api/trpc'
 import { inventory, saleItems, sales } from '~/server/db/schema'
 
 type Options = {
-  ctx: TRPCContextInner
+  ctx: TRPCAuthedContext
   input: TypeOf<typeof findSaleInput>
 }
 
@@ -85,5 +86,15 @@ export const cancelSale = async ({ ctx, input }: Options) => {
     }
 
     await upsertSaleSummary({ tx, input: saleSummary })
+
+    await makeCashMovement({
+      tx,
+      input: {
+        storeId: sale.store,
+        userId: ctx.session.user.id,
+        type: 'OUT',
+        amount: sale.amount,
+      },
+    })
   })
 }
