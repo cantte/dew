@@ -1,5 +1,6 @@
 import authedProcedure from '~/server/api/procedures/authed'
 import publicProcedure from '~/server/api/procedures/public'
+import { cancelSale } from '~/server/api/routers/sales/cancel'
 import createSale from '~/server/api/routers/sales/create'
 import findSale from '~/server/api/routers/sales/find'
 import listSales from '~/server/api/routers/sales/list'
@@ -39,6 +40,11 @@ const salesRouter = router({
     .input(getSalesOverviewInput)
     .query(async ({ ctx, input }) => {
       return await generateSalesReport({ ctx, input })
+    }),
+  cancel: authedProcedure
+    .input(findSaleInput)
+    .mutation(async ({ ctx, input }) => {
+      return await cancelSale({ ctx, input })
     }),
 })
 
