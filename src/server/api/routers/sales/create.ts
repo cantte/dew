@@ -112,7 +112,7 @@ const createSale = async ({ ctx, input }: Options) => {
           storeId: input.storeId,
           userId: ctx.session.user.id,
           type: 'IN',
-          amount: input.amount,
+          amount: input.payment,
         },
       })
 
