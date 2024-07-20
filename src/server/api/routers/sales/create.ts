@@ -98,6 +98,8 @@ const createSale = async ({ ctx, input }: Options) => {
       ),
       products: input.items.reduce((acc, item) => item.quantity + acc, 0),
       storeId: input.storeId,
+      customers: 1,
+      sales: 1,
     }
 
     await upsertSaleSummary({ tx, input: saleSummary })
