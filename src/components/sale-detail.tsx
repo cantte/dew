@@ -1,21 +1,21 @@
 'use client'
 
-import { Separator } from '~/components/ui/separator'
-import { paymentMethods } from '~/constants'
-import type { RouterOutputs } from '~/trpc/shared'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import { Printer } from 'lucide-react'
+import { useMemo } from 'react'
+import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
+import { SaleOrderItems } from '~/components/sale-order-items'
+import { Tooltip } from '~/components/tooltip'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
-import { Printer } from 'lucide-react'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
-import { useMemo } from 'react'
-import { SaleOrderItems } from '~/components/sale-order-items'
+import { Separator } from '~/components/ui/separator'
+import { paymentMethods, saleStatuses } from '~/constants'
 import {
   formatToCurrency,
   formatToDateWithTime,
   formatToNumber,
 } from '~/text/format'
-import { Tooltip } from '~/components/tooltip'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   sale: NonNullable<RouterOutputs['sale']['find']>
@@ -50,11 +50,20 @@ export const SaleDetail = ({ sale }: Props) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <Tooltip title="Fecha de creación de la venta">
-          <Badge variant="outline">
-            {formatToDateWithTime('es-CO', new Date(sale.createdAt))}
+        <div className="flex items-center gap-2">
+          <Tooltip title="Fecha de creación de la venta">
+            <Badge variant="outline">
+              {formatToDateWithTime('es-CO', new Date(sale.createdAt))}
+            </Badge>
+          </Tooltip>
+
+          <Badge
+            variant={sale.status === 'cancelled' ? 'destructive' : 'success'}
+          >
+            {saleStatuses.find((status) => status.id === sale.status)?.label ??
+              'Desconocido'}
           </Badge>
-        </Tooltip>
+        </div>
 
         <PDFDownloadLink document={<InvoicePDFTemplate {...templateProps} />}>
           <Button variant="outline" size="sm" className="h-7 gap-1">

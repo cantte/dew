@@ -13,6 +13,7 @@ export const createSaleInput = z
   .object({
     customerId: z.string().min(1).max(32),
     amount: z.coerce.number().min(0),
+    status: z.enum(['pending', 'paid'] as const),
     paymentMethod: paymentMethod,
     payment: z.coerce.number().min(0),
     storeId: z.string().min(1).max(36),
@@ -37,5 +38,7 @@ export const upsertSaleSummaryInput = z.object({
   amount: z.coerce.number().min(0),
   profit: z.coerce.number().min(0),
   products: z.coerce.number().min(0),
+  customers: z.coerce.number().min(0),
+  sales: z.coerce.number().min(0),
   storeId: z.string().uuid(),
 })

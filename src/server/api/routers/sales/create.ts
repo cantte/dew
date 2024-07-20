@@ -5,6 +5,7 @@ import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
 import NewSale from '~/emails/new-sale'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { makeCashMovement } from '~/server/api/routers/cashRegisters/make-cash-movement'
 import findCustomer from '~/server/api/routers/customers/find'
 import { notifyLowStock } from '~/server/api/routers/inventory/notifyLowStock'
 import upsertProductsSummaries from '~/server/api/routers/products/upsertSummaries'
@@ -98,9 +99,36 @@ const createSale = async ({ ctx, input }: Options) => {
       ),
       products: input.items.reduce((acc, item) => item.quantity + acc, 0),
       storeId: input.storeId,
+      customers: 1,
+      sales: 1,
     }
 
     await upsertSaleSummary({ tx, input: saleSummary })
+
+    if (input.paymentMethod === 'cash') {
+      await makeCashMovement({
+        tx,
+        input: {
+          storeId: input.storeId,
+          userId: ctx.session.user.id,
+          type: 'IN',
+          amount: input.amount,
+        },
+      })
+
+      const change = input.payment - input.amount
+      if (change > 0) {
+        await makeCashMovement({
+          tx,
+          input: {
+            storeId: input.storeId,
+            userId: ctx.session.user.id,
+            type: 'OUT',
+            amount: change,
+          },
+        })
+      }
+    }
 
     // Send email to customer
     const customer = await findCustomer({
@@ -108,11 +136,7 @@ const createSale = async ({ ctx, input }: Options) => {
       input: { id: input.customerId },
     })
 
-    if (!customer) {
-      return
-    }
-
-    if (!customer.email) {
+    if (!customer?.email) {
       return
     }
 

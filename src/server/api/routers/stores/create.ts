@@ -4,6 +4,7 @@ import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { createStoreInput } from '~/server/api/schemas/stores'
 import {
+  cashRegisters,
   employeeStore,
   employees,
   roles,
@@ -71,6 +72,13 @@ const createStore = async ({ ctx, input }: Options) => {
       employeeId: user.id,
       storeId: storeId,
       roleId: adminRole.id,
+    })
+
+    await tx.insert(cashRegisters).values({
+      id: uuid(),
+      storeId,
+      amount: 0,
+      createdBy: ctx.session.user.id,
     })
   })
 }

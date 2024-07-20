@@ -3,6 +3,7 @@ import {
   date,
   index,
   integer,
+  pgEnum,
   real,
   timestamp,
   unique,
@@ -16,6 +17,12 @@ import { customers } from '~/server/db/schema/customers'
 import { products } from '~/server/db/schema/products'
 import { stores } from '~/server/db/schema/stores'
 
+export const saleStatuses = pgEnum('sale_status', [
+  'pending',
+  'paid',
+  'cancelled',
+])
+
 export const sales = createTable(
   'sale',
   {
@@ -24,6 +31,7 @@ export const sales = createTable(
       .notNull()
       .references(() => customers.id),
     amount: real('amount').notNull(),
+    status: saleStatuses('status').notNull().default('pending'),
     paymentMethod: paymentMethods('payment_method').notNull().default('cash'),
     payment: real('payment').notNull(),
     storeId: uuid('store_id')

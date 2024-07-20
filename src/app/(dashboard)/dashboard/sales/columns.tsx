@@ -1,11 +1,10 @@
 'use client'
 
-import { EyeOpenIcon } from '@radix-ui/react-icons'
 import type { ColumnDef } from '@tanstack/react-table'
-import NextLink from 'next/link'
 import type { DateRange } from 'react-day-picker'
-import { Button } from '~/components/ui/button'
-import { paymentMethods } from '~/constants'
+import { SaleRowActions } from '~/app/(dashboard)/dashboard/sales/row-actions'
+import { Badge } from '~/components/ui/badge'
+import { paymentMethods, saleStatuses } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type Sale = RouterOutputs['sale']['list'][number]
@@ -35,6 +34,25 @@ export const columns: ColumnDef<Sale>[] = [
           }).format(row.original.amount)}
         </span>
       )
+    },
+  },
+  {
+    accessorKey: 'status',
+    header: 'Estado',
+    cell: ({ row }) => {
+      return (
+        <Badge
+          variant={
+            row.original.status === 'cancelled' ? 'destructive' : 'default'
+          }
+        >
+          {saleStatuses.find((status) => status.id === row.original.status)
+            ?.label ?? 'Desconocido'}
+        </Badge>
+      )
+    },
+    filterFn: (row, id, value: string) => {
+      return value.includes(row.getValue(id))
     },
   },
   {
@@ -86,13 +104,7 @@ export const columns: ColumnDef<Sale>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      return (
-        <Button asChild size="icon" variant="ghost">
-          <NextLink href={`/dashboard/sales/${row.original.code}`}>
-            <EyeOpenIcon className="h-4 w-4" />
-          </NextLink>
-        </Button>
-      )
+      return <SaleRowActions row={row} />
     },
   },
 ]

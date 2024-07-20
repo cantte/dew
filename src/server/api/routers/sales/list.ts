@@ -14,6 +14,7 @@ const listSales = async ({ ctx, input }: Options) => {
     .select({
       code: sales.code,
       customer: sql<string>`CONCAT(${customers.name}, ' (', ${customers.id}, ')')`,
+      status: sales.status,
       amount: sales.amount,
       paymentMethod: sales.paymentMethod,
       createdAt: sales.createdAt,
