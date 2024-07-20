@@ -32,6 +32,7 @@ const CreateSaleForm = ({ storeId, suggestions }: Props) => {
       storeId: storeId,
       items: [],
       paymentMethod: 'cash',
+      status: 'paid',
     },
   })
   const createSale = api.sale.create.useMutation()

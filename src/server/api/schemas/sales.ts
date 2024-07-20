@@ -13,6 +13,7 @@ export const createSaleInput = z
   .object({
     customerId: z.string().min(1).max(32),
     amount: z.coerce.number().min(0),
+    status: z.enum(['pending', 'paid'] as const),
     paymentMethod: paymentMethod,
     payment: z.coerce.number().min(0),
     storeId: z.string().min(1).max(36),
