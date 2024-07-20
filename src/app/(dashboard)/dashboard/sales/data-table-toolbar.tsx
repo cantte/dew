@@ -7,7 +7,7 @@ import { useMemo } from 'react'
 import DateRangeFilter from '~/app/(dashboard)/dashboard/sales/date-range-filter'
 import DataTableFacetedFilter from '~/components/data-table-faceted-filter'
 import { Button } from '~/components/ui/button'
-import { paymentMethods } from '~/constants'
+import { paymentMethods, saleStatuses } from '~/constants'
 import { type ExportableToCsv, exportToCsv } from '~/lib/csv'
 
 type Props<TData> = {
@@ -59,6 +59,14 @@ const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
                 column={table.getColumn('paymentMethod')}
                 title="Método de pago"
                 options={paymentMethods}
+              />
+            )}
+
+            {table.getColumn('status') && (
+              <DataTableFacetedFilter
+                column={table.getColumn('status')}
+                title="Estado"
+                options={saleStatuses}
               />
             )}
 
