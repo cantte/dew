@@ -136,12 +136,8 @@ const createSale = async ({ ctx, input }: Options) => {
       input: { id: input.customerId },
     })
 
-    if (!customer) {
-      return
-    }
-
-    if (!customer.email) {
-      return
+    if (!customer?.email) {
+      return;
     }
 
     const store = await findStore({ ctx, input: { id: input.storeId } })
