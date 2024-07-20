@@ -20,8 +20,6 @@ const upsertSaleSummary = async ({ tx, input }: Options) => {
     .values({
       ...input,
       id: uuid(),
-      customers: 1,
-      sales: 1,
       date: input.date.toISOString().split('T')[0],
     })
     .onConflictDoUpdate({
