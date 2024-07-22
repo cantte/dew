@@ -3,6 +3,7 @@ import { byStoreInput } from '~/server/api/schemas/common'
 
 export const createProductInput = z.object({
   code: z.string().min(1).max(255),
+  reference: z.string().optional(),
   name: z.string().min(1).max(255),
   description: z.string().optional(),
   purchasePrice: z.coerce.number().min(0),
