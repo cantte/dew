@@ -36,7 +36,7 @@
     "@react-email/components": "0.0.21",
     "@react-pdf/renderer": "^3.4.4",
     "@sentry/nextjs": "8.19.0",
-    "@t3-oss/env-nextjs": "^0.10.1",
+    "@t3-oss/env-nextjs": "^0.11.0",
     "@tanstack/react-query": "^5.51.11",
     "@tanstack/react-query-devtools": "^5.51.11",
     "@tanstack/react-table": "^8.19.3",
@@ -56,7 +56,7 @@
     "drizzle-orm": "^0.32.0",
     "export-to-csv": "^1.3.0",
     "jsbarcode": "^3.11.6",
-    "lucide-react": "^0.412.0",
+    "lucide-react": "^0.414.0",
     "next": "^14.2.5",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
@@ -102,5 +102,5 @@
   "ct3aMetadata": {
     "initVersion": "7.24.2"
   },
-  "packageManager": "pnpm@9.5.0"
+  "packageManager": "pnpm@9.6.0"
 }
