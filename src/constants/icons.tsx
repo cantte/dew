@@ -9,6 +9,7 @@ import {
   ShoppingBasket,
   ShoppingCart,
   Store,
+  Tag,
   Users,
 } from 'lucide-react'
 
@@ -48,6 +49,10 @@ const icons = [
   {
     id: 'pie-chart',
     icon: PieChart,
+  },
+  {
+    id: 'tag',
+    icon: Tag,
   },
 ]
 
