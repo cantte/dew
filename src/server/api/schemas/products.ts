@@ -8,8 +8,10 @@ export const createProductInput = z.object({
   description: z.string().optional(),
   purchasePrice: z.coerce.number().min(0),
   salePrice: z.coerce.number().min(0),
+  stock: z.coerce.number().min(0),
+  quantity: z.coerce.number().min(0),
 
-  stores: z.array(z.string().uuid()).min(1),
+  storeId: z.string().uuid(),
 })
 
 export const bulkCreateProductInput = z.object({
