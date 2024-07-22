@@ -1,0 +1,1 @@
+ALTER TABLE "product" ADD COLUMN "reference" text;
