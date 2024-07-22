@@ -21,7 +21,7 @@ const createProduct = async ({ ctx, input }: Options) => {
   }
 
   await ctx.db.transaction(async (tx) => {
-    const { stores, ...product } = input
+    const { storeId, stock, quantity, ...product } = input
     const productId = uuid()
 
     await tx.insert(products).values({
@@ -30,14 +30,12 @@ const createProduct = async ({ ctx, input }: Options) => {
       createdBy: ctx.session.user.id,
     })
 
-    await tx.insert(inventory).values(
-      stores.map((storeId) => ({
-        storeId: storeId,
-        productId: productId,
-        stock: 0,
-        quantity: 0,
-      })),
-    )
+    await tx.insert(inventory).values({
+      storeId: storeId,
+      productId: productId,
+      stock: stock,
+      quantity: quantity,
+    })
   })
 }
 
