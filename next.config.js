@@ -5,7 +5,12 @@
 await import('./src/env.js')
 
 /** @type {import("next").NextConfig} */
-const coreConfig = {}
+const coreConfig = {
+  reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+}
 
 import { withSentryConfig } from '@sentry/nextjs'
 
