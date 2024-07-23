@@ -82,7 +82,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@next/eslint-plugin-next": "^14.2.5",
-    "@types/eslint": "^8.56.11",
+    "@types/eslint": "^9.6.0",
     "@types/node": "^20.14.11",
     "@types/papaparse": "^5.3.14",
     "@types/react": "^18.3.3",
