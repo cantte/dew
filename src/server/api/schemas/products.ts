@@ -11,6 +11,7 @@ export const createProductInput = z.object({
   stock: z.coerce.number().min(0),
   quantity: z.coerce.number().min(0),
 
+  unitId: z.string().uuid(),
   storeId: z.string().uuid(),
 })
 
