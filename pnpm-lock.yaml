@@ -162,8 +162,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3(react@18.3.1)
       react-email:
-        specifier: 2.1.5
-        version: 2.1.5(@opentelemetry/api@1.9.0)(@swc/helpers@0.5.5)(eslint@9.5.0)
+        specifier: 2.1.6
+        version: 2.1.6(@opentelemetry/api@1.9.0)(@swc/helpers@0.5.5)(eslint@9.5.0)
       react-hook-form:
         specifier: ^7.52.1
         version: 7.52.1(react@18.3.1)
@@ -3928,8 +3928,8 @@ packages:
     peerDependencies:
       react: '>= 16.8 || 18.0.0'
 
-  react-email@2.1.5:
-    resolution: {integrity: sha512-SjGt5XiqNwrC6FT0rAxERj0MC9binUOVZDzspAxcRHpxjZavvePAHvV29uROWNQ1Ha7ssg1sfy4dTQi7bjCXrg==}
+  react-email@2.1.6:
+    resolution: {integrity: sha512-BtR9VI1CMq4953wfiBmzupKlWcRThaWG2dDgl1vWAllK3tNNmJNerwY4VlmASRDQZE3LpLXU3+lf8N/VAKdbZQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -8373,7 +8373,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  react-email@2.1.5(@opentelemetry/api@1.9.0)(@swc/helpers@0.5.5)(eslint@9.5.0):
+  react-email@2.1.6(@opentelemetry/api@1.9.0)(@swc/helpers@0.5.5)(eslint@9.5.0):
     dependencies:
       '@babel/core': 7.24.5
       '@babel/parser': 7.24.5
