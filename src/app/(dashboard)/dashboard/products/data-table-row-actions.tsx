@@ -51,7 +51,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
         {!canEditProduct.isPending && canEditProduct.data ? (
           <>
             <DropdownMenuItem asChild>
-              <NextLink href={`/products/${row.original.id}/edit`}>
+              <NextLink href={`/dashboard/products/${row.original.id}/edit`}>
                 Editar
               </NextLink>
             </DropdownMenuItem>

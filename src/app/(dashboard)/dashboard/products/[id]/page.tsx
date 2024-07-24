@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import ProductDetails from '~/app/(dashboard)/dashboard/products/[id]/product-details'
 import ProductDiscounts from '~/app/(dashboard)/dashboard/products/[id]/product-discounts'
 import ProductInventoryDetail from '~/app/(dashboard)/dashboard/products/[id]/product-inventory-detail'
+import BackButton from '~/components/back-button'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
@@ -26,6 +27,8 @@ const ProductDetailPage = async ({ params }: Props) => {
 
   return (
     <div className="flex flex-col items-start space-y-4">
+      <BackButton />
+
       <div className="flex min-h-[calc(100vh-20rem)] w-full flex-col space-y-4">
         <div className="grid grow grid-cols-1 gap-4 md:grid-cols-3">
           <div className="md:col-span-2">

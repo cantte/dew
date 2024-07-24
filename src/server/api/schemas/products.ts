@@ -34,10 +34,13 @@ export const bulkCreateProductInput = z.object({
 
 export const updateProductInput = z.object({
   id: z.string().min(1).max(255),
+  reference: z.string().optional(),
   name: z.string().min(1).max(255),
   description: z.string().optional(),
   purchasePrice: z.coerce.number().min(0),
   salePrice: z.coerce.number().min(0),
+
+  unitId: z.string().uuid(),
 })
 
 export const linkToStoresInput = z.object({

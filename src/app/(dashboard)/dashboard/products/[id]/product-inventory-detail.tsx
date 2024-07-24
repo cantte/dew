@@ -33,6 +33,10 @@ const ProductInventoryDetail = async ({ id }: Props) => {
 
       <ul className="grid gap-2">
         <li className="flex items-center justify-between">
+          <span className="text-muted-foreground">Unidad de medida</span>
+          <span>{inventory.unit}</span>
+        </li>
+        <li className="flex items-center justify-between">
           <span className="text-muted-foreground">Stock</span>
           <span>{Intl.NumberFormat('es-CO').format(inventory.stock)}</span>
         </li>
