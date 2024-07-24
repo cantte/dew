@@ -14,6 +14,14 @@ import {
 import { users } from '~/server/db/schema/auth'
 import { createTable } from '~/server/db/schema/base'
 
+export const units = createTable('unit', {
+  id: uuid('id').notNull().primaryKey(),
+  name: text('name').notNull(),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
+  deletedAt: timestamp('deleted_at'),
+})
+
 export const products = createTable(
   'product',
   {
@@ -27,6 +35,7 @@ export const products = createTable(
     createdBy: varchar('created_by', { length: 255 })
       .notNull()
       .references(() => users.id),
+    unitId: uuid('unit_id').references(() => units.id),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

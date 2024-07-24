@@ -9,6 +9,7 @@ import findProductById from '~/server/api/routers/products/findById'
 import findProductForSale from '~/server/api/routers/products/findForSale'
 import linkProductToStores from '~/server/api/routers/products/linkToStores'
 import listProducts from '~/server/api/routers/products/list'
+import { listProductUnits } from '~/server/api/routers/products/listUnits'
 import searchMostSoldProducts from '~/server/api/routers/products/mostSold'
 import productsOverview from '~/server/api/routers/products/overview'
 import searchProducts from '~/server/api/routers/products/search'
@@ -116,6 +117,9 @@ const productsRouter = router({
     }),
   mostSold: authedProcedure.query(async ({ ctx }) => {
     return await searchMostSoldProducts({ ctx })
+  }),
+  units: authedProcedure.query(async ({ ctx }) => {
+    return await listProductUnits({ ctx })
   }),
 })
 

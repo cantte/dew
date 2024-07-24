@@ -27,11 +27,13 @@ const CreateProductPage = async () => {
     return <NotEnoughPermissions />
   }
 
+  const units = await api.product.units()
+
   return (
     <div className="flex flex-col items-start space-y-4">
       <BackButton />
 
-      <CreateProductForm store={store} />
+      <CreateProductForm store={store} units={units} />
     </div>
   )
 }

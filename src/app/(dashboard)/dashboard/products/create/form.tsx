@@ -3,13 +3,21 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useDebounce } from '@uidotdev/usehooks'
-import { Tag } from 'lucide-react'
+import { Check, ChevronsUpDown, Tag } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import type { z } from 'zod'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/ui/command'
 
 import {
   Form,
@@ -21,8 +29,14 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/ui/popover'
 import { Textarea } from '~/components/ui/textarea'
 import { useToast } from '~/components/ui/use-toast'
+import { cn } from '~/lib/utils'
 import { createProductInput } from '~/server/api/schemas/products'
 import { formatToCurrency } from '~/text/format'
 import { api } from '~/trpc/react'
@@ -30,19 +44,22 @@ import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
   store: NonNullable<RouterOutputs['store']['findCurrent']>
+  units: RouterOutputs['product']['units']
 }
 
 type FormValues = z.infer<typeof createProductInput>
 
-export const CreateProductForm = ({ store }: Props) => {
+export const CreateProductForm = ({ store, units }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(createProductInput),
     defaultValues: {
       code: '',
       name: '',
-      storeId: store.id,
       stock: 0,
       quantity: 0,
+      reference: '',
+      unitId: '',
+      storeId: store.id,
     },
   })
 
@@ -55,6 +72,8 @@ export const CreateProductForm = ({ store }: Props) => {
       salePrice: 0,
       stock: 0,
       quantity: 0,
+      reference: '',
+      unitId: '',
       storeId: store.id,
     })
   }
@@ -147,20 +166,96 @@ export const CreateProductForm = ({ store }: Props) => {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Código de barras</FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
+                <div>
+                  <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="unitId"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col">
+                          <div>
+                            <FormLabel>Unidad de medida</FormLabel>
+                          </div>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  className={cn(
+                                    'justify-between',
+                                    !field.value && 'text-muted-foreground',
+                                  )}
+                                >
+                                  {field.value
+                                    ? units.find(
+                                        (unit) => unit.id === field.value,
+                                      )?.name
+                                    : 'Selecciona una unidad'}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+
+                            <PopoverContent className="p-0">
+                              <Command>
+                                <CommandInput
+                                  placeholder="Buscar unidad"
+                                  className="h-9"
+                                />
+
+                                <CommandList>
+                                  <CommandEmpty>
+                                    No se encontraron resultados
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {units.map((unit) => (
+                                      <CommandItem
+                                        key={unit.id}
+                                        value={unit.name}
+                                        onSelect={() =>
+                                          form.setValue('unitId', unit.id)
+                                        }
+                                      >
+                                        {unit.name}
+                                        <Check
+                                          className={cn(
+                                            'ml-auto h-4 w-4',
+                                            unit.id === field.value
+                                              ? 'opacity-100'
+                                              : 'opacity-0',
+                                          )}
+                                        />
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="code"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Código de barras</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
 
                 <div>
                   <p className="font-bold text-lg">Precios</p>
