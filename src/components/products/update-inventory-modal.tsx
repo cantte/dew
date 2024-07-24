@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import { Button } from '~/components/ui/button'
@@ -61,6 +61,8 @@ const UpdateInventoryModal = ({ product }: Props) => {
 
   const utils = api.useUtils()
   const { toast } = useToast()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (updateProductQuantity.isSuccess) {
       toast({
@@ -71,7 +73,6 @@ const UpdateInventoryModal = ({ product }: Props) => {
       void utils.product.list.invalidate()
       setIsOpen(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateProductQuantity.isSuccess])
 
   const canUpdateInventory = api.rbac.checkPermissions.useQuery({
@@ -84,13 +85,13 @@ const UpdateInventoryModal = ({ product }: Props) => {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <span className="text-sm">Actualizar inventario</span>
+              <span className="text-sm">Ajustar inventario</span>
             </DropdownMenuItem>
           </DialogTrigger>
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Actualizar inventario</DialogTitle>
+              <DialogTitle>Ajustar inventario</DialogTitle>
               <DialogDescription>
                 Producto <strong>{product.name}</strong>, cantidad actual{' '}
                 <strong>{product.quantity}</strong>
@@ -183,7 +184,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
                   {updateProductQuantity.isPending && (
                     <RotateCw className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Actualizar inventario
+                  Ajustar inventario
                 </Button>
               </form>
             </Form>
