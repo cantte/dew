@@ -2,7 +2,7 @@ import { and, desc, eq, isNull, sql } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { findInventoryInput } from '~/server/api/schemas/inventory'
-import { inventory, products } from '~/server/db/schema'
+import { inventory, products, units } from '~/server/db/schema'
 
 type Options = {
   ctx: TRPCAuthedContext
@@ -12,12 +12,14 @@ type Options = {
 const findProductInventory = async ({ ctx, input }: Options) => {
   const [value] = await ctx.db
     .select({
+      unit: units.name,
       stock: inventory.stock,
       quantity: inventory.quantity,
       isLowStock: sql<boolean>`inventory.quantity <= inventory.stock`,
     })
     .from(products)
     .innerJoin(inventory, eq(products.id, inventory.productId))
+    .innerJoin(units, eq(products.unitId, units.id))
     .where(
       and(
         eq(inventory.storeId, input.storeId),
