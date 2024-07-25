@@ -58,7 +58,7 @@ export default async function CashRegisterPage() {
 
   return (
     <div className="grid gap-4">
-      <div className="sticky top-0 z-20 grid gap-4 bg-background/95 pb-4 backdrop-blur supports-backdrop-blur:bg-background/60">
+      <div className="sticky top-0 z-[5] grid gap-4 bg-background/95 pb-4 backdrop-blur supports-backdrop-blur:bg-background/60">
         <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
           <div className="col-span-1 md:col-span-2">
             <div className="flex flex-col space-y-2 rounded border p-4">
