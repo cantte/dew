@@ -43,6 +43,13 @@
       "when": 1721937605515,
       "tag": "0005_striped_slyde",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1721939282118,
+      "tag": "0006_hard_charles_xavier",
+      "breakpoints": true
     }
   ]
 }
