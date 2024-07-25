@@ -94,7 +94,7 @@ export const cancelSale = async ({ ctx, input }: Options) => {
         input: {
           storeId: sale.store,
           userId: ctx.session.user.id,
-          type: 'OUT',
+          type: 'out',
           amount: sale.amount,
         },
       })

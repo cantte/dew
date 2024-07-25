@@ -89,12 +89,12 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
 
   const inTransaction = () => {
     setOpen(true)
-    form.setValue('type', 'IN')
+    form.setValue('type', 'in')
   }
 
   const outTransaction = () => {
     setOpen(true)
-    form.setValue('type', 'OUT')
+    form.setValue('type', 'out')
   }
 
   const isDesktop = useMediaQuery('(min-width: 768px)')
@@ -110,10 +110,10 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {form.watch('type') === 'IN' ? 'Ingreso' : 'Egreso'}
+                {form.watch('type') === 'in' ? 'Ingreso' : 'Egreso'}
               </DialogTitle>
               <DialogDescription>
-                {form.watch('type') === 'IN'
+                {form.watch('type') === 'in'
                   ? 'Registra un ingreso en la caja.'
                   : 'Registra un egreso en la caja.'}
               </DialogDescription>
@@ -162,10 +162,10 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
           <DrawerContent>
             <DrawerHeader className="text-left">
               <DrawerTitle>
-                {form.watch('type') === 'IN' ? 'Ingreso' : 'Egreso'}
+                {form.watch('type') === 'in' ? 'Ingreso' : 'Egreso'}
               </DrawerTitle>
               <DrawerDescription>
-                {form.watch('type') === 'IN'
+                {form.watch('type') === 'in'
                   ? 'Registra un ingreso en la caja.'
                   : 'Registra un egreso en la caja.'}
               </DrawerDescription>

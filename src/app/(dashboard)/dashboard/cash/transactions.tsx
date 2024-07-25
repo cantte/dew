@@ -41,10 +41,10 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
 
                 <Badge
                   variant={
-                    transaction.type === 'IN' ? 'success' : 'destructive'
+                    transaction.type === 'in' ? 'success' : 'destructive'
                   }
                 >
-                  {transaction.type === 'IN' ? 'Ingreso' : 'Egreso'}
+                  {transaction.type === 'in' ? 'Ingreso' : 'Egreso'}
                 </Badge>
               </CardHeader>
               <CardContent className="px-6 pb-2">

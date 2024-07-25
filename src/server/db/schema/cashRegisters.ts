@@ -1,5 +1,12 @@
 import { relations, sql } from 'drizzle-orm'
-import { index, real, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import {
+  index,
+  pgEnum,
+  real,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core'
 import { users } from '~/server/db/schema/auth'
 import { createTable } from '~/server/db/schema/base'
 import { stores } from '~/server/db/schema/stores'
@@ -39,12 +46,17 @@ export const cashRegisterRelations = relations(cashRegisters, ({ one }) => ({
   }),
 }))
 
+export const cashRegisterTransactionType = pgEnum(
+  'cash_register_transaction_type',
+  ['in', 'out'],
+)
+
 export const cashRegisterTransactions = createTable(
   'cash_register_transaction',
   {
     id: uuid('id').notNull().primaryKey(),
     amount: real('amount').notNull(),
-    type: varchar('type', { length: 32 }).notNull(),
+    type: cashRegisterTransactionType('type').notNull(),
     cashRegisterId: uuid('cash_register_id')
       .notNull()
       .references(() => cashRegisters.id),

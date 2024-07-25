@@ -36,6 +36,13 @@
       "when": 1721837052230,
       "tag": "0004_perpetual_synch",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1721937605515,
+      "tag": "0005_striped_slyde",
+      "breakpoints": true
     }
   ]
 }

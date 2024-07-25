@@ -99,7 +99,7 @@ const cancelOrder = async ({ ctx, input }: Options) => {
         input: {
           storeId: order.store,
           userId: ctx.session.user.id,
-          type: 'OUT',
+          type: 'out',
           amount: order.amount,
         },
       })
