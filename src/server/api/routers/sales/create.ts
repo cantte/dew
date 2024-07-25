@@ -45,8 +45,9 @@ const createSale = async ({ ctx, input }: Options) => {
     }))
 
     for (const soldProduct of soldProducts) {
-      const [product] = await tx
+      const [productInventory] = await tx
         .select({
+          stock: inventory.stock,
           quantity: inventory.quantity,
         })
         .from(inventory)
@@ -57,12 +58,17 @@ const createSale = async ({ ctx, input }: Options) => {
           ),
         )
 
-      if (product === undefined) {
+      if (!productInventory) {
         tx.rollback()
         throw new Error('Product not found')
       }
 
-      if (product.quantity < soldProduct.quantity) {
+      if (productInventory.stock === 0) {
+        // No inventory control
+        continue
+      }
+
+      if (productInventory.quantity < soldProduct.quantity) {
         tx.rollback()
         throw new Error('Insufficient product quantity')
       }
@@ -70,7 +76,7 @@ const createSale = async ({ ctx, input }: Options) => {
       await tx
         .update(inventory)
         .set({
-          quantity: product.quantity - soldProduct.quantity,
+          quantity: productInventory.quantity - soldProduct.quantity,
         })
         .where(
           and(
