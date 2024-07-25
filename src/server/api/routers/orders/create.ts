@@ -1,10 +1,10 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import NewOrderEmail from '~/emails/new-order'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { createOrderInput } from '~/server/api/schemas/orders'
-import { customers, orderItems, orders } from '~/server/db/schema'
+import { customers, inventory, orderItems, orders } from '~/server/db/schema'
 import resend from '~/server/email/resend'
 
 type Options = {
@@ -30,6 +30,53 @@ const createOrder = async ({ ctx, input }: Options) => {
     }))
 
     await tx.insert(orderItems).values(items)
+
+    const soldProducts = items.map((item) => ({
+      id: item.productId,
+      quantity: item.quantity,
+    }))
+
+    for (const soldProduct of soldProducts) {
+      const [productInventory] = await tx
+        .select({
+          stock: inventory.stock,
+          quantity: inventory.quantity,
+        })
+        .from(inventory)
+        .where(
+          and(
+            eq(inventory.productId, soldProduct.id),
+            eq(inventory.storeId, input.storeId),
+          ),
+        )
+
+      if (!productInventory) {
+        tx.rollback()
+        throw new Error('Product not found')
+      }
+
+      if (productInventory.stock === 0) {
+        // No inventory control
+        continue
+      }
+
+      if (productInventory.quantity < soldProduct.quantity) {
+        tx.rollback()
+        throw new Error('Insufficient product quantity')
+      }
+
+      await tx
+        .update(inventory)
+        .set({
+          quantity: productInventory.quantity - soldProduct.quantity,
+        })
+        .where(
+          and(
+            eq(inventory.productId, soldProduct.id),
+            eq(inventory.storeId, input.storeId),
+          ),
+        )
+    }
 
     const customer = await tx.query.customers.findFirst({
       columns: {
