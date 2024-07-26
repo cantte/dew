@@ -5,6 +5,7 @@ import { RotateCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
+import { SelectSaleCustomer } from '~/app/(dashboard)/sales/create/select-sale-customer'
 import { PreventNavigation } from '~/components/prevent-navigation'
 import { ProductSaleCard } from '~/components/products/sale-card'
 import { Badge } from '~/components/ui/badge'
@@ -54,6 +55,8 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
       items: [],
       paymentMethod: 'cash',
       status: 'paid',
+      amount: 0,
+      payment: 0,
     },
   })
 
@@ -127,6 +130,8 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
         items: [],
         paymentMethod: 'cash',
         status: 'paid',
+        amount: 0,
+        payment: 0,
       })
     }
   }, [createSale.isSuccess])
@@ -210,9 +215,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                 <div className="grid gap-2">
                   <span className="font-medium">Cliente</span>
 
-                  <Button variant="outline" size="sm">
-                    Consumido Final (222222222222)
-                  </Button>
+                  <SelectSaleCustomer />
                 </div>
 
                 <Separator />
