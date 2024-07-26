@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import type { z } from 'zod'
+import type { TypeOf } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Form,
@@ -18,15 +18,15 @@ import { Input } from '~/components/ui/input'
 import { createCustomerInput } from '~/server/api/schemas/customers'
 import { api } from '~/trpc/react'
 
-type CreateCustomerFormProps = {
+type Props = {
   id?: string
   onCreate: () => void
 }
 
-type CreateCustomerFormValues = z.infer<typeof createCustomerInput>
+type FormValues = TypeOf<typeof createCustomerInput>
 
-const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
-  const form = useForm<CreateCustomerFormValues>({
+const CreateCustomerForm = ({ onCreate, id }: Props) => {
+  const form = useForm<FormValues>({
     resolver: zodResolver(createCustomerInput),
     defaultValues: {
       id,
@@ -35,15 +35,15 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
 
   const createCustomer = api.customer.create.useMutation()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no needed
   useEffect(() => {
     if (createCustomer.isSuccess) {
       form.reset()
       onCreate()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createCustomer.isSuccess])
 
-  const onSubmit = (data: CreateCustomerFormValues) => {
+  const onSubmit = (data: FormValues) => {
     createCustomer.mutate(data)
   }
 
@@ -113,7 +113,11 @@ const CreateCustomerForm = ({ onCreate, id }: CreateCustomerFormProps) => {
           )}
         />
 
-        <Button type="submit" disabled={createCustomer.isPending}>
+        <Button
+          type="submit"
+          disabled={createCustomer.isPending}
+          onClick={(e) => e.stopPropagation()}
+        >
           {createCustomer.isPending && (
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
