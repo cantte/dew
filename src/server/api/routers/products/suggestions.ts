@@ -16,6 +16,8 @@ const getProductSuggestions = async ({ ctx, input }: Options) => {
       code: products.code,
       name: products.name,
       description: products.description,
+      purchasePrice: products.purchasePrice,
+      salePrice: products.salePrice,
     })
     .from(products)
     .innerJoin(inventory, eq(products.id, inventory.productId))
