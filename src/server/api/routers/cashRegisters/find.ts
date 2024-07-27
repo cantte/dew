@@ -15,8 +15,8 @@ const findCashRegister = async ({ ctx, input }: Options) => {
       id: cashRegisters.id,
       amount: cashRegisters.amount,
       createdAt: cashRegisters.createdAt,
-      inAmount: sql<number>`sum(${cashRegisterTransactions.amount}) filter (where ${cashRegisterTransactions.type} = 'IN')`,
-      outAmount: sql<number>`sum(${cashRegisterTransactions.amount}) filter (where ${cashRegisterTransactions.type} = 'OUT')`,
+      inAmount: sql<number>`sum(${cashRegisterTransactions.amount}) filter (where ${cashRegisterTransactions.type} = 'in')`,
+      outAmount: sql<number>`sum(${cashRegisterTransactions.amount}) filter (where ${cashRegisterTransactions.type} = 'out')`,
     })
     .from(cashRegisters)
     .leftJoin(
