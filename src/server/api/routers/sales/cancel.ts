@@ -27,6 +27,7 @@ export const cancelSale = async ({ ctx, input }: Options) => {
         code: sales.code,
         amount: sales.amount,
         status: sales.status,
+        paymentMethod: sales.paymentMethod,
         store: sales.storeId,
         createdAt: sales.createdAt,
       })
@@ -87,14 +88,16 @@ export const cancelSale = async ({ ctx, input }: Options) => {
 
     await upsertSaleSummary({ tx, input: saleSummary })
 
-    await makeCashMovement({
-      tx,
-      input: {
-        storeId: sale.store,
-        userId: ctx.session.user.id,
-        type: 'OUT',
-        amount: sale.amount,
-      },
-    })
+    if (sale.paymentMethod === 'cash') {
+      await makeCashMovement({
+        tx,
+        input: {
+          storeId: sale.store,
+          userId: ctx.session.user.id,
+          type: 'out',
+          amount: sale.amount,
+        },
+      })
+    }
   })
 }

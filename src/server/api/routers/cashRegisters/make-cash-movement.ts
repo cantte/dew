@@ -29,7 +29,7 @@ export const makeCashMovement = async ({ tx, input }: Options) => {
   }
 
   const newAmount =
-    input.type === 'IN'
+    input.type === 'in'
       ? cashRegister.amount + input.amount
       : cashRegister.amount - input.amount
 

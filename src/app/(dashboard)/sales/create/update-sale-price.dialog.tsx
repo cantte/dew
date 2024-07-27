@@ -51,15 +51,15 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant="ghost" size="icon" type="button">
+        <Button variant="ghost" size="icon" type="button" className="h-7 w-7">
           <Pen className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Actualizar precio de venta</DialogTitle>
+          <DialogTitle>Actualizar precio de venta unitario</DialogTitle>
           <DialogDescription>
-            Estás a punto de actualizar el precio de venta del producto{' '}
+            Estás a punto de actualizar el precio de venta unitario del producto{' '}
             <strong>{productName}</strong>
           </DialogDescription>
         </DialogHeader>
