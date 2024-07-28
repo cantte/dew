@@ -15,7 +15,7 @@
     "format": "biome format --write ."
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^1.4.1",
+    "@auth/drizzle-adapter": "^1.4.2",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-avatar": "^1.1.0",
