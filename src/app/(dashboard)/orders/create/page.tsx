@@ -23,17 +23,19 @@ const CreateOrderPage = async () => {
     storeId: store.id,
   })
 
+  const products = await api.product.list({
+    storeId: store.id,
+  })
+
   return (
-    <div className="w-full max-w-7xl">
-      <div className="mb-4 mt-4 md:mt-0">
-        <BackButton />
-      </div>
+    <div className="flex w-full flex-col items-start space-y-4">
+      <BackButton />
 
-      <section className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">Crear orden</h1>
-
-        <CreateOrderForm storeId={store.id} suggestions={suggestions} />
-      </section>
+      <CreateOrderForm
+        store={store}
+        products={products}
+        suggestions={suggestions}
+      />
     </div>
   )
 }
