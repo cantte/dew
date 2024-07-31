@@ -23,3 +23,8 @@ export const makeInventoryAdjustmentInput = z.object({
     }),
   ),
 })
+
+export enum InventoryAdjustmentType {
+  In = 'in',
+  Out = 'out',
+}
