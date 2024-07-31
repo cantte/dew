@@ -34,7 +34,7 @@ import { useToast } from '~/components/ui/use-toast'
 import { paymentMethods } from '~/constants'
 import type { PaymentMethod } from '~/server/api/schemas/common'
 import { createOrderInput } from '~/server/api/schemas/orders'
-import { formatToCurrency } from '~/text/format'
+import { formatToCurrency, formatToNumber } from '~/text/format'
 import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
 
@@ -409,7 +409,8 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
                         Productos vendidos
                       </span>
                       <span>
-                        {Intl.NumberFormat('es-CO').format(
+                        {formatToNumber(
+                          'es-CO',
                           form
                             .watch('items')
                             .reduce((acc, item) => acc + item.quantity, 0),
