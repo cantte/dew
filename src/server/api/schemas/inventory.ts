@@ -21,7 +21,7 @@ export const makeInventoryAdjustmentInput = z.object({
       quantity: z.coerce.number().min(1),
       type: z.enum(['in', 'out']),
     }),
-  ),
+  ).nonempty(),
 })
 
 export enum InventoryAdjustmentType {
