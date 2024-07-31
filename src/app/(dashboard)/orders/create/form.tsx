@@ -39,7 +39,6 @@ import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type FormValues = TypeOf<typeof createOrderInput>
-export type FormSteps = 'select-products' | 'select-customer' | 'checkout'
 
 type Props = {
   store: NonNullable<RouterOutputs['store']['findCurrent']>
