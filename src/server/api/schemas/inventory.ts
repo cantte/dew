@@ -15,13 +15,15 @@ export const findInventoryInput = z.object({
 export const makeInventoryAdjustmentInput = z.object({
   storeId: z.string().uuid(),
   userId: z.string().uuid(),
-  products: z.array(
-    z.object({
-      productId: z.string().uuid(),
-      quantity: z.coerce.number().min(1),
-      type: z.enum(['in', 'out']),
-    }),
-  ),
+  products: z
+    .array(
+      z.object({
+        productId: z.string().uuid(),
+        quantity: z.coerce.number().min(1),
+        type: z.enum(['in', 'out']),
+      }),
+    )
+    .min(1),
 })
 
 export enum InventoryAdjustmentType {

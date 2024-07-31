@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { columns } from '~/app/(dashboard)/dashboard/products/columns'
 import CreateProductButton from '~/app/(dashboard)/dashboard/products/create-button'
 import ProductDataTable from '~/app/(dashboard)/dashboard/products/data-table'
+import { InventoryAdjustmentButton } from '~/app/(dashboard)/dashboard/products/inventory-adjustment.button'
 import ProductsOverview from '~/app/(dashboard)/dashboard/products/overview'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
@@ -34,9 +35,15 @@ const ProductsPage = async () => {
           <ProductsOverview storeId={store.id} />
         </Suspense>
 
-        <Suspense fallback={<Skeleton className="h-8 w-10" />}>
-          <CreateProductButton />
-        </Suspense>
+        <div className="flex gap-2">
+          <Suspense fallback={<Skeleton className="h-8 w-10" />}>
+            <CreateProductButton />
+          </Suspense>
+
+          <Suspense fallback={<Skeleton className="h-8 w-10" />}>
+            <InventoryAdjustmentButton />
+          </Suspense>
+        </div>
       </div>
 
       <ProductDataTable columns={columns} data={products} storeId={store.id} />
