@@ -27,7 +27,7 @@ const getProductSuggestions = async ({ ctx, input }: Options) => {
       and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
     )
     .orderBy(desc(sum(saleItems.quantity)))
-    .limit(3)
+    .limit(5)
 }
 
 export default getProductSuggestions
