@@ -236,7 +236,7 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
                 </div>
 
                 <div className="grid gap-2">
-                  <span className="font-medium">Cliente</span>
+                  <span className="font-medium leading-none">Cliente</span>
 
                   <SelectSaleCustomer />
                 </div>
@@ -244,7 +244,7 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
                 <Separator />
 
                 <div className="grid gap-2">
-                  <span className="font-medium">Productos</span>
+                  <span className="font-medium leading-none">Productos</span>
 
                   <div className="grid gap-2">
                     {form.watch('items').map((item, index) => (
@@ -317,7 +317,9 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
 
               <div className="grid gap-4">
                 <div className="grid gap-3 text-sm">
-                  <span>Método de pago</span>
+                  <span className="font-medium leading-none">
+                    Método de pago
+                  </span>
 
                   <Select
                     value={form.watch('paymentMethod')}
@@ -363,7 +365,9 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
                 </div>
 
                 <div className="grid gap-3 text-sm">
-                  <span>Datos de envío</span>
+                  <span className="font-medium leading-none">
+                    Datos de envío
+                  </span>
 
                   <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                     <FormField
@@ -401,7 +405,7 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
                 <Separator />
 
                 <div className="grid gap-3 text-sm">
-                  <span>Resumen</span>
+                  <span className="font-medium leading-none">Resumen</span>
                   <ul className="grid gap-1">
                     <li className="flex items-center justify-between">
                       <span className="text-muted-foreground">
