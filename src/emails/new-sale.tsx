@@ -19,7 +19,7 @@ type Props = {
   store: string
 }
 
-const NewSaleCustomerEmail = ({
+export const NewSaleCustomerEmail = ({
   name,
   total,
   products,
@@ -33,7 +33,7 @@ const NewSaleCustomerEmail = ({
       <Preview>Nueva venta registrada</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto px-2 font-sans">
-          <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
+          <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-[#eaeaea] border-solid p-[20px]">
             <Text className="text-xs">
               {Intl.DateTimeFormat('es-CO', {
                 dateStyle: 'full',
@@ -41,7 +41,7 @@ const NewSaleCustomerEmail = ({
               }).format(date ?? new Date())}
             </Text>
 
-            <Text className="scroll-m-20 text-xl font-semibold tracking-tight">
+            <Text className="scroll-m-20 font-semibold text-xl tracking-tight">
               Señor(a) {name}, hemos registrado una nueva compra en nuestro
               sistema en la tienda {store}.
             </Text>
@@ -65,7 +65,7 @@ const NewSaleCustomerEmail = ({
 
               <Container className="flex justify-center">
                 <Button
-                  className="rounded-md bg-[#690dab] px-4 py-2 text-center text-sm font-medium text-white"
+                  className="rounded-md bg-[#690dab] px-4 py-2 text-center font-medium text-sm text-white"
                   href={url}
                 >
                   Ver detalle de la compra
@@ -73,13 +73,13 @@ const NewSaleCustomerEmail = ({
               </Container>
             </Container>
 
-            <Text className="text-xs text-neutral-500">
+            <Text className="text-neutral-500 text-xs">
               Gracias por tu preferencia.
             </Text>
 
             <Hr />
 
-            <Text className="text-xs text-neutral-500">
+            <Text className="text-neutral-500 text-xs">
               © {new Date().getFullYear()} Dew. Todos los derechos reservados.
             </Text>
           </Container>
@@ -88,5 +88,3 @@ const NewSaleCustomerEmail = ({
     </Html>
   )
 }
-
-export default NewSaleCustomerEmail

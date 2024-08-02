@@ -1,8 +1,10 @@
-import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import CreateCustomerForm from '~/components/customers/create-customer.form'
+import KeyboardCommand from '~/components/keyboard-command'
 import { Button } from '~/components/ui/button'
+import { FormDescription } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import { Label } from '~/components/ui/label'
 import { api } from '~/trpc/react'
 
 type Props = {
@@ -11,7 +13,7 @@ type Props = {
 
 export const SelectCustomer = ({ onCustomerSelect }: Props) => {
   const [inputCustomerId, setInputCustomerId] = useState('')
-  const customerId = useDebounce(inputCustomerId, 1000)
+  const [customerId, setCustomerId] = useState('')
 
   const {
     data: customer,
@@ -48,13 +50,28 @@ export const SelectCustomer = ({ onCustomerSelect }: Props) => {
   return (
     <div className="grid gap-2">
       {!customerNotFound && (
-        <Input
-          autoFocus
-          placeholder="Digite la identificación del cliente"
-          value={inputCustomerId}
-          onChange={(e) => setInputCustomerId(e.target.value)}
-          disabled={isLoadingCustomer}
-        />
+        <div className="grid gap-2">
+          <Label htmlFor="customerId">Identificación del cliente</Label>
+
+          <Input
+            id="customerId"
+            placeholder="Ej: 123456789"
+            autoFocus
+            value={inputCustomerId}
+            onChange={(e) => setInputCustomerId(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                setCustomerId(inputCustomerId)
+              }
+            }}
+            disabled={isLoadingCustomer}
+          />
+
+          <FormDescription>
+            Digite la identificación del cliente y presione{' '}
+            <KeyboardCommand command="Enter" /> para buscar
+          </FormDescription>
+        </div>
       )}
 
       {!isLoadingCustomer && customerNotFound && (
@@ -62,9 +79,11 @@ export const SelectCustomer = ({ onCustomerSelect }: Props) => {
       )}
 
       {customer && (
-        <div className="grid gap-4 text-sm">
+        <div className="grid gap-4 rounded border p-2 text-sm">
           <div className="grid gap-2">
-            <span>Cliente encontrado</span>
+            <span className="text-muted-foreground text-xs">
+              Cliente encontrado
+            </span>
             <span>
               {customer.name} ({customer.id})
             </span>

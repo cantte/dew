@@ -1,0 +1,1 @@
+ALTER TABLE "menu_item" ADD COLUMN "enabled" boolean DEFAULT true NOT NULL;
