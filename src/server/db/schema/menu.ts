@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm'
 import {
   type AnyPgColumn,
+  boolean,
   index,
   integer,
   primaryKey,
@@ -19,6 +20,7 @@ export const menuItems = createTable(
     href: varchar('href', { length: 255 }),
     icon: varchar('icon', { length: 30 }),
     priority: integer('priority').notNull().default(0),
+    enabled: boolean('enabled').notNull().default(true),
   },
   (menu) => ({
     parentIdIdx: index('menu_item_parent_id_idx').on(menu.parentId),
