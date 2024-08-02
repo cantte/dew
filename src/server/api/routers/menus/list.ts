@@ -53,6 +53,6 @@ export const listUserMenus = async ({ ctx }: Options) => {
     })
     .from(roleMenuItems)
     .innerJoin(menuItems, eq(menuItems.id, roleMenuItems.menuItemId))
-    .where(eq(roleMenuItems.roleId, roleId))
+    .where(and(eq(roleMenuItems.roleId, roleId), eq(menuItems.enabled, true)))
     .orderBy(desc(menuItems.priority))
 }
