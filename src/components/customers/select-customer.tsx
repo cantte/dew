@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import CreateCustomerForm from '~/components/customers/create-customer.form'
+import KeyboardCommand from '~/components/keyboard-command'
 import { Button } from '~/components/ui/button'
+import { FormDescription } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import { Label } from '~/components/ui/label'
 import { api } from '~/trpc/react'
 
 type Props = {
@@ -47,18 +50,28 @@ export const SelectCustomer = ({ onCustomerSelect }: Props) => {
   return (
     <div className="grid gap-2">
       {!customerNotFound && (
-        <Input
-          autoFocus
-          placeholder="Digite la identificación del cliente"
-          value={inputCustomerId}
-          onChange={(e) => setInputCustomerId(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              setCustomerId(inputCustomerId)
-            }
-          }}
-          disabled={isLoadingCustomer}
-        />
+        <div className="grid gap-2">
+          <Label htmlFor="customerId">Identificación del cliente</Label>
+
+          <Input
+            id="customerId"
+            placeholder="Ej: 123456789"
+            autoFocus
+            value={inputCustomerId}
+            onChange={(e) => setInputCustomerId(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                setCustomerId(inputCustomerId)
+              }
+            }}
+            disabled={isLoadingCustomer}
+          />
+
+          <FormDescription>
+            Digite la identificación del cliente y presione{' '}
+            <KeyboardCommand command="Enter" /> para buscar
+          </FormDescription>
+        </div>
       )}
 
       {!isLoadingCustomer && customerNotFound && (
