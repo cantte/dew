@@ -90,7 +90,12 @@ export const SaleDetail = ({ sale }: Props) => {
                       Productos vendidos
                     </span>
                     <span>
-                      {formatToNumber('es-CO', sale.saleItems.length)}
+                      {formatToNumber(
+                        'es-CO',
+                        sale.saleItems
+                          .map((item) => item.quantity)
+                          .reduce((acc, curr) => acc + curr, 0),
+                      )}
                     </span>
                   </li>
                   <li className="flex items-center justify-between">
