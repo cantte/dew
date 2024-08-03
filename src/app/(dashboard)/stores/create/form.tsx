@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
-import type { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import type { TypeOf } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Form,
@@ -20,14 +20,14 @@ import { Input } from '~/components/ui/input'
 import { createStoreInput } from '~/server/api/schemas/stores'
 import { api } from '~/trpc/react'
 
-export type CreateStoreFormProps = z.infer<typeof createStoreInput>
+export type FormValues = TypeOf<typeof createStoreInput>
 
 type Props = {
   onSuccess?: () => void
 }
 
 const CreateStoreForm = ({ onSuccess }: Props) => {
-  const form = useForm<CreateStoreFormProps>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(createStoreInput),
     defaultValues: {
       name: '',
@@ -36,7 +36,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
   })
 
   const createStore = api.store.create.useMutation()
-  const onSubmit: SubmitHandler<CreateStoreFormProps> = (data) => {
+  const onSubmit = (data: FormValues) => {
     createStore.mutate(data)
   }
 
