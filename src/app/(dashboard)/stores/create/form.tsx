@@ -32,7 +32,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
     defaultValues: {
       name: '',
       address: '',
-    }
+    },
   })
 
   const createStore = api.store.create.useMutation()
