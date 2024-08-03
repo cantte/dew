@@ -7,14 +7,8 @@ import {
   LabelList,
   Line,
   LineChart,
-  type TooltipProps,
   XAxis,
 } from 'recharts'
-import type {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent'
-import ValueDateTooltip from '~/components/dashboard/value-date-tooltip'
 import {
   Card,
   CardContent,
@@ -29,24 +23,6 @@ import {
   ChartTooltipContent,
 } from '~/components/ui/chart'
 import { formatToCurrency, formatToShortMonth } from '~/text/format'
-
-const Tooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
-  if (active && payload) {
-    const firstPayload = payload[0]
-
-    if (!firstPayload) {
-      return null
-    }
-
-    const value = +(firstPayload.value ?? 0)
-    const date = new Date(
-      (firstPayload.payload as { date: string }).date + 'T00:00:00', // Prevents timezone issues
-    )
-
-    return <ValueDateTooltip value={value} date={date} />
-  }
-  return null
-}
 
 type Props = {
   title: string
