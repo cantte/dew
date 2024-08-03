@@ -140,17 +140,23 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
         )}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          {valueImprovement > 0 ? '+' : ''}
-          {Intl.NumberFormat('es-CO', {
-            style: 'percent',
-            minimumFractionDigits: 2,
-          }).format(valueImprovement)}{' '}
-          respecto al mes anterior{' '}
+        <div className="flex items-center gap-2 font-medium leading-none">
+          <span>
+            {Intl.NumberFormat('es-CO', {
+              style: 'percent',
+              signDisplay: 'always',
+              minimumFractionDigits: 2,
+            }).format(valueImprovement)}{' '}
+            respecto al periodo anterior{' '}
+          </span>
           {valueImprovement > 0 ? (
-            <TrendingUp className="h-4 w-4" />
+            <span className="rounded-full bg-secondary p-1">
+              <TrendingUp className="h-3 w-3 text-success-text" />
+            </span>
           ) : (
-            <TrendingDown className="h-4 w-4" />
+            <span className="rounded-full bg-secondary p-1">
+              <TrendingDown className="h-3 w-3 text-destructive" />
+            </span>
           )}
         </div>
       </CardFooter>
