@@ -65,8 +65,8 @@ export const SaleDetail = ({ sale }: Props) => {
             <Badge
               variant={sale.status === 'cancelled' ? 'destructive' : 'success'}
             >
-              {saleStatuses.find((status) => status.id === sale.status)?.label ??
-                'Desconocido'}
+              {saleStatuses.find((status) => status.id === sale.status)
+                ?.label ?? 'Desconocido'}
             </Badge>
           </Tooltip>
         </div>
