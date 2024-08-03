@@ -1,6 +1,7 @@
 import { renderToBuffer } from '@react-pdf/renderer'
 import type { TypeOf } from 'zod'
 import { InvoicePDFTemplate } from '~/components/pdf/invoice-template'
+import { paymentMethods } from '~/constants'
 import { NewSaleCustomerEmail } from '~/emails/new-sale'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import findSale from '~/server/api/routers/sales/find'
@@ -26,17 +27,10 @@ export const sendSaleCustomerNotificationEmail = async ({
     return
   }
 
-  // today's date UTC-5
-  const today = new Date()
-  today.setHours(today.getHours() - 5)
-
   const fileStream = await renderToBuffer(
     InvoicePDFTemplate({
       id: sale.code,
-      date: Intl.DateTimeFormat('es-CO', {
-        dateStyle: 'full',
-        timeStyle: 'short',
-      }).format(today),
+      date: sale.createdAt.toISOString(),
       customer: {
         ...sale.customer,
         phone: sale.customer.phone ?? undefined,
@@ -51,7 +45,11 @@ export const sendSaleCustomerNotificationEmail = async ({
         quantity: item.quantity,
         price: item.salePrice,
       })),
-      total: sale.amount,
+      amount: sale.amount,
+      payment: sale.payment,
+      paymentMethod:
+        paymentMethods.find((p) => p.id === sale.paymentMethod)?.label ??
+        'No presenta',
     }),
   )
 
@@ -63,7 +61,7 @@ export const sendSaleCustomerNotificationEmail = async ({
       name: sale.customer.name,
       total: sale.amount,
       products: sale.saleItems.reduce((acc, item) => acc + item.quantity, 0),
-      date: today,
+      date: sale.createdAt,
       url: process.env.NEXT_PUBLIC_URL
         ? `${process.env.NEXT_PUBLIC_URL}/sales/c/${sale.code}`
         : `http://localhost:3000/sales/c/${sale.code}`,

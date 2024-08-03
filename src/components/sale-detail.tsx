@@ -26,7 +26,7 @@ export const SaleDetail = ({ sale }: Props) => {
   const templateProps = useMemo(
     () => ({
       id: sale.code,
-      date: formatToDateWithTime('es-CO', new Date(sale.createdAt)),
+      date: sale.createdAt.toISOString(),
       customer: {
         name: sale.customer?.name ?? 'Mostrador',
         id: sale.customer?.id ?? 'No encontrado',
@@ -38,11 +38,15 @@ export const SaleDetail = ({ sale }: Props) => {
         quantity: item.quantity,
         price: item.salePrice,
       })),
-      total: sale.amount,
       store: {
         name: sale.store.name,
         nit: sale.store.nit ?? 'No definido',
       },
+      amount: sale.amount,
+      payment: sale.payment,
+      paymentMethod:
+        paymentMethods.find((method) => method.id === sale.paymentMethod)
+          ?.label ?? 'No presenta',
     }),
     [],
   )
@@ -57,16 +61,21 @@ export const SaleDetail = ({ sale }: Props) => {
             </Badge>
           </Tooltip>
 
-          <Badge
-            variant={sale.status === 'cancelled' ? 'destructive' : 'success'}
-          >
-            {saleStatuses.find((status) => status.id === sale.status)?.label ??
-              'Desconocido'}
-          </Badge>
+          <Tooltip title="Estado de la venta">
+            <Badge
+              variant={sale.status === 'cancelled' ? 'destructive' : 'success'}
+            >
+              {saleStatuses.find((status) => status.id === sale.status)
+                ?.label ?? 'Desconocido'}
+            </Badge>
+          </Tooltip>
         </div>
 
-        <PDFDownloadLink document={<InvoicePDFTemplate {...templateProps} />}>
-          <Button variant="outline" size="sm" className="h-7 gap-1">
+        <PDFDownloadLink
+          fileName={`invoice-${sale.code}`}
+          document={<InvoicePDFTemplate {...templateProps} />}
+        >
+          <Button variant="outline" size="sm" className="h-7 gap-2">
             <Printer className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Imprimir
