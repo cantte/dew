@@ -3,14 +3,15 @@ import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import {
   Controller,
-  FormProvider,
-  useFormContext,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
+  FormProvider,
+  useFormContext,
 } from 'react-hook-form'
 
 import { Label } from '~/components/ui/label'
+import { getErrorMessage } from '~/constants/errors'
 import { cn } from '~/lib/utils'
 
 const Form = FormProvider
@@ -32,7 +33,7 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   const providerProps = React.useMemo(() => ({ name: props.name }), [])
   return (
     <FormFieldContext.Provider value={providerProps}>
@@ -77,7 +78,7 @@ const FormItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const id = React.useId()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   const providerProps = React.useMemo(() => ({ id }), [])
 
   return (
@@ -149,7 +150,11 @@ const FormMessage = React.forwardRef<
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
   const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message) : children
+
+  const errorMessage = error?.message
+    ? getErrorMessage(error.message, error.message)
+    : undefined
+  const body = errorMessage ? String(errorMessage) : children
 
   if (!body) {
     return null
@@ -176,5 +181,6 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
-  useFormField,
+  useFormField
 }
+
