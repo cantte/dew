@@ -2,45 +2,85 @@ import { z } from 'zod'
 import { byStoreInput } from '~/server/api/schemas/common'
 
 export const createProductInput = z.object({
-  code: z.string().min(1).max(255),
+  code: z.string().min(1, 'not_empty_string').max(255, 'too_long_string'),
   reference: z.string().optional(),
-  name: z.string().min(1).max(255),
+  name: z.string().min(1, 'not_empty_string').max(255, 'too_long_string'),
   description: z.string().optional(),
-  purchasePrice: z.coerce.number().min(0),
-  salePrice: z.coerce.number().min(0),
-  stock: z.coerce.number().min(0),
-  quantity: z.coerce.number().min(0),
+  purchasePrice: z.coerce
+    .number({
+      invalid_type_error: 'invalid_number',
+    })
+    .min(0, 'must_be_positive_number'),
+  salePrice: z.coerce
+    .number({
+      invalid_type_error: 'invalid_number',
+    })
+    .min(0, 'must_be_positive_number'),
+  stock: z.coerce
+    .number({
+      invalid_type_error: 'invalid_number',
+    })
+    .min(0, 'must_be_positive_number'),
+  quantity: z.coerce
+    .number({
+      invalid_type_error: 'invalid_number',
+    })
+    .min(0, 'must_be_positive_number'),
 
-  unitId: z.string().uuid(),
-  storeId: z.string().uuid(),
+  unitId: z.string().uuid('unit_required'),
+  storeId: z.string().uuid('store_required'),
 })
 
 export const bulkCreateProductInput = z.object({
   products: z
     .array(
       z.object({
-        code: z.string().min(1).max(255),
-        name: z.string().min(1).max(255),
+        code: z.string().min(1, 'not_empty_string').max(255, 'too_long_string'),
+        name: z.string().min(1, 'not_empty_string').max(255, 'too_long_string'),
         description: z.string().optional(),
-        purchasePrice: z.coerce.number().min(0),
-        salePrice: z.coerce.number().min(0),
-        quantity: z.coerce.number().min(0),
-        stock: z.coerce.number().min(0),
+        purchasePrice: z.coerce
+          .number({
+            invalid_type_error: 'invalid_number',
+          })
+          .min(0, 'must_be_positive_number'),
+        salePrice: z.coerce
+          .number({
+            invalid_type_error: 'invalid_number',
+          })
+          .min(0, 'must_be_positive_number'),
+        quantity: z.coerce
+          .number({
+            invalid_type_error: 'invalid_number',
+          })
+          .min(0, 'must_be_positive_number'),
+        stock: z.coerce
+          .number({
+            invalid_type_error: 'invalid_number',
+          })
+          .min(0, 'must_be_positive_number'),
       }),
     )
-    .min(1),
-  store: z.string().uuid(),
+    .min(1, 'at_least_one_product'),
+  store: z.string().uuid('store_required'),
 })
 
 export const updateProductInput = z.object({
-  id: z.string().min(1).max(255),
+  id: z.string().min(1, 'not_empty_string').max(255, 'too_long_string'),
   reference: z.string().optional(),
-  name: z.string().min(1).max(255),
+  name: z.string().min(1, 'not_empty_string').max(255, 'too_long_string'),
   description: z.string().optional(),
-  purchasePrice: z.coerce.number().min(0),
-  salePrice: z.coerce.number().min(0),
+  purchasePrice: z.coerce
+    .number({
+      invalid_type_error: 'invalid_number',
+    })
+    .min(0, 'must_be_positive_number'),
+  salePrice: z.coerce
+    .number({
+      invalid_type_error: 'invalid_number',
+    })
+    .min(0, 'must_be_positive_number'),
 
-  unitId: z.string().uuid(),
+  unitId: z.string().uuid('unit_required'),
 })
 
 export const linkToStoresInput = z.object({
