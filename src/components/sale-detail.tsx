@@ -61,19 +61,21 @@ export const SaleDetail = ({ sale }: Props) => {
             </Badge>
           </Tooltip>
 
-          <Badge
-            variant={sale.status === 'cancelled' ? 'destructive' : 'success'}
-          >
-            {saleStatuses.find((status) => status.id === sale.status)?.label ??
-              'Desconocido'}
-          </Badge>
+          <Tooltip title="Estado de la venta">
+            <Badge
+              variant={sale.status === 'cancelled' ? 'destructive' : 'success'}
+            >
+              {saleStatuses.find((status) => status.id === sale.status)?.label ??
+                'Desconocido'}
+            </Badge>
+          </Tooltip>
         </div>
 
         <PDFDownloadLink
           fileName={`invoice-${sale.code}`}
           document={<InvoicePDFTemplate {...templateProps} />}
         >
-          <Button variant="outline" size="sm" className="h-7 gap-1">
+          <Button variant="outline" size="sm" className="h-7 gap-2">
             <Printer className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Imprimir
