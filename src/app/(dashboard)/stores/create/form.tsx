@@ -29,6 +29,10 @@ type Props = {
 const CreateStoreForm = ({ onSuccess }: Props) => {
   const form = useForm<CreateStoreFormProps>({
     resolver: zodResolver(createStoreInput),
+    defaultValues: {
+      name: '',
+      address: '',
+    }
   })
 
   const createStore = api.store.create.useMutation()
@@ -37,6 +41,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
   }
 
   const router = useRouter()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createStore.isSuccess) {
       router.refresh()
@@ -47,7 +52,6 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
 
       router.push('/dashboard')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createStore.isSuccess, router])
 
   return (
