@@ -215,7 +215,7 @@ export const InventoryAdjustmentForm = ({ store, products }: Props) => {
                 </div>
 
                 <div className="grid gap-2">
-                  <span>Productos</span>
+                  <span className="font-semibold">Productos</span>
 
                   <div className="grid gap-2">
                     {items.map((item, index) => (

@@ -43,7 +43,11 @@ export const columns: ColumnDef<Sale>[] = [
       return (
         <Badge
           variant={
-            row.original.status === 'cancelled' ? 'destructive' : 'default'
+            row.original.status === 'paid'
+              ? 'success'
+              : row.original.status === 'cancelled'
+                ? 'destructive'
+                : 'default'
           }
         >
           {saleStatuses.find((status) => status.id === row.original.status)

@@ -57,6 +57,13 @@
       "when": 1722615717686,
       "tag": "0007_zippy_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1722893501601,
+      "tag": "0008_massive_spitfire",
+      "breakpoints": true
     }
   ]
 }

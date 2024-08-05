@@ -5,7 +5,7 @@ import type { RouterOutputs } from '~/trpc/shared'
 type Props = {
   product: Omit<
     RouterOutputs['product']['list'][number],
-    'isLowStock' | 'quantity' | 'stock'
+    'isLowStock' | 'quantity' | 'stock' | 'enabled'
   >
   onAddProduct: (productId: string) => void
 }

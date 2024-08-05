@@ -1,3 +1,5 @@
 # Dew
 
-A SaaS to manage sales, orders, products.
+A SaaS to manage sales, products, inventory and more.
+
+POS SaaS

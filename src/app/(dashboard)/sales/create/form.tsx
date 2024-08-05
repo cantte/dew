@@ -1,14 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Minus, Plus, RotateCw, Trash } from 'lucide-react'
+import { RotateCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { SelectSaleCustomer } from '~/app/(dashboard)/sales/create/select-sale-customer'
-import UpdateSalePriceDialog from '~/app/(dashboard)/sales/create/update-sale-price.dialog'
 import { PreventNavigation } from '~/components/prevent-navigation'
 import { ProductSaleCard } from '~/components/products/sale-card'
+import { SaleItems } from '~/components/sales/sale-items'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import {
@@ -98,11 +98,6 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
     ])
   }
 
-  const getProductName = (productId: string) => {
-    const product = products.find((p) => p.id === productId)
-    return product?.name ?? 'Producto no encontrado'
-  }
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: don't needed
   useEffect(() => {
     const amount = items.reduce<number>(
@@ -152,31 +147,6 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
 
   const amount = form.watch('amount')
   const payment = form.watch('payment')
-
-  const increaseQuantity = (index: number) => {
-    form.setValue(
-      'items',
-      items.map((item, i) =>
-        i === index ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
-    )
-  }
-
-  const decreaseQuantity = (index: number) => {
-    form.setValue(
-      'items',
-      items.map((item, i) =>
-        i === index ? { ...item, quantity: item.quantity - 1 } : item,
-      ),
-    )
-  }
-
-  const removeProduct = (index: number) => {
-    form.setValue(
-      'items',
-      items.filter((_, i) => i !== index),
-    )
-  }
 
   return (
     <div className="flex min-h-[calc(100vh-20rem)] w-full flex-col space-y-4">
@@ -238,7 +208,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                 </div>
 
                 <div className="grid gap-2">
-                  <span className="font-medium leading-none">Cliente</span>
+                  <span className="font-semibold leading-none">Cliente</span>
 
                   <SelectSaleCustomer />
                 </div>
@@ -246,72 +216,9 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                 <Separator />
 
                 <div className="grid gap-2">
-                  <span className="font-medium leading-none">Productos</span>
+                  <span className="font-semibold leading-none">Productos</span>
 
-                  <div className="grid gap-2">
-                    {form.watch('items').map((item, index) => (
-                      <div
-                        key={index}
-                        className="grid grid-cols-1 gap-2 rounded border p-2 md:grid-cols-3 md:gap-1"
-                      >
-                        <div className="grid gap-1">
-                          <span>{getProductName(item.productId)}</span>
-                          <span className="text-muted-foreground text-xs">
-                            {formatToCurrency('es-CO', item.salePrice)}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2 md:justify-center">
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="secondary"
-                            className="h-7"
-                            disabled={item.quantity === 1}
-                            onClick={() => decreaseQuantity(index)}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-
-                          <span className="font-semibold">{item.quantity}</span>
-
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="secondary"
-                            className="h-7"
-                            onClick={() => increaseQuantity(index)}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
-
-                        <div className="flex items-center gap-2 md:justify-end">
-                          <span>
-                            {formatToCurrency(
-                              'es-CO',
-                              item.quantity * item.salePrice,
-                            )}
-                          </span>
-
-                          <UpdateSalePriceDialog
-                            productName={getProductName(item.productId)}
-                            index={index}
-                          />
-
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="destructive"
-                            className="h-7 w-7"
-                            onClick={() => removeProduct(index)}
-                          >
-                            <Trash className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <SaleItems products={products} />
                 </div>
               </div>
 
@@ -319,7 +226,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
 
               <div className="grid gap-4">
                 <div className="grid gap-3 text-sm">
-                  <span className="font-medium leading-none">
+                  <span className="font-semibold leading-none">
                     Método de pago
                   </span>
 
@@ -366,8 +273,10 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                   )}
                 </div>
 
+                <Separator />
+
                 <div className="grid gap-3 text-sm">
-                  <span className="font-medium leading-none">Resumen</span>
+                  <span className="font-semibold leading-none">Resumen</span>
                   <ul className="grid gap-1">
                     <li className="flex items-center justify-between">
                       <span className="text-muted-foreground">

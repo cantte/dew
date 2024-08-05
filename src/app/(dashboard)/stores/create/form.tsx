@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
-import type { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import type { TypeOf } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Form,
@@ -20,23 +20,28 @@ import { Input } from '~/components/ui/input'
 import { createStoreInput } from '~/server/api/schemas/stores'
 import { api } from '~/trpc/react'
 
-export type CreateStoreFormProps = z.infer<typeof createStoreInput>
+export type FormValues = TypeOf<typeof createStoreInput>
 
 type Props = {
   onSuccess?: () => void
 }
 
 const CreateStoreForm = ({ onSuccess }: Props) => {
-  const form = useForm<CreateStoreFormProps>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(createStoreInput),
+    defaultValues: {
+      name: '',
+      address: '',
+    },
   })
 
   const createStore = api.store.create.useMutation()
-  const onSubmit: SubmitHandler<CreateStoreFormProps> = (data) => {
+  const onSubmit = (data: FormValues) => {
     createStore.mutate(data)
   }
 
   const router = useRouter()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createStore.isSuccess) {
       router.refresh()
@@ -47,7 +52,6 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
 
       router.push('/dashboard')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createStore.isSuccess, router])
 
   return (

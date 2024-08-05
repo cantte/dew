@@ -7,14 +7,8 @@ import {
   LabelList,
   Line,
   LineChart,
-  type TooltipProps,
   XAxis,
 } from 'recharts'
-import type {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent'
-import ValueDateTooltip from '~/components/dashboard/value-date-tooltip'
 import {
   Card,
   CardContent,
@@ -29,24 +23,6 @@ import {
   ChartTooltipContent,
 } from '~/components/ui/chart'
 import { formatToCurrency, formatToShortMonth } from '~/text/format'
-
-const Tooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
-  if (active && payload) {
-    const firstPayload = payload[0]
-
-    if (!firstPayload) {
-      return null
-    }
-
-    const value = +(firstPayload.value ?? 0)
-    const date = new Date(
-      (firstPayload.payload as { date: string }).date + 'T00:00:00', // Prevents timezone issues
-    )
-
-    return <ValueDateTooltip value={value} date={date} />
-  }
-  return null
-}
 
 type Props = {
   title: string
@@ -140,17 +116,23 @@ const LineChartCard = ({ title, value, valueImprovement, summary }: Props) => {
         )}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          {valueImprovement > 0 ? '+' : ''}
-          {Intl.NumberFormat('es-CO', {
-            style: 'percent',
-            minimumFractionDigits: 2,
-          }).format(valueImprovement)}{' '}
-          respecto al mes anterior{' '}
+        <div className="flex items-center gap-2 font-medium leading-none">
+          <span>
+            {Intl.NumberFormat('es-CO', {
+              style: 'percent',
+              signDisplay: 'always',
+              minimumFractionDigits: 2,
+            }).format(valueImprovement)}{' '}
+            respecto al periodo anterior{' '}
+          </span>
           {valueImprovement > 0 ? (
-            <TrendingUp className="h-4 w-4" />
+            <span className="rounded-full bg-secondary p-1">
+              <TrendingUp className="h-3 w-3 text-success-text" />
+            </span>
           ) : (
-            <TrendingDown className="h-4 w-4" />
+            <span className="rounded-full bg-secondary p-1">
+              <TrendingDown className="h-3 w-3 text-destructive" />
+            </span>
           )}
         </div>
       </CardFooter>

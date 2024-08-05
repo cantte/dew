@@ -5,11 +5,8 @@ import {
   MobileNavServer,
   MobileNavServerFallback,
 } from '~/components/mobile-nav.server'
-import SelectStore from '~/components/stores/select-store'
 import { Badge } from '~/components/ui/badge'
-import { Separator } from '~/components/ui/separator'
 import { getServerAuthSession } from '~/server/auth'
-import { api } from '~/trpc/server'
 
 export const Header = async () => {
   const session = await getServerAuthSession()
@@ -17,13 +14,6 @@ export const Header = async () => {
   if (!session) {
     return null
   }
-
-  const currentStore = await api.store.findCurrent()
-  const stores = await api.store.list()
-
-  const canCreateStore = await api.rbac.checkPermissions({
-    permissions: ['store:create'],
-  })
 
   return (
     <div className="fixed top-0 right-0 left-0 z-20 border-b bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
@@ -42,18 +32,6 @@ export const Header = async () => {
         </div>
 
         <ul className="flex gap-2">
-          <li className="flex items-center">
-            <SelectStore
-              currentStore={currentStore}
-              stores={stores}
-              canCreateStore={canCreateStore}
-            />
-          </li>
-
-          <li>
-            <Separator orientation="vertical" />
-          </li>
-
           <li className="inline-flex items-center justify-center">
             <AccountNav user={session.user} />
           </li>

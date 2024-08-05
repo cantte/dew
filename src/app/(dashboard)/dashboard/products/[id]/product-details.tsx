@@ -24,15 +24,18 @@ const ProductDetails = async ({ id }: Props) => {
     return notFound()
   }
 
-  const stores = await api.product.stores({ id: id })
-
   return (
-    <Card className="rounded shadow-none">
+    <Card>
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
             <span className="font-bold">{product.name}</span>
-            <Badge variant="outline">{product.code}</Badge>
+
+            {product.enabled ? (
+              <Badge variant="success">Activo</Badge>
+            ) : (
+              <Badge variant="destructive">Inactivo</Badge>
+            )}
           </div>
         </CardTitle>
 
@@ -43,16 +46,25 @@ const ProductDetails = async ({ id }: Props) => {
         <div className="flex flex-col justify-between gap-4">
           <div className="text-sm">
             <div className="grid gap-3">
-              <div className="font-semibold">Tiendas</div>
-              <div className="flex flex-row space-x-2">
-                {stores.map((store) => (
-                  <Badge key={store.id} variant="secondary">
-                    {store.name}
-                  </Badge>
-                ))}
-              </div>
+              {(product.reference || product.code) && (
+                <>
+                  <span className="font-semibold">Códigos</span>
+                  <ul className="grid gap-2">
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">
+                        Código de barras
+                      </span>
+                      <span>{product.code}</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Referencia</span>
+                      <span>{product.reference}</span>
+                    </li>
+                  </ul>
+                </>
+              )}
 
-              <div className="font-semibold">Precios</div>
+              <span className="font-semibold">Precios</span>
               <ul className="grid gap-2">
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
