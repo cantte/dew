@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Minus, Plus, RotateCw, Trash } from 'lucide-react'
+import { Minus, Plus, RotateCw, ShoppingCart, Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
@@ -249,6 +249,14 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                   <span className="font-semibold leading-none">Productos</span>
 
                   <div className="grid gap-2">
+                    {items.length === 0 && (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 text-muted-foreground">
+                        <ShoppingCart className="h-8 w-8" />
+                        <span className="text-xs">
+                          No hay productos en la venta
+                        </span>
+                      </div>
+                    )}
                     {items.map((item, index) => (
                       <div
                         key={index}
