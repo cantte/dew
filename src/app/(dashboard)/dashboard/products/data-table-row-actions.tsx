@@ -7,7 +7,6 @@ import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
 import BarcodeModal from '~/components/products/barcode-modal'
 import CreateProductDiscountDialog from '~/components/products/create-discount'
 import DeleteProductModal from '~/components/products/delete-modal'
-import LinkToStoresModal from '~/components/products/link-to-stores-modal'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
@@ -50,7 +49,6 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
                 Editar
               </NextLink>
             </DropdownMenuItem>
-            <LinkToStoresModal product={row.original} />
             <CreateProductDiscountDialog product={row.original} />
           </>
         ) : null}
