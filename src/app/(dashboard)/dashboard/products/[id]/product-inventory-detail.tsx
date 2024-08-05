@@ -25,10 +25,8 @@ const ProductInventoryDetail = async ({ id }: Props) => {
   return (
     <>
       <div className="flex items-center gap-2">
-        <div className="font-semibold">Inventario</div>
-        <Badge variant={inventory.isLowStock ? 'destructive' : 'secondary'}>
-          {inventory.isLowStock ? 'Bajo' : 'Normal'}
-        </Badge>
+        <span className="font-semibold">Inventario</span>
+        {inventory.isLowStock && <Badge variant="destructive">Bajo</Badge>}
       </div>
 
       <ul className="grid gap-2">
