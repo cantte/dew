@@ -43,16 +43,7 @@ const ProductDetails = async ({ id }: Props) => {
         <div className="flex flex-col justify-between gap-4">
           <div className="text-sm">
             <div className="grid gap-3">
-              <div className="font-semibold">Tiendas</div>
-              <div className="flex flex-row space-x-2">
-                {stores.map((store) => (
-                  <Badge key={store.id} variant="secondary">
-                    {store.name}
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="font-semibold">Precios</div>
+              <span className="font-semibold">Precios</span>
               <ul className="grid gap-2">
                 <li className="flex items-center justify-between">
                   <span className="text-muted-foreground">
