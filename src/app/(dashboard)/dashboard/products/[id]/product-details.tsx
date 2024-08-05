@@ -24,8 +24,6 @@ const ProductDetails = async ({ id }: Props) => {
     return notFound()
   }
 
-  const stores = await api.product.stores({ id: id })
-
   return (
     <Card className="rounded shadow-none">
       <CardHeader>
