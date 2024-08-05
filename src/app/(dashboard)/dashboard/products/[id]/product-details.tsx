@@ -25,7 +25,7 @@ const ProductDetails = async ({ id }: Props) => {
   }
 
   return (
-    <Card className="rounded shadow-none">
+    <Card>
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
