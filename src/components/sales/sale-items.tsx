@@ -45,6 +45,15 @@ export const SaleItems = ({ products }: Props) => {
     return product?.name ?? 'Producto no encontrado'
   }
 
+  const setDiscount = (index: number, newPrice: number) => {
+    form.setValue(
+      'items',
+      items.map((item, i) =>
+        i === index ? { ...item, salePrice: newPrice } : item,
+      ),
+    )
+  }
+
   return (
     <div className="grid gap-1.5">
       {items.length === 0 && (
@@ -62,6 +71,7 @@ export const SaleItems = ({ products }: Props) => {
           onIncreaseQuantity={() => increaseQuantity(index)}
           onDecreaseQuantity={() => decreaseQuantity(index)}
           onRemove={() => removeProduct(index)}
+          onLoadDiscounts={(newPrice) => setDiscount(index, newPrice)}
         />
       ))}
     </div>
