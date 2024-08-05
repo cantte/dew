@@ -1,5 +1,6 @@
-import { CircleUserRound } from 'lucide-react'
+import { CircleUserRound, Settings } from 'lucide-react'
 import type { User } from 'next-auth'
+import Link from 'next/link'
 import SignOutButton from '~/components/signout-button'
 import { ThemeToggle } from '~/components/theme-toggle'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
@@ -7,6 +8,7 @@ import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -46,6 +48,14 @@ const AccountNav = ({ user }: Props) => {
         <DropdownMenuSeparator />
 
         <ThemeToggle />
+
+        <Link href="/dashboard/account">
+          <DropdownMenuItem className="flex items-center justify-between px-4 font-medium text-xs">
+            <span>Preferencias</span>
+
+            <Settings className="h-3 w-3" />
+          </DropdownMenuItem>
+        </Link>
 
         <DropdownMenuSeparator />
 
