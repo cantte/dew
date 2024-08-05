@@ -238,7 +238,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                 </div>
 
                 <div className="grid gap-2">
-                  <span className="font-medium leading-none">Cliente</span>
+                  <span className="font-semibold leading-none">Cliente</span>
 
                   <SelectSaleCustomer />
                 </div>
@@ -246,7 +246,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                 <Separator />
 
                 <div className="grid gap-2">
-                  <span className="font-medium leading-none">Productos</span>
+                  <span className="font-semibold leading-none">Productos</span>
 
                   <div className="grid gap-2">
                     {form.watch('items').map((item, index) => (
@@ -319,7 +319,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
 
               <div className="grid gap-4">
                 <div className="grid gap-3 text-sm">
-                  <span className="font-medium leading-none">
+                  <span className="font-semibold leading-none">
                     Método de pago
                   </span>
 
@@ -366,8 +366,10 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                   )}
                 </div>
 
+                <Separator />
+
                 <div className="grid gap-3 text-sm">
-                  <span className="font-medium leading-none">Resumen</span>
+                  <span className="font-semibold leading-none">Resumen</span>
                   <ul className="grid gap-1">
                     <li className="flex items-center justify-between">
                       <span className="text-muted-foreground">
