@@ -36,6 +36,7 @@ export const products = createTable(
       .notNull()
       .references(() => users.id),
     unitId: uuid('unit_id').references(() => units.id),
+    enabled: boolean('enabled').notNull().default(true),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
