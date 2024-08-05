@@ -249,7 +249,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
                   <span className="font-semibold leading-none">Productos</span>
 
                   <div className="grid gap-2">
-                    {form.watch('items').map((item, index) => (
+                    {items.map((item, index) => (
                       <div
                         key={index}
                         className="grid grid-cols-1 gap-2 rounded border p-2 md:grid-cols-3 md:gap-1"
