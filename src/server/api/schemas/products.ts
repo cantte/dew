@@ -79,6 +79,7 @@ export const updateProductInput = z.object({
       invalid_type_error: 'invalid_number',
     })
     .min(0, 'must_be_positive_number'),
+  enabled: z.boolean(),
 
   unitId: z.string().uuid('unit_required'),
 })
