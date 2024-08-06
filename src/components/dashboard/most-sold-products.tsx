@@ -32,7 +32,7 @@ const MostSoldProducts = async () => {
               <TableBody>
                 {mostSoldProducts.map((product) => (
                   <TableRow key={product.id}>
-                    <TableCell>{product.name ?? 'No encontrado'}</TableCell>
+                    <TableCell>{product.name}</TableCell>
                     <TableCell>
                       {Intl.NumberFormat('es-CO').format(product.quantity)}
                     </TableCell>

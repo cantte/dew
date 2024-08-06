@@ -52,11 +52,11 @@ export const EditProductForm = ({ product, units }: Props) => {
     defaultValues: {
       id: product.id,
       reference: product.reference ?? undefined,
-      name: product.name ?? undefined,
+      name: product.name,
       description: product.description ?? undefined,
-      purchasePrice: product.purchasePrice ?? undefined,
-      salePrice: product.salePrice ?? undefined,
-      enabled: product.enabled ?? undefined,
+      purchasePrice: product.purchasePrice,
+      salePrice: product.salePrice,
+      enabled: product.enabled,
       unitId: product.unitId ?? undefined,
     },
   })

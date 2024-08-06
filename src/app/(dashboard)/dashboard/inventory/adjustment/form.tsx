@@ -77,7 +77,7 @@ export const InventoryAdjustmentForm = ({ store, products }: Props) => {
 
   const filteredProducts = products.filter(
     (product) =>
-      product.name!.toLowerCase().includes(productQuery.toLowerCase()) ||
+      product.name.toLowerCase().includes(productQuery.toLowerCase()) ||
       product.code.toLowerCase().includes(productQuery.toLowerCase()),
   )
 
