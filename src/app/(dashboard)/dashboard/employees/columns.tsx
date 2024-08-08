@@ -1,8 +1,10 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import UpdateEmployeeModal from '~/app/(dashboard)/dashboard/employees/update.modal'
+import { SquarePen } from 'lucide-react'
+import Link from 'next/link'
 import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type Employee = RouterOutputs['employee']['byStore'][number]
@@ -35,7 +37,13 @@ export const columns: ColumnDef<Employee>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      return <UpdateEmployeeModal employee={row.original} />
+      return (
+        <Button variant="secondary" size="icon" asChild>
+          <Link href={`/dashboard/employees/${row.original.id}/edit`}>
+            <SquarePen className="h-4 w-4" />
+          </Link>
+        </Button>
+      )
     },
   },
 ]
