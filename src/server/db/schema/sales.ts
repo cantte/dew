@@ -14,6 +14,7 @@ import { users } from '~/server/db/schema/auth'
 import { createTable } from '~/server/db/schema/base'
 import { paymentMethods } from '~/server/db/schema/common'
 import { customers } from '~/server/db/schema/customers'
+import { employees } from '~/server/db/schema/employees'
 import { products } from '~/server/db/schema/products'
 import { stores } from '~/server/db/schema/stores'
 
@@ -37,6 +38,7 @@ export const sales = createTable(
     storeId: uuid('store_id')
       .notNull()
       .references(() => stores.id),
+    employeeId: uuid('employee_id').references(() => employees.id),
     createdBy: varchar('created_by', { length: 255 })
       .notNull()
       .references(() => users.id),
@@ -58,6 +60,10 @@ export const salesRelations = relations(sales, ({ one, many }) => ({
   }),
   saleItems: many(saleItems),
   store: one(stores, { fields: [sales.storeId], references: [stores.id] }),
+  employee: one(employees, {
+    fields: [sales.employeeId],
+    references: [employees.id],
+  }),
 }))
 
 export const saleItems = createTable(
