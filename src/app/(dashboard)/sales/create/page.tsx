@@ -23,7 +23,7 @@ const CreateSalePage = async () => {
     storeId: store.id,
   })
 
-  const products = await api.product.list({
+  const products = await api.product.forSale({
     storeId: store.id,
   })
 
