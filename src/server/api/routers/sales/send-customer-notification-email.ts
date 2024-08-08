@@ -39,9 +39,12 @@ export const sendSaleCustomerNotificationEmail = async ({
         ...sale.store,
         nit: sale.store.nit ?? 'No presenta',
       },
+      employee: {
+        name: sale.employee?.name ?? 'No presenta',
+      },
       products: sale.saleItems.map((item) => ({
         id: item.product.code,
-        name: item.product.name ?? 'No presenta',
+        name: item.product.name,
         quantity: item.quantity,
         price: item.salePrice,
       })),

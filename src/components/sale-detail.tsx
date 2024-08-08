@@ -28,19 +28,22 @@ export const SaleDetail = ({ sale }: Props) => {
       id: sale.code,
       date: sale.createdAt.toISOString(),
       customer: {
-        name: sale.customer?.name ?? 'Mostrador',
-        id: sale.customer?.id ?? 'No encontrado',
-        phone: sale.customer?.phone ?? undefined,
+        name: sale.customer.name,
+        id: sale.customer.id,
+        phone: sale.customer.phone ?? undefined,
       },
       products: sale.saleItems.map((item) => ({
-        id: item.product?.code ?? 'No encontrado',
-        name: item.product?.name ?? 'No encontrado',
+        id: item.product.code,
+        name: item.product.name,
         quantity: item.quantity,
         price: item.salePrice,
       })),
       store: {
         name: sale.store.name,
-        nit: sale.store.nit ?? 'No definido',
+        nit: sale.store.nit ?? 'N/A',
+      },
+      employee: {
+        name: sale.employee?.name ?? 'No presenta',
       },
       amount: sale.amount,
       payment: sale.payment,
@@ -90,10 +93,49 @@ export const SaleDetail = ({ sale }: Props) => {
           </div>
 
           <div className="flex flex-col justify-between gap-4 rounded border p-4">
-            <div className="text-sm">
-              <div className="grid gap-3">
-                <div className="font-semibold">Resumen</div>
-                <ul className="grid gap-3">
+            <div className="grid gap-4 text-sm">
+              <div>
+                <Badge variant="outline">{sale.store.name}</Badge>
+              </div>
+
+              <div className="grid gap-2">
+                <span className="font-semibold leading-none">Vendedor</span>
+
+                <span className="text-muted-foreground">
+                  {sale.employee?.name ?? 'No presenta'}
+                </span>
+              </div>
+
+              <Separator />
+
+              <div className="grid gap-2">
+                <span className="font-semibold leading-none">Cliente</span>
+
+                <span className="text-muted-foreground">
+                  {sale.customer.name} ({sale.customer.id})
+                </span>
+              </div>
+
+              <Separator />
+
+              <div className="grid gap-2">
+                <span className="font-semibold leading-none">
+                  Método de pago
+                </span>
+
+                <span className="text-muted-foreground">
+                  {paymentMethods.find(
+                    (method) => method.id === sale.paymentMethod,
+                  )?.label ?? 'No presenta'}
+                </span>
+              </div>
+
+              <Separator />
+
+              <div className="grid gap-3 text-sm">
+                <span className="font-semibold leading-none">Resumen</span>
+
+                <ul className="grid gap-1">
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
                       Productos vendidos
@@ -111,43 +153,18 @@ export const SaleDetail = ({ sale }: Props) => {
                     <span className="text-muted-foreground">Total</span>
                     <span>{formatToCurrency('es-CO', sale.amount)}</span>
                   </li>
-                </ul>
-
-                <Separator className="my-2" />
-
-                <div className="font-semibold">Cliente</div>
-                <p className="text-muted-foreground">
-                  {sale.customer
-                    ? `${sale.customer.name} (${sale.customer.id})`
-                    : 'Mostrador'}
-                </p>
-
-                <Separator className="my-2" />
-
-                <div className="space-y-2">
-                  <div className="font-semibold">Método de pago</div>
-                  <p className="text-muted-foreground">
-                    {paymentMethods.find(
-                      (method) => method.id === sale.paymentMethod,
-                    )?.label ?? 'Desconocido'}
-                  </p>
-                </div>
-
-                <ul className="grid gap-3">
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Total a pagar</span>
-                    <span>{formatToCurrency('es-CO', sale.amount)}</span>
-                  </li>
                   <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">Pago recibido</span>
                     <span>{formatToCurrency('es-CO', sale.payment)}</span>
                   </li>
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Cambio</span>
-                    <span>
-                      {formatToCurrency('es-CO', sale.payment - sale.amount)}
-                    </span>
-                  </li>
+                  {sale.payment - sale.amount > 0 && (
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Cambio</span>
+                      <span>
+                        {formatToCurrency('es-CO', sale.payment - sale.amount)}
+                      </span>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>

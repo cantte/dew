@@ -36,6 +36,12 @@ const findSale = async ({ ctx, input }: Options) => {
           nit: true,
         },
       },
+      employee: {
+        columns: {
+          code: true,
+          name: true,
+        },
+      },
     },
     where: eq(sales.code, input.code),
   })

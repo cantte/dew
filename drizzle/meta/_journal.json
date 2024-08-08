@@ -64,6 +64,20 @@
       "when": 1722893501601,
       "tag": "0008_massive_spitfire",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1722962892283,
+      "tag": "0009_fixed_lake",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1723135682303,
+      "tag": "0010_soft_zemo",
+      "breakpoints": true
     }
   ]
 }

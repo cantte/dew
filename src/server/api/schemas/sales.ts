@@ -16,7 +16,8 @@ export const createSaleInput = z
     status: z.enum(['pending', 'paid'] as const),
     paymentMethod: paymentMethod,
     payment: z.coerce.number().min(0),
-    storeId: z.string().min(1).max(36),
+    storeId: z.string().uuid(),
+    employeeId: z.string().uuid(),
 
     items: z.array(createSaleItemInput).min(1),
   })

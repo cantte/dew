@@ -6,7 +6,6 @@ import deleteProduct from '~/server/api/routers/products/delete'
 import checkProductExistence from '~/server/api/routers/products/exists'
 import findProduct from '~/server/api/routers/products/find'
 import findProductById from '~/server/api/routers/products/findById'
-import findProductForSale from '~/server/api/routers/products/findForSale'
 import linkProductToStores from '~/server/api/routers/products/linkToStores'
 import listProducts from '~/server/api/routers/products/list'
 import { listProductUnits } from '~/server/api/routers/products/listUnits'
@@ -14,6 +13,7 @@ import searchMostSoldProducts from '~/server/api/routers/products/mostSold'
 import productsOverview from '~/server/api/routers/products/overview'
 import searchProducts from '~/server/api/routers/products/search'
 import searchProductDiscounts from '~/server/api/routers/products/searchDiscount'
+import { searchProductsForSale } from '~/server/api/routers/products/searchForSale'
 import searchProductSummary from '~/server/api/routers/products/searchSummary'
 import listProductStores from '~/server/api/routers/products/stores'
 import getProductSuggestions from '~/server/api/routers/products/suggestions'
@@ -45,6 +45,9 @@ const productsRouter = router({
   list: authedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
     return await listProducts({ ctx, input })
   }),
+  forSale: authedProcedure.input(byStoreInput).query(async ({ ctx, input }) => {
+    return await searchProductsForSale({ ctx, input })
+  }),
   exists: authedProcedure
     .input(byCodeProductInput)
     .query(async ({ ctx, input }) => {
@@ -59,11 +62,6 @@ const productsRouter = router({
     .input(byProductIdInput)
     .query(async ({ ctx, input }) => {
       return await findProductById({ ctx, input })
-    }),
-  findForSale: authedProcedure
-    .input(byCodeProductInput)
-    .query(async ({ ctx, input }) => {
-      return await findProductForSale({ ctx, input })
     }),
   update: authedProcedure
     .input(updateProductInput)

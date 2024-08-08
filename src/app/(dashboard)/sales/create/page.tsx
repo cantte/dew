@@ -23,7 +23,11 @@ const CreateSalePage = async () => {
     storeId: store.id,
   })
 
-  const products = await api.product.list({
+  const products = await api.product.forSale({
+    storeId: store.id,
+  })
+
+  const employees = await api.employee.byStore({
     storeId: store.id,
   })
 
@@ -33,6 +37,7 @@ const CreateSalePage = async () => {
 
       <CreateSaleForm
         store={store}
+        employees={employees}
         products={products}
         suggestions={suggestions}
       />

@@ -28,7 +28,7 @@ export const products = createTable(
     id: uuid('id').notNull().primaryKey(),
     code: varchar('code', { length: 255 }).notNull(),
     reference: text('reference'),
-    name: varchar('name', { length: 255 }),
+    name: varchar('name', { length: 255 }).notNull(),
     description: text('description'),
     purchasePrice: real('purchase_price').notNull(),
     salePrice: real('sale_price').notNull(),

@@ -1,11 +1,9 @@
 import { eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
-import EmployeeStoreInvitationEmail from '~/emails/employee-store-invitation'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { createEmployeeInput } from '~/server/api/schemas/employees'
-import { employeeStore, employees, roles, stores } from '~/server/db/schema'
-import resend from '~/server/email/resend'
+import { employeeStore, employees, roles } from '~/server/db/schema'
 
 type Options = {
   ctx: TRPCAuthedContext
@@ -58,45 +56,6 @@ const createEmployee = async ({ ctx, input }: Options) => {
         roleId: employeeRole.id,
       })
       .onConflictDoNothing()
-
-    const storeQuery = await tx
-      .select({
-        name: stores.name,
-      })
-      .from(stores)
-      .where(eq(stores.id, storeId))
-
-    if (storeQuery.length === 0) {
-      try {
-        tx.rollback()
-      } catch (error) {
-        throw new Error('Store not found')
-      }
-    }
-
-    const store = storeQuery.at(0)
-    if (store === undefined) {
-      try {
-        tx.rollback()
-      } catch (error) {
-        throw new Error('Store not found')
-      }
-      return
-    }
-
-    // Send email to employee
-    await resend.emails.send({
-      from: process.env.RESEND_EMAIL!,
-      to: data.email,
-      subject: 'Has sido invitado a la tienda',
-      react: EmployeeStoreInvitationEmail({
-        employeeName: data.name,
-        storeName: store.name,
-        url: process.env.NEXT_PUBLIC_URL
-          ? `${process.env.NEXT_PUBLIC_URL}/stores/${storeId}/accept-invitation?employeeId=${employeeId}`
-          : `http://localhost:3000/stores/${storeId}/accept-invitation?employeeId=${employeeId}`,
-      }),
-    })
   })
 }
 

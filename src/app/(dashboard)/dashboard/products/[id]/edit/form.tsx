@@ -35,6 +35,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover'
+import { Switch } from '~/components/ui/switch'
 import { Textarea } from '~/components/ui/textarea'
 import { cn } from '~/lib/utils'
 import { formatToCurrency } from '~/text/format'
@@ -51,10 +52,11 @@ export const EditProductForm = ({ product, units }: Props) => {
     defaultValues: {
       id: product.id,
       reference: product.reference ?? undefined,
-      name: product.name ?? undefined,
+      name: product.name,
       description: product.description ?? undefined,
-      purchasePrice: product.purchasePrice ?? undefined,
-      salePrice: product.salePrice ?? undefined,
+      purchasePrice: product.purchasePrice,
+      salePrice: product.salePrice,
+      enabled: product.enabled,
       unitId: product.unitId ?? undefined,
     },
   })
@@ -267,6 +269,32 @@ export const EditProductForm = ({ product, units }: Props) => {
                         <FormDescription>
                           Código unico para indentificar tus productos
                         </FormDescription>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="enabled"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded border p-3">
+                        <div className="space-y-0.5">
+                          <FormLabel>Activo / Inactivo</FormLabel>
+                          <FormDescription>
+                            Habilita o deshabilita la visibilidad del producto
+                            al realizar ventas.
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
 
                         <FormMessage />
                       </FormItem>

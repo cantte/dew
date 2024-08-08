@@ -77,6 +77,7 @@ type Props = {
   date: string
   customer: { name: string; id: string; phone?: string }
   store: { name: string; nit: string }
+  employee: { name: string }
   products: { id: string; name: string; quantity: number; price: number }[]
   amount: number
   payment: number
@@ -88,6 +89,7 @@ export const InvoicePDFTemplate = ({
   date,
   customer,
   store,
+  employee,
   products,
   amount,
   payment,
@@ -99,6 +101,7 @@ export const InvoicePDFTemplate = ({
     <Document>
       <Page style={styles.page} size="A4">
         <View style={styles.section}>
+          <Text style={styles.info}>{id}</Text>
           <View style={styles.header}>
             <Text style={styles.info}>
               {formatToDateWithTime('es-CO', today)}
@@ -124,6 +127,8 @@ export const InvoicePDFTemplate = ({
           <Text style={styles.info}>
             Vencimiento: {formatToDateShort('es-CO', new Date(date))}
           </Text>
+
+          <Text style={styles.info}>Vendedor: {employee.name}</Text>
 
           <View style={styles.spacer}></View>
 
