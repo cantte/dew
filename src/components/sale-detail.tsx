@@ -28,19 +28,22 @@ export const SaleDetail = ({ sale }: Props) => {
       id: sale.code,
       date: sale.createdAt.toISOString(),
       customer: {
-        name: sale.customer?.name ?? 'Mostrador',
-        id: sale.customer?.id ?? 'No encontrado',
-        phone: sale.customer?.phone ?? undefined,
+        name: sale.customer.name,
+        id: sale.customer.id,
+        phone: sale.customer.phone ?? undefined,
       },
       products: sale.saleItems.map((item) => ({
-        id: item.product?.code ?? 'No encontrado',
-        name: item.product?.name ?? 'No encontrado',
+        id: item.product.code,
+        name: item.product.name,
         quantity: item.quantity,
         price: item.salePrice,
       })),
       store: {
         name: sale.store.name,
-        nit: sale.store.nit ?? 'No definido',
+        nit: sale.store.nit ?? 'N/A',
+      },
+      employee: {
+        name: sale.employee?.name ?? 'No presenta',
       },
       amount: sale.amount,
       payment: sale.payment,
@@ -112,6 +115,13 @@ export const SaleDetail = ({ sale }: Props) => {
                     <span>{formatToCurrency('es-CO', sale.amount)}</span>
                   </li>
                 </ul>
+
+                <Separator className="my-2" />
+
+                <div className="font-semibold">Vendedor</div>
+                <p className="text-muted-foreground">
+                  {sale.employee ? `${sale.employee.name}` : 'No presenta'}
+                </p>
 
                 <Separator className="my-2" />
 
