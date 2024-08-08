@@ -13,6 +13,7 @@ const findEmployeesByStore = async ({ ctx, input }: Options) => {
   return await ctx.db
     .select({
       id: employees.id,
+      code: employees.code,
       name: employees.name,
       email: employees.email,
       phone: employees.phone,

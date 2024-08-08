@@ -27,12 +27,17 @@ const CreateSalePage = async () => {
     storeId: store.id,
   })
 
+  const employees = await api.employee.byStore({
+    storeId: store.id,
+  })
+
   return (
     <div className="flex w-full flex-col items-start space-y-4">
       <BackButton />
 
       <CreateSaleForm
         store={store}
+        employees={employees}
         products={products}
         suggestions={suggestions}
       />

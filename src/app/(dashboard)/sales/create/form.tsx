@@ -42,11 +42,15 @@ export type FormValues = z.infer<typeof createSaleInput>
 
 type Props = {
   store: NonNullable<RouterOutputs['store']['findCurrent']>
+  employees: RouterOutputs['employee']['byStore']
+
   products: RouterOutputs['product']['list']
   suggestions: RouterOutputs['product']['suggestions']
 }
 
-const CreateSaleForm = ({ store, products, suggestions }: Props) => {
+const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
+  const ownerId = employees.find((employee) => employee.isOwner)?.id
+
   const form = useForm<FormValues>({
     resolver: zodResolver(createSaleInput),
     defaultValues: {
@@ -57,6 +61,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
       status: 'paid',
       amount: 0,
       payment: 0,
+      employeeId: ownerId ?? '',
     },
   })
 
@@ -127,6 +132,7 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
         status: 'paid',
         amount: 0,
         payment: 0,
+        employeeId: ownerId ?? '',
       })
     }
   }, [createSale.isSuccess])
@@ -143,6 +149,10 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
   const onSelectPaymentMethod = (value: string) => {
     form.setValue('paymentMethod', value as PaymentMethod)
     form.setValue('payment', form.watch('amount'))
+  }
+
+  const onSelectEmployee = (value: string) => {
+    form.setValue('employeeId', value)
   }
 
   const amount = form.watch('amount')
@@ -205,6 +215,27 @@ const CreateSaleForm = ({ store, products, suggestions }: Props) => {
               <div className="grid gap-4 text-sm">
                 <div>
                   <Badge variant="secondary">{store.name}</Badge>
+                </div>
+
+                <div className="grid gap-2">
+                  <span className="font-semibold leading-none">Vendedor</span>
+
+                  <Select
+                    value={form.watch('employeeId')}
+                    onValueChange={onSelectEmployee}
+                  >
+                    <SelectTrigger>
+                      <SelectValue defaultValue={form.watch('employeeId')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {employees.map((employee) => (
+                        <SelectItem key={employee.id} value={employee.id}>
+                          {employee.name}{' '}
+                          {employee.code && `(${employee.code})`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="grid gap-2">
