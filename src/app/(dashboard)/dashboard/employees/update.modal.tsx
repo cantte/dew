@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw, SquarePen } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
@@ -32,7 +33,6 @@ type Props = {
 type FormValues = TypeOf<typeof updateEmployeeInput>
 
 const UpdateEmployeeModal = ({ employee }: Props) => {
-  const [isOpen, setIsOpen] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
       id: employee.id,
@@ -44,12 +44,17 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
   })
 
   const updateEmployee = api.employee.update.useMutation()
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
+  const onSubmit = (values: FormValues) => {
     updateEmployee.mutate(values)
   }
 
+  const [isOpen, setIsOpen] = useState(false)
+
+  const router = useRouter()
   const utils = api.useUtils()
   const { toast } = useToast()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (updateEmployee.isSuccess) {
       toast({
@@ -57,10 +62,11 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
         description: 'Empleado actualizado correctamente',
       })
 
+      router.refresh()
       void utils.employee.byStore.invalidate()
+
       setIsOpen(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateEmployee.isSuccess])
 
   const canUpdateEmployee = api.rbac.checkPermissions.useQuery({
