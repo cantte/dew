@@ -1,3 +1,5 @@
+import { BarChartCard } from '~/components/bar-chart-card'
+import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
 export const YearlySalesReport = async () => {
@@ -20,5 +22,41 @@ export const YearlySalesReport = async () => {
     return null
   }
 
-  return <div>{JSON.stringify(report)}</div>
+  const amountReport = report.map((row) => ({
+    total: row.amount,
+    date: row.date.toISOString(),
+  }))
+
+  const profitReport = report.map((row) => ({
+    total: row.profit,
+    date: row.date.toISOString(),
+  }))
+
+  const totalAmount = report.reduce((acc, row) => acc + row.amount, 0)
+  const totalProfit = report.reduce((acc, row) => acc + row.profit, 0)
+
+  return (
+    <>
+      <BarChartCard
+        title="Ingresos totales"
+        value={totalAmount}
+        summary={amountReport}
+      />
+
+      <BarChartCard
+        title="Ganancias totales"
+        value={totalProfit}
+        summary={profitReport}
+      />
+    </>
+  )
+}
+
+export const YearlySalesReportFallback = () => {
+  return (
+    <>
+      <Skeleton className="h-64 w-full" />
+      <Skeleton className="h-64 w-full" />
+    </>
+  )
 }
