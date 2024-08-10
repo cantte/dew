@@ -11,6 +11,7 @@ import {
   SalesOverview,
   SalesOverviewFallback,
 } from '~/components/sales/overview'
+import { YearlySalesReport } from '~/components/sales/yearly-report'
 
 export default function ReportPage() {
   return (
@@ -32,6 +33,16 @@ export default function ReportPage() {
       <Suspense fallback={<MostSoldProductsFallback />}>
         <MostSoldProducts />
       </Suspense>
+
+      <div className="space-y-2">
+        <span className="font-semibold tracking-tight">Ventas del año</span>
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+          <Suspense fallback={<SalesReportFallback />}>
+            <YearlySalesReport />
+          </Suspense>
+        </div>
+      </div>
     </div>
   )
 }
