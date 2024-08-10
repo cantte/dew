@@ -33,3 +33,9 @@ export const formatToShortMonth = (locale: string, date: Date) => {
     day: 'numeric',
   }).format(date)
 }
+
+export const formatToMonthName = (locale: string, date: Date) => {
+  return Intl.DateTimeFormat(locale, {
+    month: 'long',
+  }).format(date)
+}

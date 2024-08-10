@@ -48,9 +48,9 @@ export const SalesReport = async () => {
 
 export const SalesReportFallback = () => {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+    <>
       <Skeleton className="h-64 w-full" />
       <Skeleton className="h-64 w-full" />
-    </div>
+    </>
   )
 }
