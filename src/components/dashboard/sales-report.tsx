@@ -1,10 +1,11 @@
 import { endOfMonth, startOfMonth } from 'date-fns'
 import TotalProfit from '~/components/dashboard/total-profit'
 import TotalRevenue from '~/components/dashboard/total-revenue'
+import { Skeleton } from '~/components/ui/skeleton'
 
 import { api } from '~/trpc/server'
 
-const SalesReport = async () => {
+export const SalesReport = async () => {
   const store = await api.store.findCurrent()
   if (!store) {
     return null
@@ -45,4 +46,11 @@ const SalesReport = async () => {
   )
 }
 
-export default SalesReport
+export const SalesReportFallback = () => {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+      <Skeleton className="h-64 w-full" />
+      <Skeleton className="h-64 w-full" />
+    </div>
+  )
+}
