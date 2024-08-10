@@ -20,7 +20,7 @@ export const generateYearlySalesReport = async ({ ctx }: Options) => {
   }
 
   // Group by month the total amount per day of the report
-  return await ctx.db
+  const data = await ctx.db
     .select({
       amount: sum(saleSummary.amount).mapWith(Number),
       customers: sum(saleSummary.customers).mapWith(Number),
@@ -37,4 +37,11 @@ export const generateYearlySalesReport = async ({ ctx }: Options) => {
       ),
     )
     .groupBy(sql`EXTRACT(MONTH FROM ${saleSummary.createdAt})`)
+
+  const report = data.map((row) => ({
+    ...row,
+    date: new Date(today.getFullYear(), row.month - 1, 1),
+  }))
+
+  return report
 }
