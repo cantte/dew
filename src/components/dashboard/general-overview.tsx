@@ -1,5 +1,6 @@
 import { endOfMonth, startOfMonth } from 'date-fns'
 import BadgeIndicators from '~/components/badge-indicators'
+import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
 export const GeneralOverview = async () => {
@@ -18,22 +19,11 @@ export const GeneralOverview = async () => {
     storeId: store.id,
   })
 
-  const ordersOverview = await api.order.overview({
-    from,
-    to,
-    storeId: store.id,
-  })
-
-  const customers = salesOverview.customers + ordersOverview.customers
-  const revenue = salesOverview.revenue + ordersOverview.revenue
-  const products = salesOverview.products + ordersOverview.products
+  const customers = salesOverview.customers
+  const revenue = salesOverview.revenue
+  const products = salesOverview.products
 
   const indicators = [
-    {
-      title: 'Ordenes',
-      tooltip: 'Cantidad de ordenes entregadas',
-      value: Intl.NumberFormat('es-CO').format(+ordersOverview.orders),
-    },
     {
       title: 'Ventas',
       tooltip: 'Cantidad de ventas registradas',
@@ -62,4 +52,8 @@ export const GeneralOverview = async () => {
   const info = `Información general de las ordenes y ventas registradas en el mes de ${Intl.DateTimeFormat('es-CO', { month: 'long' }).format(new Date())}.`
 
   return <BadgeIndicators indicators={indicators} info={info} />
+}
+
+export const GeneralOverviewFallback = () => {
+  return <Skeleton className="h-5 w-full max-w-[450px]" />
 }

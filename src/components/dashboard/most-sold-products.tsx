@@ -1,3 +1,4 @@
+import { Skeleton } from '~/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -8,7 +9,7 @@ import {
 } from '~/components/ui/table'
 import { api } from '~/trpc/server'
 
-const MostSoldProducts = async () => {
+export const MostSoldProducts = async () => {
   const mostSoldProducts = await api.product.mostSold()
 
   return (
@@ -64,4 +65,13 @@ const MostSoldProducts = async () => {
   )
 }
 
-export default MostSoldProducts
+export const MostSoldProductsFallback = () => {
+  return (
+    <div className="grid grid-cols-1 gap-2">
+      <span className="font-semibold tracking-tight">
+        Productos más vendidos
+      </span>
+      <Skeleton className="h-32 w-full" />
+    </div>
+  )
+}
