@@ -3,7 +3,10 @@ import {
   GeneralOverview,
   GeneralOverviewFallback,
 } from '~/components/dashboard/general-overview'
-import { MostSoldProducts, MostSoldProductsFallback } from '~/components/dashboard/most-sold-products'
+import {
+  MostSoldProducts,
+  MostSoldProductsFallback,
+} from '~/components/dashboard/most-sold-products'
 import {
   SalesReport,
   SalesReportFallback,
