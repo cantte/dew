@@ -6,6 +6,7 @@ import findSale from '~/server/api/routers/sales/find'
 import listSales from '~/server/api/routers/sales/list'
 import getSalesOverview from '~/server/api/routers/sales/overview'
 import generateSalesReport from '~/server/api/routers/sales/report'
+import { generateYearlySalesReport } from '~/server/api/routers/sales/yearly-report'
 import { byStoreInput } from '~/server/api/schemas/common'
 import {
   createSaleInput,
@@ -46,6 +47,9 @@ const salesRouter = router({
     .mutation(async ({ ctx, input }) => {
       return await cancelSale({ ctx, input })
     }),
+  yearlyReport: authedProcedure.query(async ({ ctx }) => {
+    return await generateYearlySalesReport({ ctx })
+  }),
 })
 
 export default salesRouter
