@@ -1,19 +1,16 @@
 import { Suspense } from 'react'
-import {
-  GeneralOverview,
-  GeneralOverviewFallback,
-} from '~/components/dashboard/general-overview'
 import { MostSoldProducts, MostSoldProductsFallback } from '~/components/dashboard/most-sold-products'
 import {
   SalesReport,
   SalesReportFallback,
 } from '~/components/dashboard/sales-report'
+import { SalesOverview, SalesOverviewFallback } from '~/components/sales/overview'
 
 export default function ReportPage() {
   return (
     <div className="space-y-4">
-      <Suspense fallback={<GeneralOverviewFallback />}>
-        <GeneralOverview />
+      <Suspense fallback={<SalesOverviewFallback />}>
+        <SalesOverview />
       </Suspense>
 
       <div className="space-y-2">

@@ -1,8 +1,9 @@
 import { endOfMonth, startOfMonth } from 'date-fns'
 import BadgeIndicators from '~/components/badge-indicators'
+import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
-const SalesOverview = async () => {
+export const SalesOverview = async () => {
   const store = await api.store.findCurrent()
   if (!store) {
     return null
@@ -49,4 +50,6 @@ const SalesOverview = async () => {
   return <BadgeIndicators indicators={indicators} info={info} />
 }
 
-export default SalesOverview
+export const SalesOverviewFallback = () => {
+  return <Skeleton className="h-5 w-full max-w-[450px]" />
+}

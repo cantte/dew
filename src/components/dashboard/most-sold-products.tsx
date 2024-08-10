@@ -68,7 +68,9 @@ export const MostSoldProducts = async () => {
 export const MostSoldProductsFallback = () => {
   return (
     <div className="grid grid-cols-1 gap-2">
-      <span className="font-semibold tracking-tight">Productos más vendidos</span>
+      <span className="font-semibold tracking-tight">
+        Productos más vendidos
+      </span>
       <Skeleton className="h-32 w-full" />
     </div>
   )
