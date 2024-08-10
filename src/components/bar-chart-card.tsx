@@ -14,7 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '~/components/ui/chart'
-import { formatToCurrency, formatToShortMonth } from '~/text/format'
+import { formatToCurrency, formatToMonthName } from '~/text/format'
 
 type Props = {
   title: string
@@ -45,7 +45,7 @@ export const BarChartCard = ({ title, value, summary }: Props) => {
         {summary.length > 0 && (
           <ChartContainer
             config={chartConfig}
-            className="max-h-[200px] min-h-[80px] w-full"
+            className="max-h-[200px] min-h-[100px] w-full"
           >
             <BarChart accessibilityLayer data={summary}>
               <CartesianGrid vertical={false} />
@@ -56,7 +56,10 @@ export const BarChartCard = ({ title, value, summary }: Props) => {
                 axisLine={false}
                 tickMargin={8}
                 tickFormatter={(value) =>
-                  new Date(value as unknown as string).getDate().toString()
+                  formatToMonthName(
+                    'es-CO',
+                    new Date(value as unknown as string),
+                  )
                 }
               />
 
@@ -66,7 +69,7 @@ export const BarChartCard = ({ title, value, summary }: Props) => {
                   <ChartTooltipContent
                     indicator="line"
                     labelFormatter={(value) =>
-                      formatToShortMonth(
+                      formatToMonthName(
                         'es-CO',
                         new Date(value as unknown as string),
                       )
@@ -78,7 +81,7 @@ export const BarChartCard = ({ title, value, summary }: Props) => {
                 }
               />
 
-              <Bar dataKey="total" fill="hsl(var(--color-total))" radius={8} />
+              <Bar dataKey="total" fill="hsl(var(--primary))" radius={8} />
             </BarChart>
           </ChartContainer>
         )}
