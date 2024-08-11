@@ -73,7 +73,7 @@
     "resend": "^3.5.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
-    "tailwind-merge": "^2.4.0",
+    "tailwind-merge": "^2.5.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0",
     "vaul": "^0.9.1",
