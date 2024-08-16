@@ -70,7 +70,7 @@
     "react-email": "2.1.6",
     "react-hook-form": "^7.52.2",
     "recharts": "^2.12.7",
-    "resend": "^3.5.0",
+    "resend": "^4.0.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.5.2",
