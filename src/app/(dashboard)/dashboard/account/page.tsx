@@ -1,10 +1,14 @@
+import { unstable_noStore as noStore } from 'next/cache'
 import { redirect } from 'next/navigation'
 import BackButton from '~/components/back-button'
+import { UpdateStoreForm } from '~/components/stores/update-store.form'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { getServerAuthSession } from '~/server/auth'
 import { api } from '~/trpc/server'
 
 export default async function AccountPage() {
+  noStore()
+
   const session = await getServerAuthSession()
 
   if (!session) {
@@ -28,7 +32,7 @@ export default async function AccountPage() {
           <div className="grid gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>Mi cuenta</CardTitle>
+                <CardTitle className="text-xl">Mi cuenta</CardTitle>
               </CardHeader>
 
               <CardContent>
@@ -42,19 +46,11 @@ export default async function AccountPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Tienda</CardTitle>
+                <CardTitle className="text-xl">Tienda</CardTitle>
               </CardHeader>
 
               <CardContent>
-                <div className="grid gap-1.5 text-muted-foreground text-sm">
-                  <span>Nombre: {store.name}</span>
-
-                  <span>Dirección: {store.address}</span>
-
-                  <span>Teléfono: {store.phone || 'N/A'}</span>
-
-                  <span>NIT: {store.nit || 'N/A'}</span>
-                </div>
+                <UpdateStoreForm store={store} />
               </CardContent>
             </Card>
           </div>
