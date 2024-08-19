@@ -46,7 +46,7 @@ export default async function AccountPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl">Tienda</CardTitle>
+                <CardTitle className="text-xl">Mi tienda</CardTitle>
               </CardHeader>
 
               <CardContent>
