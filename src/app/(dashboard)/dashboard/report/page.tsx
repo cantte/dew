@@ -15,12 +15,15 @@ import {
   YearlySalesReport,
   YearlySalesReportFallback,
 } from '~/components/sales/yearly-report'
+import { formatToMonthName } from '~/text/format'
 
 export default function ReportPage() {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <span className="font-semibold tracking-tight">Ventas del mes</span>
+        <span className="font-semibold tracking-tight">
+          Ventas de {formatToMonthName('es-CO', new Date())}
+        </span>
 
         <Suspense fallback={<SalesOverviewFallback />}>
           <SalesOverview />

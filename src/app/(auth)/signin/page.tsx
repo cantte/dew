@@ -1,10 +1,8 @@
-import { ChevronLeftIcon } from '@radix-ui/react-icons'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import SignInButton from '~/components/signin-button'
-import { buttonVariants } from '~/components/ui/button'
-import { cn } from '~/lib/utils'
+import { GoogleSignInButton } from '~/components/auth/google-signin'
+import DefaultLayout from '~/components/default-layout'
 import { authOptions } from '~/server/auth'
 
 export const metadata = {
@@ -20,30 +18,55 @@ const SignInPage = async () => {
   }
 
   return (
-    <main className="container flex h-screen w-screen flex-col items-center justify-center">
-      <Link
-        href="/"
-        className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'absolute top-4 left-4 md:top-8 md:left-8',
-        )}
-      >
-        <>
-          <ChevronLeftIcon className="mr-2 h-4 w-4" />
-          Regresar
-        </>
-      </Link>
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 rounded border border-dashed p-4 sm:w-[350px]">
-        <div className="flex flex-col space-y-2 text-center">
-          <h1 className="font-semibold text-2xl tracking-tight">Bienvenido</h1>
-          <p className="text-muted-foreground text-sm">
-            Inicia sesión para acceder a nuestros servicios.
-          </p>
+    <DefaultLayout>
+      <div className="grid h-[calc(100vh-15rem)] w-full max-w-7xl grid-cols-1 md:grid-cols-2">
+        <div className="hidden md:flex">
+          <div className="flex h-full flex-col items-center justify-center space-y-8">
+            <h1 className="font-semibold text-4xl tracking-tight">
+              Bienvenido a dew
+            </h1>
+
+            <p className="text-base text-muted-foreground">
+              El software de facturación más sencillo y fácil de usar.
+            </p>
+          </div>
         </div>
 
-        <SignInButton />
+        <div className="flex h-full flex-col items-center justify-center space-y-6 rounded border">
+          <div className="flex flex-col space-y-2 text-center">
+            <h1 className="font-semibold text-2xl tracking-tight">
+              Iniciar sesión
+            </h1>
+
+            <p className="px-8 text-muted-foreground text-sm">
+              Puedes acceder a nuestros servicios con tu cuenta de Google.
+            </p>
+          </div>
+
+          <div className="grid gap-6">
+            <GoogleSignInButton />
+          </div>
+
+          <p className="px-8 text-center text-muted-foreground text-sm">
+            Al iniciar sesión, aceptas nuestras{' '}
+            <Link
+              href="/terms"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Condiciones de uso
+            </Link>{' '}
+            y{' '}
+            <Link
+              href="/privacy"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Política de privacidad
+            </Link>
+            .
+          </p>
+        </div>
       </div>
-    </main>
+    </DefaultLayout>
   )
 }
 
