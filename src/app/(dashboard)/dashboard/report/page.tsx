@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import {
   MostSoldProducts,
@@ -29,24 +30,32 @@ import {
 } from '~/components/ui/select'
 import { formatToMonthName } from '~/text/format'
 
-export default function ReportPage() {
+type Props = {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default function ReportPage({ searchParams }: Props) {
   const today = new Date()
+
+  if (!searchParams || !searchParams.year || !searchParams.month) {
+    return redirect(`/dashboard/report?year=${today.getFullYear()}&month=${today.getMonth() + 1}`)
+  }
+
+  const currentYear = searchParams.year as string
 
   return (
     <div className="space-y-4">
       <div className="space-y-2">
         <Label>Reporte anual</Label>
 
-        <Select defaultValue={today.getFullYear().toString()}>
+        <Select defaultValue={currentYear}>
           <SelectTrigger className="w-[280px]">
             <SelectValue placeholder="Seleccionar año" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={today.getFullYear().toString()}>
-              {today.getFullYear().toString()}
+            <SelectItem value={currentYear}>
+              {currentYear}
             </SelectItem>
-            <SelectItem value="2020">2020</SelectItem>
-            <SelectItem value="2019">2019</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -72,8 +81,6 @@ export default function ReportPage() {
             <SelectItem value={formatToMonthName('es-CO', today)}>
               {formatToMonthName('es-CO', today)}
             </SelectItem>
-            <SelectItem value="2">Febrero</SelectItem>
-            <SelectItem value="3">Marzo</SelectItem>
           </SelectContent>
         </Select>
       </div>
