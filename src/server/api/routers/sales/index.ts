@@ -4,6 +4,7 @@ import { cancelSale } from '~/server/api/routers/sales/cancel'
 import createSale from '~/server/api/routers/sales/create'
 import findSale from '~/server/api/routers/sales/find'
 import listSales from '~/server/api/routers/sales/list'
+import { generateMonthlySalesReport } from '~/server/api/routers/sales/monthly-report'
 import getSalesOverview from '~/server/api/routers/sales/overview'
 import generateSalesReport from '~/server/api/routers/sales/report'
 import { generateYearlySalesReport } from '~/server/api/routers/sales/yearly-report'
@@ -49,6 +50,9 @@ const salesRouter = router({
     }),
   yearlyReport: authedProcedure.query(async ({ ctx }) => {
     return await generateYearlySalesReport({ ctx })
+  }),
+  monthlyReport: authedProcedure.query(async ({ ctx }) => {
+    return await generateMonthlySalesReport({ ctx })
   }),
 })
 
