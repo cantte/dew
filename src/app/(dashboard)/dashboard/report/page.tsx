@@ -31,14 +31,16 @@ import {
 import { formatToMonthName } from '~/text/format'
 
 type Props = {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | string[] | undefined }
 }
 
 export default function ReportPage({ searchParams }: Props) {
   const today = new Date()
 
   if (!searchParams || !searchParams.year || !searchParams.month) {
-    return redirect(`/dashboard/report?year=${today.getFullYear()}&month=${today.getMonth() + 1}`)
+    return redirect(
+      `/dashboard/report?year=${today.getFullYear()}&month=${today.getMonth() + 1}`,
+    )
   }
 
   const currentYear = searchParams.year as string
@@ -53,9 +55,7 @@ export default function ReportPage({ searchParams }: Props) {
             <SelectValue placeholder="Seleccionar año" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={currentYear}>
-              {currentYear}
-            </SelectItem>
+            <SelectItem value={currentYear}>{currentYear}</SelectItem>
           </SelectContent>
         </Select>
       </div>
