@@ -4,13 +4,13 @@ import {
   MostSoldProductsFallback,
 } from '~/components/dashboard/most-sold-products'
 import {
-  SalesReport,
-  SalesReportFallback,
-} from '~/components/dashboard/sales-report'
-import {
   MonthlySalesOverview,
   MonthlySalesOverviewFallback,
 } from '~/components/sales/monthly-overview'
+import {
+  MonthlySalesReport,
+  MonthlySalesReportFallback,
+} from '~/components/sales/monthly-report'
 import {
   YearlySalesOverview,
   YearlySalesOverviewFallback,
@@ -61,10 +61,6 @@ export default function ReportPage() {
         </Suspense>
       </div>
 
-      <Suspense fallback={<MostSoldProductsFallback />}>
-        <MostSoldProducts />
-      </Suspense>
-
       <div className="space-y-2">
         <Label>Reporte mensual</Label>
 
@@ -86,8 +82,8 @@ export default function ReportPage() {
         <MonthlySalesOverview />
       </Suspense>
 
-      <Suspense fallback={<SalesReportFallback />}>
-        <SalesReport />
+      <Suspense fallback={<MonthlySalesReportFallback />}>
+        <MonthlySalesReport />
       </Suspense>
 
       <Suspense fallback={<MostSoldProductsFallback />}>
