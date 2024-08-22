@@ -1,50 +1,97 @@
+import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import {
   MostSoldProducts,
   MostSoldProductsFallback,
 } from '~/components/dashboard/most-sold-products'
 import {
-  SalesReport,
-  SalesReportFallback,
-} from '~/components/dashboard/sales-report'
+  MonthlySalesOverview,
+  MonthlySalesOverviewFallback,
+} from '~/components/sales/monthly-overview'
 import {
-  SalesOverview,
-  SalesOverviewFallback,
-} from '~/components/sales/overview'
+  MonthlySalesReport,
+  MonthlySalesReportFallback,
+} from '~/components/sales/monthly-report'
+import {
+  YearlySalesOverview,
+  YearlySalesOverviewFallback,
+} from '~/components/sales/yearly-overview'
 import {
   YearlySalesReport,
   YearlySalesReportFallback,
 } from '~/components/sales/yearly-report'
+import { Label } from '~/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select'
 import { formatToMonthName } from '~/text/format'
 
-export default function ReportPage() {
+type Props = {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
+export default function ReportPage({ searchParams }: Props) {
+  const today = new Date()
+
+  if (!searchParams || !searchParams.year || !searchParams.month) {
+    return redirect(
+      `/dashboard/report?year=${today.getFullYear()}&month=${today.getMonth() + 1}`,
+    )
+  }
+
+  const currentYear = searchParams.year as string
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <span className="font-semibold tracking-tight">
-          Ventas de {formatToMonthName('es-CO', new Date())}
-        </span>
+        <Label>Reporte anual</Label>
 
-        <Suspense fallback={<SalesOverviewFallback />}>
-          <SalesOverview />
+        <Select defaultValue={currentYear}>
+          <SelectTrigger className="w-[280px]">
+            <SelectValue placeholder="Seleccionar año" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={currentYear}>{currentYear}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Suspense fallback={<YearlySalesOverviewFallback />}>
+        <YearlySalesOverview />
+      </Suspense>
+
+      <div className="grid gap-2 grid-cols-1">
+        <Suspense fallback={<YearlySalesReportFallback />}>
+          <YearlySalesReport />
         </Suspense>
-
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-          <Suspense fallback={<SalesReportFallback />}>
-            <SalesReport />
-          </Suspense>
-        </div>
       </div>
 
       <div className="space-y-2">
-        <span className="font-semibold tracking-tight">Ventas del año</span>
+        <Label>Reporte mensual</Label>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-          <Suspense fallback={<YearlySalesReportFallback />}>
-            <YearlySalesReport />
-          </Suspense>
-        </div>
+        <Select defaultValue={formatToMonthName('es-CO', today)}>
+          <SelectTrigger className="w-[280px]">
+            <SelectValue placeholder="Seleccionar un mes" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={formatToMonthName('es-CO', today)}>
+              {formatToMonthName('es-CO', today)}
+            </SelectItem>
+          </SelectContent>
+        </Select>
       </div>
+
+      <Suspense fallback={<MonthlySalesOverviewFallback />}>
+        <MonthlySalesOverview />
+      </Suspense>
+
+      <Suspense fallback={<MonthlySalesReportFallback />}>
+        <MonthlySalesReport />
+      </Suspense>
 
       <Suspense fallback={<MostSoldProductsFallback />}>
         <MostSoldProducts />
