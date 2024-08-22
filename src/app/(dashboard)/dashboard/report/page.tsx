@@ -55,7 +55,7 @@ export default function ReportPage() {
         <YearlySalesOverview />
       </Suspense>
 
-      <div className="grid gap-2 grid-cols-1 md:grid-cols-2">
+      <div className="grid gap-2 grid-cols-1">
         <Suspense fallback={<YearlySalesReportFallback />}>
           <YearlySalesReport />
         </Suspense>

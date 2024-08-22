@@ -1,5 +1,6 @@
-import { BarChartCard } from '~/components/bar-chart-card'
+import { YearlyReportChart } from '~/components/sales/yearly-report.chart'
 import { Skeleton } from '~/components/ui/skeleton'
+import { formatToMonthName } from '~/text/format'
 import { api } from '~/trpc/server'
 
 export const YearlySalesReport = async () => {
@@ -24,38 +25,39 @@ export const YearlySalesReport = async () => {
 
   const amountReport = report.map((row) => ({
     total: row.amount,
-    date: row.date.toISOString(),
+    month: row.date.getMonth(),
+    monthName: formatToMonthName('es-CO', row.date),
   }))
 
   const profitReport = report.map((row) => ({
     total: row.profit,
-    date: row.date.toISOString(),
+    month: row.date.getMonth(),
+    monthName: formatToMonthName('es-CO', row.date),
   }))
 
-  const totalAmount = report.reduce((acc, row) => acc + row.amount, 0)
-  const totalProfit = report.reduce((acc, row) => acc + row.profit, 0)
+  // Group by month and build and array of objects with the total amount and profit for each month of the year
+  const data = Array.from({ length: 12 }, (_, i) => {
+    const month = i
+    const amount = amountReport.find((row) => row.month === month)?.total ?? 0
+    const profit = profitReport.find((row) => row.month === month)?.total ?? 0
+
+    return {
+      month: formatToMonthName('es-CO', new Date(2021, month)),
+      amount,
+      profit,
+    }
+  })
 
   return (
-    <>
-      <BarChartCard
-        title="Ingresos totales"
-        value={totalAmount}
-        summary={amountReport}
-      />
-
-      <BarChartCard
-        title="Ganancias totales"
-        value={totalProfit}
-        summary={profitReport}
-      />
-    </>
+    <div className="w-full p-2 border rounded grid">
+      <YearlyReportChart data={data} />
+    </div>
   )
 }
 
 export const YearlySalesReportFallback = () => {
   return (
     <>
-      <Skeleton className="h-64 w-full" />
       <Skeleton className="h-64 w-full" />
     </>
   )
