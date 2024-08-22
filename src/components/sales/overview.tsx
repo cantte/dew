@@ -1,55 +1,131 @@
-import { endOfMonth, startOfMonth } from 'date-fns'
-import BadgeIndicators from '~/components/badge-indicators'
+import { CircleDollarSign, ShoppingCart, Tag } from 'lucide-react'
+import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
-import { api } from '~/trpc/server'
+import { formatToCurrency, formatToNumber } from '~/text/format'
 
-export const SalesOverview = async () => {
-  const store = await api.store.findCurrent()
-  if (!store) {
-    return null
-  }
+type Props = {
+  sales: number
+  products: number
+  amount: number
+  profit: number
+}
 
-  const today = new Date()
-  const from = startOfMonth(today)
-  const to = endOfMonth(today)
+export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
+  return (
+    <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border rounded">
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <ShoppingCart className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Ventas totales</p>
+          </div>
+          <p className="text-lg font-semibold">
+            {formatToNumber('es-CO', sales)}
+          </p>
+        </div>
 
-  const overview = await api.sale.overview({
-    from,
-    to,
-    storeId: store.id,
-  })
+        <Separator orientation="vertical" className="hidden md:flex" />
+      </div>
 
-  const indicators = [
-    {
-      title: 'Ventas',
-      tooltip: 'Cantidad de ventas registradas',
-      value: Intl.NumberFormat('es-CO').format(+overview.sales),
-    },
-    {
-      title: 'Clientes',
-      tooltip: 'Cantidad de clientes atendidos',
-      value: Intl.NumberFormat('es-CO').format(+overview.customers),
-    },
-    {
-      title: 'Ingresos',
-      tooltip: 'Ingresos generados por las ventas',
-      value: Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-      }).format(+overview.revenue),
-    },
-    {
-      title: 'Productos',
-      tooltip: 'Products vendidos',
-      value: Intl.NumberFormat('es-CO').format(+overview.products),
-    },
-  ]
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <Tag className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Productos vendidos</p>
+          </div>
+          <p className="text-lg font-semibold">
+            {formatToNumber('es-CO', products)}
+          </p>
+        </div>
 
-  const info = `Información general de las ventas registradas en el mes de ${Intl.DateTimeFormat('es-CO', { month: 'long' }).format(new Date())}.`
+        <Separator orientation="vertical" className="hidden lg:flex" />
+      </div>
 
-  return <BadgeIndicators indicators={indicators} info={info} />
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <CircleDollarSign className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Ingesos generados</p>
+          </div>
+          <p className="text-lg font-semibold">
+            {formatToCurrency('es-CO', amount)}
+          </p>
+        </div>
+
+        <Separator orientation="vertical" className="hidden md:flex" />
+      </div>
+
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <CircleDollarSign className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Ganancias generadas</p>
+          </div>
+          <p className="text-lg font-semibold">
+            {formatToCurrency('es-CO', profit)}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export const SalesOverviewFallback = () => {
-  return <Skeleton className="h-5 w-full max-w-[450px]" />
+  return (
+    <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border rounded">
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <ShoppingCart className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Ventas totales</p>
+          </div>
+          <p className="text-lg font-semibold">
+            <Skeleton className="w-16 h-6" />
+          </p>
+        </div>
+
+        <Separator orientation="vertical" className="hidden md:flex" />
+      </div>
+
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <Tag className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Productos vendidos</p>
+          </div>
+          <p className="text-lg font-semibold">
+            <Skeleton className="w-16 h-6" />
+          </p>
+        </div>
+
+        <Separator orientation="vertical" className="hidden lg:flex" />
+      </div>
+
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <CircleDollarSign className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Ingesos generados</p>
+          </div>
+          <p className="text-lg font-semibold">
+            <Skeleton className="w-16 h-6" />
+          </p>
+        </div>
+
+        <Separator orientation="vertical" className="hidden md:flex" />
+      </div>
+
+      <div className="p-2 flex justify-between">
+        <div className="p-2">
+          <div className="flex space-x-2 items-center">
+            <CircleDollarSign className="size-3.5 text-muted-foreground" />
+            <p className="text-sm font-medium">Ganancias generadas</p>
+          </div>
+          <p className="text-lg font-semibold">
+            <Skeleton className="w-16 h-6" />
+          </p>
+        </div>
+      </div>
+    </div>
+  )
 }

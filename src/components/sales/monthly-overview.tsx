@@ -1,19 +1,19 @@
-import { endOfYear, startOfYear } from 'date-fns'
+import { endOfMonth, startOfMonth } from 'date-fns'
 import {
   SalesOverview,
   SalesOverviewFallback,
 } from '~/components/sales/overview'
 import { api } from '~/trpc/server'
 
-export const YearlySalesOverview = async () => {
+export const MonthlySalesOverview = async () => {
   const store = await api.store.findCurrent()
   if (!store) {
     return null
   }
 
   const today = new Date()
-  const from = startOfYear(today)
-  const to = endOfYear(today)
+  const from = startOfMonth(today)
+  const to = endOfMonth(today)
 
   const overview = await api.sale.overview({
     from,
@@ -31,6 +31,6 @@ export const YearlySalesOverview = async () => {
   )
 }
 
-export const YearlySalesOverviewFallback = () => {
+export const MonthlySalesOverviewFallback = () => {
   return <SalesOverviewFallback />
 }

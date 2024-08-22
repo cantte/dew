@@ -8,9 +8,9 @@ import {
   SalesReportFallback,
 } from '~/components/dashboard/sales-report'
 import {
-  SalesOverview,
-  SalesOverviewFallback,
-} from '~/components/sales/overview'
+  MonthlySalesOverview,
+  MonthlySalesOverviewFallback,
+} from '~/components/sales/monthly-overview'
 import {
   YearlySalesOverview,
   YearlySalesOverviewFallback,
@@ -82,8 +82,8 @@ export default function ReportPage() {
         </Select>
       </div>
 
-      <Suspense fallback={<SalesOverviewFallback />}>
-        <SalesOverview />
+      <Suspense fallback={<MonthlySalesOverviewFallback />}>
+        <MonthlySalesOverview />
       </Suspense>
 
       <Suspense fallback={<SalesReportFallback />}>
