@@ -22,7 +22,7 @@ export const YearlySalesOverview = async () => {
   })
 
   return (
-    <div className="grid gap-2 grid-cols-2 md:grid-cols-4 w-full border rounded">
+    <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border rounded">
       <div className="p-2 flex justify-between">
         <div className="p-2">
           <div className="flex space-x-2 items-center">
@@ -34,7 +34,7 @@ export const YearlySalesOverview = async () => {
           </p>
         </div>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
       <div className="p-2 flex justify-between">
@@ -48,7 +48,7 @@ export const YearlySalesOverview = async () => {
           </p>
         </div>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden lg:flex" />
       </div>
 
       <div className="p-2 flex justify-between">
@@ -62,7 +62,7 @@ export const YearlySalesOverview = async () => {
           </p>
         </div>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
       <div className="p-2 flex justify-between">
@@ -82,7 +82,7 @@ export const YearlySalesOverview = async () => {
 
 export const YearlySalesOverviewFallback = () => {
   return (
-    <div className="grid gap-2 grid-cols-2 md:grid-cols-4 w-full border rounded">
+    <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border rounded">
       <div className="p-2 flex justify-between">
         <div className="p-2">
           <div className="flex space-x-2 items-center">
@@ -94,7 +94,7 @@ export const YearlySalesOverviewFallback = () => {
           </p>
         </div>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
       <div className="p-2 flex justify-between">
@@ -108,7 +108,7 @@ export const YearlySalesOverviewFallback = () => {
           </p>
         </div>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden lg:flex" />
       </div>
 
       <div className="p-2 flex justify-between">
@@ -122,7 +122,7 @@ export const YearlySalesOverviewFallback = () => {
           </p>
         </div>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
       <div className="p-2 flex justify-between">
