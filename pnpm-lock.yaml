@@ -165,8 +165,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3(react@18.3.1)
       react-email:
-        specifier: 3.0.0
-        version: 3.0.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 3.0.1
+        version: 3.0.1(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-hook-form:
         specifier: ^7.52.2
         version: 7.52.2(react@18.3.1)
@@ -3619,8 +3619,8 @@ packages:
     peerDependencies:
       react: '>= 16.8 || 18.0.0'
 
-  react-email@3.0.0:
-    resolution: {integrity: sha512-5MYZFDkAc5nOdJA5GWJin3iJeDVqf91lhDJTwdsGW2qWGovF9pnvyOfg8de+iDUPM3jfNvrmrIGuExUVFSQE+A==}
+  react-email@3.0.1:
+    resolution: {integrity: sha512-G4Bkx2ULIScy/0Z8nnWywHt0W1iTkaYCdh9rWNuQ3eVZ6B3ttTUDE9uUy3VNQ8dtQbmG0cpt8+XmImw7mMBW6Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -7462,7 +7462,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  react-email@3.0.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-email@3.0.1(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/core': 7.24.5
       '@babel/parser': 7.24.5
@@ -7885,7 +7885,7 @@ snapshots:
   unplugin@1.0.1:
     dependencies:
       acorn: 8.12.0
-      chokidar: 3.5.3
+      chokidar: 3.6.0
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.5.0
 
