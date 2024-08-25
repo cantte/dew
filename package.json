@@ -40,7 +40,7 @@
     "@t3-oss/env-nextjs": "^0.11.0",
     "@tanstack/react-query": "^5.52.1",
     "@tanstack/react-query-devtools": "^5.52.1",
-    "@tanstack/react-table": "^8.20.1",
+    "@tanstack/react-table": "^8.20.5",
     "@trpc/client": "11.0.0-rc.485",
     "@trpc/next": "11.0.0-rc.485",
     "@trpc/react-query": "11.0.0-rc.485",
