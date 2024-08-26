@@ -7,12 +7,17 @@ import listSales from '~/server/api/routers/sales/list'
 import { generateMonthlySalesReport } from '~/server/api/routers/sales/monthly-report'
 import getSalesOverview from '~/server/api/routers/sales/overview'
 import generateSalesReport from '~/server/api/routers/sales/report'
+import { searchSelectableMonths } from '~/server/api/routers/sales/search-selectable-months'
+import { searchSelectableYears } from '~/server/api/routers/sales/search-selectable-years'
 import { generateYearlySalesReport } from '~/server/api/routers/sales/yearly-report'
 import { byStoreInput } from '~/server/api/schemas/common'
 import {
   createSaleInput,
   findSaleInput,
   getSalesOverviewInput,
+  monthlyReportInput,
+  searchSelectableMonthsInput,
+  yearlyReportInput,
 } from '~/server/api/schemas/sales'
 import { router } from '~/server/api/trpc'
 
@@ -48,12 +53,24 @@ const salesRouter = router({
     .mutation(async ({ ctx, input }) => {
       return await cancelSale({ ctx, input })
     }),
-  yearlyReport: authedProcedure.query(async ({ ctx }) => {
-    return await generateYearlySalesReport({ ctx })
+  yearlyReport: authedProcedure
+    .input(yearlyReportInput)
+    .query(async ({ ctx, input }) => {
+      return await generateYearlySalesReport({ ctx, input })
+    }),
+  monthlyReport: authedProcedure
+    .input(monthlyReportInput)
+    .query(async ({ ctx, input }) => {
+      return await generateMonthlySalesReport({ ctx, input })
+    }),
+  selectableYears: authedProcedure.query(async ({ ctx }) => {
+    return await searchSelectableYears({ ctx })
   }),
-  monthlyReport: authedProcedure.query(async ({ ctx }) => {
-    return await generateMonthlySalesReport({ ctx })
-  }),
+  selectableMonths: authedProcedure
+    .input(searchSelectableMonthsInput)
+    .query(async ({ ctx, input }) => {
+      return await searchSelectableMonths({ ctx, input })
+    }),
 })
 
 export default salesRouter

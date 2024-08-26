@@ -5,13 +5,18 @@ import {
 } from '~/components/sales/overview'
 import { api } from '~/trpc/server'
 
-export const MonthlySalesOverview = async () => {
+type Props = {
+  month: number
+  year: number
+}
+
+export const MonthlySalesOverview = async ({ month, year }: Props) => {
   const store = await api.store.findCurrent()
   if (!store) {
     return null
   }
 
-  const today = new Date()
+  const today = new Date(year, month - 1, 1)
   const from = startOfMonth(today)
   const to = endOfMonth(today)
 

@@ -2,7 +2,12 @@ import { MonthlyReportChart } from '~/components/sales/monthly-report.chart'
 import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
-export const MonthlySalesReport = async () => {
+type Props = {
+  month: number
+  year: number
+}
+
+export const MonthlySalesReport = async ({ month, year }: Props) => {
   const store = await api.store.findCurrent()
   if (!store) {
     return null
@@ -16,7 +21,10 @@ export const MonthlySalesReport = async () => {
     return null
   }
 
-  const report = await api.sale.monthlyReport()
+  const report = await api.sale.monthlyReport({
+    month,
+    year,
+  })
 
   return (
     <div className="w-full p-2 border rounded grid">
