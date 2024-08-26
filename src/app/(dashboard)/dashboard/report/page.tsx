@@ -37,11 +37,11 @@ export default async function ReportPage({ searchParams }: Props) {
     )
   }
 
-  const currentYear = searchParams.year as string
+  const currentYear = Number(searchParams.year)
 
   const selectableYears = await api.sale.selectableYears()
   const selectableMonths = await api.sale.selectableMonths({
-    year: Number(currentYear),
+    year: currentYear,
   })
 
   return (
@@ -49,12 +49,12 @@ export default async function ReportPage({ searchParams }: Props) {
       <SelectYear selectableYears={selectableYears} />
 
       <Suspense fallback={<YearlySalesOverviewFallback />}>
-        <YearlySalesOverview />
+        <YearlySalesOverview year={currentYear} />
       </Suspense>
 
       <div className="grid gap-2 grid-cols-1">
         <Suspense fallback={<YearlySalesReportFallback />}>
-          <YearlySalesReport />
+          <YearlySalesReport year={currentYear} />
         </Suspense>
       </div>
 

@@ -47,3 +47,7 @@ export const upsertSaleSummaryInput = z.object({
 export const searchSelectableMonthsInput = z.object({
   year: z.number(),
 })
+
+export const yearlyReportInput = z.object({
+  year: z.number(),
+})

@@ -3,7 +3,11 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { formatToMonthName } from '~/text/format'
 import { api } from '~/trpc/server'
 
-export const YearlySalesReport = async () => {
+type Props = {
+  year: number
+}
+
+export const YearlySalesReport = async ({ year }: Props) => {
   const store = await api.store.findCurrent()
   if (!store) {
     return null
@@ -17,7 +21,9 @@ export const YearlySalesReport = async () => {
     return null
   }
 
-  const report = await api.sale.yearlyReport()
+  const report = await api.sale.yearlyReport({
+    year,
+  })
 
   if (!report) {
     return null

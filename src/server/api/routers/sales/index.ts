@@ -16,6 +16,7 @@ import {
   findSaleInput,
   getSalesOverviewInput,
   searchSelectableMonthsInput,
+  yearlyReportInput,
 } from '~/server/api/schemas/sales'
 import { router } from '~/server/api/trpc'
 
@@ -51,9 +52,11 @@ const salesRouter = router({
     .mutation(async ({ ctx, input }) => {
       return await cancelSale({ ctx, input })
     }),
-  yearlyReport: authedProcedure.query(async ({ ctx }) => {
-    return await generateYearlySalesReport({ ctx })
-  }),
+  yearlyReport: authedProcedure
+    .input(yearlyReportInput)
+    .query(async ({ ctx, input }) => {
+      return await generateYearlySalesReport({ ctx, input })
+    }),
   monthlyReport: authedProcedure.query(async ({ ctx }) => {
     return await generateMonthlySalesReport({ ctx })
   }),

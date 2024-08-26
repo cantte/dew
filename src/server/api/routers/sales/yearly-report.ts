@@ -1,17 +1,20 @@
-import { startOfYear } from 'date-fns'
+import { endOfYear, startOfYear } from 'date-fns'
 import { and, between, eq, sql, sum } from 'drizzle-orm'
+import type { TypeOf } from 'zod'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import findCurrentStore from '~/server/api/routers/stores/findCurrent'
+import type { yearlyReportInput } from '~/server/api/schemas/sales'
 import { saleSummary } from '~/server/db/schema'
 
 type Options = {
   ctx: TRPCAuthedContext
+  input: TypeOf<typeof yearlyReportInput>
 }
 
-export const generateYearlySalesReport = async ({ ctx }: Options) => {
-  const today = new Date()
-  const from = startOfYear(today)
-  const to = today
+export const generateYearlySalesReport = async ({ ctx, input }: Options) => {
+  const yearDate = new Date(input.year, 0, 1)
+  const from = startOfYear(yearDate)
+  const to = endOfYear(yearDate)
 
   const store = await findCurrentStore({ ctx })
 
@@ -40,7 +43,7 @@ export const generateYearlySalesReport = async ({ ctx }: Options) => {
 
   const report = data.map((row) => ({
     ...row,
-    date: new Date(today.getFullYear(), row.month - 1, 1),
+    date: new Date(yearDate.getFullYear(), row.month - 1, 1),
   }))
 
   return report
