@@ -30,11 +30,16 @@ const SalesPage = async () => {
     storeId: store.id,
   })
 
+  const today = new Date()
+
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Suspense fallback={<MonthlySalesOverviewFallback />}>
-          <MonthlySalesOverview />
+          <MonthlySalesOverview
+            month={today.getMonth() + 1}
+            year={today.getFullYear()}
+          />
         </Suspense>
 
         <Suspense fallback={<Skeleton className="h-8 w-32" />}>
