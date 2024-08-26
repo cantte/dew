@@ -1,8 +1,8 @@
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '~/components/ui/accordion'
 
 export const FAQSection = () => {
