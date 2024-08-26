@@ -1,3 +1,4 @@
+import Footer from '~/components/footer'
 import FeaturesSection from '~/components/home/features'
 import { MainNav } from '~/components/main-nav'
 
@@ -10,6 +11,8 @@ export default function FeaturesPage() {
       <main className="flex flex-1 flex-col items-center gap-4 p-4 md:gap-8 md:p-6">
         <FeaturesSection />
       </main>
+
+      <Footer />
     </>
   )
 }

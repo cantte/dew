@@ -16,10 +16,6 @@ const Footer = () => {
             Características
           </Link>
 
-          <Link href="/terms" className="text-muted-foreground text-sm">
-            Condiciones de uso
-          </Link>
-
           <Link href="/privacy" className="text-muted-foreground text-sm">
             Política de privacidad
           </Link>
