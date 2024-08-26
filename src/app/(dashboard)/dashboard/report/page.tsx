@@ -4,6 +4,8 @@ import {
   MostSoldProducts,
   MostSoldProductsFallback,
 } from '~/components/dashboard/most-sold-products'
+import { SelectMonth } from '~/components/dashboard/select-month'
+import { SelectYear } from '~/components/dashboard/select-year'
 import {
   MonthlySalesOverview,
   MonthlySalesOverviewFallback,
@@ -20,21 +22,13 @@ import {
   YearlySalesReport,
   YearlySalesReportFallback,
 } from '~/components/sales/yearly-report'
-import { Label } from '~/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select'
-import { formatToMonthName } from '~/text/format'
+import { api } from '~/trpc/server'
 
 type Props = {
   searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default function ReportPage({ searchParams }: Props) {
+export default async function ReportPage({ searchParams }: Props) {
   const today = new Date()
 
   if (!searchParams || !searchParams.year || !searchParams.month) {
@@ -45,20 +39,14 @@ export default function ReportPage({ searchParams }: Props) {
 
   const currentYear = searchParams.year as string
 
+  const selectableYears = await api.sale.selectableYears()
+  const selectableMonths = await api.sale.selectableMonths({
+    year: Number(currentYear),
+  })
+
   return (
     <div className="space-y-4">
-      <div className="space-y-2">
-        <Label>Reporte anual</Label>
-
-        <Select defaultValue={currentYear}>
-          <SelectTrigger className="w-[280px]">
-            <SelectValue placeholder="Seleccionar año" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={currentYear}>{currentYear}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <SelectYear selectableYears={selectableYears} />
 
       <Suspense fallback={<YearlySalesOverviewFallback />}>
         <YearlySalesOverview />
@@ -70,20 +58,7 @@ export default function ReportPage({ searchParams }: Props) {
         </Suspense>
       </div>
 
-      <div className="space-y-2">
-        <Label>Reporte mensual</Label>
-
-        <Select defaultValue={formatToMonthName('es-CO', today)}>
-          <SelectTrigger className="w-[280px]">
-            <SelectValue placeholder="Seleccionar un mes" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={formatToMonthName('es-CO', today)}>
-              {formatToMonthName('es-CO', today)}
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <SelectMonth selectableMonths={selectableMonths} />
 
       <Suspense fallback={<MonthlySalesOverviewFallback />}>
         <MonthlySalesOverview />
