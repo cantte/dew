@@ -43,3 +43,7 @@ export const upsertSaleSummaryInput = z.object({
   sales: z.coerce.number().min(0),
   storeId: z.string().uuid(),
 })
+
+export const searchSelectableMonthsInput = z.object({
+  year: z.number(),
+})
