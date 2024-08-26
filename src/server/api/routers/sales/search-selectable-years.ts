@@ -14,7 +14,7 @@ export const searchSelectableYears = async ({ ctx }: Options) => {
     return [{ year: new Date().getFullYear() }]
   }
 
-  return await ctx.db
+  const selectableYears = await ctx.db
     .selectDistinct({
       year: sql<number>`EXTRACT(YEAR FROM ${saleSummary.createdAt})`.mapWith(
         Number,
@@ -23,4 +23,10 @@ export const searchSelectableYears = async ({ ctx }: Options) => {
     .from(saleSummary)
     .where(eq(saleSummary.storeId, store.id))
     .orderBy(sql`EXTRACT(YEAR FROM ${saleSummary.createdAt})`)
+
+  if (selectableYears.length === 0) {
+    return [{ year: new Date().getFullYear() }]
+  }
+
+  return selectableYears
 }
