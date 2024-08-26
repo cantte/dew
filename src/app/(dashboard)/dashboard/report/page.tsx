@@ -38,6 +38,7 @@ export default async function ReportPage({ searchParams }: Props) {
   }
 
   const currentYear = Number(searchParams.year)
+  const currentMonth = Number(searchParams.month)
 
   const selectableYears = await api.sale.selectableYears()
   const selectableMonths = await api.sale.selectableMonths({
@@ -61,7 +62,7 @@ export default async function ReportPage({ searchParams }: Props) {
       <SelectMonth selectableMonths={selectableMonths} />
 
       <Suspense fallback={<MonthlySalesOverviewFallback />}>
-        <MonthlySalesOverview />
+        <MonthlySalesOverview month={currentMonth} year={currentYear} />
       </Suspense>
 
       <Suspense fallback={<MonthlySalesReportFallback />}>
