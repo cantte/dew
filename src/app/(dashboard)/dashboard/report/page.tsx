@@ -66,7 +66,7 @@ export default async function ReportPage({ searchParams }: Props) {
       </Suspense>
 
       <Suspense fallback={<MonthlySalesReportFallback />}>
-        <MonthlySalesReport />
+        <MonthlySalesReport month={currentMonth} year={currentYear} />
       </Suspense>
 
       <Suspense fallback={<MostSoldProductsFallback />}>
