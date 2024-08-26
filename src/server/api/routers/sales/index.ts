@@ -15,6 +15,7 @@ import {
   createSaleInput,
   findSaleInput,
   getSalesOverviewInput,
+  monthlyReportInput,
   searchSelectableMonthsInput,
   yearlyReportInput,
 } from '~/server/api/schemas/sales'
@@ -57,9 +58,11 @@ const salesRouter = router({
     .query(async ({ ctx, input }) => {
       return await generateYearlySalesReport({ ctx, input })
     }),
-  monthlyReport: authedProcedure.query(async ({ ctx }) => {
-    return await generateMonthlySalesReport({ ctx })
-  }),
+  monthlyReport: authedProcedure
+    .input(monthlyReportInput)
+    .query(async ({ ctx, input }) => {
+      return await generateMonthlySalesReport({ ctx, input })
+    }),
   selectableYears: authedProcedure.query(async ({ ctx }) => {
     return await searchSelectableYears({ ctx })
   }),

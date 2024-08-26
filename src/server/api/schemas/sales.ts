@@ -51,3 +51,8 @@ export const searchSelectableMonthsInput = z.object({
 export const yearlyReportInput = z.object({
   year: z.number(),
 })
+
+export const monthlyReportInput = z.object({
+  month: z.number(),
+  year: z.number(),
+})
