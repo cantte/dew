@@ -1,3 +1,4 @@
+import { differenceInDays } from 'date-fns'
 import { eq } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import { users } from '~/server/db/schema'
@@ -6,7 +7,7 @@ type Options = {
   ctx: TRPCAuthedContext
 }
 
-export const checkUserTrialIsActive = async ({ ctx }: Options) => {
+export const findUserTrial = async ({ ctx }: Options) => {
   const userId = ctx.session.user.id
 
   const [dbUser] = await ctx.db
@@ -18,10 +19,13 @@ export const checkUserTrialIsActive = async ({ ctx }: Options) => {
     .where(eq(users.id, userId))
 
   if (!dbUser) {
-    return false
+    return {
+      remainingDays: 0,
+      isActive: false,
+    }
   }
 
-  if (dbUser.trialEnd === null) {
+  if (!dbUser.trialEnd) {
     await ctx.db
       .update(users)
       .set({
@@ -30,8 +34,17 @@ export const checkUserTrialIsActive = async ({ ctx }: Options) => {
       })
       .where(eq(users.id, userId))
 
-    return true
+    return {
+      remainingDays: 14,
+      isActive: true,
+    }
   }
 
-  return dbUser.trialEnd > new Date()
+  const today = new Date()
+  const remainingDays = differenceInDays(dbUser.trialEnd, today)
+
+  return {
+    remainingDays,
+    isActive: dbUser.trialEnd > today,
+  }
 }
