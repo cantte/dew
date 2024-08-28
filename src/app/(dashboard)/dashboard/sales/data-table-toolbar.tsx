@@ -49,38 +49,36 @@ const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
 
   return (
     <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
-      <div className="grid grid-flow-row grid-cols-1 gap-2 md:grid-cols-3">
-        <DateRangeFilter table={table} className="col-span-1 h-8" />
+      <div className="grid gap-2">
+        <div className="flex flex-col gap-2 md:flex-row">
+          {table.getColumn('paymentMethod') && (
+            <DataTableFacetedFilter
+              column={table.getColumn('paymentMethod')}
+              title="Método de pago"
+              options={paymentMethods}
+            />
+          )}
 
-        <div className="col-span-2">
-          <div className="flex flex-col gap-2 md:flex-row">
-            {table.getColumn('paymentMethod') && (
-              <DataTableFacetedFilter
-                column={table.getColumn('paymentMethod')}
-                title="Método de pago"
-                options={paymentMethods}
-              />
-            )}
+          {table.getColumn('status') && (
+            <DataTableFacetedFilter
+              column={table.getColumn('status')}
+              title="Estado"
+              options={saleStatuses}
+            />
+          )}
 
-            {table.getColumn('status') && (
-              <DataTableFacetedFilter
-                column={table.getColumn('status')}
-                title="Estado"
-                options={saleStatuses}
-              />
-            )}
+          <DateRangeFilter table={table} className="col-span-1 h-8" />
 
-            {isFiltered && (
-              <Button
-                variant="ghost"
-                onClick={resetFilters}
-                className="h-8 px-2 lg:px-3"
-              >
-                Limpiar filtros
-                <FilterX className="ml-2 h-4 w-4" />
-              </Button>
-            )}
-          </div>
+          {isFiltered && (
+            <Button
+              variant="ghost"
+              onClick={resetFilters}
+              className="h-8 px-2 lg:px-3"
+            >
+              Limpiar filtros
+              <FilterX className="ml-2 h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
 

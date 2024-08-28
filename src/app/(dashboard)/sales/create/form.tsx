@@ -214,7 +214,7 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
             <div className="flex flex-col justify-between gap-4 rounded border p-4">
               <div className="grid gap-4 text-sm">
                 <div>
-                  <Badge variant="secondary">{store.name}</Badge>
+                  <Badge>{store.name}</Badge>
                 </div>
 
                 <div className="grid gap-2">

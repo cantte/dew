@@ -29,6 +29,23 @@ Sentry.init({
     Sentry.feedbackIntegration({
       colorScheme: 'system',
       autoInject: false,
+      showBranding: false,
+      triggerLabel: 'Reportar un problema',
+
+      formTitle: 'Reportar un problema',
+      nameLabel: 'Nombre',
+      namePlaceholder: 'Ej: Manolo',
+
+      messageLabel: 'Observaciones',
+      messagePlaceholder: 'Tienes una sugerencia? Que problema presentas?',
+      isRequiredLabel: '(requerido)',
+
+      submitButtonLabel: 'Enviar',
+      cancelButtonLabel: 'Cancelar',
+      confirmButtonLabel: 'Confirmar',
+
+      addScreenshotButtonLabel: 'Agregar captura de pantalla',
+      removeScreenshotButtonLabel: 'Remover captura de pantalla',
     }),
   ],
 })

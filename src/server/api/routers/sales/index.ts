@@ -7,6 +7,7 @@ import listSales from '~/server/api/routers/sales/list'
 import { generateMonthlySalesReport } from '~/server/api/routers/sales/monthly-report'
 import getSalesOverview from '~/server/api/routers/sales/overview'
 import generateSalesReport from '~/server/api/routers/sales/report'
+import { searchLastSales } from '~/server/api/routers/sales/search-last-sales'
 import { searchSelectableMonths } from '~/server/api/routers/sales/search-selectable-months'
 import { searchSelectableYears } from '~/server/api/routers/sales/search-selectable-years'
 import { generateYearlySalesReport } from '~/server/api/routers/sales/yearly-report'
@@ -71,6 +72,9 @@ const salesRouter = router({
     .query(async ({ ctx, input }) => {
       return await searchSelectableMonths({ ctx, input })
     }),
+  lastSales: authedProcedure.query(async ({ ctx }) => {
+    return await searchLastSales({ ctx })
+  }),
 })
 
 export default salesRouter

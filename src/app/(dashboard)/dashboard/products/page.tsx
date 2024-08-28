@@ -3,7 +3,10 @@ import { columns } from '~/app/(dashboard)/dashboard/products/columns'
 import CreateProductButton from '~/app/(dashboard)/dashboard/products/create-button'
 import ProductDataTable from '~/app/(dashboard)/dashboard/products/data-table'
 import { InventoryAdjustmentButton } from '~/app/(dashboard)/dashboard/products/inventory-adjustment.button'
-import ProductsOverview from '~/app/(dashboard)/dashboard/products/overview'
+import {
+  ProductsOverview,
+  ProductsOverviewFallback,
+} from '~/app/(dashboard)/dashboard/products/overview'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { Skeleton } from '~/components/ui/skeleton'
@@ -30,12 +33,12 @@ const ProductsPage = async () => {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <Suspense fallback={<Skeleton className="h-8 w-10" />}>
+      <div className="grid gap-2">
+        <Suspense fallback={<ProductsOverviewFallback />}>
           <ProductsOverview storeId={store.id} />
         </Suspense>
 
-        <div className="flex gap-2">
+        <div className="flex justify-end gap-2">
           <Suspense fallback={<Skeleton className="h-8 w-10" />}>
             <CreateProductButton />
           </Suspense>
