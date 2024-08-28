@@ -1,10 +1,10 @@
 import { and, eq, isNotNull } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import {
-    employeeStore,
-    employees,
-    permissions,
-    rolePermission,
+  employeeStore,
+  employees,
+  permissions,
+  rolePermission,
 } from '~/server/db/schema'
 
 type Options = {
