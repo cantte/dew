@@ -4,6 +4,10 @@ import {
   DailySalesOverview,
   DailySalesOverviewFallback,
 } from '~/components/sales/daily-overview'
+import {
+  LastSales,
+  LastSalesFallback,
+} from '~/components/sales/last-sales.table'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { formatToCurrency } from '~/text/format'
 import { api } from '~/trpc/server'
@@ -84,6 +88,14 @@ export default async function DashboardPage() {
         <Suspense fallback={<DailySalesOverviewFallback />}>
           <DailySalesOverview />
         </Suspense>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className='md:col-span-3'>
+          <Suspense fallback={<LastSalesFallback />}>
+            <LastSales />
+          </Suspense>
+        </div>
       </div>
     </div>
   )
