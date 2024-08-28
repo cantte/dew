@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from '~/components/ui/card'
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { formatToCurrency } from '~/text/format'

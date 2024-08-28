@@ -78,6 +78,13 @@
       "when": 1723135682303,
       "tag": "0010_soft_zemo",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1724875760356,
+      "tag": "0011_violet_echo",
+      "breakpoints": true
     }
   ]
 }
