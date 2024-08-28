@@ -14,7 +14,6 @@ const FeaturesSection = () => {
     <section id="features" className="flex max-w-7xl flex-col space-y-16">
       <div className="flex w-full flex-col items-center space-y-4">
         <Badge
-          className="bg-primary-text/10 text-primary-text hover:bg-primary-text/10"
           aria-label="Características"
         >
           Características
