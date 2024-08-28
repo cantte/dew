@@ -10,10 +10,9 @@ const rbacRouter = router({
     .query(async ({ ctx, input }) => {
       return await checkPermissions({ ctx, input })
     }),
-  list: authedProcedure
-    .query(async ({ ctx }) => {
-      return await searchPermissions({ ctx })
-    }),
+  list: authedProcedure.query(async ({ ctx }) => {
+    return await searchPermissions({ ctx })
+  }),
 })
 
 export default rbacRouter
