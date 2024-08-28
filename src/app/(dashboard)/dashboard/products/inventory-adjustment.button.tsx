@@ -13,9 +13,9 @@ export const InventoryAdjustmentButton = async () => {
   }
 
   return (
-    <Button asChild size="sm" className="h-7 gap-1">
+    <Button asChild size="sm">
       <Link href="/dashboard/inventory/adjustment">
-        <ClipboardList className="h-3.5 w-3.5" />
+        <ClipboardList className="size-4 sm:mr-2" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
           Ajuste de inventario
         </span>

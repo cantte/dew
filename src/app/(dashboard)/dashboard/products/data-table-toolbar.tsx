@@ -63,13 +63,6 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
   return (
     <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
       <div className="grid grid-flow-row grid-cols-1 gap-2 md:grid-cols-3">
-        <Input
-          placeholder="Buscar producto"
-          value={table.getState().globalFilter}
-          onChange={(event) => table.setGlobalFilter(event.target.value)}
-          className="col-span-1 h-8"
-        />
-
         <div className="col-span-2">
           <div className="flex flex-col gap-2 md:flex-row">
             <Toggle
@@ -82,6 +75,15 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
               <Filter className="mr-2 h-4 w-4" />
               Productos con stock bajo
             </Toggle>
+
+            <div>
+              <Input
+                placeholder="Buscar un producto"
+                value={table.getState().globalFilter}
+                onChange={(event) => table.setGlobalFilter(event.target.value)}
+                className="h-8 text-xs"
+              />
+            </div>
 
             {isFiltered && (
               <Button

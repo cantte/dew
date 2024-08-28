@@ -13,11 +13,7 @@ const FeaturesSection = () => {
   return (
     <section id="features" className="flex max-w-7xl flex-col space-y-16">
       <div className="flex w-full flex-col items-center space-y-4">
-        <Badge
-          aria-label="Características"
-        >
-          Características
-        </Badge>
+        <Badge aria-label="Características">Características</Badge>
 
         <h2 className="text-center font-medium text-4xl">
           Mira lo que puedes hacer con dew
