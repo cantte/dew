@@ -20,6 +20,11 @@ export const users = createTable('user', {
     mode: 'date',
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar('image', { length: 255 }),
+
+  trialEnd: timestamp('trial_end', { mode: 'date' }),
+
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
 })
 
 export const usersRelations = relations(users, ({ many }) => ({

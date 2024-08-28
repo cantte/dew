@@ -8,6 +8,7 @@ import productsRouter from '~/server/api/routers/products'
 import rbacRouter from '~/server/api/routers/rbac'
 import salesRouter from '~/server/api/routers/sales'
 import storesProcedure from '~/server/api/routers/stores'
+import { subscriptionsRouter } from '~/server/api/routers/subscriptions'
 import userPreferencesRouter from '~/server/api/routers/userPreferences'
 import { createCallerFactory, router } from '~/server/api/trpc'
 
@@ -18,6 +19,7 @@ export const appRouter = router({
   sale: salesRouter,
   order: ordersRouter,
   store: storesProcedure,
+  subscription: subscriptionsRouter,
   cashRegister: cashRegistersRouter,
   userPreference: userPreferencesRouter,
   employee: employeesRouter,
