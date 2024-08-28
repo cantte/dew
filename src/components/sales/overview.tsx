@@ -12,14 +12,14 @@ type Props = {
 
 export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
   return (
-    <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border rounded">
-      <div className="p-2 flex justify-between">
+    <div className="grid w-full grid-cols-1 gap-1 rounded border md:grid-cols-2 lg:grid-cols-4">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <ShoppingCart className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Ventas totales</p>
+            <p className="font-medium text-sm">Ventas totales</p>
           </div>
-          <p className="text-lg font-semibold">
+          <p className="font-semibold text-lg">
             {formatToNumber('es-CO', sales)}
           </p>
         </div>
@@ -27,13 +27,13 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
         <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
-      <div className="p-2 flex justify-between">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <Tag className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Productos vendidos</p>
+            <p className="font-medium text-sm">Productos vendidos</p>
           </div>
-          <p className="text-lg font-semibold">
+          <p className="font-semibold text-lg">
             {formatToNumber('es-CO', products)}
           </p>
         </div>
@@ -41,13 +41,13 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
         <Separator orientation="vertical" className="hidden lg:flex" />
       </div>
 
-      <div className="p-2 flex justify-between">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Ingesos generados</p>
+            <p className="font-medium text-sm">Ingesos generados</p>
           </div>
-          <p className="text-lg font-semibold">
+          <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', amount)}
           </p>
         </div>
@@ -55,13 +55,13 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
         <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
-      <div className="p-2 flex justify-between">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Ganancias generadas</p>
+            <p className="font-medium text-sm">Ganancias generadas</p>
           </div>
-          <p className="text-lg font-semibold">
+          <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', profit)}
           </p>
         </div>
@@ -72,57 +72,57 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
 
 export const SalesOverviewFallback = () => {
   return (
-    <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border rounded">
-      <div className="p-2 flex justify-between">
+    <div className="grid w-full grid-cols-1 gap-1 rounded border md:grid-cols-2 lg:grid-cols-4">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <ShoppingCart className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Ventas totales</p>
+            <p className="font-medium text-sm">Ventas totales</p>
           </div>
-          <p className="text-lg font-semibold">
-            <Skeleton className="w-16 h-6" />
+          <p className="font-semibold text-lg">
+            <Skeleton className="h-6 w-16" />
           </p>
         </div>
 
         <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
-      <div className="p-2 flex justify-between">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <Tag className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Productos vendidos</p>
+            <p className="font-medium text-sm">Productos vendidos</p>
           </div>
-          <p className="text-lg font-semibold">
-            <Skeleton className="w-16 h-6" />
+          <p className="font-semibold text-lg">
+            <Skeleton className="h-6 w-16" />
           </p>
         </div>
 
         <Separator orientation="vertical" className="hidden lg:flex" />
       </div>
 
-      <div className="p-2 flex justify-between">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Ingesos generados</p>
+            <p className="font-medium text-sm">Ingesos generados</p>
           </div>
-          <p className="text-lg font-semibold">
-            <Skeleton className="w-16 h-6" />
+          <p className="font-semibold text-lg">
+            <Skeleton className="h-6 w-16" />
           </p>
         </div>
 
         <Separator orientation="vertical" className="hidden md:flex" />
       </div>
 
-      <div className="p-2 flex justify-between">
+      <div className="flex justify-between p-2">
         <div className="p-2">
-          <div className="flex space-x-2 items-center">
+          <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="text-sm font-medium">Ganancias generadas</p>
+            <p className="font-medium text-sm">Ganancias generadas</p>
           </div>
-          <p className="text-lg font-semibold">
-            <Skeleton className="w-16 h-6" />
+          <p className="font-semibold text-lg">
+            <Skeleton className="h-6 w-16" />
           </p>
         </div>
       </div>

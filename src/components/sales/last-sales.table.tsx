@@ -4,12 +4,12 @@ import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Skeleton } from '~/components/ui/skeleton'
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '~/components/ui/table'
 import { saleStatuses } from '~/constants'
 import { formatToCurrency, formatToDateWithTime } from '~/text/format'
@@ -60,11 +60,11 @@ export const LastSales = async () => {
                       {formatToDateWithTime('es-CO', sale.createdAt)}
                     </TableCell>
                     <TableCell>
-                        <Button variant='ghost' size='icon' asChild>
-                            <Link href={`/dashboard/sales/${sale.code}`}>
-                            <EyeIcon className='size-5 text-muted-foreground'/>
-                            </Link>
-                        </Button>
+                      <Button variant="ghost" size="icon" asChild>
+                        <Link href={`/dashboard/sales/${sale.code}`}>
+                          <EyeIcon className="size-5 text-muted-foreground" />
+                        </Link>
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

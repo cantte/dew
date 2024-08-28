@@ -91,7 +91,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className='md:col-span-3'>
+        <div className="md:col-span-3">
           <Suspense fallback={<LastSalesFallback />}>
             <LastSales />
           </Suspense>
