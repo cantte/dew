@@ -53,7 +53,7 @@ export default async function ReportPage({ searchParams }: Props) {
         <YearlySalesOverview year={currentYear} />
       </Suspense>
 
-      <div className="grid gap-2 grid-cols-1">
+      <div className="grid grid-cols-1 gap-2">
         <Suspense fallback={<YearlySalesReportFallback />}>
           <YearlySalesReport year={currentYear} />
         </Suspense>
