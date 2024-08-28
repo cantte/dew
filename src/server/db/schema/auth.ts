@@ -21,6 +21,8 @@ export const users = createTable('user', {
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar('image', { length: 255 }),
 
+  trialEnd: timestamp('trial_end', { mode: 'date' }),
+
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
 })
