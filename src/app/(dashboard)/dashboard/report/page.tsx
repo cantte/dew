@@ -49,27 +49,27 @@ export default async function ReportPage({ searchParams }: Props) {
     <div className="space-y-4">
       <SelectYear selectableYears={selectableYears} />
 
-      <Suspense fallback={<YearlySalesOverviewFallback />}>
+      <Suspense key={Math.random()} fallback={<YearlySalesOverviewFallback />}>
         <YearlySalesOverview year={currentYear} />
       </Suspense>
 
       <div className="grid grid-cols-1 gap-2">
-        <Suspense fallback={<YearlySalesReportFallback />}>
+        <Suspense key={Math.random()} fallback={<YearlySalesReportFallback />}>
           <YearlySalesReport year={currentYear} />
         </Suspense>
       </div>
 
       <SelectMonth selectableMonths={selectableMonths} />
 
-      <Suspense fallback={<MonthlySalesOverviewFallback />}>
+      <Suspense key={Math.random()} fallback={<MonthlySalesOverviewFallback />}>
         <MonthlySalesOverview month={currentMonth} year={currentYear} />
       </Suspense>
 
-      <Suspense fallback={<MonthlySalesReportFallback />}>
+      <Suspense key={Math.random()} fallback={<MonthlySalesReportFallback />}>
         <MonthlySalesReport month={currentMonth} year={currentYear} />
       </Suspense>
 
-      <Suspense fallback={<MostSoldProductsFallback />}>
+      <Suspense key={Math.random()} fallback={<MostSoldProductsFallback />}>
         <MostSoldProducts />
       </Suspense>
     </div>
