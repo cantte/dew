@@ -1,8 +1,8 @@
 import { EPAYCO_SECURE_URL } from '~/server/epayco/constants'
 import { ePaycoLogin } from '~/server/epayco/login'
 import type {
-    EpaycoChargeSubscriptionParams,
-    EpaycoChargeSubscriptionResponse
+  EpaycoChargeSubscriptionParams,
+  EpaycoChargeSubscriptionResponse,
 } from '~/types/epayco'
 
 export const ePaycoChargeSubscription = async (
