@@ -1,5 +1,5 @@
 export type EpaycoApifyLoginResponse = {
-  token: string
+  token?: string
 }
 
 export type EpaycoLoginResponse = {
@@ -61,7 +61,12 @@ export type EpaycoCreateSubscriptionResponse = {
   status_subscription: string
 }
 
-export type EpaycoChargeSubscriptionParams = Omit<EpaycoCreateSubscriptionParams, 'url_confirmation' | 'method_confirmation'> & {
+export type EpaycoChargeSubscriptionParams = {
+  id_plan: string
+  customer: string
+  token_card: string
+  doc_type: string
+  doc_number: string
   ip: string
 }
 
