@@ -63,8 +63,8 @@ export default async function AccountPage() {
                 {trial.isActive && (
                   <div className="grid gap-1.5 text-muted-foreground text-sm">
                     <span>
-                      Subscripción de prueba activa, te quedan{' '}
-                      {trial.leftDays} días de prueba.
+                      Subscripción de prueba activa, te quedan {trial.leftDays}{' '}
+                      días de prueba.
                     </span>
                   </div>
                 )}
