@@ -20,7 +20,7 @@ export const findUserTrial = async ({ ctx }: Options) => {
 
   if (!dbUser) {
     return {
-      remainingDays: 0,
+      leftDays: 0,
       isActive: false,
     }
   }
@@ -35,16 +35,16 @@ export const findUserTrial = async ({ ctx }: Options) => {
       .where(eq(users.id, userId))
 
     return {
-      remainingDays: 14,
+      leftDays: 14,
       isActive: true,
     }
   }
 
   const today = new Date()
-  const remainingDays = differenceInDays(dbUser.trialEnd, today)
+  const leftDays = differenceInDays(dbUser.trialEnd, today)
 
   return {
-    remainingDays,
+    leftDays,
     isActive: dbUser.trialEnd > today,
   }
 }

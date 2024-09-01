@@ -64,7 +64,7 @@ export default async function AccountPage() {
                   <div className="grid gap-1.5 text-muted-foreground text-sm">
                     <span>
                       Subscripción de prueba activa, te quedan{' '}
-                      {trial.remainingDays} días de prueba.
+                      {trial.leftDays} días de prueba.
                     </span>
                   </div>
                 )}

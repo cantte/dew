@@ -39,7 +39,7 @@ export const Header = async () => {
           <li className="inline-flex items-center justify-center">
             <Badge variant={trial.isActive ? 'default' : 'destructive'}>
               {trial.isActive
-                ? `${trial.remainingDays} días de prueba`
+                ? `${trial.leftDays} días de prueba`
                 : 'Prueba expirada'}
             </Badge>
           </li>
