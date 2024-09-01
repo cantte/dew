@@ -73,8 +73,8 @@ export default async function AccountPage() {
               <CardFooter>
                 {trial.isActive && (
                   <Button asChild>
-                    <Link href="/dashboard/subscription/new">
-                      Activar subscripción
+                    <Link href="/dashboard/subscription/create">
+                      Adquirir plan
                     </Link>
                   </Button>
                 )}
