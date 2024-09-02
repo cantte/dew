@@ -18,3 +18,9 @@ export const saleStatuses = [
   { id: 'paid', label: 'Pagada' },
   { id: 'cancelled', label: 'Cancelada' },
 ] as const
+
+export const subscriptionStatuses = [
+  { id: 'active', label: 'Activa' },
+  { id: 'past_due', label: 'Vencida' },
+  { id: 'inactive', label: 'Inactiva' },
+] as const
