@@ -18,6 +18,9 @@ export const Header = async () => {
   }
 
   const trial = await api.subscription.trial()
+  const subscription = await api.subscription.find()
+
+  const hasSubscription = subscription !== undefined
 
   return (
     <div className="fixed top-0 right-0 left-0 z-20 border-b bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
@@ -37,11 +40,21 @@ export const Header = async () => {
 
         <ul className="flex gap-2">
           <li className="inline-flex items-center justify-center">
-            <Badge variant={trial.isActive ? 'default' : 'destructive'}>
-              {trial.isActive
-                ? `${trial.remainingDays} días de prueba`
-                : 'Prueba expirada'}
-            </Badge>
+            {hasSubscription ? (
+              <Badge
+                variant={
+                  subscription.status === 'active' ? 'success' : 'destructive'
+                }
+              >
+                {subscription.planId}
+              </Badge>
+            ) : (
+              <Badge variant={trial.isActive ? 'default' : 'destructive'}>
+                {trial.isActive
+                  ? `${trial.daysLeft} días de prueba`
+                  : 'Prueba expirada'}
+              </Badge>
+            )}
           </li>
 
           <li>

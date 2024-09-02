@@ -33,6 +33,9 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
     RESEND_EMAIL: z.string().email(),
+
+    EPAYCO_API_KEY: z.string(),
+    EPAYCO_PRIVATE_KEY: z.string(),
   },
 
   /**
@@ -59,6 +62,8 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     RESEND_EMAIL: process.env.RESEND_EMAIL,
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+    EPAYCO_API_KEY: process.env.EPAYCO_API_KEY,
+    EPAYCO_PRIVATE_KEY: process.env.EPAYCO_PRIVATE_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
