@@ -110,7 +110,7 @@ export default async function AccountPage() {
                 {!hasSubscription && (
                   <Button asChild>
                     <Link href="/dashboard/subscription/create">
-                      Adquirir plan
+                      Adquirir subscripción
                     </Link>
                   </Button>
                 )}
@@ -118,7 +118,7 @@ export default async function AccountPage() {
                 {hasSubscription && (
                   <Button variant="destructive" asChild>
                     <Link href="/dashboard/subscription/cancel">
-                      Cancelar plan
+                      Cancelar subscripción
                     </Link>
                   </Button>
                 )}
