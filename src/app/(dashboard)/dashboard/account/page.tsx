@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import { getServerAuthSession } from '~/server/auth'
+import { formatToDateShort } from '~/text/format'
 import { api } from '~/trpc/server'
 
 export default async function AccountPage() {
@@ -30,6 +31,9 @@ export default async function AccountPage() {
   }
 
   const trial = await api.subscription.trial()
+  const subscription = await api.subscription.find()
+
+  const hasSubscription = subscription !== undefined
 
   return (
     <div className="grid gap-4">
@@ -60,23 +64,60 @@ export default async function AccountPage() {
               </CardHeader>
 
               <CardContent>
-                {trial.isActive && (
+                {hasSubscription && (
                   <div className="grid gap-1.5 text-muted-foreground text-sm">
+                    <span>Estado: {subscription.status}</span>
+
+                    <span>Plan: {subscription.planId}</span>
+
                     <span>
-                      Subscripción de prueba activa, te quedan {trial.leftDays}{' '}
-                      días de prueba.
+                      Fin del periodo:{' '}
+                      {formatToDateShort('es-CO', subscription.periodEnd)}
                     </span>
+                  </div>
+                )}
+
+                {!hasSubscription && (
+                  <div className="text-muted-foreground text-sm">
+                    {trial.isActive ? (
+                      <span>
+                        Subscripción de prueba activa, te quedan{' '}
+                        {trial.daysLeft} días. Puedes adquirir un plan en
+                        cualquier momento.
+                      </span>
+                    ) : (
+                      <span>
+                        No tienes una subscripción activa. Puedes adquirir un
+                        plan en cualquier momento.
+                      </span>
+                    )}
                   </div>
                 )}
               </CardContent>
 
               <CardFooter>
-                {trial.isActive && (
+                {!hasSubscription && (
                   <Button asChild>
                     <Link href="/dashboard/subscription/create">
                       Adquirir plan
                     </Link>
                   </Button>
+                )}
+
+                {hasSubscription && (
+                  <div className="flex gap-2">
+                    <Button asChild>
+                      <Link href="/dashboard/subscription/update">
+                        Cambiar plan
+                      </Link>
+                    </Button>
+
+                    <Button variant="destructive" asChild>
+                      <Link href="/dashboard/subscription/cancel">
+                        Cancelar plan
+                      </Link>
+                    </Button>
+                  </div>
                 )}
               </CardFooter>
             </Card>
