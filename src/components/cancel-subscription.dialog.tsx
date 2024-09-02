@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { RotateCw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +14,9 @@ import {
   AlertDialogTitle,
 } from '~/components/ui/alert-dialog'
 import { Button } from '~/components/ui/button'
+import { useToast } from '~/components/ui/use-toast'
 import { formatToDateShort } from '~/text/format'
+import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
@@ -22,17 +26,34 @@ type Props = {
 export const CancelSubscriptionDialog = ({ subscription }: Props) => {
   const [open, setOpen] = useState(false)
 
+  const cancelSubscription = api.subscription.cancel.useMutation()
+
   const onClosed = () => {
     setOpen(false)
   }
 
   const onConfirm = () => {
-    setOpen(false)
+    cancelSubscription.mutate()
   }
 
   const onOpen = () => {
     setOpen(true)
   }
+
+  const router = useRouter()
+  const { toast } = useToast()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
+  useEffect(() => {
+    if (!cancelSubscription.isSuccess) return
+
+    setOpen(false)
+    toast({
+      title: 'Subscripción cancelada',
+      description: 'Tu subscripción ha sido cancelada con éxito.',
+    })
+    router.refresh()
+  }, [cancelSubscription.isSuccess])
 
   return (
     <>
@@ -53,10 +74,19 @@ export const CancelSubscriptionDialog = ({ subscription }: Props) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={onClosed}>
+            <AlertDialogCancel
+              onClick={onClosed}
+              disabled={cancelSubscription.isPending}
+            >
               No, mantener subscripción
             </AlertDialogCancel>
-            <AlertDialogAction onClick={onConfirm}>
+            <AlertDialogAction
+              onClick={onConfirm}
+              disabled={cancelSubscription.isPending}
+            >
+              {cancelSubscription.isPending && (
+                <RotateCw className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Sí, cancelar subscripción
             </AlertDialogAction>
           </AlertDialogFooter>
