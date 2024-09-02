@@ -32,6 +32,7 @@ export const createUserPaymentInfo = async ({ ctx, input }: Options) => {
     lastName: input.customer.lastName,
     email: input.customer.email,
     phone: input.customer.phone,
+    cellPhone: input.customer.phone,
     cardTokenId,
   })
 

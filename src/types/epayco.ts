@@ -29,6 +29,7 @@ export type EpaycoCreateCustomerParams = {
   lastName: string
   email: string
   phone: string
+  cellPhone: string
   cardTokenId: string
 }
 
