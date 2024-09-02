@@ -55,6 +55,7 @@ export const createSubscription = async ({ ctx, input }: Options) => {
 
   await ctx.db.insert(subscriptions).values({
     id: uuid(),
+    externalId: createSubscriptionResponse.id,
     status:
       chargeSubscriptionResponse.subscription.status === 'active'
         ? 'active'
