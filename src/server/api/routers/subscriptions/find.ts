@@ -12,6 +12,7 @@ export const findUserSubscription = async ({ ctx }: Options) => {
   const [subscription] = await ctx.db
     .select({
       id: subscriptions.id,
+      externalId: subscriptions.externalId,
       status: subscriptions.status,
       planId: subscriptions.planId,
       periodEnd: subscriptions.periodEnd,

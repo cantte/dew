@@ -46,7 +46,9 @@ export const Header = async () => {
                   subscription.status === 'active' ? 'success' : 'destructive'
                 }
               >
-                {subscription.planId}
+                {subscription.planId === 'dew_mensual'
+                  ? 'Plan mensual'
+                  : 'Plan anual'}
               </Badge>
             ) : (
               <Badge variant={trial.isActive ? 'default' : 'destructive'}>

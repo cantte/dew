@@ -1,4 +1,5 @@
 import authedProcedure from '~/server/api/procedures/authed'
+import { cancelSubscription } from '~/server/api/routers/subscriptions/cancel'
 import { createSubscription } from '~/server/api/routers/subscriptions/create'
 import { findUserSubscription } from '~/server/api/routers/subscriptions/find'
 import { findUserTrial } from '~/server/api/routers/subscriptions/find-trial'
@@ -16,5 +17,8 @@ export const subscriptionsRouter = router({
     }),
   find: authedProcedure.query(async ({ ctx }) => {
     return await findUserSubscription({ ctx })
+  }),
+  cancel: authedProcedure.mutation(async ({ ctx }) => {
+    await cancelSubscription({ ctx })
   }),
 })
