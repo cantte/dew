@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
+import { subscriptionStatuses } from '~/constants'
 import { getServerAuthSession } from '~/server/auth'
 import { formatToDateShort } from '~/text/format'
 import { api } from '~/trpc/server'
@@ -66,12 +67,22 @@ export default async function AccountPage() {
               <CardContent>
                 {hasSubscription && (
                   <div className="grid gap-1.5 text-muted-foreground text-sm">
-                    <span>Estado: {subscription.status}</span>
-
-                    <span>Plan: {subscription.planId}</span>
+                    <span>
+                      Estado:{' '}
+                      {subscriptionStatuses.find(
+                        (s) => s.id === subscription.status,
+                      )?.label ?? 'Desconocido'}
+                    </span>
 
                     <span>
-                      Fin del periodo:{' '}
+                      Plan:{' '}
+                      {subscription.planId === 'dew_mensual'
+                        ? 'Mensual'
+                        : 'Anual'}
+                    </span>
+
+                    <span>
+                      Próximo pago:{' '}
                       {formatToDateShort('es-CO', subscription.periodEnd)}
                     </span>
                   </div>
@@ -105,19 +116,11 @@ export default async function AccountPage() {
                 )}
 
                 {hasSubscription && (
-                  <div className="flex gap-2">
-                    <Button asChild>
-                      <Link href="/dashboard/subscription/update">
-                        Cambiar plan
-                      </Link>
-                    </Button>
-
-                    <Button variant="destructive" asChild>
-                      <Link href="/dashboard/subscription/cancel">
-                        Cancelar plan
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button variant="destructive" asChild>
+                    <Link href="/dashboard/subscription/cancel">
+                      Cancelar plan
+                    </Link>
+                  </Button>
                 )}
               </CardFooter>
             </Card>
