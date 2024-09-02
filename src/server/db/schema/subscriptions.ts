@@ -13,11 +13,11 @@ export const subscriptions = createTable('subscription', {
   id: uuid('id').notNull().primaryKey(),
   status: subscriptionsStatuses('status').notNull(),
   periodEnd: timestamp('period_end').notNull(),
-  planId: text('plan_id'),
+  planId: text('plan_id').notNull(),
   userId: varchar('user_id', { length: 255 })
     .notNull()
     .references(() => users.id),
-  externalId: text('external_id'),
+  externalId: text('external_id').notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
 })
