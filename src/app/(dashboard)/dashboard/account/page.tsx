@@ -2,6 +2,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import BackButton from '~/components/back-button'
+import { CancelSubscriptionDialog } from '~/components/cancel-subscription.dialog'
 import { UpdateStoreForm } from '~/components/stores/update-store.form'
 import { Button } from '~/components/ui/button'
 import {
@@ -116,11 +117,7 @@ export default async function AccountPage() {
                 )}
 
                 {hasSubscription && (
-                  <Button variant="destructive" asChild>
-                    <Link href="/dashboard/subscription/cancel">
-                      Cancelar subscripción
-                    </Link>
-                  </Button>
+                  <CancelSubscriptionDialog subscription={subscription} />
                 )}
               </CardFooter>
             </Card>
