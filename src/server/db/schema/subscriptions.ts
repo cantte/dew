@@ -17,6 +17,7 @@ export const subscriptions = createTable('subscription', {
   userId: varchar('user_id', { length: 255 })
     .notNull()
     .references(() => users.id),
+  externalId: text('external_id'),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
 })
