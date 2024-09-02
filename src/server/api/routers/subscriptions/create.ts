@@ -34,6 +34,9 @@ export const createSubscription = async ({ ctx, input }: Options) => {
     token_card: userPayment.cardToken,
     doc_type: input.customer.docType,
     doc_number: input.customer.docNumber,
+
+    url_confirmation: `${process.env.NEXT_PUBLIC_URL}/api/epayco`,
+    method_confirmation: 'POST',
   })
 
   if (!createSubscriptionResponse.success) {
