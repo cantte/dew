@@ -1,3 +1,4 @@
+import CryptoJS from 'crypto-js'
 import { EPAYCO_SECURE_URL } from '~/server/epayco/constants'
 import type { EpaycoLoginResponse } from '~/types/epayco'
 

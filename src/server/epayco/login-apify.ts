@@ -1,3 +1,4 @@
+import CryptoJS from 'crypto-js'
 import { EPAYCO_APIFY_URL } from '~/server/epayco/constants'
 import type { EpaycoApifyLoginResponse } from '~/types/epayco'
 
