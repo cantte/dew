@@ -80,3 +80,13 @@ export type EpaycoChargeSubscriptionResponse = {
     nextVerificationDate: string
   }
 }
+
+export type EpaycoCancelSubscriptionParams = {
+  id: string
+  public_key: string
+}
+
+export type EpaycoCancelSubscriptionResponse = {
+  status: boolean
+  success: boolean
+}
