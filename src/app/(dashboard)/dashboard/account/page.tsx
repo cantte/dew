@@ -116,7 +116,7 @@ export default async function AccountPage() {
                   </Button>
                 )}
 
-                {hasSubscription && (
+                {hasSubscription && subscription.status === 'active' && (
                   <CancelSubscriptionDialog subscription={subscription} />
                 )}
               </CardFooter>
