@@ -3,6 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import { Badge } from '~/components/ui/badge'
@@ -19,6 +21,7 @@ import {
 import { Input } from '~/components/ui/input'
 import { Separator } from '~/components/ui/separator'
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
+import { useToast } from '~/components/ui/use-toast'
 import { createSubscriptionInput } from '~/server/api/schemas/subscriptions'
 import { formatToCurrency } from '~/text/format'
 import { api } from '~/trpc/react'
@@ -45,6 +48,22 @@ export const CreateSubscriptionForm = ({ store, email }: Props) => {
   })
 
   const createSubscription = api.subscription.create.useMutation()
+
+  const router = useRouter()
+  const { toast } = useToast()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
+  useEffect(() => {
+    if (!createSubscription.isSuccess) return
+
+    toast({
+      title: 'Pago realizado',
+      description: 'Tu pago ha sido realizado con éxito.',
+    })
+
+    router.refresh()
+    router.push('/dashboard/account')
+  }, [createSubscription.isSuccess])
 
   const onSubmit = (data: FormValues) => {
     createSubscription.mutate(data)
