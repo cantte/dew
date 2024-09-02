@@ -13,6 +13,8 @@ export const findUserSubscription = async ({ ctx }: Options) => {
     .select({
       id: subscriptions.id,
       status: subscriptions.status,
+      planId: subscriptions.planId,
+      periodEnd: subscriptions.periodEnd,
     })
     .from(subscriptions)
     .where(eq(subscriptions.userId, userId))
