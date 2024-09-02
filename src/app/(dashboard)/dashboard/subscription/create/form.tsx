@@ -9,12 +9,12 @@ import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardHeader, CardTitle } from '~/components/ui/card'
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
 import { Separator } from '~/components/ui/separator'
@@ -231,7 +231,7 @@ export const CreateSubscriptionForm = ({ store, email }: Props) => {
                     </TabsList>
                   </Tabs>
 
-                  <Card className='w-full'>
+                  <Card className="w-full">
                     <CardHeader className="pt-4 pb-8">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg">Plan inicial</CardTitle>
