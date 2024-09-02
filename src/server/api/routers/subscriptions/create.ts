@@ -1,4 +1,4 @@
-import { toDate } from 'date-fns'
+import { parse } from 'date-fns'
 import type { TypeOf } from 'zod'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
@@ -59,7 +59,12 @@ export const createSubscription = async ({ ctx, input }: Options) => {
       chargeSubscriptionResponse.subscription.status === 'active'
         ? 'active'
         : 'inactive',
-    periodEnd: toDate(chargeSubscriptionResponse.subscription.periodEnd),
+    // date format dd-mm-yyyy
+    periodEnd: parse(
+      chargeSubscriptionResponse.subscription.periodEnd,
+      'dd-MM-yyyy',
+      new Date(),
+    ),
     planId: input.planId,
     userId,
   })
