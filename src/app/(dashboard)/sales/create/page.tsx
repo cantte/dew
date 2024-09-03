@@ -1,5 +1,6 @@
 import CreateSaleForm from '~/app/(dashboard)/sales/create/form'
 import BackButton from '~/components/back-button'
+import { NotActiveSubscription } from '~/components/not-active-subscription'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { api } from '~/trpc/server'
@@ -17,6 +18,19 @@ const CreateSalePage = async () => {
 
   if (!hasPermissions) {
     return <NotEnoughPermissions />
+  }
+
+  const trial = await api.subscription.trial()
+  const subscription = await api.subscription.find()
+
+  const hasSubscription = subscription !== undefined
+
+  if (!hasSubscription && !trial.isActive) {
+    return <NotActiveSubscription />
+  }
+
+  if (subscription?.status === 'past_due') {
+    return <NotActiveSubscription />
   }
 
   const suggestions = await api.product.suggestions({
