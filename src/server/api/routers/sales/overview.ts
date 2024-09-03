@@ -9,13 +9,13 @@ type Options = {
   input: TypeOf<typeof getSalesOverviewInput>
 }
 
-const getSalesOverview = async ({ ctx, input }: Options) => {
-  const result = await ctx.db
+const genenrateSalesOverview = async ({ ctx, input }: Options) => {
+  const [summary] = await ctx.db
     .select({
       amount: sum(saleSummary.amount).mapWith(Number),
-      customers: sum(saleSummary.customers).mapWith(Number),
       sales: sum(saleSummary.sales).mapWith(Number),
       products: sum(saleSummary.products).mapWith(Number),
+      profit: sum(saleSummary.profit).mapWith(Number),
     })
     .from(saleSummary)
     .where(
@@ -25,32 +25,21 @@ const getSalesOverview = async ({ ctx, input }: Options) => {
       ),
     )
 
-  if (!result) {
-    return {
-      revenue: 0,
-      customers: 0,
-      sales: 0,
-      products: 0,
-    }
-  }
-
-  const summary = result[0]
-
   if (!summary) {
     return {
-      revenue: 0,
-      customers: 0,
+      amount: 0,
       sales: 0,
       products: 0,
+      profit: 0,
     }
   }
 
   return {
-    revenue: summary.amount,
-    customers: summary.customers,
+    amount: summary.amount,
     sales: summary.sales,
     products: summary.products,
+    profit: summary.profit,
   }
 }
 
-export default getSalesOverview
+export default genenrateSalesOverview

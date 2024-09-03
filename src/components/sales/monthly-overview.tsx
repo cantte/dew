@@ -30,8 +30,8 @@ export const MonthlySalesOverview = async ({ month, year }: Props) => {
     <SalesOverview
       sales={overview.sales}
       products={overview.products}
-      amount={overview.revenue}
-      profit={overview.revenue}
+      amount={overview.amount}
+      profit={overview.profit}
     />
   )
 }

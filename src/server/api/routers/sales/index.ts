@@ -5,7 +5,7 @@ import createSale from '~/server/api/routers/sales/create'
 import findSale from '~/server/api/routers/sales/find'
 import listSales from '~/server/api/routers/sales/list'
 import { generateMonthlySalesReport } from '~/server/api/routers/sales/monthly-report'
-import getSalesOverview from '~/server/api/routers/sales/overview'
+import genenrateSalesOverview from '~/server/api/routers/sales/overview'
 import generateSalesReport from '~/server/api/routers/sales/report'
 import { searchLastSales } from '~/server/api/routers/sales/search-last-sales'
 import { searchSelectableMonths } from '~/server/api/routers/sales/search-selectable-months'
@@ -34,7 +34,7 @@ const salesRouter = router({
   overview: authedProcedure
     .input(getSalesOverviewInput)
     .query(async ({ ctx, input }) => {
-      return await getSalesOverview({ ctx, input })
+      return await genenrateSalesOverview({ ctx, input })
     }),
   find: authedProcedure.input(findSaleInput).query(async ({ ctx, input }) => {
     return await findSale({ ctx, input })

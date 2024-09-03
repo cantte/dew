@@ -29,8 +29,8 @@ export const YearlySalesOverview = async ({ year }: Props) => {
     <SalesOverview
       sales={overview.sales}
       products={overview.products}
-      amount={overview.revenue}
-      profit={overview.revenue}
+      amount={overview.amount}
+      profit={overview.profit}
     />
   )
 }
