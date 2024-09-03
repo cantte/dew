@@ -24,7 +24,11 @@ const getProductSuggestions = async ({ ctx, input }: Options) => {
     .innerJoin(saleItems, eq(products.id, saleItems.productId))
     .groupBy(products.id)
     .where(
-      and(eq(inventory.storeId, input.storeId), isNull(products.deletedAt)),
+      and(
+        eq(inventory.storeId, input.storeId),
+        isNull(products.deletedAt),
+        eq(products.enabled, true),
+      ),
     )
     .orderBy(desc(sum(saleItems.quantity)))
     .limit(5)
