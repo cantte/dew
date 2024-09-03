@@ -122,7 +122,7 @@ export const UpdateStoreForm = ({ store }: Props) => {
           )}
         />
 
-        <div className="flex w-full justify-end pt-2">
+        <div className="pt-2">
           <Button type="submit" disabled={updateStore.isPending}>
             {updateStore.isPending && (
               <RotateCw className="mr-2 h-4 w-4 animate-spin" />
