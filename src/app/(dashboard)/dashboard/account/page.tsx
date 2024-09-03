@@ -119,6 +119,14 @@ export default async function AccountPage() {
                 {hasSubscription && subscription.status === 'active' && (
                   <CancelSubscriptionDialog subscription={subscription} />
                 )}
+
+                {hasSubscription && subscription.status === 'past_due' && (
+                  <Button asChild>
+                    <Link href="/dashboard/subscription/update">
+                      Actualizar método de pago
+                    </Link>
+                  </Button>
+                )}
               </CardFooter>
             </Card>
 
