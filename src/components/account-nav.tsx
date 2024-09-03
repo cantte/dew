@@ -37,7 +37,7 @@ const AccountNav = ({ user }: Props) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel className="flex flex-col space-y-1">
-          <span>Mi cuenta</span>
+          <span>Tu cuenta</span>
           <span className="font-light text-muted-foreground text-xs">
             {user.name}
           </span>

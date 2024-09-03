@@ -48,7 +48,7 @@ export default async function AccountPage() {
           <div className="grid gap-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl">Mi cuenta</CardTitle>
+                <CardTitle className="text-xl">Tu cuenta</CardTitle>
               </CardHeader>
 
               <CardContent>
@@ -62,7 +62,7 @@ export default async function AccountPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl">Mi subscripción</CardTitle>
+                <CardTitle className="text-xl">Tu subscripción</CardTitle>
               </CardHeader>
 
               <CardContent>
@@ -124,7 +124,7 @@ export default async function AccountPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl">Mi tienda</CardTitle>
+                <CardTitle className="text-xl">Tu tienda</CardTitle>
               </CardHeader>
 
               <CardContent>
