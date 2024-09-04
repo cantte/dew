@@ -6,8 +6,10 @@ import {
 } from '~/app/(dashboard)/dashboard/sidebar.server'
 import { Header } from '~/components/layout/header'
 import { SentryFeedbackWidget } from '~/components/sentry-feedback-widget'
+import { SetPermissions } from '~/components/set-permissions'
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { getServerAuthSession } from '~/server/auth'
+import { api } from '~/trpc/server'
 
 type Props = {
   children: ReactNode
@@ -19,6 +21,8 @@ const DashboardLayout = async ({ children }: Props) => {
   if (!session) {
     return redirect('/api/auth/signin')
   }
+
+  const permissions = await api.rbac.list()
 
   return (
     <>
@@ -32,6 +36,9 @@ const DashboardLayout = async ({ children }: Props) => {
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">{children}</div>
           </ScrollArea>
         </main>
+
+        <SetPermissions permissions={permissions} />
+
         <SentryFeedbackWidget />
       </div>
     </>
