@@ -6,9 +6,9 @@ type Store = {
   hasPermissions: (permissions: string[]) => boolean
 }
 
-export const usePermissions = create<Store>((set) => ({
+export const usePermissions = create<Store>((set, get) => ({
   permissions: [],
   setPermissions: (permissions) => set({ permissions }),
   hasPermissions: (permissions) =>
-    permissions.every((permission) => permissions.includes(permission)),
+    permissions.every((permission) => get().permissions.includes(permission)),
 }))
