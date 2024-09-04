@@ -1,14 +1,15 @@
+'use client'
+
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
-import { api } from '~/trpc/server'
+import { usePermissions } from '~/hooks/use-permissions'
 
-const CreateProductButton = async () => {
-  const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ['product:create'],
-  })
+const CreateProductButton = () => {
+  const { hasPermissions } = usePermissions()
+  const canCreateProduct = hasPermissions(['product:create'])
 
-  if (!hasPermissions) {
+  if (!canCreateProduct) {
     return null
   }
 

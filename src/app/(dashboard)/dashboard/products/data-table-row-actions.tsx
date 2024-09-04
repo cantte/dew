@@ -14,20 +14,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
-import { api } from '~/trpc/react'
+import { usePermissions } from '~/hooks/use-permissions'
 
 type DataTableRowActionsProps = {
   row: Row<Product>
 }
 
 const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
-  const canDeleteProduct = api.rbac.checkPermissions.useQuery({
-    permissions: ['product:delete'],
-  })
+  const { hasPermissions } = usePermissions()
 
-  const canEditProduct = api.rbac.checkPermissions.useQuery({
-    permissions: ['product:update'],
-  })
+  const canDeleteProduct = hasPermissions(['product:delete'])
+  const canEditProduct = hasPermissions(['product:update'])
 
   return (
     <DropdownMenu>
@@ -42,7 +39,7 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-[250px]">
-        {!canEditProduct.isPending && canEditProduct.data ? (
+        {canEditProduct && (
           <>
             <DropdownMenuItem asChild>
               <NextLink href={`/dashboard/products/${row.original.id}/edit`}>
@@ -51,11 +48,9 @@ const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
             </DropdownMenuItem>
             <CreateProductDiscountDialog product={row.original} />
           </>
-        ) : null}
+        )}
 
-        {!canDeleteProduct.isPending && canDeleteProduct.data ? (
-          <DeleteProductModal product={row.original} />
-        ) : null}
+        {canDeleteProduct && <DeleteProductModal product={row.original} />}
 
         <BarcodeModal product={row.original} />
 

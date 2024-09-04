@@ -9,7 +9,6 @@ import {
 } from '~/app/(dashboard)/dashboard/products/overview'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
-import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
 const ProductsPage = async () => {
@@ -39,17 +38,13 @@ const ProductsPage = async () => {
         </Suspense>
 
         <div className="flex justify-end gap-2">
-          <Suspense fallback={<Skeleton className="h-8 w-10" />}>
-            <CreateProductButton />
-          </Suspense>
+          <CreateProductButton />
 
-          <Suspense fallback={<Skeleton className="h-8 w-10" />}>
-            <InventoryAdjustmentButton />
-          </Suspense>
+          <InventoryAdjustmentButton />
         </div>
       </div>
 
-      <ProductDataTable columns={columns} data={products} storeId={store.id} />
+      <ProductDataTable columns={columns} data={products} store={store} />
     </>
   )
 }

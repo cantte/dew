@@ -1,3 +1,5 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { mkConfig } from 'export-to-csv'
 import { Download, FileUp, RotateCw, Upload } from 'lucide-react'
@@ -22,29 +24,26 @@ import { useToast } from '~/components/ui/use-toast'
 import { exportToCsv } from '~/lib/csv'
 import { bulkCreateProductInput } from '~/server/api/schemas/products'
 import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
+
+type Props = {
+  store: NonNullable<RouterOutputs['store']['findCurrent']>
+}
 
 type ImportProductData = TypeOf<
   typeof bulkCreateProductInput
 >['products'][number]
+
 type FormValues = TypeOf<typeof bulkCreateProductInput>
 
-const ImportProductsDialog = () => {
-  const currentStore = api.store.findCurrent.useQuery()
+const ImportProductsDialog = ({ store }: Props) => {
   const form = useForm<FormValues>({
     defaultValues: {
       products: [],
-      store: currentStore.data?.id ?? '',
+      store: store.id,
     },
     resolver: zodResolver(bulkCreateProductInput),
   })
-
-  useEffect(() => {
-    if (!currentStore.data) {
-      return
-    }
-
-    form.setValue('store', currentStore.data.id)
-  }, [currentStore.data])
 
   const bulkCreateProduct = api.product.bulkCreate.useMutation()
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -54,6 +53,8 @@ const ImportProductsDialog = () => {
   const [open, setOpen] = useState(false)
   const { toast } = useToast()
   const utils = api.useUtils()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (bulkCreateProduct.isSuccess) {
       toast({
@@ -70,6 +71,7 @@ const ImportProductsDialog = () => {
     }
   }, [bulkCreateProduct.isSuccess])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (bulkCreateProduct.error) {
       form.setError('products', {
@@ -96,6 +98,7 @@ const ImportProductsDialog = () => {
     },
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (file === undefined) {
       return
@@ -182,9 +185,7 @@ const ImportProductsDialog = () => {
         <div className="grid gap-2">
           <div className="flex items-center justify-between">
             <div>
-              {currentStore.data && (
-                <Badge variant="outline">{currentStore.data.name}</Badge>
-              )}
+              <Badge variant="outline">{store.name}</Badge>
             </div>
             <Button
               size="sm"
