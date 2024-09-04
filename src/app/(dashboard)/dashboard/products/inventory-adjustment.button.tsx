@@ -1,14 +1,15 @@
+'use client'
+
 import { ClipboardList } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '~/components/ui/button'
-import { api } from '~/trpc/server'
+import { usePermissions } from '~/hooks/use-permissions'
 
-export const InventoryAdjustmentButton = async () => {
-  const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ['inventory:update'],
-  })
+export const InventoryAdjustmentButton = () => {
+  const { hasPermissions } = usePermissions()
+  const canUpdateInventory = hasPermissions(['inventory:update'])
 
-  if (!hasPermissions) {
+  if (!canUpdateInventory) {
     return null
   }
 

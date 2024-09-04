@@ -9,13 +9,16 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Toggle } from '~/components/ui/toggle'
 import { type ExportableToCsv, exportToCsv } from '~/lib/csv'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props<TData extends ExportableToCsv> = {
   table: Table<TData>
+  store: NonNullable<RouterOutputs['store']['findCurrent']>
 }
 
 const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
   table,
+  store,
 }: Props<TData>) => {
   const isFiltered =
     table.getState().columnFilters.length > 0 ||
@@ -100,7 +103,7 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
       </div>
 
       <div className="flex items-center justify-end space-x-2">
-        <ImportProductsDialog />
+        <ImportProductsDialog store={store} />
 
         <Button
           size="sm"

@@ -17,18 +17,15 @@ import ProductsDataTableToolbar from '~/app/(dashboard)/dashboard/products/data-
 import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'
 import { api } from '~/trpc/react'
+import type { RouterOutputs } from '~/trpc/shared'
 
 type Props<TValue> = {
   columns: ColumnDef<Product, TValue>[]
   data: Product[]
-  storeId: string
+  store: NonNullable<RouterOutputs['store']['findCurrent']>
 }
 
-const ProductDataTable = <TValue,>({
-  columns,
-  data,
-  storeId,
-}: Props<TValue>) => {
+const ProductDataTable = <TValue,>({ columns, data, store }: Props<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     isLowStock: false,
@@ -36,7 +33,7 @@ const ProductDataTable = <TValue,>({
   const [globalFilter, setGlobalFilter] = useState('')
 
   const { data: products } = api.product.list.useQuery(
-    { storeId: storeId },
+    { storeId: store.id },
     {
       initialData: data,
     },
@@ -62,7 +59,7 @@ const ProductDataTable = <TValue,>({
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      <ProductsDataTableToolbar table={table} />
+      <ProductsDataTableToolbar table={table} store={store} />
       <DataTable table={table} />
       <DataTablePagination table={table} />
     </div>
