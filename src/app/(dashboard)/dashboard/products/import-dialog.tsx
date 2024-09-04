@@ -1,3 +1,5 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { mkConfig } from 'export-to-csv'
 import { Download, FileUp, RotateCw, Upload } from 'lucide-react'
