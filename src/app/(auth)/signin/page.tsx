@@ -48,14 +48,7 @@ const SignInPage = async () => {
           </div>
 
           <p className="px-8 text-center text-muted-foreground text-sm">
-            Al iniciar sesión, aceptas nuestras{' '}
-            <Link
-              href="/terms"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Condiciones de uso
-            </Link>{' '}
-            y{' '}
+            Al iniciar sesión, aceptas nuestra{' '}
             <Link
               href="/privacy"
               className="underline underline-offset-4 hover:text-primary"
