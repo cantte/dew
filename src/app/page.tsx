@@ -1,5 +1,5 @@
-import FeaturesSection from '~/components/home/features'
 import { HeroSection } from '~/components/home/hero-section'
+import { SideBySide } from '~/components/home/side-by-side'
 import { PageWrapper } from '~/components/wrapper/page-wrapper'
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       </div>
 
       <div className="my-[8rem] flex w-full items-center justify-center">
-        <FeaturesSection />
+        <SideBySide />
       </div>
     </PageWrapper>
   )
