@@ -1,49 +1,62 @@
 import Link from 'next/link'
-import { ThemeToggle } from '~/components/theme-toggle'
 
 const Footer = () => {
   return (
-    <footer className="flex items-center justify-center border-t py-4">
-      <div className="flex w-full max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
-        <div className="flex flex-col space-y-1.5">
-          <p className="font-semibold">dew</p>
+    <footer className="border-t">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div>
+          <div className="py-8 lg:py-16 lg:pe-16">
+            <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div>
+                <p className="font-medium ">Dew</p>
 
-          <Link href="/pricing" className="text-muted-foreground text-sm">
-            Precios
-          </Link>
+                <ul className="mt-6 space-y-4 text-sm">
+                  <li>
+                    <Link href="/features" className="text-muted-foreground">
+                      Características
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/pricing" className="text-muted-foreground">
+                      Precios
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/faq" className="text-muted-foreground">
+                      Preguntas frecuentes
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
-          <Link href="/features" className="text-muted-foreground text-sm">
-            Características
-          </Link>
+            <div className="mt-8 border-t pt-8">
+              <ul className="flex flex-wrap gap-4 text-xs">
+                <li>
+                  <Link href="/privacy" className="text-muted-foreground">
+                    Política de privacidad
+                  </Link>
+                </li>
+              </ul>
 
-          <Link href="/privacy" className="text-muted-foreground text-sm">
-            Política de privacidad
-          </Link>
+              <p className="mt-8 text-xs ">
+                &copy; {new Date().getFullYear()}. Dew. Todos los derechos
+                reservados.
+              </p>
 
-          <Link href="/faq" className="text-muted-foreground text-sm">
-            Preguntas frecuentes
-          </Link>
-        </div>
-
-        <div className="flex flex-col items-center space-y-1">
-          <div>
-            <ThemeToggle />
+              <p className="mt-4 text-xs">
+                Hecho con ❤️ por{' '}
+                <Link
+                  href="https://www.cantte.com/"
+                  target="_blank"
+                  className="text-muted-foreground"
+                >
+                  cantte
+                </Link>
+                .
+              </p>
+            </div>
           </div>
-
-          <span className="inline-flex items-center gap-2 font-normal text-muted-foreground text-sm">
-            {new Date().getFullYear()} © dew
-          </span>
-
-          <span className="inline-flex items-center gap-2 font-normal text-muted-foreground text-sm">
-            Creado con <span className="text-red-500">❤</span> por
-            <Link
-              href="https://www.cantte.com/"
-              target="_blank"
-              className="text-foreground transition-colors duration-200 hover:text-foreground/80"
-            >
-              cantte
-            </Link>
-          </span>
         </div>
       </div>
     </footer>
