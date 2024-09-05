@@ -1,22 +1,18 @@
-import Footer from '~/components/footer'
 import { FAQSection } from '~/components/home/faq'
-import { MainNav } from '~/components/main-nav'
+import { PageWrapper } from '~/components/wrapper/page-wrapper'
 
 export default function FAQPage() {
   return (
-    <>
-      <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <MainNav />
-      </header>
-      <main className="flex flex-1 flex-col items-center gap-4 p-4 md:gap-8 md:p-6 h-screen">
-        <div className="w-full max-w-xl space-y-4">
-          <h1 className="font-bold text-4xl">Preguntas frecuentes</h1>
+    <PageWrapper>
+      <div className="my-[8rem] flex w-full items-center justify-center">
+        <div className="flex w-[70%] flex-col lg:w-[50%]">
+          <h2 className="scroll-m-20 pb-[3rem] text-center font-semibold text-3xl tracking-tight lg:text-4xl">
+            Preguntas frecuentes (FAQs)
+          </h2>
 
           <FAQSection />
         </div>
-      </main>
-
-      <Footer />
-    </>
+      </div>
+    </PageWrapper>
   )
 }

@@ -15,7 +15,7 @@ export const NavButton = async () => {
             <Link href="/dashboard">
               <LayoutDashboard className="h-3.5 w-3.5 sm:mr-2" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Panel de control
+                Ir al panel de control
               </span>
             </Link>
           </Button>

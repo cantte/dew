@@ -1,13 +1,10 @@
 import { PricingSection } from '~/components/home/pricing'
-import { MainNav } from '~/components/main-nav'
+import { PageWrapper } from '~/components/wrapper/page-wrapper'
 
 export default function PricingPage() {
   return (
-    <>
-      <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <MainNav />
-      </header>
-      <main className="flex flex-1 flex-col items-center gap-4 p-4 md:gap-8 md:p-6">
+    <PageWrapper>
+      <div className="w-full max-w-xl space-y-4">
         <div className="gap-2">
           <h1 className="text-center font-bold text-4xl">Precios</h1>
           <p className="text-muted-foreground">
@@ -16,7 +13,7 @@ export default function PricingPage() {
         </div>
 
         <PricingSection />
-      </main>
-    </>
+      </div>
+    </PageWrapper>
   )
 }

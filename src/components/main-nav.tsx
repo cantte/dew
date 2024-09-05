@@ -1,39 +1,105 @@
+import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { NavButton } from '~/components/home/nav-button'
 import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
+import { Dialog, DialogClose } from '~/components/ui/dialog'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from '~/components/ui/navigation-menu'
+import {
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '~/components/ui/sheet'
 
 export const MainNav = () => {
   return (
-    <div className="flex h-14 items-center justify-end gap-4 border-b px-4 md:justify-between">
+    <div className="flex items-center justify-between border-b p-2">
+      <div className="flex w-full justify-between min-[825px]:hidden">
+        <Dialog>
+          <SheetTrigger className="p-2 transition">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="size-4"
+              aria-label="Open menu"
+              asChild
+            >
+              <Menu />
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent side="left">
+            <SheetHeader>
+              <SheetTitle>Dew</SheetTitle>
+            </SheetHeader>
+
+            <div className="mt-[1rem] flex flex-col space-y-3">
+              <DialogClose asChild>
+                <Link href="/">
+                  <Button variant="ghost">Inicio</Button>
+                </Link>
+              </DialogClose>
+
+              <DialogClose asChild>
+                <Link href="/features">
+                  <Button variant="ghost">Características</Button>
+                </Link>
+              </DialogClose>
+
+              <DialogClose asChild>
+                <Link href="/pricing">
+                  <Button variant="ghost">Precios</Button>
+                </Link>
+              </DialogClose>
+
+              <DialogClose asChild>
+                <Link href="/faq">
+                  <Button variant="ghost">FAQ</Button>
+                </Link>
+              </DialogClose>
+            </div>
+          </SheetContent>
+        </Dialog>
+      </div>
       <div className="hidden gap-4 md:flex">
-        <Link href="/" className="mr-4 flex items-center gap-2">
-          <span className="font-semibold text-lg">dew</span>
-          <Badge>beta</Badge>
-        </Link>
+        <NavigationMenu>
+          <NavigationMenuList className="flex w-[100%] justify-between gap-3 max-[825px]:hidden">
+            <Link
+              href="/"
+              className="mr-5 flex items-center gap-2 pl-2"
+              aria-label="Home"
+            >
+              <span className="font-semibold text-lg">dew</span>
+              <Badge>beta</Badge>
+            </Link>
+          </NavigationMenuList>
 
-        <nav className="flex items-center gap-4 text-sm lg:gap-6">
-          <Link
-            href="/features"
-            className="transition-colors hover:text-foreground/80"
-          >
-            Características
-          </Link>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Button variant="ghost" asChild>
+                <Link href="/features">Características</Link>
+              </Button>
+            </NavigationMenuItem>
 
-          <Link
-            href="/pricing"
-            className="transition-colors hover:text-foreground/80"
-          >
-            Precios
-          </Link>
+            <NavigationMenuItem>
+              <Button variant="ghost" asChild>
+                <Link href="/pricing">Precios</Link>
+              </Button>
+            </NavigationMenuItem>
 
-          <Link
-            href="/faq"
-            className="transition-colors hover:text-foreground/80"
-          >
-            FAQ
-          </Link>
-        </nav>
+            <NavigationMenuItem>
+              <Button variant="ghost" asChild>
+                <Link href="/faq">FAQ</Link>
+              </Button>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
 
       <nav className="flex items-center gap-3">
