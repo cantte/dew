@@ -10,6 +10,16 @@ const coreConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 import { withSentryConfig } from '@sentry/nextjs'
