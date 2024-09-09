@@ -4,7 +4,9 @@ export default function PrivacyPage() {
   return (
     <PageWrapper>
       <div className="w-full max-w-2xl space-y-4 p-4">
-        <h1 className='mb-4 scroll-m-20 text-center font-semibold text-3xl tracking-tight lg:text-4xl'>Política de privacidad</h1>
+        <h1 className="mb-4 scroll-m-20 text-center font-semibold text-3xl tracking-tight lg:text-4xl">
+          Política de privacidad
+        </h1>
 
         <span className="text-muted-foreground text-sm">
           Ultima actualización: 26 de agosto del 2024
