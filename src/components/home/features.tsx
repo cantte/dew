@@ -11,7 +11,10 @@ import { Badge } from '~/components/ui/badge'
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className='my-4 flex max-w-7xl flex-col space-y-16 p-4'>
+    <section
+      id="features"
+      className="my-4 flex max-w-7xl flex-col space-y-16 p-4"
+    >
       <div className="flex w-full flex-col items-center space-y-4">
         <Badge aria-label="Características">Características</Badge>
 
