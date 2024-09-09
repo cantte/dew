@@ -3,12 +3,14 @@ import { PageWrapper } from '~/components/wrapper/page-wrapper'
 export default function PrivacyPage() {
   return (
     <PageWrapper>
-      <div className="w-full max-w-xl space-y-4">
-        <h1 className="font-bold text-4xl">Política de privacidad</h1>
+      <div className="w-full max-w-2xl space-y-4 p-4">
+        <h1 className="mb-4 scroll-m-20 text-center font-semibold text-3xl tracking-tight lg:text-4xl">
+          Política de privacidad
+        </h1>
 
-        <p className="text-muted-foreground text-xl">
+        <span className="text-muted-foreground text-sm">
           Ultima actualización: 26 de agosto del 2024
-        </p>
+        </span>
 
         <p className="leading-7 [&:not(:first-child)]:mt-6">
           En Dew, accesible desde https://dew.cantte.com/, nos comprometemos a

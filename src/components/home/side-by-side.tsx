@@ -34,10 +34,10 @@ export const SideBySide = () => {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pt-4 lg:pr-8">
             <div className="lg:max-w-lg">
-              <p className="mt-2 font-bold text-3xl tracking-tight sm:text-4xl">
+              <p className="mt-2 font-semibold text-2xl tracking-tight sm:text-2xl md:text-3xl lg:text-4xl">
                 Impulsa tu negocio con Dew
               </p>
-              <p className="mt-6 text-lg text-muted-foreground leading-8">
+              <p className="mt-6 leading-8">
                 Facturación electrónica e inventario simplificados para impulsar
                 tu negocio.
               </p>
