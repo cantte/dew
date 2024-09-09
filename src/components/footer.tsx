@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div>
           <div className="py-8 lg:py-16 lg:pe-16">
-            <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
               <div>
                 <p className="font-medium ">Dew</p>
 
