@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
@@ -30,7 +31,7 @@ export const PricingSection = () => {
       </Tabs>
 
       <section className="flex flex-col justify-center gap-8 sm:flex-row sm:flex-wrap">
-        <Card className="w-96">
+        <Card className="max-w-96">
           <CardHeader className="pt-4 pb-8">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">Plan inicial</CardTitle>
@@ -53,13 +54,15 @@ export const PricingSection = () => {
           </CardHeader>
 
           <CardContent>
-            Con el plan básico podrás disfrutar de un acceso completo a nuestra
-            plataforma.
+            <p className="text-base">
+              Con el plan básico podrás disfrutar de un acceso completo a
+              nuestra plataforma.
+            </p>
           </CardContent>
 
           <CardFooter>
-            <Button className="w-full" size="lg">
-              Comprar
+            <Button className="w-full" size="lg" asChild>
+              <Link href="/dashboard/subscription/create">Comprar</Link>
             </Button>
           </CardFooter>
         </Card>
