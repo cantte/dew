@@ -10,19 +10,25 @@ const Footer = () => {
               <div>
                 <p className="font-medium ">Dew</p>
 
-                <ul className="mt-6 space-y-4 text-sm">
+                <ul className="mt-6 space-y-4 text-muted-foreground text-sm">
                   <li>
-                    <Link href="/features" className="text-muted-foreground">
+                    <Link
+                      href="/features"
+                      className="transition hover:opacity-75"
+                    >
                       Características
                     </Link>
                   </li>
                   <li>
-                    <Link href="/pricing" className="text-muted-foreground">
+                    <Link
+                      href="/pricing"
+                      className="transition hover:opacity-75"
+                    >
                       Precios
                     </Link>
                   </li>
                   <li>
-                    <Link href="/faq" className="text-muted-foreground">
+                    <Link href="/faq" className="transition hover:opacity-75">
                       Preguntas frecuentes
                     </Link>
                   </li>
@@ -31,9 +37,9 @@ const Footer = () => {
             </div>
 
             <div className="mt-8 border-t pt-8">
-              <ul className="flex flex-wrap gap-4 text-xs">
+              <ul className="flex flex-wrap gap-4 text-muted-foreground text-xs">
                 <li>
-                  <Link href="/privacy" className="text-muted-foreground">
+                  <Link href="/privacy" className="transition hover:opacity-75">
                     Política de privacidad
                   </Link>
                 </li>
@@ -49,7 +55,7 @@ const Footer = () => {
                 <Link
                   href="https://www.cantte.com/"
                   target="_blank"
-                  className="text-muted-foreground"
+                  className="text-muted-foreground transition hover:opacity-75"
                 >
                   cantte
                 </Link>
