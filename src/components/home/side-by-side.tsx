@@ -1,4 +1,5 @@
 import { LineChart, Scaling, Shapes, Store } from 'lucide-react'
+import { OrbitingCircles } from '~/components/home/orbiting-circles'
 
 const features = [
   {
@@ -35,7 +36,8 @@ export const SideBySide = () => {
           <div className="lg:pt-4 lg:pr-8">
             <div className="lg:max-w-lg">
               <p className="mt-2 font-semibold text-2xl tracking-tight sm:text-2xl md:text-3xl lg:text-4xl">
-                Impulsa tu negocio con Dew
+                Impulsa tu negocio con{' '}
+                <span className="text-primary-text">Dew</span>
               </p>
               <p className="mt-6 leading-8">
                 Facturación electrónica e inventario simplificados para impulsar
@@ -59,6 +61,8 @@ export const SideBySide = () => {
               </dl>
             </div>
           </div>
+
+          <OrbitingCircles />
         </div>
       </div>
     </div>
