@@ -22,6 +22,12 @@ export const Header = async () => {
 
   const hasSubscription = subscription !== undefined
 
+  const trialMonthsLeft = Math.floor(trial.daysLeft / 30)
+  const trialLeft =
+    trialMonthsLeft > 0
+      ? `${trialMonthsLeft} meses de prueba`
+      : `${trial.daysLeft} días de prueba`
+
   return (
     <div className="fixed top-0 right-0 left-0 z-20 border-b bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
       <nav className="flex h-14 items-center justify-between px-4">
@@ -52,9 +58,7 @@ export const Header = async () => {
               </Badge>
             ) : (
               <Badge variant={trial.isActive ? 'default' : 'destructive'}>
-                {trial.isActive
-                  ? `${trial.daysLeft} días de prueba`
-                  : 'Prueba expirada'}
+                {trial.isActive ? trialLeft : 'Prueba expirada'}
               </Badge>
             )}
           </li>

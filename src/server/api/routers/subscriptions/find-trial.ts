@@ -29,8 +29,8 @@ export const findUserTrial = async ({ ctx }: Options) => {
     await ctx.db
       .update(users)
       .set({
-        // 14 days from now
-        trialEnd: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+        // Generate trial for six months
+        trialEnd: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30 * 6),
       })
       .where(eq(users.id, userId))
 
