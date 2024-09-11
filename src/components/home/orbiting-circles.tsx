@@ -33,6 +33,15 @@ export const OrbitingCircles = () => {
       >
         <span className="h-2 w-2 rounded-full bg-primary" />
       </OrbitingCircle>
+
+      <OrbitingCircle
+        className="h-[70px] w-[70px] border-none bg-transparent"
+        radius={250}
+        duration={20}
+        delay={15}
+      >
+        <span className="h-2 w-2 rounded-full bg-primary" />
+      </OrbitingCircle>
     </div>
   )
 }
