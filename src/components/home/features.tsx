@@ -11,18 +11,16 @@ import { Badge } from '~/components/ui/badge'
 
 const FeaturesSection = () => {
   return (
-    <section
-      id="features"
-      className="my-4 flex max-w-7xl flex-col space-y-16 p-4"
-    >
+    <section className="my-4 flex max-w-7xl flex-col space-y-16 p-4">
       <div className="flex w-full flex-col items-center space-y-4">
         <Badge aria-label="Características">Características</Badge>
 
-        <h2 className="text-center font-medium text-4xl">
-          Mira lo que puedes hacer con dew
+        <h2 className="mt-2 font-semibold text-2xl tracking-tight sm:text-2xl md:text-3xl lg:text-4xl">
+          Mira lo que puedes hacer con{' '}
+          <span className="text-primary-text">Dew</span>
         </h2>
 
-        <p className="text-base text-muted-foreground leading-7">
+        <p className="mx-auto mt-2 text-center text-muted-foreground ">
           Explora las características clave de dew y descubre cómo nuestra
           plataforma puede ayudarte a llevar un control eficiente de tus ventas
           y operaciones comerciales. Desde la gestión de tiendas y productos

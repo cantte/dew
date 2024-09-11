@@ -1,4 +1,5 @@
 import { FAQSection } from '~/components/home/faq'
+import FeaturesSection from '~/components/home/features'
 import { HeroSection } from '~/components/home/hero-section'
 import { SideBySide } from '~/components/home/side-by-side'
 import { PageWrapper } from '~/components/wrapper/page-wrapper'
@@ -12,6 +13,10 @@ export default function Home() {
 
       <div className="my-[8rem] flex w-full items-center justify-center">
         <SideBySide />
+      </div>
+
+      <div className="flex w-full flex-col items-center justify-center p-2">
+        <FeaturesSection />
       </div>
 
       <div className="my-[8rem] flex w-full items-center justify-center">
