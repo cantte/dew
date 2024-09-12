@@ -60,7 +60,7 @@
     "drizzle-orm": "^0.33.0",
     "export-to-csv": "^1.4.0",
     "jsbarcode": "^3.11.6",
-    "lucide-react": "^0.439.0",
+    "lucide-react": "^0.441.0",
     "next": "^14.2.10",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
