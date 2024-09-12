@@ -63,7 +63,7 @@ export const SelectSaleCustomer = () => {
       <Button type="button" variant="outline" size="sm" onClick={toggleOpen}>
         {isLoadingCustomer
           ? 'Cargando...'
-          : `${customer?.name} (${customer?.id})` ?? 'Seleccionar cliente'}
+          : (`${customer?.name} (${customer?.id})` ?? 'Seleccionar cliente')}
       </Button>
 
       {isDesktop ? (
