@@ -6,11 +6,10 @@ import {
   Heading,
   Hr,
   Html,
-  Img,
   Preview,
   Section,
   Tailwind,
-  Text,
+  Text
 } from '@react-email/components'
 
 export const MarketingEmail = () => {
@@ -21,17 +20,6 @@ export const MarketingEmail = () => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
         />
-        <style>
-          {`
-                    body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-          }
-          .bg-primary { background-color: #690dab; }
-          .text-primary { color: #690dab; }
-          .bg-primary-light { background-color: #f3e8fa; }
-          .border-primary { border-color: #690dab; }
-        `}
-        </style>
       </Head>
       <Preview>
         Simplifica tu negocio con Dew: ¡6 meses de prueba gratis!
@@ -45,13 +33,6 @@ export const MarketingEmail = () => {
           }}
         >
           <Container className="mx-auto max-w-2xl p-8">
-            <Img
-              src="https://utfs.io/f/HJd6WUfSbe8i2hhOBRCrPUIG0RpN9vAlynZHX37SmwTx8dE6"
-              alt="Dew Logo"
-              width="250"
-              height="50"
-              className="mx-auto text-primary"
-            />
             <Heading className="my-8 text-center font-bold text-3xl text-gray-800">
               Revoluciona tu facturación y punto de venta
             </Heading>
@@ -63,7 +44,10 @@ export const MarketingEmail = () => {
               negocio? Te presentamos Dew, la aplicación de facturación y POS
               que transformará la forma en que manejas tus ventas e inventario.
             </Text>
-            <Section className="mb-8 rounded-lg bg-primary-light p-6">
+            <Section
+              className="mb-8 rounded-lg p-6"
+              style={{ backgroundColor: '#f3e8fa' }}
+            >
               <Text className="mb-4 font-semibold text-gray-800 text-lg">
                 Con Dew obtendrás:
               </Text>
@@ -76,8 +60,14 @@ export const MarketingEmail = () => {
                 <li>Facturación electrónica integrada</li>
               </ul>
             </Section>
-            <Section className="mb-8 rounded-lg bg-primary-light p-6 text-center">
-              <Text className="mb-4 font-bold text-primary text-xl">
+            <Section
+              className="mb-8 rounded-lg p-6 text-center"
+              style={{ backgroundColor: '#f3e8fa' }}
+            >
+              <Text
+                className="mb-4 font-bold text-xl"
+                style={{ color: '#690dab' }}
+              >
                 ¡Únete a nuestra beta pública y disfruta de 6 meses de prueba
                 gratuita!
               </Text>
@@ -87,14 +77,15 @@ export const MarketingEmail = () => {
               </Text>
               <Button
                 href="https://dew.cantte.com/"
-                className="rounded bg-primary px-6 py-3 text-center font-medium text-white"
+                className="block rounded-lg px-6 py-3 text-center font-bold text-white transition duration-300 hover:opacity-90"
+                style={{ backgroundColor: '#690dab' }}
               >
                 Comenzar prueba gratuita
               </Button>
             </Section>
             <Hr className="my-6 border-gray-300" />
             <Text className="text-center text-gray-500 text-sm">
-              © {new Date().getFullYear()} Dew. Todos los derechos reservados.
+              © 2024 Dew. Todos los derechos reservados.
             </Text>
           </Container>
         </Body>
