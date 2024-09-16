@@ -85,9 +85,18 @@ export const MarketingEmail = () => {
               </Button>
             </Section>
             <Hr className="my-6 border-gray-300" />
-            <Text className='text-center text-gray-500 text-sm'>
-              Este correo fue enviado por Dew. Si no deseas recibir más correos, puedes
-              <Link href="https://dew.cantte.com/unsubscribe" className="hover:underline" style={{ color: '#690dab' }}> darte de baja aquí</Link>.
+            <Text className="text-center text-gray-500 text-sm">
+              Este correo fue enviado por Dew. Si no deseas recibir más correos,
+              puedes
+              <Link
+                href="https://dew.cantte.com/unsubscribe"
+                className="hover:underline"
+                style={{ color: '#690dab' }}
+              >
+                {' '}
+                darte de baja aquí
+              </Link>
+              .
             </Text>
             <Hr className="my-6 border-gray-300" />
             <Text className="text-center text-gray-500 text-sm">
