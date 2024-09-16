@@ -38,7 +38,7 @@ const SignInPage = async () => {
               Iniciar sesión
             </h1>
 
-            <p className="px-8 text-muted-foreground text-sm">
+            <p className="px-4 text-muted-foreground text-sm">
               Puedes acceder a nuestros servicios con tu cuenta de Google.
             </p>
           </div>
@@ -47,13 +47,13 @@ const SignInPage = async () => {
             <GoogleSignInButton />
           </div>
 
-          <p className="px-8 text-center text-muted-foreground text-sm">
+          <p className="px-4 text-muted-foreground text-xs">
             Al iniciar sesión, aceptas nuestra{' '}
             <Link
               href="/privacy"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Política de privacidad
+              política de privacidad
             </Link>
             .
           </p>

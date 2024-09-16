@@ -18,10 +18,8 @@ export const GoogleSignInButton = () => {
         })
       }
     >
-      <GoogleIcon className="h-5 w-5 sm:mr-2" />
-      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-        Iniciar sesión con Google
-      </span>
+      <GoogleIcon className="mr-2 h-5 w-5" />
+      <span className="whitespace-nowrap">Iniciar sesión con Google</span>
     </Button>
   )
 }

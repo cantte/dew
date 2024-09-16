@@ -1,38 +1,53 @@
+'use client'
+
+import { Barcode, Package } from 'lucide-react'
 import { Badge } from '~/components/ui/badge'
+import { Card, CardContent } from '~/components/ui/card'
 import { formatToCurrency } from '~/text/format'
-import type { RouterOutputs } from '~/trpc/shared'
+
+type Product = {
+  id: string
+  name: string
+  code: string
+  salePrice: number
+  quantity: number
+  isLowStock: boolean
+}
 
 type Props = {
-  product: Omit<
-    RouterOutputs['product']['list'][number],
-    'isLowStock' | 'quantity' | 'stock' | 'enabled'
-  >
+  product: Product
   onAddProduct: (productId: string) => void
 }
 
 export const ProductSaleCard = ({ product, onAddProduct }: Props) => {
   return (
-    <div
-      key={product.id}
-      className="flex cursor-pointer flex-col gap-2 rounded border p-2 hover:bg-accent/20"
+    <Card
+      className="w-full transition-all duration-300 hover:bg-muted-foreground/10"
       onClick={() => onAddProduct(product.id)}
     >
-      <div>
-        <Badge
-          variant="outline"
-          className="rounded px-2 font-extralight text-[10px]"
-        >
-          {product.code}
-        </Badge>
-      </div>
+      <CardContent className="p-6">
+        <div className="mb-2 flex items-start justify-between">
+          <h3 className="line-clamp-2 font-semibold text-lg">{product.name}</h3>
 
-      <div className="flex items-center gap-2">
-        <span>{product.name}</span>
-      </div>
+          {product.isLowStock && (
+            <Badge variant="destructive">Poco stock</Badge>
+          )}
+        </div>
 
-      <span className="text-muted-foreground text-xs">
-        {formatToCurrency('es-CO', product.salePrice)}
-      </span>
-    </div>
+        <div className="space-y-1">
+          <p className="font-bold">
+            {formatToCurrency('es-CO', product.salePrice)}
+          </p>
+          <div className="flex items-center text-muted-foreground text-sm">
+            <Barcode className="mr-2 h-4 w-4" />
+            {product.code}
+          </div>
+          <div className="flex items-center text-muted-foreground text-sm">
+            <Package className="mr-2 h-4 w-4" />
+            {product.quantity} en stock
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   )
 }

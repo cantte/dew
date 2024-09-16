@@ -27,7 +27,7 @@ export const PreventNavigation = ({ prevent, backHref, reset }: Props) => {
     if (typeof window !== 'undefined') {
       window.history.pushState(null, document.title, window.location.href)
     }
-  }, [window])
+  }, [])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: only need prevent
   useEffect(() => {

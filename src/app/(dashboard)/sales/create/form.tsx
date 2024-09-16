@@ -159,7 +159,7 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
   const payment = form.watch('payment')
 
   return (
-    <div className="flex min-h-[calc(100vh-20rem)] w-full flex-col space-y-4">
+    <div className="flex min-h-[calc(100vh-10rem)] w-full flex-col space-y-4">
       <PreventNavigation
         prevent={prevent}
         backHref="/dashboard"
@@ -183,23 +183,27 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
                   </FormDescription>
                 </div>
 
-                <span className="font-medium">Sugerencias</span>
+                {productQuery.length === 0 && (
+                  <>
+                    <span className="font-medium">Sugerencias</span>
 
-                <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
-                  {suggestions.map((product) => (
-                    <ProductSaleCard
-                      key={product.id}
-                      product={product}
-                      onAddProduct={addProduct}
-                    />
-                  ))}
-                </div>
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                      {suggestions.map((product) => (
+                        <ProductSaleCard
+                          key={product.id}
+                          product={product}
+                          onAddProduct={addProduct}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
 
                 {productQuery.length > 0 && (
                   <>
                     <span className="font-medium">Productos</span>
 
-                    <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                       {filteredProducts.map((product) => (
                         <ProductSaleCard
                           product={product}
