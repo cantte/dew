@@ -26,8 +26,8 @@ export const ProductSaleCard = ({ product, onAddProduct }: Props) => {
       onClick={() => onAddProduct(product.id)}
     >
       <CardContent className="p-6">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-semibold line-clamp-2">{product.name}</h3>
+        <div className="mb-2 flex items-start justify-between">
+          <h3 className="line-clamp-2 font-semibold text-lg">{product.name}</h3>
 
           {product.isLowStock && (
             <Badge variant="destructive">Poco stock</Badge>
@@ -38,11 +38,11 @@ export const ProductSaleCard = ({ product, onAddProduct }: Props) => {
           <p className="font-bold">
             {formatToCurrency('es-CO', product.salePrice)}
           </p>
-          <div className="flex items-center text-sm text-muted-foreground">
+          <div className="flex items-center text-muted-foreground text-sm">
             <Barcode className="mr-2 h-4 w-4" />
             {product.code}
           </div>
-          <div className="flex items-center text-sm text-muted-foreground">
+          <div className="flex items-center text-muted-foreground text-sm">
             <Package className="mr-2 h-4 w-4" />
             {product.quantity} en stock
           </div>
