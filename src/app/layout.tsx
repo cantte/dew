@@ -9,6 +9,7 @@ import { ThemeProvider } from '~/components/theme-provider'
 import { Toaster } from '~/components/ui/toaster'
 
 import { TRPCReactProvider } from '~/trpc/react'
+import { CSPostHogProvider } from './(analytics)/providers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -50,20 +51,24 @@ type Props = {
 
 export default function RootLayout({ children }: Readonly<Props>) {
   return (
-    <html lang="es">
-      <body className={`font-sans ${inter.variable} bg-background antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    <CSPostHogProvider>
+      <html lang="es">
+        <body
+          className={`font-sans ${inter.variable} bg-background antialiased`}
         >
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </ThemeProvider>
-        <Analytics />
-        <SpeedInsights />
-        <Toaster />
-      </body>
-    </html>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </ThemeProvider>
+          <Analytics />
+          <SpeedInsights />
+          <Toaster />
+        </body>
+      </html>
+    </CSPostHogProvider>
   )
 }
