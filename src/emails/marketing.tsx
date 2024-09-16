@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Link,
   Preview,
   Section,
   Tailwind,
@@ -76,13 +77,18 @@ export const MarketingEmail = () => {
                 tu futura suscripción.
               </Text>
               <Button
-                href="https://dew.cantte.com/"
+                href="https://dew.cantte.com?utm_source=email&utm_medium=marketing&utm_campaign=6-months-free"
                 className="block rounded-lg px-6 py-3 text-center font-bold text-white transition duration-300 hover:opacity-90"
                 style={{ backgroundColor: '#690dab' }}
               >
                 Comenzar prueba gratuita
               </Button>
             </Section>
+            <Hr className="my-6 border-gray-300" />
+            <Text className='text-center text-gray-500 text-sm'>
+              Este correo fue enviado por Dew. Si no deseas recibir más correos, puedes
+              <Link href="https://dew.cantte.com/unsubscribe" className="hover:underline" style={{ color: '#690dab' }}> darte de baja aquí</Link>.
+            </Text>
             <Hr className="my-6 border-gray-300" />
             <Text className="text-center text-gray-500 text-sm">
               © 2024 Dew. Todos los derechos reservados.
