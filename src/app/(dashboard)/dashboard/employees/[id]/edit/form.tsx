@@ -1,8 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ReloadIcon } from '@radix-ui/react-icons'
-import { User } from 'lucide-react'
+import { RotateCw, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -158,7 +157,7 @@ export const EditEmployeeForm = ({ employee, store }: Props) => {
               <div className="flex flex-col space-y-2">
                 <Button type="submit" disabled={updateEmployee.isPending}>
                   {updateEmployee.isPending && (
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    <RotateCw className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Actualizar empleado
                 </Button>

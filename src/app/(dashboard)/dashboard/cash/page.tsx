@@ -1,5 +1,4 @@
-import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import { Info, TrendingDown, TrendingUp } from 'lucide-react'
 import { Suspense } from 'react'
 import CashRegisterActions from '~/app/(dashboard)/dashboard/cash/actions'
 import CashRegisterDetails from '~/app/(dashboard)/dashboard/cash/details'
@@ -43,7 +42,7 @@ export default async function CashRegisterPage() {
         </h3>
 
         <Alert>
-          <InfoCircledIcon className="h-4 w-4 text-muted-foreground" />
+          <Info className="h-4 w-4 text-muted-foreground" />
           <AlertTitle>Habilitar caja</AlertTitle>
           <AlertDescription>
             Actualmente no tienes esta funcionalidad activa para la tienda

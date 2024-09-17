@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ReloadIcon } from '@radix-ui/react-icons'
+import { RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -123,7 +123,7 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
 
         <Button type="submit" disabled={createStore.isPending}>
           {createStore.isPending && (
-            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            <RotateCw className="mr-2 h-4 w-4 animate-spin" />
           )}
           Agregar tienda
         </Button>

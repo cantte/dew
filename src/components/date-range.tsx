@@ -1,6 +1,6 @@
-import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { Calendar as CalendarIcon } from 'lucide-react'
 import type { HTMLAttributes } from 'react'
 import type {
   DateRange as DateRangeType,

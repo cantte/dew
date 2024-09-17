@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ReloadIcon } from '@radix-ui/react-icons'
+import { RotateCw } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
@@ -119,7 +119,7 @@ const CreateCustomerForm = ({ onCreate, id }: Props) => {
           onClick={(e) => e.stopPropagation()}
         >
           {createCustomer.isPending && (
-            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            <RotateCw className="mr-2 h-4 w-4 animate-spin" />
           )}
           Registrar
         </Button>

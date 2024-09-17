@@ -1,7 +1,7 @@
-import { CalendarIcon } from '@radix-ui/react-icons'
 import type { Table } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { Calendar as CalendarIcon } from 'lucide-react'
 import { type HTMLAttributes, useEffect } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Button } from '~/components/ui/button'
@@ -27,6 +27,7 @@ const DateRangeFilter = <TData,>({
     table.getColumn('createdAt')?.setFilterValue(date)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (date?.from === undefined) {
       return
@@ -37,7 +38,6 @@ const DateRangeFilter = <TData,>({
     }
 
     table.getColumn('createdAt')?.setFilterValue(date)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date])
 
   return (
