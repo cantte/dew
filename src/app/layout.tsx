@@ -3,21 +3,14 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import '~/styles/globals.css'
 
-import { Inter } from 'next/font/google'
+import { GeistSans } from 'geist/font/sans'
+
 import type { ReactNode } from 'react'
 import { ThemeProvider } from '~/components/theme-provider'
 import { Toaster } from '~/components/ui/toaster'
 
 import { TRPCReactProvider } from '~/trpc/react'
 import { CSPostHogProvider } from './(analytics)/providers'
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-inter',
-  display: 'swap',
-  fallback: ['sans-serif'],
-})
 
 export const metadata: Metadata = {
   title: 'dew',
@@ -53,9 +46,7 @@ export default function RootLayout({ children }: Readonly<Props>) {
   return (
     <CSPostHogProvider>
       <html lang="es">
-        <body
-          className={`font-sans ${inter.variable} bg-background antialiased`}
-        >
+        <body className={`font-sans ${GeistSans.variable} bg-background`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
