@@ -1,12 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ReloadIcon } from '@radix-ui/react-icons'
 import { useMediaQuery } from '@uidotdev/usehooks'
+import { RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import type { z } from 'zod'
+import type { TypeOf } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
   Dialog,
@@ -41,18 +41,19 @@ type Props = {
   cashRegisterId: string
 }
 
-type FormValues = z.infer<typeof createCashRegisterTransactionInput>
+type FormValues = TypeOf<typeof createCashRegisterTransactionInput>
 
 const CashRegisterActions = ({ cashRegisterId }: Props) => {
   const form = useForm<FormValues>({
+    resolver: zodResolver(createCashRegisterTransactionInput),
     defaultValues: {
       cashRegisterId: cashRegisterId,
     },
-    resolver: zodResolver(createCashRegisterTransactionInput),
   })
 
   const createCashRegisterTransaction =
     api.cashRegister.transactions.create.useMutation()
+
   const onSubmit: SubmitHandler<FormValues> = (values) => {
     createCashRegisterTransaction.mutate(values)
   }
@@ -63,6 +64,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
   const utils = api.useUtils()
   const { toast } = useToast()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createCashRegisterTransaction.isSuccess) {
       setOpen(false)
@@ -77,6 +79,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
     }
   }, [createCashRegisterTransaction.isSuccess])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createCashRegisterTransaction.error) {
       form.setError('amount', {
@@ -84,7 +87,6 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
         message: createCashRegisterTransaction.error.message,
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createCashRegisterTransaction.error])
 
   const inTransaction = () => {
@@ -98,6 +100,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
   }
 
   const isDesktop = useMediaQuery('(min-width: 768px)')
+
   return (
     <div className="grid grid-cols-2 gap-2">
       <Button onClick={inTransaction}>Realizar ingreso</Button>
@@ -148,7 +151,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                     disabled={createCashRegisterTransaction.isPending}
                   >
                     {createCashRegisterTransaction.isPending && (
-                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                      <RotateCw className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Realizar transacción
                   </Button>
@@ -201,7 +204,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                     disabled={createCashRegisterTransaction.isPending}
                   >
                     {createCashRegisterTransaction.isPending && (
-                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                      <RotateCw className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Realizar transacción
                   </Button>

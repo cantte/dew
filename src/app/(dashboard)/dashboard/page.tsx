@@ -49,7 +49,7 @@ export default async function DashboardPage() {
 
             <div className="col-span-1">
               <div className="flex flex-col space-y-2 rounded border p-4">
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                   <span className="rounded-full bg-secondary p-1">
                     <TrendingUp className="h-3 w-3 text-success-text" />
                   </span>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
 
             <div className="col-span-1">
               <div className="flex flex-col space-y-2 rounded border p-4">
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                   <span className="rounded-full bg-secondary p-1">
                     <TrendingDown className="h-3 w-3 text-destructive" />
                   </span>

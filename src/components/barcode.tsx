@@ -1,5 +1,7 @@
-import { DownloadIcon } from '@radix-ui/react-icons'
+'use client'
+
 import JsBarcode from 'jsbarcode'
+import { Download } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { Button } from '~/components/ui/button'
 
@@ -48,7 +50,7 @@ const Barcode = ({ value, options }: Props) => {
 
       <div className="mt-4">
         <Button variant="outline" onClick={download}>
-          <DownloadIcon className="mr-2 h-4 w-4" />
+          <Download className="mr-2 h-4 w-4" />
           Descargar
           <span className="sr-only">Código de barras</span>
         </Button>

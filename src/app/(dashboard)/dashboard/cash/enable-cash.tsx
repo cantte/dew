@@ -1,6 +1,6 @@
 'use client'
 
-import { ReloadIcon } from '@radix-ui/react-icons'
+import { RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Button } from '~/components/ui/button'
@@ -18,11 +18,12 @@ const EnableCashButton = ({ storeId }: Props) => {
   }
 
   const router = useRouter()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createCash.isSuccess) {
       router.refresh()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createCash.isSuccess])
 
   return (
@@ -33,7 +34,7 @@ const EnableCashButton = ({ storeId }: Props) => {
       disabled={createCash.isPending}
     >
       {createCash.isPending && (
-        <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+        <RotateCw className="mr-2 h-4 w-4 animate-spin" />
       )}
       Habilitar caja registradora
     </Button>

@@ -18,8 +18,7 @@ import type { updateProductInput } from '~/server/api/schemas/products'
 import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
 
-import { ReloadIcon } from '@radix-ui/react-icons'
-import { Check, ChevronsUpDown, Tag } from 'lucide-react'
+import { Check, ChevronsUpDown, RotateCw, Tag } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import {
   FormControl,
@@ -315,7 +314,7 @@ export const EditProductForm = ({ product, units }: Props) => {
               <div className="flex flex-col space-y-2">
                 <Button type="submit" disabled={updateProduct.isPending}>
                   {updateProduct.isPending && (
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    <RotateCw className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Actualizar
                 </Button>

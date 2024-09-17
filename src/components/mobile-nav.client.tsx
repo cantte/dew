@@ -1,6 +1,6 @@
 'use client'
 
-import { ViewVerticalIcon } from '@radix-ui/react-icons'
+import { Menu } from 'lucide-react'
 import Link, { type LinkProps } from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -25,7 +25,7 @@ export const MobileNavClient = ({ items }: Props) => {
           variant="ghost"
           className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
         >
-          <ViewVerticalIcon className="h-5 w-5" />
+          <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">

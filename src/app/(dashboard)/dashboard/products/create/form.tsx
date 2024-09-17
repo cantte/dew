@@ -1,9 +1,8 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ReloadIcon } from '@radix-ui/react-icons'
 import { useDebounce } from '@uidotdev/usehooks'
-import { Check, ChevronsUpDown, Tag } from 'lucide-react'
+import { Check, ChevronsUpDown, RotateCw, Tag } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -394,7 +393,7 @@ export const CreateProductForm = ({ store, units }: Props) => {
               <div className="flex flex-col space-y-2">
                 <Button type="submit" disabled={createProduct.isPending}>
                   {createProduct.isPending && (
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    <RotateCw className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Agregar
                 </Button>
