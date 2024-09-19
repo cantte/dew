@@ -1,12 +1,10 @@
 import { Info, TrendingDown, TrendingUp } from 'lucide-react'
-import { Suspense } from 'react'
 import CashRegisterActions from '~/app/(dashboard)/dashboard/cash/actions'
 import CashRegisterDetails from '~/app/(dashboard)/dashboard/cash/details'
 import EnableCash from '~/app/(dashboard)/dashboard/cash/enable-cash'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
-import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
 export default async function CashRegisterPage() {
@@ -115,17 +113,7 @@ export default async function CashRegisterPage() {
         <CashRegisterActions cashRegisterId={cashRegister.id} />
       </div>
 
-      <Suspense fallback={<CashRegisterDetailsFallback />}>
-        <CashRegisterDetails cashRegisterId={cashRegister.id} />
-      </Suspense>
-    </div>
-  )
-}
-
-const CashRegisterDetailsFallback = () => {
-  return (
-    <div>
-      <Skeleton className="h-8 w-full" />
+      <CashRegisterDetails cashRegisterId={cashRegister.id} />
     </div>
   )
 }

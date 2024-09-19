@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Footer from '~/components/footer'
-import { ThemeToggle } from '~/components/theme-toggle'
 import { Badge } from '~/components/ui/badge'
 
 type Props = {
@@ -16,14 +15,6 @@ const DefaultLayout = ({ children }: Props) => {
             <span className="font-semibold text-lg">dew</span>
             <Badge>beta</Badge>
           </Link>
-
-          <nav className="flex items-center gap-3">
-            <ul className="flex gap-2">
-              <li>
-                <ThemeToggle />
-              </li>
-            </ul>
-          </nav>
         </header>
 
         <main className="flex grow flex-col items-center gap-4 p-4 md:gap-8 md:p-6">
