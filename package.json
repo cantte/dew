@@ -12,7 +12,9 @@
     "start": "next start",
     "email": "dotenv \"email dev --dir src/emails --port 3500\"",
     "format:check": "biome format",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.5.0",
@@ -98,7 +100,9 @@
     "pg": "^8.13.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.12",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.1.1"
   },
   "ct3aMetadata": {
     "initVersion": "7.24.2"
