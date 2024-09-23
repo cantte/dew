@@ -33,6 +33,17 @@ jobs:
 
       - run: pnpm lint
 
+  test:
+    runs-on: ubuntu-latest
+    name: test project
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - run: pnpm test
+
   format:
     runs-on: ubuntu-latest
     name: format code
