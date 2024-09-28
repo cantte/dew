@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { AccountNav, AccountNavFallback } from '~/components/account-nav'
+import { SelectStore } from '~/components/dashboard/select-store'
 import {
   MobileNavServer,
   MobileNavServerFallback,
@@ -26,8 +27,9 @@ export const Header = () => {
         </div>
 
         <ul className="flex gap-2">
-          <li className="inline-flex items-center justify-center"></li>
-
+          <li className="inline-flex items-center justify-center">
+            <SelectStore />
+          </li>
           <li>
             <Separator orientation="vertical" />
           </li>
