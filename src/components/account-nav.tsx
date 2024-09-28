@@ -1,5 +1,4 @@
 import { CircleUserRound, Settings } from 'lucide-react'
-import type { User } from 'next-auth'
 import Link from 'next/link'
 import SignOutButton from '~/components/signout-button'
 import { ThemeToggle } from '~/components/theme-toggle'
@@ -13,12 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
+import { Skeleton } from '~/components/ui/skeleton'
+import { getServerAuthSession } from '~/server/auth'
 
-type Props = {
-  user: User
-}
+export const AccountNav = async () => {
+  const session = await getServerAuthSession()
 
-const AccountNav = ({ user }: Props) => {
+  if (!session) {
+    return null
+  }
+
+  const user = session.user
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -65,4 +70,10 @@ const AccountNav = ({ user }: Props) => {
   )
 }
 
-export default AccountNav
+export const AccountNavFallback = () => {
+  return (
+    <Button className="rounded-full" size="icon" variant="ghost" disabled>
+      <Skeleton className="h-8 w-8 rounded-full" />
+    </Button>
+  )
+}
