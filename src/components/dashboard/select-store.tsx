@@ -1,6 +1,6 @@
 'use client'
 
-import { RotateCw } from 'lucide-react'
+import { CirclePlus, RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Badge } from '~/components/ui/badge'
@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select'
+import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/react'
 
@@ -43,7 +44,11 @@ export const SelectStore = () => {
     return <Badge variant="destructive">Sin tienda</Badge>
   }
 
-  const onSelectStore = async (storeId: string) => {
+  const onSelectStore = (storeId: string) => {
+    if (storeId === 'new') {
+      return
+    }
+
     setCurrentStore.mutate({ storeId })
   }
 
@@ -52,7 +57,7 @@ export const SelectStore = () => {
   return (
     <Select
       value={currentStore.id}
-      onValueChange={(value) => onSelectStore(value)}
+      onValueChange={onSelectStore}
       disabled={disabled}
     >
       <SelectTrigger className="w-56">
@@ -69,6 +74,15 @@ export const SelectStore = () => {
             {store.name}
           </SelectItem>
         ))}
+
+        <Separator orientation="horizontal" className="my-1" />
+
+        <SelectItem value="new">
+          <div className="flex items-center gap-2 overflow-hidden">
+            <CirclePlus className="h-4 w-4" />
+            <span>Registrar tienda</span>
+          </div>
+        </SelectItem>
       </SelectContent>
     </Select>
   )
