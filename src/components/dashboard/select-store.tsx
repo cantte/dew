@@ -17,9 +17,13 @@ import { api } from '~/trpc/react'
 
 export const SelectStore = () => {
   const { data: currentStore, isFetching: isFetchingCurrentStore } =
-    api.store.findCurrent.useQuery()
+    api.store.findCurrent.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    })
   const { data: stores, isFetching: isFetchingStores } =
-    api.store.list.useQuery()
+    api.store.list.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    })
 
   const setCurrentStore = api.userPreference.update.useMutation()
   const utils = api.useUtils()
