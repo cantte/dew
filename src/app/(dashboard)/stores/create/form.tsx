@@ -41,10 +41,12 @@ const CreateStoreForm = ({ onSuccess }: Props) => {
   }
 
   const router = useRouter()
+  const utils = api.useUtils()
   // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (createStore.isSuccess) {
       router.refresh()
+      utils.store.findCurrent.invalidate()
       if (onSuccess) {
         onSuccess()
         return

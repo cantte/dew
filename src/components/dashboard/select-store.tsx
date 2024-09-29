@@ -2,7 +2,8 @@
 
 import { CirclePlus, RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { RegisterStoreDialog } from '~/components/stores/register-store.dialog'
 import { Badge } from '~/components/ui/badge'
 import {
   Select,
@@ -37,6 +38,8 @@ export const SelectStore = () => {
     }
   }, [setCurrentStore.isSuccess])
 
+  const [openRegisterStore, setOpenRegisterStore] = useState(false)
+
   const showSkeleton =
     (isFetchingCurrentStore || isFetchingStores) && !currentStore
 
@@ -50,6 +53,7 @@ export const SelectStore = () => {
 
   const onSelectStore = (storeId: string) => {
     if (storeId === 'new') {
+      setOpenRegisterStore(true)
       return
     }
 
@@ -59,35 +63,42 @@ export const SelectStore = () => {
   const disabled = setCurrentStore.isPending || isFetchingCurrentStore
 
   return (
-    <Select
-      value={currentStore.id}
-      onValueChange={onSelectStore}
-      disabled={disabled}
-    >
-      <SelectTrigger className="w-56">
-        <SelectValue>
-          <div className="flex items-center gap-2 overflow-hidden">
-            {disabled && <RotateCw className="h-4 w-4 animate-spin" />}
-            <span>{currentStore.name}</span>
-          </div>
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {stores?.map((store) => (
-          <SelectItem key={store.id} value={store.id}>
-            {store.name}
+    <>
+      <RegisterStoreDialog
+        open={openRegisterStore}
+        onOpenChange={setOpenRegisterStore}
+      />
+
+      <Select
+        value={currentStore.id}
+        onValueChange={onSelectStore}
+        disabled={disabled}
+      >
+        <SelectTrigger className="w-56">
+          <SelectValue>
+            <div className="flex items-center gap-2 overflow-hidden">
+              {disabled && <RotateCw className="h-4 w-4 animate-spin" />}
+              <span>{currentStore.name}</span>
+            </div>
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {stores?.map((store) => (
+            <SelectItem key={store.id} value={store.id}>
+              {store.name}
+            </SelectItem>
+          ))}
+
+          <Separator orientation="horizontal" className="my-1" />
+
+          <SelectItem value="new">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <CirclePlus className="h-4 w-4" />
+              <span>Registrar tienda</span>
+            </div>
           </SelectItem>
-        ))}
-
-        <Separator orientation="horizontal" className="my-1" />
-
-        <SelectItem value="new">
-          <div className="flex items-center gap-2 overflow-hidden">
-            <CirclePlus className="h-4 w-4" />
-            <span>Registrar tienda</span>
-          </div>
-        </SelectItem>
-      </SelectContent>
-    </Select>
+        </SelectContent>
+      </Select>
+    </>
   )
 }
