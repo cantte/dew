@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { SelectSaleCustomer } from '~/app/(dashboard)/sales/create/select-sale-customer'
@@ -184,7 +184,7 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
                 </div>
 
                 {productQuery.length === 0 && (
-                  <>
+                  <Fragment>
                     <span className="font-medium">Sugerencias</span>
 
                     <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -196,11 +196,11 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
                         />
                       ))}
                     </div>
-                  </>
+                  </Fragment>
                 )}
 
                 {productQuery.length > 0 && (
-                  <>
+                  <Fragment>
                     <span className="font-medium">Productos</span>
 
                     <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -211,7 +211,7 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
                         />
                       ))}
                     </div>
-                  </>
+                  </Fragment>
                 )}
               </div>
             </div>

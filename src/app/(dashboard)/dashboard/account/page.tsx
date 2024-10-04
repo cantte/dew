@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import BackButton from '~/components/back-button'
 import { CancelSubscriptionDialog } from '~/components/cancel-subscription.dialog'
 import { UpdateStoreForm } from '~/components/stores/update-store.form'
+import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import {
   Card,
@@ -36,6 +37,10 @@ export default async function AccountPage() {
   const subscription = await api.subscription.find()
 
   const hasSubscription = subscription !== undefined
+
+  const hasDeleteStorePermission = await api.rbac.checkPermissions({
+    permissions: ['store:delete'],
+  })
 
   return (
     <div className="grid gap-4">
@@ -139,6 +144,33 @@ export default async function AccountPage() {
                 <UpdateStoreForm store={store} />
               </CardContent>
             </Card>
+
+            {hasDeleteStorePermission && (
+              <Card className="border-destructive">
+                <CardHeader>
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-destructive text-xl">
+                      Eliminar tienda
+                    </CardTitle>
+
+                    <Badge variant="destructive">Próximamente</Badge>
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <p className="text-destructive/80">
+                    Si deseas eliminar tu tienda, puedes hacerlo aquí. Ten en
+                    cuenta que esta acción no se puede deshacer.
+                  </p>
+                </CardContent>
+
+                <CardFooter>
+                  <Button variant="destructive" disabled>
+                    Deseo eliminar mi tienda
+                  </Button>
+                </CardFooter>
+              </Card>
+            )}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { BadgePercent, Minus, Plus, Trash } from 'lucide-react'
 import { useEffect, useMemo } from 'react'
 import type { TypeOf } from 'zod'
-import UpdateSalePriceDialog from '~/app/(dashboard)/sales/create/update-sale-price.dialog'
+import UpdateSaleItemDialog from '~/app/(dashboard)/sales/create/update-sale-item.dialog'
 import { Button } from '~/components/ui/button'
 import { applyDiscount } from '~/lib/utils'
 import type { createSaleInput } from '~/server/api/schemas/sales'
@@ -35,9 +35,14 @@ export const SaleItem = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: keep initial salePrice
   const salePrice = useMemo(() => item.salePrice, [])
 
-  const { isFetching, data } = api.product.searchDiscounts.useQuery({
-    id: productId,
-  })
+  const { isFetching, data } = api.product.searchDiscounts.useQuery(
+    {
+      id: productId,
+    },
+    {
+      refetchOnWindowFocus: false,
+    },
+  )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: only run when data changes
   useEffect(() => {
@@ -88,7 +93,7 @@ export const SaleItem = ({
 
         <span>{formatToCurrency('es-CO', item.quantity * item.salePrice)}</span>
 
-        <UpdateSalePriceDialog productName={product} index={index} />
+        <UpdateSaleItemDialog productName={product} index={index} />
 
         <Button
           type="button"
