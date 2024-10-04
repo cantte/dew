@@ -29,7 +29,7 @@ type Props = {
   index: number
 }
 
-const UpdateSalePriceDialog = ({ productName, index }: Props) => {
+const UpdateSaleItemDialog = ({ productName, index }: Props) => {
   const [open, setOpen] = useState(false)
   const form = useFormContext<FormValues>()
 
@@ -57,10 +57,10 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Actualizar precio de venta unitario</DialogTitle>
+          <DialogTitle>Editar venta</DialogTitle>
           <DialogDescription>
-            Estás a punto de actualizar el precio de venta unitario del producto{' '}
-            <strong>{productName}</strong>
+            Estás a punto de actualizar los datos del{' '}
+            <strong>{productName}</strong> en la venta.
           </DialogDescription>
         </DialogHeader>
 
@@ -70,6 +70,21 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Precio de venta</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name={`items.${index}.quantity`}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cantidad</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -89,4 +104,4 @@ const UpdateSalePriceDialog = ({ productName, index }: Props) => {
   )
 }
 
-export default UpdateSalePriceDialog
+export default UpdateSaleItemDialog

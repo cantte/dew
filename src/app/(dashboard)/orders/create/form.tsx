@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import { SelectSaleCustomer } from '~/app/(dashboard)/sales/create/select-sale-customer'
-import UpdateSalePriceDialog from '~/app/(dashboard)/sales/create/update-sale-price.dialog'
+import UpdateSaleItemDialog from '~/app/(dashboard)/sales/create/update-sale-item.dialog'
 import { PreventNavigation } from '~/components/prevent-navigation'
 import { ProductSaleCard } from '~/components/products/sale-card'
 import { Badge } from '~/components/ui/badge'
@@ -292,7 +292,7 @@ const CreateOrderForm = ({ store, products, suggestions }: Props) => {
                             )}
                           </span>
 
-                          <UpdateSalePriceDialog
+                          <UpdateSaleItemDialog
                             productName={getProductName(item.productId)}
                             index={index}
                           />
