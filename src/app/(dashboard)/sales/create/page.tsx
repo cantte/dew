@@ -46,7 +46,7 @@ const CreateSalePage = async () => {
   })
 
   return (
-    <div className="flex w-full flex-col items-start space-y-4">
+    <div className="flex w-full flex-col items-start space-y-2">
       <BackButton />
 
       <CreateSaleForm
