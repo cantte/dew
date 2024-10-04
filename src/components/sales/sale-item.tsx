@@ -35,9 +35,14 @@ export const SaleItem = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: keep initial salePrice
   const salePrice = useMemo(() => item.salePrice, [])
 
-  const { isFetching, data } = api.product.searchDiscounts.useQuery({
-    id: productId,
-  })
+  const { isFetching, data } = api.product.searchDiscounts.useQuery(
+    {
+      id: productId,
+    },
+    {
+      refetchOnWindowFocus: false,
+    },
+  )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: only run when data changes
   useEffect(() => {
