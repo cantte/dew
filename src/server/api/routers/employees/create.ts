@@ -1,9 +1,15 @@
+import { addDays } from 'date-fns'
 import { eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
 import type { createEmployeeInput } from '~/server/api/schemas/employees'
-import { employeeStore, employees, roles } from '~/server/db/schema'
+import {
+  employeeStore,
+  employeeStoreInvitationTokens,
+  employees,
+  roles,
+} from '~/server/db/schema'
 
 type Options = {
   ctx: TRPCAuthedContext
@@ -44,6 +50,17 @@ const createEmployee = async ({ ctx, input }: Options) => {
       throw new Error('Employee role not found')
     }
 
+    const invitationToken = uuid()
+    const tokenExpiresAt = addDays(new Date(), 7)
+
+    await tx.insert(employeeStoreInvitationTokens).values({
+      employeeId: employeeId,
+      storeId: input.storeId,
+      token: invitationToken,
+      expiresAt: tokenExpiresAt,
+    })
+
+    // TODO: Send email with invitation token and remove this link
     await tx
       .insert(employeeStore)
       .values({
