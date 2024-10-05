@@ -206,6 +206,7 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
                     <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                       {filteredProducts.map((product) => (
                         <ProductSaleCard
+                          key={product.id}
                           product={product}
                           onAddProduct={addProduct}
                         />
