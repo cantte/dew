@@ -134,6 +134,13 @@
       "when": 1728147807445,
       "tag": "0018_shiny_legion",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1728149097932,
+      "tag": "0019_concerned_black_tarantula",
+      "breakpoints": true
     }
   ]
 }

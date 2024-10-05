@@ -1,5 +1,12 @@
 import { relations, sql } from 'drizzle-orm'
-import { primaryKey, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import {
+  primaryKey,
+  serial,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core'
 import { users } from '~/server/db/schema/auth'
 import { createTable } from '~/server/db/schema/base'
 import { roles } from '~/server/db/schema/rbac'
@@ -67,3 +74,22 @@ export const employeeStoreRelations = relations(employeeStore, ({ one }) => ({
     references: [roles.id],
   }),
 }))
+
+export const employeeStoreInvitationTokens = createTable(
+  'employee_store_invitation_token',
+  {
+    id: serial('id').notNull().primaryKey(),
+    employeeId: uuid('employee_id')
+      .notNull()
+      .references(() => employees.id),
+    storeId: uuid('store_id')
+      .notNull()
+      .references(() => stores.id),
+    token: text('token').notNull().unique(),
+    createdAt: timestamp('created_at')
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    expiresAt: timestamp('expires_at').notNull(),
+    usedAt: timestamp('used_at'),
+  },
+)
