@@ -28,7 +28,7 @@ type Props = {
   searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default async function ReportPage({ searchParams }: Props) {
+export default async function ReportPage({ searchParams }: Readonly<Props>) {
   const today = new Date()
 
   if (!searchParams || !searchParams.year || !searchParams.month) {
