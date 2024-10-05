@@ -189,7 +189,7 @@ const CreateEmployeeForm = ({ store }: Props) => {
               <div className="flex flex-col justify-between gap-4 rounded border p-4">
                 <div className="grid gap-4 text-sm">
                   <div>
-                    <Badge variant="secondary">{store.name}</Badge>
+                    <Badge>{store.name}</Badge>
                   </div>
 
                   <div className="flex flex-col items-center space-y-2">
