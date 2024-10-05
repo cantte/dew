@@ -41,12 +41,7 @@ const createEmployee = async ({ ctx, input }: Options) => {
     })
 
     if (!employeeRole) {
-      try {
-        tx.rollback()
-      } catch (error) {
-        throw new Error('Employee role not found')
-      }
-      return
+      throw new Error('Employee role not found')
     }
 
     await tx
