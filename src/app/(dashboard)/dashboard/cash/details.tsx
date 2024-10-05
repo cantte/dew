@@ -12,6 +12,7 @@ import DateRange from '~/components/date-range'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Skeleton } from '~/components/ui/skeleton'
+import uuid from '~/lib/uuid'
 import { api } from '~/trpc/react'
 
 type Props = {
@@ -82,7 +83,10 @@ const CashRegisterDetailsFallback = () => {
   return (
     <div className="grid gap-2">
       {Array.from({ length: FALLBACK_ITEMS }).map((_, index) => (
-        <Card key={index} className="mb-2 rounded shadow-none">
+        <Card
+          key={`fallback-item-${uuid()}`}
+          className="mb-2 rounded shadow-none"
+        >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pt-2 pb-1">
             <CardTitle className="font-bold text-xl">
               <Skeleton className="h-6 w-32" />
