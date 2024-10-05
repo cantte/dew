@@ -1,7 +1,6 @@
 'use client'
 
 import { ChevronLeft } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { DashboardNav } from '~/components/dashboard/nav'
 import { Button } from '~/components/ui/button'
@@ -23,8 +22,6 @@ export const Sidebar = ({ className, items }: Props) => {
     toggle()
     setTimeout(() => setStatus(false), 500)
   }
-
-  const pathname = usePathname()
 
   return (
     <nav

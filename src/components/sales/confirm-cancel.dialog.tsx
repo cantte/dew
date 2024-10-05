@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import ConfirmDialog from '~/components/confirm-dialog'
 import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 import { api } from '~/trpc/react'
@@ -33,7 +33,7 @@ export const ConfirmCancelSaleDialog = ({ sale }: Props) => {
   }, [cancelSale.isSuccess])
 
   return (
-    <>
+    <Fragment>
       <DropdownMenuItem
         onSelect={(e) => e.preventDefault()}
         onClick={() => setIsOpen(true)}
@@ -49,6 +49,6 @@ export const ConfirmCancelSaleDialog = ({ sale }: Props) => {
         onClose={() => setIsOpen(false)}
         onConfirm={handleCancel}
       />
-    </>
+    </Fragment>
   )
 }

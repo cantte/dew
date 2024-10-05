@@ -2,7 +2,7 @@
 
 import { CirclePlus, RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { RegisterStoreDialog } from '~/components/stores/register-store.dialog'
 import { Badge } from '~/components/ui/badge'
 import {
@@ -63,7 +63,7 @@ export const SelectStore = () => {
   const disabled = setCurrentStore.isPending || isFetchingCurrentStore
 
   return (
-    <>
+    <Fragment>
       <RegisterStoreDialog
         open={openRegisterStore}
         onOpenChange={setOpenRegisterStore}
@@ -99,6 +99,6 @@ export const SelectStore = () => {
           </SelectItem>
         </SelectContent>
       </Select>
-    </>
+    </Fragment>
   )
 }

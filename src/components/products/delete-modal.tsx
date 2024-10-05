@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import type { Product } from '~/app/(dashboard)/dashboard/products/columns'
 import ConfirmDialog from '~/components/confirm-dialog'
 import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
@@ -20,16 +20,17 @@ const DeleteProductModal = ({ product }: Props) => {
   }
 
   const utils = api.useUtils()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (deleteProduct.isSuccess) {
-      void utils.product.list.invalidate()
+      utils.product.list.invalidate()
       setIsOpen(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteProduct.isSuccess])
 
   return (
-    <>
+    <Fragment>
       <DropdownMenuItem
         onSelect={(e) => e.preventDefault()}
         onClick={() => setIsOpen(true)}
@@ -44,7 +45,7 @@ const DeleteProductModal = ({ product }: Props) => {
         title="Eliminar producto"
         description="¿Estás seguro que deseas eliminar este producto?"
       />
-    </>
+    </Fragment>
   )
 }
 

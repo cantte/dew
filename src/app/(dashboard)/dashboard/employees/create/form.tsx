@@ -5,7 +5,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { RotateCw, User } from 'lucide-react'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import type { z } from 'zod'
+import type { TypeOf } from 'zod'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,7 +36,7 @@ type Props = {
   store: NonNullable<RouterOutputs['store']['findCurrent']>
 }
 
-type FormValues = z.infer<typeof createEmployeeInput>
+type FormValues = TypeOf<typeof createEmployeeInput>
 
 const CreateEmployeeForm = ({ store }: Props) => {
   const form = useForm<FormValues>({
@@ -80,13 +80,18 @@ const CreateEmployeeForm = ({ store }: Props) => {
   }, [employee])
 
   const loadEmployee = () => {
+    if (!employee) {
+      return
+    }
+
     form.reset({
       code: employeeCode,
-      name: employee?.name,
-      email: employee?.email,
-      phone: employee?.phone !== null ? employee?.phone : undefined,
+      name: employee.name,
+      email: employee.email,
+      phone: employee.phone ?? undefined,
       storeId: store.id,
     })
+
     setIsOpen(false)
   }
 
@@ -189,7 +194,7 @@ const CreateEmployeeForm = ({ store }: Props) => {
               <div className="flex flex-col justify-between gap-4 rounded border p-4">
                 <div className="grid gap-4 text-sm">
                   <div>
-                    <Badge variant="secondary">{store.name}</Badge>
+                    <Badge>{store.name}</Badge>
                   </div>
 
                   <div className="flex flex-col items-center space-y-2">

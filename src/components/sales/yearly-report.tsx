@@ -55,16 +55,12 @@ export const YearlySalesReport = async ({ year }: Props) => {
   })
 
   return (
-    <div className="w-full p-2 border rounded grid">
+    <div className="grid w-full rounded border p-2">
       <YearlyReportChart data={data} />
     </div>
   )
 }
 
 export const YearlySalesReportFallback = () => {
-  return (
-    <>
-      <Skeleton className="h-64 w-full" />
-    </>
-  )
+  return <Skeleton className="h-64 w-full" />
 }

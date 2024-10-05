@@ -12,7 +12,7 @@ type Props = {
   }
 }
 
-export default async function EditEmployeePage({ params }: Props) {
+export default async function EditEmployeePage({ params }: Readonly<Props>) {
   noStore()
 
   const store = await api.store.findCurrent()

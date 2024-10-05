@@ -12,7 +12,6 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/ui/command'
-import { Form } from '~/components/ui/form'
 import { useToast } from '~/components/ui/use-toast'
 import type { updateProductInput } from '~/server/api/schemas/products'
 import { api } from '~/trpc/react'
@@ -21,6 +20,7 @@ import type { RouterOutputs } from '~/trpc/shared'
 import { Check, ChevronsUpDown, RotateCw, Tag } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import {
+  Form,
   FormControl,
   FormDescription,
   FormField,

@@ -8,7 +8,7 @@ type Props = {
   }
 }
 
-export default async function OrderDetailPage({ params }: Props) {
+export default async function OrderDetailPage({ params }: Readonly<Props>) {
   const order = await api.order.findPublic({ id: params.id })
 
   if (!order) {

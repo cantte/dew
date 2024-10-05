@@ -67,7 +67,7 @@ const ImportProductsDialog = ({ store }: Props) => {
 
       form.reset()
 
-      void utils.product.list.invalidate()
+      utils.product.list.invalidate()
     }
   }, [bulkCreateProduct.isSuccess])
 
@@ -177,7 +177,7 @@ const ImportProductsDialog = ({ store }: Props) => {
             <strong>
               código, nombre, descripción, precio de compra, precio de venta,
               cantidad, stock
-            </strong>
+            </strong>{' '}
             .
           </DialogDescription>
         </DialogHeader>
