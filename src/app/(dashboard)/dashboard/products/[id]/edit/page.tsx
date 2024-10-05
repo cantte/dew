@@ -11,7 +11,7 @@ type Props = {
   }
 }
 
-export default async function EditProductPage({ params }: Props) {
+export default async function EditProductPage({ params }: Readonly<Props>) {
   noStore()
 
   const hasPermissions = await api.rbac.checkPermissions({
