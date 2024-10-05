@@ -22,6 +22,7 @@ import {
   YearlySalesReport,
   YearlySalesReportFallback,
 } from '~/components/sales/yearly-report'
+import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { api } from '~/trpc/server'
 
 type Props = {
@@ -29,9 +30,15 @@ type Props = {
 }
 
 export default async function ReportPage({ searchParams }: Readonly<Props>) {
+  const store = await api.store.findCurrent()
+
+  if (!store) {
+    return <NotFoundStoreAlert />
+  }
+
   const today = new Date()
 
-  if (!searchParams || !searchParams.year || !searchParams.month) {
+  if (!searchParams?.year || !searchParams?.month) {
     return redirect(
       `/dashboard/report?year=${today.getFullYear()}&month=${today.getMonth() + 1}`,
     )
@@ -49,27 +56,27 @@ export default async function ReportPage({ searchParams }: Readonly<Props>) {
     <div className="space-y-4">
       <SelectYear selectableYears={selectableYears} />
 
-      <Suspense key={Math.random()} fallback={<YearlySalesOverviewFallback />}>
+      <Suspense key={store.id} fallback={<YearlySalesOverviewFallback />}>
         <YearlySalesOverview year={currentYear} />
       </Suspense>
 
       <div className="grid grid-cols-1 gap-2">
-        <Suspense key={Math.random()} fallback={<YearlySalesReportFallback />}>
+        <Suspense key={store.id} fallback={<YearlySalesReportFallback />}>
           <YearlySalesReport year={currentYear} />
         </Suspense>
       </div>
 
       <SelectMonth selectableMonths={selectableMonths} />
 
-      <Suspense key={Math.random()} fallback={<MonthlySalesOverviewFallback />}>
+      <Suspense key={store.id} fallback={<MonthlySalesOverviewFallback />}>
         <MonthlySalesOverview month={currentMonth} year={currentYear} />
       </Suspense>
 
-      <Suspense key={Math.random()} fallback={<MonthlySalesReportFallback />}>
+      <Suspense key={store.id} fallback={<MonthlySalesReportFallback />}>
         <MonthlySalesReport month={currentMonth} year={currentYear} />
       </Suspense>
 
-      <Suspense key={Math.random()} fallback={<MostSoldProductsFallback />}>
+      <Suspense key={store.id} fallback={<MostSoldProductsFallback />}>
         <MostSoldProducts />
       </Suspense>
     </div>
