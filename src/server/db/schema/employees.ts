@@ -1,42 +1,24 @@
 import { relations, sql } from 'drizzle-orm'
-import {
-  primaryKey,
-  timestamp,
-  unique,
-  uuid,
-  varchar,
-} from 'drizzle-orm/pg-core'
+import { primaryKey, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { users } from '~/server/db/schema/auth'
 import { createTable } from '~/server/db/schema/base'
 import { roles } from '~/server/db/schema/rbac'
 import { stores } from '~/server/db/schema/stores'
 
-export const employees = createTable(
-  'employee',
-  {
-    id: uuid('id').notNull().primaryKey(),
-    code: varchar('code', { length: 32 }),
-    name: varchar('name', { length: 128 }).notNull(),
-    email: varchar('email', { length: 255 }).notNull(),
-    phone: varchar('phone', { length: 32 }),
-    userId: varchar('user_id', { length: 255 }).references(() => users.id),
-    createdBy: varchar('created_by', { length: 255 })
-      .notNull()
-      .references(() => users.id),
-    createdAt: timestamp('created_at')
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
-    deletedAt: timestamp('deleted_at'),
-  },
-  (employee) => ({
-    uniqueEmailPhoneCode: unique('employee_email_phone_code_unique').on(
-      employee.email,
-      employee.phone,
-      employee.code,
-    ),
-  }),
-)
+export const employees = createTable('employee', {
+  id: uuid('id').notNull().primaryKey(),
+  code: varchar('code', { length: 32 }).unique(),
+  name: varchar('name', { length: 128 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  phone: varchar('phone', { length: 32 }).unique(),
+  userId: varchar('user_id', { length: 255 }).references(() => users.id),
+  createdBy: varchar('created_by', { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: timestamp('updated_at').$onUpdateFn(() => new Date()),
+  deletedAt: timestamp('deleted_at'),
+})
 
 export const employeeRelations = relations(employees, ({ many, one }) => ({
   stores: many(stores),
