@@ -80,13 +80,18 @@ const CreateEmployeeForm = ({ store }: Props) => {
   }, [employee])
 
   const loadEmployee = () => {
+    if (!employee) {
+      return
+    }
+
     form.reset({
       code: employeeCode,
-      name: employee?.name,
-      email: employee?.email,
-      phone: employee?.phone !== null ? employee?.phone : undefined,
+      name: employee.name,
+      email: employee.email,
+      phone: employee.phone ?? undefined,
       storeId: store.id,
     })
+
     setIsOpen(false)
   }
 
