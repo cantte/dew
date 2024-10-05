@@ -3,10 +3,7 @@
 import {
   type ColumnDef,
   getCoreRowModel,
-  getFacetedRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
 import type { Employee } from '~/app/(dashboard)/dashboard/employees/columns'
@@ -37,14 +34,8 @@ const EmployeeDataTable = <TValue,>({
   const table = useReactTable<Employee>({
     data: employees,
     columns,
-    state: {
-      columnFilters: [],
-    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
   })
 
   return (

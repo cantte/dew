@@ -32,16 +32,12 @@ const EmployeesPage = async () => {
 
   return (
     <div className="grid gap-2">
-      <div className="flex justify-between">
-        <span></span>
-
+      <div className="flex justify-end">
         {canCreateEmployee && (
-          <Button asChild size="sm" className="h-7 gap-1">
+          <Button asChild>
             <Link href="/dashboard/employees/create">
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Agregar empleado
-              </span>
+              <PlusCircle className="mr-2 size-4" />
+              <span className="whitespace-nowrap">Registrar empleado</span>
             </Link>
           </Button>
         )}
