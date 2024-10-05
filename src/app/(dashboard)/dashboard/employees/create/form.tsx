@@ -5,7 +5,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { RotateCw, User } from 'lucide-react'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import type { z } from 'zod'
+import type { TypeOf } from 'zod'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,7 +36,7 @@ type Props = {
   store: NonNullable<RouterOutputs['store']['findCurrent']>
 }
 
-type FormValues = z.infer<typeof createEmployeeInput>
+type FormValues = TypeOf<typeof createEmployeeInput>
 
 const CreateEmployeeForm = ({ store }: Props) => {
   const form = useForm<FormValues>({
