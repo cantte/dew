@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Minus, Plus, RotateCw, Trash } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import { ProductSaleCard } from '~/components/products/sale-card'
@@ -191,7 +191,7 @@ export const InventoryAdjustmentForm = ({ store, products }: Props) => {
                 </div>
 
                 {productQuery.length > 0 && (
-                  <>
+                  <Fragment>
                     <span className="font-medium">Productos</span>
 
                     <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
@@ -203,7 +203,7 @@ export const InventoryAdjustmentForm = ({ store, products }: Props) => {
                         />
                       ))}
                     </div>
-                  </>
+                  </Fragment>
                 )}
               </div>
             </div>
@@ -220,7 +220,7 @@ export const InventoryAdjustmentForm = ({ store, products }: Props) => {
                   <div className="grid gap-2">
                     {items.map((item, index) => (
                       <div
-                        key={index}
+                        key={item.productId}
                         className="grid grid-cols-1 gap-2 rounded border p-2 md:grid-cols-3 md:gap-1"
                       >
                         <div className="grid gap-1">
