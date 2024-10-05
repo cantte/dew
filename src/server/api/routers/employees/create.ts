@@ -12,6 +12,7 @@ type Options = {
 
 const createEmployee = async ({ ctx, input }: Options) => {
   const { storeId, ...data } = input
+
   await ctx.db.transaction(async (tx) => {
     const employeeId = uuid()
 
@@ -23,7 +24,7 @@ const createEmployee = async ({ ctx, input }: Options) => {
         createdBy: ctx.session.user.id,
       })
       .onConflictDoUpdate({
-        target: employees.id,
+        target: [employees.email, employees.phone, employees.code],
         set: {
           name: data.name,
           email: data.email,
