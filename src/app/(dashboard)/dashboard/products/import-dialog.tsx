@@ -177,7 +177,7 @@ const ImportProductsDialog = ({ store }: Props) => {
             <strong>
               código, nombre, descripción, precio de compra, precio de venta,
               cantidad, stock
-            </strong>
+            </strong>{' '}
             .
           </DialogDescription>
         </DialogHeader>

@@ -149,8 +149,8 @@ export const EditProductForm = ({ product, units }: Props) => {
                                 >
                                   {field.value
                                     ? units.find(
-                                      (unit) => unit.id === field.value,
-                                    )?.name
+                                        (unit) => unit.id === field.value,
+                                      )?.name
                                     : 'Selecciona una unidad'}
                                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
