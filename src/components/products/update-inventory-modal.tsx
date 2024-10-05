@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
@@ -70,7 +70,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
         description: 'Inventario actualizado correctamente',
       })
 
-      void utils.product.list.invalidate()
+      utils.product.list.invalidate()
       setIsOpen(false)
     }
   }, [updateProductQuantity.isSuccess])
@@ -80,7 +80,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
   })
 
   return (
-    <>
+    <Fragment>
       {!canUpdateInventory.isPending && canUpdateInventory.data ? (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
@@ -191,7 +191,7 @@ const UpdateInventoryModal = ({ product }: Props) => {
           </DialogContent>
         </Dialog>
       ) : null}
-    </>
+    </Fragment>
   )
 }
 

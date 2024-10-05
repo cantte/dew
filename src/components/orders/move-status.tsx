@@ -1,6 +1,6 @@
 import { RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import ConfirmDialog from '~/components/confirm-dialog'
 import { Button } from '~/components/ui/button'
 import { orderStatus } from '~/constants'
@@ -28,7 +28,7 @@ export const MoveOrderStatus = ({ order }: Props) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: no needed
   useEffect(() => {
     if (moveToNextStatus.isSuccess) {
-      void utils.order.list.invalidate()
+      utils.order.list.invalidate()
       setIsOpenConfirmDialog(false)
       router.refresh()
     }
@@ -39,7 +39,7 @@ export const MoveOrderStatus = ({ order }: Props) => {
   const nextStatusLabel = orderStatus.find((s) => s.id === nextStatus)?.label
 
   return (
-    <>
+    <Fragment>
       <ConfirmDialog
         isOpen={isOpenConfirmDialog}
         title="Mover orden a siguiente estado"
@@ -61,6 +61,6 @@ export const MoveOrderStatus = ({ order }: Props) => {
           Actualizar estado
         </Button>
       )}
-    </>
+    </Fragment>
   )
 }

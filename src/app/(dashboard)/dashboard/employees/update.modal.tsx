@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw, SquarePen } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { TypeOf } from 'zod'
 import { Button } from '~/components/ui/button'
@@ -63,7 +63,7 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
       })
 
       router.refresh()
-      void utils.employee.byStore.invalidate()
+      utils.employee.byStore.invalidate()
 
       setIsOpen(false)
     }
@@ -74,7 +74,7 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
   })
 
   return (
-    <>
+    <Fragment>
       {!canUpdateEmployee.isLoading && canUpdateEmployee.data && (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger>
@@ -147,7 +147,7 @@ const UpdateEmployeeModal = ({ employee }: Props) => {
           </DialogContent>
         </Dialog>
       )}
-    </>
+    </Fragment>
   )
 }
 

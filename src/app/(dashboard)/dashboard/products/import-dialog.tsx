@@ -67,7 +67,7 @@ const ImportProductsDialog = ({ store }: Props) => {
 
       form.reset()
 
-      void utils.product.list.invalidate()
+      utils.product.list.invalidate()
     }
   }, [bulkCreateProduct.isSuccess])
 

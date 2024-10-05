@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import ConfirmDialog from '~/components/confirm-dialog'
 import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 import { api } from '~/trpc/react'
@@ -22,16 +22,17 @@ const ConfirmCancelOrderDialog = ({ order }: Props) => {
   }
 
   const utils = api.useUtils()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
   useEffect(() => {
     if (cancelOrder.isSuccess) {
-      void utils.order.list.invalidate()
+      utils.order.list.invalidate()
       setIsOpen(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cancelOrder.isSuccess])
 
   return (
-    <>
+    <Fragment>
       <DropdownMenuItem
         onSelect={(e) => e.preventDefault()}
         onClick={() => setIsOpen(true)}
@@ -47,7 +48,7 @@ const ConfirmCancelOrderDialog = ({ order }: Props) => {
         onClose={() => setIsOpen(false)}
         onConfirm={handleCancel}
       />
-    </>
+    </Fragment>
   )
 }
 

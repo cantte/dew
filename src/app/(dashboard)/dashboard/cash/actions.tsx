@@ -69,7 +69,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
     if (createCashRegisterTransaction.isSuccess) {
       setOpen(false)
       router.refresh()
-      void utils.cashRegister.transactions.list.invalidate()
+      utils.cashRegister.transactions.list.invalidate()
       form.reset()
 
       toast({
