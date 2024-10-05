@@ -30,7 +30,7 @@ const createEmployee = async ({ ctx, input }: Options) => {
         createdBy: ctx.session.user.id,
       })
       .onConflictDoUpdate({
-        target: [employees.email, employees.phone, employees.code],
+        target: employees.code,
         set: {
           name: data.name,
           email: data.email,
