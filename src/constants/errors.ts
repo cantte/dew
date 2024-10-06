@@ -11,5 +11,5 @@ export const getErrorMessage = (
   errorKey: string,
   defaultMessage: string,
 ): string => {
-  return errorMessages[errorKey] || defaultMessage
+  return errorMessages[errorKey] ?? defaultMessage
 }
