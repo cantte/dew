@@ -15,7 +15,7 @@ type Options = {
 }
 
 export const createSubscription = async ({ ctx, input }: Options) => {
-  const ip = ctx.headers.get('x-forwarded-for') || ''
+  const ip = ctx.headers.get('x-forwarded-for') ?? ''
   const userId = ctx.session.user.id
 
   let userPayment = await findUserPaymentInfo({ ctx })
