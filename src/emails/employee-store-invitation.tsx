@@ -9,6 +9,7 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components'
+import { Store } from 'lucide-react'
 
 type Props = {
   employeeName: string
@@ -16,7 +17,7 @@ type Props = {
   url: string
 }
 
-const EmployeeStoreInvitationEmail = ({
+export const EmployeeStoreInvitationEmail = ({
   employeeName,
   storeName,
   url,
@@ -27,32 +28,36 @@ const EmployeeStoreInvitationEmail = ({
       <Preview>Invitación a la tienda</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto px-2 font-sans">
-          <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
-            <Text className="scroll-m-20 text-xl font-semibold tracking-tight">
+          <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-[#eaeaea] border-solid p-[20px]">
+            <Text className="scroll-m-20 font-semibold text-xl tracking-tight">
               Hola {employeeName}, has sido invitado a la tienda {storeName}.
             </Text>
 
             <Text>
-              Puedes acceder a la tienda dando clic en el siguiente enlace:
+              Has sido invitado a la tienda {storeName} en Dew. Para acceder a
+              la tienda, haz clic en el siguiente botón:
             </Text>
 
             <Container className="flex justify-center">
               <Button
-                className="rounded-md bg-[#690dab] px-4 py-2 text-center text-sm font-medium text-white"
+                className="flex items-center justify-center rounded-md bg-[#690dab] px-6 py-3 font-medium text-base text-white"
                 href={url}
               >
-                Acceder a la tienda
+                <span className="flex items-center">
+                  <Store className="mr-2 size-4" size={18} />
+                  <span>Aceptar invitación</span>
+                </span>
               </Button>
             </Container>
 
-            <Text className="text-xs text-neutral-500">
+            <Text className="text-neutral-500 text-xs">
               Este enlace es personal e intransferible y solo puede ser usado
               por ti una vez.
             </Text>
 
             <Hr />
 
-            <Text className="text-xs text-neutral-500">
+            <Text className="text-neutral-500 text-xs">
               © {new Date().getFullYear()} Dew. Todos los derechos reservados.
             </Text>
           </Container>
@@ -61,5 +66,3 @@ const EmployeeStoreInvitationEmail = ({
     </Html>
   )
 }
-
-export default EmployeeStoreInvitationEmail
