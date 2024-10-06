@@ -26,7 +26,7 @@ const bulkCreateProduct = async ({ ctx, input }: Options) => {
 
   if (existingCodes.length > 0) {
     throw new Error(
-      `Products with codes \"${existingCodes.map((product) => product.code).join(', ')}\" already exist`,
+      `Products with codes "${existingCodes.map((product) => product.code).join(', ')}" already exist`,
     )
   }
 

@@ -3,9 +3,11 @@ import { eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { generateEmployeeInvitationLink } from '~/server/api/routers/employees/generate-invitation-link'
+import { sendEmployeeInvitationLink } from '~/server/api/routers/employees/send-invitation-link'
+import findStore from '~/server/api/routers/stores/find'
 import type { createEmployeeInput } from '~/server/api/schemas/employees'
 import {
-  employeeStore,
   employeeStoreInvitationTokens,
   employees,
   roles,
@@ -60,15 +62,19 @@ const createEmployee = async ({ ctx, input }: Options) => {
       expiresAt: tokenExpiresAt,
     })
 
-    // TODO: Send email with invitation token and remove this link
-    await tx
-      .insert(employeeStore)
-      .values({
-        employeeId: employeeId,
-        storeId: input.storeId,
-        roleId: employeeRole.id,
-      })
-      .onConflictDoNothing()
+    const invitationLink = generateEmployeeInvitationLink(invitationToken)
+    const store = await findStore({ ctx, input: { id: input.storeId } })
+
+    if (!store) {
+      throw new Error('Store not found')
+    }
+
+    await sendEmployeeInvitationLink({
+      name: data.name,
+      email: data.email,
+      invitationLink,
+      storeName: store.name,
+    })
   })
 }
 

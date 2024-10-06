@@ -24,10 +24,11 @@ export const ConfirmCancelSaleDialog = ({ sale }: Props) => {
   }
 
   const utils = api.useUtils()
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: not needed here
   useEffect(() => {
     if (cancelSale.isSuccess) {
-      void utils.sale.list.invalidate()
+      utils.sale.list.invalidate()
       setIsOpen(false)
     }
   }, [cancelSale.isSuccess])
