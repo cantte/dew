@@ -10,7 +10,7 @@ export const HeroSection = () => {
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
             <h1 className="font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl">
-              Simplifique sus ventas
+              Simplifique sus ventas{' '}
               <span className="block text-primary-text">
                 amplifique sus resultados
               </span>
