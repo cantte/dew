@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@auth/drizzle-adapter':
-        specifier: ^1.6.0
-        version: 1.6.0
+        specifier: ^1.6.1
+        version: 1.6.1
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.0(react@18.3.1))
@@ -286,8 +286,8 @@ packages:
       nodemailer:
         optional: true
 
-  '@auth/drizzle-adapter@1.6.0':
-    resolution: {integrity: sha512-9fxXDeWItF0qqukUN90yCo2p8mZ+BKWi9yAOK1+gVVrkseAwF5wearQABWi22RCvJ3JcUxK2i76UnXDstwF0lA==}
+  '@auth/drizzle-adapter@1.6.1':
+    resolution: {integrity: sha512-BbWjTFuNXrAIPa7uj9mDhmiHQPABIu74TqzslIkfMgcblMgXruVSVxoPeFJCQjZE25O3bLO2riX83VEbG1K29w==}
 
   '@babel/code-frame@7.24.6':
     resolution: {integrity: sha512-ZJhac6FkEd1yhG2AHOmfcXG4ceoLltoCVJjN5XsWN9BifBQr+cHJbWi0h68HZuSORq+3WtJ2z0hwF2NG1b5kcA==}
@@ -4719,7 +4719,7 @@ snapshots:
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
-  '@auth/drizzle-adapter@1.6.0':
+  '@auth/drizzle-adapter@1.6.1':
     dependencies:
       '@auth/core': 0.36.0
     transitivePeerDependencies:
