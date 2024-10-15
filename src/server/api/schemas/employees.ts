@@ -23,3 +23,7 @@ export const linkToStoreInput = z.object({
 export const findEmployeeInput = z.object({
   code: z.string().min(1).max(36),
 })
+
+export const findInvitationLinkInput = z.object({
+  token: z.string().min(1).max(36),
+})
