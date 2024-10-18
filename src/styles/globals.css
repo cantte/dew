@@ -7,7 +7,7 @@
     --background: 0 0% 100%;
     --foreground: 0 0% 4%;
 
-    --card: 0 0% 100%;
+    --card: 210 20% 98%;
     --card-foreground: 0 0% 4%;
 
     --popover: 0 0% 100%;
@@ -36,7 +36,7 @@
     --warning: 45 100% 50%;
     --warning-foreground: 60 100% 99%;
 
-    --border: 0 0% 90%;
+    --border: 220 13% 91%;
     --input: 0 0% 90%;
     --ring: 0 0% 4%;
 
@@ -53,7 +53,7 @@
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 4%;
+    --card: 0 0% 7%;
     --card-foreground: 0 0% 98%;
 
     --popover: 0 0% 4%;
