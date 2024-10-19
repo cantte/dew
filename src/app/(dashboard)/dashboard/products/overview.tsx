@@ -14,12 +14,14 @@ export const ProductsOverview = async ({ storeId }: Props) => {
   })
 
   return (
-    <div className="grid w-full grid-cols-1 gap-1 rounded border md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid w-full grid-cols-1 gap-1 rounded border bg-card md:grid-cols-2 lg:grid-cols-4">
       <div className="flex justify-between p-2">
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <Tag className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Productos</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Productos
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToNumber('es-CO', overview.products)}
@@ -33,7 +35,9 @@ export const ProductsOverview = async ({ storeId }: Props) => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Valor total</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Valor total
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', overview.value)}
@@ -47,7 +51,9 @@ export const ProductsOverview = async ({ storeId }: Props) => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Costo total</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Costo total
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', overview.cost)}
@@ -61,7 +67,9 @@ export const ProductsOverview = async ({ storeId }: Props) => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Utilidad</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Utilidad
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', overview.value - overview.cost)}
@@ -79,7 +87,9 @@ export const ProductsOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <Tag className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Productos</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Productos
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
@@ -93,7 +103,9 @@ export const ProductsOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Valor total</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Valor total
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
@@ -107,7 +119,9 @@ export const ProductsOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Costo total</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Costo total
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
@@ -121,7 +135,9 @@ export const ProductsOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Utilidad</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Utilidad
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
