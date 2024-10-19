@@ -1,5 +1,7 @@
 import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
+import { Suspense } from 'react'
+import CreateSaleButton from '~/app/(dashboard)/dashboard/sales/create-button'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Skeleton } from '~/components/ui/skeleton'
@@ -20,7 +22,10 @@ export const LastSales = async () => {
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      <span className="font-medium tracking-tight">Últimas ventas</span>
+      <h3 className="scroll-m-20 font-semibold text-2xl tracking-tight">
+        Últimas ventas
+      </h3>
+
       <div>
         {lastSales.length > 0 ? (
           <div className="rounded-md border p-4">
@@ -72,9 +77,14 @@ export const LastSales = async () => {
             </Table>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center">
-            <h3 className="font-semibold text-2xl">No hay ventas</h3>
-            <p className="text-gray-500">No tiene ventas registradas</p>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <span className="text-2xl text-muted-foreground">
+              No tiene ventas registradas
+            </span>
+
+            <Suspense fallback={<Skeleton className="h-8 w-24" />}>
+              <CreateSaleButton />
+            </Suspense>
           </div>
         )}
       </div>
@@ -83,10 +93,37 @@ export const LastSales = async () => {
 }
 
 export const LastSalesFallback = () => {
+  const rows = Array.from({ length: 5 }).map((_, i) => (
+    <TableRow key={i}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <TableCell key={i}>
+          <Skeleton className="h-6 w-32" />
+        </TableCell>
+      ))}
+    </TableRow>
+  ))
+
   return (
     <div className="grid grid-cols-1 gap-2">
-      <span className="font-semibold tracking-tight">Últimas ventas</span>
-      <Skeleton className="h-32 w-full" />
+      <h3 className="scroll-m-20 font-semibold text-2xl tracking-tight">
+        Últimas ventas
+      </h3>
+
+      <div className="rounded-md border p-4">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Cliente</TableHead>
+              <TableHead>Total</TableHead>
+              <TableHead>Estado</TableHead>
+              <TableHead>Fecha</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>{rows}</TableBody>
+        </Table>
+      </div>
     </div>
   )
 }
