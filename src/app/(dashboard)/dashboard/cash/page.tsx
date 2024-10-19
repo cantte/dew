@@ -5,6 +5,7 @@ import EnableCash from '~/app/(dashboard)/dashboard/cash/enable-cash'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
+import { formatToCurrency } from '~/text/format'
 import { api } from '~/trpc/server'
 
 export default async function CashRegisterPage() {
@@ -55,26 +56,23 @@ export default async function CashRegisterPage() {
 
   return (
     <div className="grid gap-4">
-      <div className="sticky top-0 z-[5] grid gap-4 bg-background/95 pb-4 backdrop-blur supports-backdrop-blur:bg-background/60">
+      <div className="sticky top-16 z-[5] grid gap-4 bg-background/95 pb-4 backdrop-blur supports-backdrop-blur:bg-background/60">
         <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
           <div className="col-span-1 md:col-span-2">
-            <div className="flex flex-col space-y-2 rounded border p-4">
+            <div className="flex flex-col space-y-2 rounded border bg-card p-4">
               <p className="font-medium text-muted-foreground text-sm">
                 Saldo actual
               </p>
               <h3 className="font-semibold text-xl leading-none tracking-tight md:text-2xl">
-                {Intl.NumberFormat('es-CO', {
-                  style: 'currency',
-                  currency: 'COP',
-                }).format(cashRegister.amount)}
+                {formatToCurrency('es-CO', cashRegister.amount)}
               </h3>
             </div>
           </div>
 
           <div className="col-span-1">
-            <div className="flex flex-col space-y-2 rounded border p-4">
-              <div className="flex items-center space-x-1">
-                <span className="rounded-full bg-secondary p-1">
+            <div className="flex flex-col space-y-2 rounded border bg-card p-4">
+              <div className="flex items-center space-x-2">
+                <span className="rounded-full bg-success/10 p-1">
                   <TrendingUp className="h-3 w-3 text-success-text" />
                 </span>
                 <p className="font-medium text-muted-foreground text-sm">
@@ -82,18 +80,15 @@ export default async function CashRegisterPage() {
                 </p>
               </div>
               <h3 className="font-semibold text-xl leading-none tracking-tight md:text-2xl">
-                {Intl.NumberFormat('es-CO', {
-                  style: 'currency',
-                  currency: 'COP',
-                }).format(cashRegister.inAmount)}
+                {formatToCurrency('es-CO', cashRegister.inAmount)}
               </h3>
             </div>
           </div>
 
           <div className="col-span-1">
-            <div className="flex flex-col space-y-2 rounded border p-4">
-              <div className="flex items-center space-x-1">
-                <span className="rounded-full bg-secondary p-1">
+            <div className="flex flex-col space-y-2 rounded border bg-card p-4">
+              <div className="flex items-center space-x-2">
+                <span className="rounded-full bg-destructive/10 p-1">
                   <TrendingDown className="h-3 w-3 text-destructive" />
                 </span>
                 <p className="font-medium text-muted-foreground text-sm">
@@ -101,10 +96,7 @@ export default async function CashRegisterPage() {
                 </p>
               </div>
               <h3 className="font-semibold text-xl leading-none tracking-tight md:text-2xl">
-                {Intl.NumberFormat('es-CO', {
-                  style: 'currency',
-                  currency: 'COP',
-                }).format(cashRegister.outAmount)}
+                {formatToCurrency('es-CO', cashRegister.outAmount)}
               </h3>
             </div>
           </div>

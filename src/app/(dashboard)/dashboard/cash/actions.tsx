@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMediaQuery } from '@uidotdev/usehooks'
-import { RotateCw } from 'lucide-react'
+import { ArrowDownCircle, ArrowUpCircle, RotateCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
@@ -103,8 +103,13 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      <Button onClick={inTransaction}>Realizar ingreso</Button>
+      <Button onClick={inTransaction}>
+        <ArrowUpCircle />
+        Realizar ingreso
+      </Button>
+      
       <Button variant="secondary" onClick={outTransaction}>
+        <ArrowDownCircle />
         Realizar egreso
       </Button>
 
