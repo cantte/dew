@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { AppSidebar } from '~/components/app-sidebar'
 import { SetPermissions } from '~/components/set-permissions'
+import { ThemeToggle } from '~/components/theme-toggle'
 import { Badge } from '~/components/ui/badge'
 import { Separator } from '~/components/ui/separator'
 import {
@@ -36,6 +37,10 @@ const DashboardLayout = async ({ children }: Props) => {
             <Separator orientation="vertical" className="mr-2 h-4" />
 
             <Badge>beta</Badge>
+
+            <Separator orientation="vertical" className="ml-2 h-4" />
+
+            <ThemeToggle />
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 pt-0">
