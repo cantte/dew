@@ -1,7 +1,9 @@
 import authedProcedure from '~/server/api/procedures/authed'
+import { acceptInvitationLink } from '~/server/api/routers/employees/accept-invitation-link'
 import findEmployeesByStore from '~/server/api/routers/employees/byStore'
 import createEmployee from '~/server/api/routers/employees/create'
 import findEmployee from '~/server/api/routers/employees/find'
+import { findInvitationLink } from '~/server/api/routers/employees/find-invitation-link'
 import findEmployeeById from '~/server/api/routers/employees/findById'
 import linkEmployeeToStore from '~/server/api/routers/employees/linkToStore'
 import updateEmployee from '~/server/api/routers/employees/update'
@@ -9,6 +11,7 @@ import { byStoreInput } from '~/server/api/schemas/common'
 import {
   createEmployeeInput,
   findEmployeeInput,
+  findInvitationLinkInput,
   linkToStoreInput,
   updateEmployeeInput,
 } from '~/server/api/schemas/employees'
@@ -42,6 +45,16 @@ const employeesRouter = router({
     .input(linkToStoreInput)
     .mutation(async ({ ctx, input }) => {
       await linkEmployeeToStore({ ctx, input })
+    }),
+  findInvitationLink: authedProcedure
+    .input(findInvitationLinkInput)
+    .query(async ({ ctx, input }) => {
+      return await findInvitationLink({ ctx, input })
+    }),
+  acceptInvitationLink: authedProcedure
+    .input(findInvitationLinkInput)
+    .mutation(async ({ ctx, input }) => {
+      return await acceptInvitationLink({ ctx, input })
     }),
 })
 

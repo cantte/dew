@@ -12,12 +12,14 @@ type Props = {
 
 export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
   return (
-    <div className="grid w-full grid-cols-1 gap-1 rounded border md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid w-full grid-cols-1 gap-1 rounded border bg-card md:grid-cols-2 lg:grid-cols-4">
       <div className="flex justify-between p-2">
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <ShoppingCart className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Ventas totales</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Ventas totales
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToNumber('es-CO', sales)}
@@ -31,7 +33,9 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <Tag className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Productos vendidos</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Productos vendidos
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToNumber('es-CO', products)}
@@ -45,7 +49,9 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Ingesos generados</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Ingesos generados
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', amount)}
@@ -59,7 +65,9 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Ganancias generadas</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Ganancias generadas
+            </p>
           </div>
           <p className="font-semibold text-lg">
             {formatToCurrency('es-CO', profit)}
@@ -77,7 +85,9 @@ export const SalesOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <ShoppingCart className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Ventas totales</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Ventas totales
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
@@ -91,7 +101,9 @@ export const SalesOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <Tag className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Productos vendidos</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Productos vendidos
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
@@ -105,7 +117,9 @@ export const SalesOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Ingesos generados</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Ingesos generados
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />
@@ -119,7 +133,9 @@ export const SalesOverviewFallback = () => {
         <div className="p-2">
           <div className="flex items-center space-x-2">
             <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-sm">Ganancias generadas</p>
+            <p className="font-medium text-muted-foreground text-sm">
+              Ganancias generadas
+            </p>
           </div>
           <p className="font-semibold text-lg">
             <Skeleton className="h-6 w-16" />

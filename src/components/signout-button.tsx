@@ -1,18 +1,15 @@
 'use client'
 
+import { LogOut } from 'lucide-react'
 import { signOut } from 'next-auth/react'
-import { Button } from '~/components/ui/button'
+import { DropdownMenuItem } from '~/components/ui/dropdown-menu'
 
 const SignOutButton = () => {
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="w-full"
-      onClick={() => void signOut()}
-    >
+    <DropdownMenuItem onClick={() => signOut()}>
+      <LogOut />
       Cerrar sesión
-    </Button>
+    </DropdownMenuItem>
   )
 }
 
