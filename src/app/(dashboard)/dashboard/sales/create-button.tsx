@@ -13,12 +13,10 @@ const CreateSaleButton = async () => {
   }
 
   return (
-    <Button asChild size="sm">
+    <Button asChild>
       <Link href="/sales/create">
-        <PlusCircle className="size-4 sm:mr-2" />
-        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Nueva venta
-        </span>
+        <PlusCircle />
+        Nueva venta
       </Link>
     </Button>
   )
