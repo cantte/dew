@@ -49,7 +49,7 @@ export default async function DashboardPage() {
                   <span className="rounded-full bg-success/10 p-1">
                     <TrendingUp className="h-3 w-3 text-success-text" />
                   </span>
-                  <p className="font-medium text-sm text-zinc-500">
+                  <p className="font-medium text-muted-foreground text-sm">
                     Ingresos totales
                   </p>
                 </div>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
                   <span className="rounded-full bg-destructive/10 p-1">
                     <TrendingDown className="h-3 w-3 text-destructive" />
                   </span>
-                  <p className="font-medium text-sm text-zinc-500">
+                  <p className="font-medium text-muted-foreground text-sm">
                     Egresos totales
                   </p>
                 </div>

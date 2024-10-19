@@ -2,7 +2,7 @@
 
 import type { Table } from '@tanstack/react-table'
 import { mkConfig } from 'export-to-csv'
-import { FileDown, Filter, FilterX } from 'lucide-react'
+import { FileDown, Filter, FilterX, Search } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import ImportProductsDialog from '~/app/(dashboard)/dashboard/products/import-dialog'
 import { Button } from '~/components/ui/button'
@@ -65,56 +65,56 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
 
   return (
     <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
-      <div className="grid grid-flow-row grid-cols-1 gap-2 md:grid-cols-3">
-        <div className="col-span-2">
-          <div className="flex flex-col gap-2 md:flex-row">
-            <Toggle
-              variant="outline"
-              size="sm"
-              className="border-dashed text-xs"
-              pressed={showLowStock}
-              onPressedChange={setShowLowStock}
-            >
-              <Filter className="mr-2 h-4 w-4" />
-              Productos con stock bajo
-            </Toggle>
-
-            <div>
-              <Input
-                placeholder="Buscar un producto"
-                value={table.getState().globalFilter}
-                onChange={(event) => table.setGlobalFilter(event.target.value)}
-                className="h-8 text-xs"
+      <div className="flex flex-col gap-2 md:flex-row md:items-center">
+        <div className="space-y-2">
+          <div className="relative">
+            <Input
+              id="search-product"
+              className="peer pr-9 pl-9"
+              placeholder="Buscar un producto"
+              value={table.getState().globalFilter}
+              onChange={(event) => table.setGlobalFilter(event.target.value)}
+            />
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 text-muted-foreground/80 peer-disabled:opacity-50">
+              <Search
+                size={16}
+                strokeWidth={2}
+                aria-hidden="true"
+                role="presentation"
               />
             </div>
-
-            {isFiltered && (
-              <Button
-                variant="ghost"
-                onClick={resetFilters}
-                className="h-8 px-2 lg:px-3"
-              >
-                Limpiar filtros
-                <FilterX className="ml-2 h-4 w-4" />
-              </Button>
-            )}
           </div>
         </div>
+
+        <Toggle
+          variant="outline"
+          size="sm"
+          className="border-dashed text-xs"
+          pressed={showLowStock}
+          onPressedChange={setShowLowStock}
+        >
+          <Filter className="mr-2 h-4 w-4" />
+          Productos con stock bajo
+        </Toggle>
+
+        {isFiltered && (
+          <Button
+            variant="ghost"
+            onClick={resetFilters}
+            className="h-8 px-2 lg:px-3"
+          >
+            Limpiar filtros
+            <FilterX className="ml-2 h-4 w-4" />
+          </Button>
+        )}
       </div>
 
       <div className="flex items-center justify-end space-x-2">
         <ImportProductsDialog store={store} />
 
-        <Button
-          size="sm"
-          variant="outline"
-          className="h-7 gap-1"
-          onClick={exportData}
-        >
-          <FileDown className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Exportar
-          </span>
+        <Button variant="outline" onClick={exportData}>
+          <FileDown />
+          Exportar
         </Button>
       </div>
     </div>

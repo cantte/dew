@@ -7,7 +7,9 @@ import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
 
@@ -16,47 +18,40 @@ export const ThemeToggle = () => {
 
   const icon = useMemo(() => {
     if (theme === 'light') {
-      return <Sun className="h-3 w-3" />
+      return <Sun />
     }
     if (theme === 'dark') {
-      return <Moon className="h-3 w-3" />
+      return <Moon />
     }
-    return <Monitor className="h-3 w-3" />
+    return <Monitor />
   }, [theme])
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex h-7 w-full justify-between gap-1"
-        >
-          <span className="ml-1 whitespace-nowrap text-xs">Cambiar tema</span>
+        <Button variant="ghost" size="icon" className="h-7 w-7">
           {icon}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          className="flex h-7 w-full justify-between gap-1"
-          onClick={() => setTheme('light')}
-        >
-          <span>Claro</span>
-          <Sun className="h-3 w-3" />
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="flex h-7 w-full justify-between gap-1"
-          onClick={() => setTheme('dark')}
-        >
-          <span>Oscuro</span>
-          <Moon className="h-3 w-3" />
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="flex h-7 w-full justify-between gap-1"
-          onClick={() => setTheme('system')}
-        >
-          <span>Sistema</span>
-          <Monitor className="h-3 w-3" />
-        </DropdownMenuItem>
+      <DropdownMenuContent className="min-w-56">
+        <DropdownMenuLabel className="text-muted-foreground text-xs">
+          Cambiar tema
+        </DropdownMenuLabel>
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem onClick={() => setTheme('light')}>
+            <Sun />
+            Claro
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme('dark')}>
+            <Moon />
+            Oscuro
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme('system')}>
+            <Monitor />
+            Sistema
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

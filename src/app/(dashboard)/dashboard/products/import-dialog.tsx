@@ -160,11 +160,9 @@ const ImportProductsDialog = ({ store }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="secondary" className="h-7 gap-1">
-          <FileUp className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Importar
-          </span>
+        <Button variant="secondary">
+          <FileUp />
+          Importar
         </Button>
       </DialogTrigger>
 

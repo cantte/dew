@@ -50,7 +50,11 @@ const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
   return (
     <div className="grid grid-cols-1 justify-between gap-2 md:grid-cols-2">
       <div className="grid gap-2">
-        <div className="flex flex-col gap-2 md:flex-row">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center">
+          <div>
+            <DateRangeFilter table={table} />
+          </div>
+
           {table.getColumn('paymentMethod') && (
             <DataTableFacetedFilter
               column={table.getColumn('paymentMethod')}
@@ -67,32 +71,19 @@ const SalesDataTableToolbar = <TData,>({ table }: Props<TData>) => {
             />
           )}
 
-          <DateRangeFilter table={table} className="col-span-1 h-8" />
-
           {isFiltered && (
-            <Button
-              variant="ghost"
-              onClick={resetFilters}
-              className="h-8 px-2 lg:px-3"
-            >
+            <Button variant="ghost" size="sm" onClick={resetFilters}>
+              <FilterX />
               Limpiar filtros
-              <FilterX className="ml-2 h-4 w-4" />
             </Button>
           )}
         </div>
       </div>
 
-      <div className="flex items-center justify-end space-x-2">
-        <Button
-          size="sm"
-          variant="outline"
-          className="h-7 gap-1"
-          onClick={exportData}
-        >
-          <FileDown className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Exportar
-          </span>
+      <div className="flex items-center space-x-2 md:justify-end">
+        <Button size="sm" variant="secondary" onClick={exportData}>
+          <FileDown />
+          Exportar
         </Button>
       </div>
     </div>

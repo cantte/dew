@@ -28,8 +28,8 @@ const SalesPage = async () => {
 
   return (
     <div className="grid gap-4">
-      <div className="flex flex-wrap items-center justify-end gap-2">
-        <Suspense fallback={<Skeleton className="h-8 w-32" />}>
+      <div>
+        <Suspense fallback={<Skeleton className="h-9 min-w-32" />}>
           <CreateSaleButton />
         </Suspense>
       </div>

@@ -50,7 +50,7 @@ const SalesDataTable = <TValue,>({ columns, data, storeId }: Props<TValue>) => {
   })
 
   return (
-    <div className="grid grid-cols-1 gap-2">
+    <div className="grid grid-cols-1 gap-4">
       <SalesDataTableToolbar table={table} />
       <DataTable table={table} />
       <DataTablePagination table={table} />

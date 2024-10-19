@@ -46,14 +46,14 @@ const DateRangeFilter = <TData,>({
         <PopoverTrigger asChild>
           <Button
             id="date"
-            variant={'outline'}
+            variant="outline"
             className={cn(
               'justify-start text-left font-normal',
               !date && 'text-muted-foreground',
               className,
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon />
             {date?.from ? (
               date.to ? (
                 <>
