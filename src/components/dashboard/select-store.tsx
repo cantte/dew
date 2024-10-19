@@ -1,18 +1,23 @@
 'use client'
 
-import { CirclePlus, RotateCw } from 'lucide-react'
+import { ChevronsUpDown, Plus, Store } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
 import { RegisterStoreDialog } from '~/components/stores/register-store.dialog'
 import { Badge } from '~/components/ui/badge'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select'
-import { Separator } from '~/components/ui/separator'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu'
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from '~/components/ui/sidebar'
 import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/react'
 
@@ -44,11 +49,15 @@ export const SelectStore = () => {
     (isFetchingCurrentStore || isFetchingStores) && !currentStore
 
   if (showSkeleton) {
-    return <Skeleton className="h-8 w-40" />
+    return <Skeleton className="h-12 w-full" />
   }
 
   if (!currentStore) {
-    return <Badge variant="destructive">Sin tienda</Badge>
+    return (
+      <Badge variant="destructive" className="py-2 text-center">
+        No hay tiendas registradas
+      </Badge>
+    )
   }
 
   const onSelectStore = (storeId: string) => {
@@ -69,36 +78,65 @@ export const SelectStore = () => {
         onOpenChange={setOpenRegisterStore}
       />
 
-      <Select
-        value={currentStore.id}
-        onValueChange={onSelectStore}
-        disabled={disabled}
-      >
-        <SelectTrigger className="w-56">
-          <SelectValue>
-            <div className="flex items-center gap-2 overflow-hidden">
-              {disabled && <RotateCw className="h-4 w-4 animate-spin" />}
-              <span>{currentStore.name}</span>
-            </div>
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          {stores?.map((store) => (
-            <SelectItem key={store.id} value={store.id}>
-              {store.name}
-            </SelectItem>
-          ))}
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                disabled={disabled}
+              >
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
+                  <Store className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">
+                    {currentStore.name}
+                  </span>
+                </div>
+                <ChevronsUpDown className="ml-auto" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+              align="start"
+              side="bottom"
+              sideOffset={4}
+            >
+              <DropdownMenuLabel className="text-muted-foreground text-xs">
+                Tiendas
+              </DropdownMenuLabel>
+              {stores?.map((store) => (
+                <DropdownMenuItem
+                  key={store.id}
+                  onClick={() => onSelectStore(store.id)}
+                  className="gap-2 p-2"
+                >
+                  <div className="flex size-6 items-center justify-center">
+                    <Store className="size-4 shrink-0" />
+                  </div>
+                  {store.name}
+                </DropdownMenuItem>
+              ))}
 
-          <Separator orientation="horizontal" className="my-1" />
+              <DropdownMenuSeparator />
 
-          <SelectItem value="new">
-            <div className="flex items-center gap-2 overflow-hidden">
-              <CirclePlus className="h-4 w-4" />
-              <span>Registrar tienda</span>
-            </div>
-          </SelectItem>
-        </SelectContent>
-      </Select>
+              <DropdownMenuItem
+                className="gap-2 p-2"
+                onClick={() => onSelectStore('new')}
+              >
+                <div className="flex size-6 items-center justify-center">
+                  <Plus className="size-4" />
+                </div>
+                <div className="font-medium text-muted-foreground">
+                  Registrar tienda
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenuItem>
+      </SidebarMenu>
     </Fragment>
   )
 }

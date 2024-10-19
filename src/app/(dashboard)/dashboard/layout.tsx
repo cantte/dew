@@ -1,13 +1,14 @@
 import { redirect } from 'next/navigation'
-import { type ReactNode, Suspense } from 'react'
-import {
-  DashboardServerSidebar,
-  DashboardServerSidebarFallback,
-} from '~/app/(dashboard)/dashboard/sidebar.server'
-import { Header } from '~/components/layout/header'
-import { SentryFeedbackWidget } from '~/components/sentry-feedback-widget'
+import type { ReactNode } from 'react'
+import { AppSidebar } from '~/components/app-sidebar'
 import { SetPermissions } from '~/components/set-permissions'
-import { ScrollArea } from '~/components/ui/scroll-area'
+import { Badge } from '~/components/ui/badge'
+import { Separator } from '~/components/ui/separator'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '~/components/ui/sidebar'
 import { getServerAuthSession } from '~/server/auth'
 import { api } from '~/trpc/server'
 
@@ -25,23 +26,25 @@ const DashboardLayout = async ({ children }: Props) => {
   const permissions = await api.rbac.list()
 
   return (
-    <>
-      <Header />
-      <div className="flex h-screen overflow-hidden">
-        <Suspense fallback={<DashboardServerSidebarFallback />}>
-          <DashboardServerSidebar />
-        </Suspense>
-        <main className="flex-1 overflow-hidden pt-16">
-          <ScrollArea className="h-full">
-            <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">{children}</div>
-          </ScrollArea>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 bg-background/95 backdrop-blur transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+
+            <Separator orientation="vertical" className="mr-2 h-4" />
+
+            <Badge>beta</Badge>
+          </div>
+        </header>
+        <main className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <SetPermissions permissions={permissions} />
+
+          {children}
         </main>
-
-        <SetPermissions permissions={permissions} />
-
-        <SentryFeedbackWidget />
-      </div>
-    </>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
 
