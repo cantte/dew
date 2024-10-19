@@ -107,7 +107,7 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
         <ArrowUpCircle />
         Realizar ingreso
       </Button>
-      
+
       <Button variant="secondary" onClick={outTransaction}>
         <ArrowDownCircle />
         Realizar egreso
