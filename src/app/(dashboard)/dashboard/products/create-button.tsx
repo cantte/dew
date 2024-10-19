@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Button } from '~/components/ui/button'
 import { usePermissions } from '~/hooks/use-permissions'
 
-const CreateProductButton = () => {
+export const CreateProductButton = () => {
   const { hasPermissions } = usePermissions()
   const canCreateProduct = hasPermissions(['product:create'])
 
@@ -14,15 +14,11 @@ const CreateProductButton = () => {
   }
 
   return (
-    <Button asChild size="sm">
+    <Button asChild>
       <Link href="/dashboard/products/create">
-        <PlusCircle className="size-4 sm:mr-2" />
-        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Agregar producto
-        </span>
+        <PlusCircle />
+        Agregar producto
       </Link>
     </Button>
   )
 }
-
-export default CreateProductButton

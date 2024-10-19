@@ -58,7 +58,7 @@ const ProductDataTable = <TValue,>({ columns, data, store }: Props<TValue>) => {
   })
 
   return (
-    <div className="grid grid-cols-1 gap-2">
+    <div className="grid grid-cols-1 gap-4">
       <ProductsDataTableToolbar table={table} store={store} />
       <DataTable table={table} />
       <DataTablePagination table={table} />

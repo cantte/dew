@@ -14,12 +14,10 @@ export const InventoryAdjustmentButton = () => {
   }
 
   return (
-    <Button asChild size="sm">
+    <Button asChild>
       <Link href="/dashboard/inventory/adjustment">
-        <ClipboardList className="size-4 sm:mr-2" />
-        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Ajuste de inventario
-        </span>
+        <ClipboardList />
+        Ajuste de inventario
       </Link>
     </Button>
   )
