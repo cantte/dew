@@ -3,6 +3,7 @@ import {
   index,
   pgEnum,
   real,
+  text,
   timestamp,
   uuid,
   varchar,
@@ -57,6 +58,8 @@ export const cashRegisterTransactions = createTable(
     id: uuid('id').notNull().primaryKey(),
     amount: real('amount').notNull(),
     type: cashRegisterTransactionType('type').notNull(),
+    observation: text('observation'),
+
     cashRegisterId: uuid('cash_register_id')
       .notNull()
       .references(() => cashRegisters.id),

@@ -30,6 +30,7 @@ const createCashRegisterTransaction = async ({ ctx, input }: Options) => {
         type: input.type,
         amount: input.amount,
         userId: ctx.session.user.id,
+        observation: input.observation,
       },
     })
   })

@@ -15,6 +15,7 @@ const listCashRegisterTransactions = async ({ ctx, input }: Options) => {
       id: cashRegisterTransactions.id,
       amount: cashRegisterTransactions.amount,
       type: cashRegisterTransactions.type,
+      observation: cashRegisterTransactions.observation,
       createdAt: cashRegisterTransactions.createdAt,
       employee: employees.name,
     })

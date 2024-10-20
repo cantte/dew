@@ -8,6 +8,7 @@ export const createCashRegisterTransactionInput = z.object({
   cashRegisterId: z.string().min(1).max(36),
   amount: z.coerce.number().min(1),
   type: z.enum(['in', 'out']),
+  observation: z.string().optional(),
 })
 
 export const listCashRegisterTransactionsInput = z.object({
@@ -21,4 +22,5 @@ export const makeCashMovementInput = z.object({
   userId: z.string().min(1).max(36),
   type: z.enum(['in', 'out']),
   amount: z.coerce.number().min(1),
+  observation: z.string().optional(),
 })

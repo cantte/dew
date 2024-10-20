@@ -44,6 +44,7 @@ export const makeCashMovement = async ({ tx, input }: Options) => {
     amount: input.amount,
     type: input.type,
     createdBy: input.userId,
+    observation: input.observation,
   }
 
   await tx.insert(cashRegisterTransactions).values(cashRegisterTransaction)

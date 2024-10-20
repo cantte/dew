@@ -1,0 +1,1 @@
+ALTER TABLE "cash_register_transaction" ADD COLUMN "observation" text;
