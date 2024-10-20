@@ -82,7 +82,7 @@ const FALLBACK_ITEMS = 3
 const CashRegisterDetailsFallback = () => {
   return (
     <div className="grid gap-2">
-      {Array.from({ length: FALLBACK_ITEMS }).map((_, index) => (
+      {Array.from({ length: FALLBACK_ITEMS }).map((_) => (
         <Card
           key={`fallback-item-${uuid()}`}
           className="mb-2 rounded shadow-none"
@@ -94,16 +94,16 @@ const CashRegisterDetailsFallback = () => {
           </CardHeader>
           <CardContent className="px-6 pb-2">
             <div className="grid gap-1.5">
-              <div className="flex items-center">
+              <div className="flex items-center text-muted-foreground">
                 <Calendar className="mr-1 inline-block h-4 w-4" />
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm">
                   <Skeleton className="h-4 w-32" />
                 </span>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center text-muted-foreground">
                 <User className="mr-1 inline-block h-4 w-4" />
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm">
                   <Skeleton className="h-4 w-32" />
                 </span>
               </div>

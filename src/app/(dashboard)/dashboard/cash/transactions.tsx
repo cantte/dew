@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar, User } from 'lucide-react'
+import { Calendar, StickyNote, User } from 'lucide-react'
 import { Badge } from '~/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { ScrollArea } from '~/components/ui/scroll-area'
@@ -10,6 +10,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/ui/tooltip'
+import { cn } from '~/lib/utils'
+import { formatToCurrency } from '~/text/format'
 import type { RouterOutputs } from '~/trpc/shared'
 
 type Props = {
@@ -32,11 +34,15 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
           return (
             <Card key={transaction.id} className="mb-2 rounded shadow-none">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pt-2 pb-1">
-                <CardTitle className="font-bold text-xl">
-                  {Intl.NumberFormat('es-CO', {
-                    style: 'currency',
-                    currency: 'COP',
-                  }).format(transaction.amount)}
+                <CardTitle
+                  className={cn(
+                    'font-bold text-xl',
+                    transaction.type === 'in'
+                      ? 'text-success'
+                      : 'text-destructive',
+                  )}
+                >
+                  {formatToCurrency('es-CO', transaction.amount)}
                 </CardTitle>
 
                 <Badge
@@ -52,36 +58,53 @@ const CashRegisterTransactions = ({ transactions }: Props) => {
                   <div className="grid gap-1.5">
                     <div className="flex items-center">
                       <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Calendar className="mr-1 inline-block h-4 w-4" />
+                        <TooltipTrigger className="m-0 flex cursor-text items-center gap-2 p-0 text-muted-foreground">
+                          <Calendar className="inline-block h-4 w-4" />
+                          <span className="text-sm">
+                            {Intl.DateTimeFormat('es-CO', {
+                              dateStyle: 'medium',
+                              timeStyle: 'short',
+                            }).format(new Date(transaction.createdAt))}
+                          </span>
                         </TooltipTrigger>
 
                         <TooltipContent>
                           <span>Fecha de la transacción</span>
                         </TooltipContent>
                       </Tooltip>
-                      <span className="text-muted-foreground text-sm">
-                        {Intl.DateTimeFormat('es-CO', {
-                          dateStyle: 'medium',
-                          timeStyle: 'short',
-                        }).format(new Date(transaction.createdAt))}
-                      </span>
                     </div>
 
                     <div className="flex items-center">
                       <Tooltip>
-                        <TooltipTrigger asChild>
-                          <User className="mr-1 inline-block h-4 w-4" />
+                        <TooltipTrigger className="m-0 flex cursor-text items-center gap-2 p-0 text-muted-foreground">
+                          <User className="inline-block h-4 w-4" />
+                          <span className="text-muted-foreground text-sm">
+                            {transaction.employee}
+                          </span>
                         </TooltipTrigger>
 
                         <TooltipContent>
                           <span>Empleado que realizó la transacción</span>
                         </TooltipContent>
                       </Tooltip>
-                      <span className="text-muted-foreground text-sm">
-                        {transaction.employee}
-                      </span>
                     </div>
+
+                    {transaction.observation && (
+                      <div className="flex items-center">
+                        <Tooltip>
+                          <TooltipTrigger className="m-0 flex cursor-text items-center gap-2 p-0 text-muted-foreground">
+                            <StickyNote className="inline-block h-4 w-4" />
+                            <span className="text-muted-foreground text-sm">
+                              {transaction.observation}
+                            </span>
+                          </TooltipTrigger>
+
+                          <TooltipContent>
+                            <span>Observación</span>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    )}
                   </div>
                 </TooltipProvider>
               </CardContent>
