@@ -33,6 +33,7 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
 import { useToast } from '~/components/ui/use-toast'
 import { createCashRegisterTransactionInput } from '~/server/api/schemas/cashRegisters'
 import { api } from '~/trpc/react'
@@ -151,6 +152,24 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                     )}
                   />
 
+                  <FormField
+                    control={form.control}
+                    name="observation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Observación</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            disabled={createCashRegisterTransaction.isPending}
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   <Button
                     type="submit"
                     disabled={createCashRegisterTransaction.isPending}
@@ -193,6 +212,24 @@ const CashRegisterActions = ({ cashRegisterId }: Props) => {
                         <FormControl>
                           <Input
                             type="number"
+                            disabled={createCashRegisterTransaction.isPending}
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="observation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Observación</FormLabel>
+                        <FormControl>
+                          <Textarea
                             disabled={createCashRegisterTransaction.isPending}
                             {...field}
                           />
