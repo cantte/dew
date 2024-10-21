@@ -1,6 +1,6 @@
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
-import findCurrentStore from '~/server/api/routers/stores/findCurrent'
+import { findCurrentStore } from '~/server/api/routers/stores/find-current'
 import { inventory, productSummaries, products } from '~/server/db/schema'
 
 type Options = {
