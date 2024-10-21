@@ -17,6 +17,7 @@ import {
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
 import { useToast } from '~/components/ui/use-toast'
+import { usePermissions } from '~/hooks/use-permissions'
 import { updateStoreInput } from '~/server/api/schemas/stores'
 import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
@@ -39,8 +40,16 @@ export const UpdateStoreForm = ({ store }: Props) => {
     },
   })
 
+  const { hasPermissions } = usePermissions()
+  const canEditStore = hasPermissions(['store:update'])
+
   const updateStore = api.store.update.useMutation()
+
   const onSubmit = (values: FormValues) => {
+    if (!canEditStore) {
+      return
+    }
+
     updateStore.mutate(values)
   }
 
@@ -123,7 +132,10 @@ export const UpdateStoreForm = ({ store }: Props) => {
         />
 
         <div className="pt-2">
-          <Button type="submit" disabled={updateStore.isPending}>
+          <Button
+            type="submit"
+            disabled={updateStore.isPending || !canEditStore}
+          >
             {updateStore.isPending && (
               <RotateCw className="mr-2 h-4 w-4 animate-spin" />
             )}
