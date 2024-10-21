@@ -3,8 +3,8 @@ import { acceptInvitationLink } from '~/server/api/routers/employees/accept-invi
 import findEmployeesByStore from '~/server/api/routers/employees/byStore'
 import createEmployee from '~/server/api/routers/employees/create'
 import findEmployee from '~/server/api/routers/employees/find'
+import { findEmployeeById } from '~/server/api/routers/employees/find-by-id'
 import { findInvitationLink } from '~/server/api/routers/employees/find-invitation-link'
-import findEmployeeById from '~/server/api/routers/employees/findById'
 import updateEmployee from '~/server/api/routers/employees/update'
 import { byStoreInput } from '~/server/api/schemas/common'
 import {
