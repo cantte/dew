@@ -8,11 +8,12 @@ import { getServerAuthSession } from '~/server/auth'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     token: string
-  }
+  }>
 }
-export default async function StoreInvitationPage({ params }: Props) {
+export default async function StoreInvitationPage(props: Props) {
+  const params = await props.params
   const session = await getServerAuthSession()
 
   if (!session) {
