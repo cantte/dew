@@ -171,8 +171,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       react-day-picker:
-        specifier: ^8.10.1
-        version: 8.10.1(date-fns@4.1.0)(react@18.3.1)
+        specifier: ^9.2.0
+        version: 9.2.0(react@18.3.1)
       react-dom:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
@@ -444,6 +444,9 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
+
+  '@date-fns/tz@1.1.2':
+    resolution: {integrity: sha512-Xmg2cPmOPQieCLAdf62KtFPU9y7wbQDq1OAzrs/bEQFvhtCPXDiks1CHDE/sTXReRfh/MICVkw/vY6OANHUGiA==}
 
   '@drizzle-team/brocli@0.10.1':
     resolution: {integrity: sha512-AHy0vjc+n/4w/8Mif+w86qpppHuF3AyXbcWW+R/W7GNA3F5/p2nuhlkCJaTXSLZheB4l1rtHzOfr9A7NwoR/Zg==}
@@ -4030,11 +4033,11 @@ packages:
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
 
-  react-day-picker@8.10.1:
-    resolution: {integrity: sha512-TMx7fNbhLk15eqcMt+7Z7S2KF7mfTId/XJDjKE8f+IUcFn0l08/kI4FiYTL/0yuOLmEcbR4Fwe3GJf/NiiMnPA==}
+  react-day-picker@9.2.0:
+    resolution: {integrity: sha512-WGdI2tmGBG2SZRDNCTG9rNXC4e8iUpYQHUWBtFDREHC9zqatY+YhgCgMFFWXddpKHLvN4CtJ54o4UpNDs4jVpA==}
+    engines: {node: '>=18'}
     peerDependencies:
-      date-fns: ^2.28.0 || ^3.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: '>=16.8.0'
 
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
@@ -4911,6 +4914,8 @@ snapshots:
 
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
+
+  '@date-fns/tz@1.1.2': {}
 
   '@drizzle-team/brocli@0.10.1': {}
 
@@ -8346,8 +8351,9 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1):
+  react-day-picker@9.2.0(react@18.3.1):
     dependencies:
+      '@date-fns/tz': 1.1.2
       date-fns: 4.1.0
       react: 18.3.1
 
