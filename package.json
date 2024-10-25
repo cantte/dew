@@ -68,7 +68,7 @@
     "next-auth": "^4.24.10",
     "next-themes": "^0.3.0",
     "papaparse": "^5.4.1",
-    "postgres": "^3.4.4",
+    "postgres": "^3.4.5",
     "posthog-js": "^1.176.0",
     "react": "18.3.1",
     "react-day-picker": "^8.10.1",
