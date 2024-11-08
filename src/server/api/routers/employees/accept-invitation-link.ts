@@ -6,6 +6,7 @@ import type { findInvitationLinkInput } from '~/server/api/schemas/employees'
 import {
   employeeStore,
   employeeStoreInvitationTokens,
+  employees,
   roles,
 } from '~/server/db/schema'
 
@@ -45,6 +46,13 @@ export const acceptInvitationLink = async ({ ctx, input }: Options) => {
         usedAt: sql`CURRENT_TIMESTAMP`,
       })
       .where(eq(employeeStoreInvitationTokens.token, input.token))
+
+    await tx
+      .update(employees)
+      .set({
+        userId: ctx.session.user.id,
+      })
+      .where(eq(employees.id, invitationLink.employee.id))
   })
 
   return invitationLink

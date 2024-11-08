@@ -12,14 +12,6 @@ const CreateSalePage = async () => {
     return <NotFoundStoreAlert />
   }
 
-  const hasPermissions = await api.rbac.checkPermissions({
-    permissions: ['sale:create', 'product:view'],
-  })
-
-  if (!hasPermissions) {
-    return <NotEnoughPermissions />
-  }
-
   const trial = await api.subscription.trial()
   const subscription = await api.subscription.find()
 
@@ -33,17 +25,19 @@ const CreateSalePage = async () => {
     return <NotActiveSubscription />
   }
 
-  const suggestions = await api.product.suggestions({
-    storeId: store.id,
+  const hasPermissions = await api.rbac.checkPermissions({
+    permissions: ['sale:create', 'product:view'],
   })
 
-  const products = await api.product.forSale({
-    storeId: store.id,
-  })
+  if (!hasPermissions) {
+    return <NotEnoughPermissions />
+  }
 
-  const employees = await api.employee.byStore({
-    storeId: store.id,
-  })
+  const [suggestions, products, employees] = await Promise.all([
+    api.product.suggestions({ storeId: store.id }),
+    api.product.forSale({ storeId: store.id }),
+    api.employee.byStore({ storeId: store.id }),
+  ])
 
   return (
     <div className="flex w-full flex-col items-start space-y-2">

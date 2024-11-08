@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { findEmployeeById } from '~/server/api/routers/employees/find-by-id'
 import type { createStoreInput } from '~/server/api/schemas/stores'
 import {
   cashRegisters,
@@ -19,6 +20,17 @@ type Options = {
 
 const createStore = async ({ ctx, input }: Options) => {
   await ctx.db.transaction(async (tx) => {
+    const adminRole = await tx.query.roles.findFirst({
+      columns: {
+        id: true,
+      },
+      where: eq(roles.name, 'admin'),
+    })
+
+    if (!adminRole) {
+      throw new Error('Admin role not found')
+    }
+
     const storeId = uuid()
     await tx.insert(stores).values({
       ...input,
@@ -40,36 +52,23 @@ const createStore = async ({ ctx, input }: Options) => {
       })
 
     const user = ctx.session.user
+    const employee = await findEmployeeById({ ctx, input: { code: user.id } })
 
-    await tx
-      .insert(employees)
-      .values({
-        id: user.id,
-        name: user.name ?? 'Sin nombre',
-        email: user.email ?? 'Sin email',
-        userId: user.id,
-        createdBy: user.id,
-      })
-      .onConflictDoNothing()
-
-    const adminRole = await tx.query.roles.findFirst({
-      columns: {
-        id: true,
-      },
-      where: eq(roles.name, 'admin'),
-    })
-
-    if (!adminRole) {
-      try {
-        tx.rollback()
-      } catch (error) {
-        throw new Error('Admin role not found')
-      }
-      return
+    if (!employee) {
+      await tx
+        .insert(employees)
+        .values({
+          id: user.id,
+          name: user.name ?? 'Sin nombre',
+          email: user.email ?? 'Sin email',
+          userId: user.id,
+          createdBy: user.id,
+        })
+        .onConflictDoNothing()
     }
 
     await tx.insert(employeeStore).values({
-      employeeId: user.id,
+      employeeId: employee?.id ?? user.id,
       storeId: storeId,
       roleId: adminRole.id,
     })

@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
+import { findCurrentStore } from '~/server/api/routers/stores/find-current'
 import { subscriptions } from '~/server/db/schema'
 
 type Options = {
@@ -7,7 +8,13 @@ type Options = {
 }
 
 export const findUserSubscription = async ({ ctx }: Options) => {
-  const userId = ctx.session.user.id
+  const store = await findCurrentStore({ ctx })
+
+  if (store === undefined) {
+    return undefined
+  }
+
+  const userId = store.createdBy
 
   const [subscription] = await ctx.db
     .select({

@@ -2,7 +2,7 @@ import authedProcedure from '~/server/api/procedures/authed'
 import createStore from '~/server/api/routers/stores/create'
 import { deleteStore } from '~/server/api/routers/stores/delete'
 import findStore from '~/server/api/routers/stores/find'
-import findCurrentStore from '~/server/api/routers/stores/findCurrent'
+import { findCurrentStore } from '~/server/api/routers/stores/find-current'
 import listStores from '~/server/api/routers/stores/list'
 import updateStore from '~/server/api/routers/stores/update'
 import {
