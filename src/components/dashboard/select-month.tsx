@@ -25,7 +25,9 @@ export const SelectMonth = ({ selectableMonths }: Props) => {
 
   return (
     <div className="space-y-2">
-      <Label>Reporte mensual</Label>
+      <Label className="scroll-m-20 font-semibold text-2xl tracking-tight">
+        Reporte mensual
+      </Label>
       <Select defaultValue={month.toString()} onValueChange={onSelectMonth}>
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Seleccionar mes" />

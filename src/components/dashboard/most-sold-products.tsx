@@ -14,9 +14,9 @@ export const MostSoldProducts = async () => {
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      <span className="font-semibold tracking-tight">
+      <h3 className="scroll-m-20 font-semibold text-2xl tracking-tight">
         Productos más vendidos
-      </span>
+      </h3>
       <div>
         {mostSoldProducts.length > 0 ? (
           <div className="rounded-md border p-4">

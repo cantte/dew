@@ -24,7 +24,9 @@ export const SelectYear = ({ selectableYears }: Props) => {
 
   return (
     <div className="space-y-2">
-      <Label>Reporte anual</Label>
+      <Label className="scroll-m-20 font-semibold text-2xl tracking-tight">
+        Reporte anual
+      </Label>
       <Select defaultValue={year.toString()} onValueChange={onSelectYear}>
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Seleccionar año" />
