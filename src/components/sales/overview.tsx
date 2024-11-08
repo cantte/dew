@@ -12,7 +12,7 @@ type Props = {
 
 export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
   return (
-    <div className="grid w-full grid-cols-1 gap-1 rounded border bg-card md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid w-full grid-cols-1 gap-1 rounded-md border bg-card md:grid-cols-2 lg:grid-cols-4">
       <div className="flex justify-between p-2">
         <div className="p-2">
           <div className="flex items-center space-x-2">
