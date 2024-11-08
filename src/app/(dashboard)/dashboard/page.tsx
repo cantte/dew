@@ -30,7 +30,7 @@ export default async function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex flex-col space-y-2 rounded border bg-card p-4">
+              <div className="flex flex-col space-y-2 rounded-md border bg-card p-4">
                 <p className="font-medium text-muted-foreground text-sm">
                   Saldo actual
                 </p>
@@ -44,7 +44,7 @@ export default async function DashboardPage() {
             </div>
 
             <div className="col-span-1">
-              <div className="flex flex-col space-y-2 rounded border bg-card p-4">
+              <div className="flex flex-col space-y-2 rounded-md border bg-card p-4">
                 <div className="flex items-center space-x-2">
                   <span className="rounded-full bg-success/10 p-1">
                     <TrendingUp className="h-3 w-3 text-success-text" />
@@ -60,7 +60,7 @@ export default async function DashboardPage() {
             </div>
 
             <div className="col-span-1">
-              <div className="flex flex-col space-y-2 rounded border bg-card p-4">
+              <div className="flex flex-col space-y-2 rounded-md border bg-card p-4">
                 <div className="flex items-center space-x-2">
                   <span className="rounded-full bg-destructive/10 p-1">
                     <TrendingDown className="h-3 w-3 text-destructive" />
