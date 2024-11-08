@@ -1,9 +1,11 @@
+import { PlusIcon } from 'lucide-react'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { AppSidebar } from '~/components/app-sidebar'
 import { SetPermissions } from '~/components/set-permissions'
 import { ThemeToggle } from '~/components/theme-toggle'
-import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
 import {
   SidebarInset,
@@ -34,13 +36,22 @@ const DashboardLayout = async ({ children }: Props) => {
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
 
-            <Separator orientation="vertical" className="mr-2 h-4" />
-
-            <Badge>beta</Badge>
-
-            <Separator orientation="vertical" className="ml-2 h-4" />
+            <Separator orientation="vertical" className="mr-2 ml-2 h-4" />
 
             <ThemeToggle />
+
+            {permissions.includes('sale:create') && (
+              <>
+                <Separator orientation="vertical" className="mr-2 ml-2 h-4" />
+
+                <Button className="h-7 font-medium text-xs" asChild>
+                  <Link href="/sales/create">
+                    <PlusIcon />
+                    <span>Nueva venta</span>
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 pt-0">
