@@ -75,8 +75,8 @@ importers:
         specifier: 0.0.28
         version: 0.0.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-pdf/renderer':
-        specifier: ^4.1.3
-        version: 4.1.3(react@18.3.1)
+        specifier: ^4.1.4
+        version: 4.1.4(react@18.3.1)
       '@sentry/nextjs':
         specifier: 8.38.0
         version: 8.38.0(@opentelemetry/core@1.26.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.26.0(@opentelemetry/api@1.9.0))(next@14.2.18(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.90.1(esbuild@0.19.11))
@@ -1945,14 +1945,14 @@ packages:
   '@react-pdf/primitives@4.0.0':
     resolution: {integrity: sha512-yp4E0rDL03NaUp/CnDBz3HQNfH2Mzdlgku57yhTMGNzetwB0NJusXcjYg5XsTGIXnR7Tv80JKI4O4ajj+oaLeQ==}
 
-  '@react-pdf/reconciler@1.1.1':
-    resolution: {integrity: sha512-SZK3GQ4o4IYW30OPdyjxzdoIL6zDDEc7t1idJJPnRcY+CF+5z7vejymyAAIlF6dIRUI0ZtMCUNqsUwxKau/TUA==}
+  '@react-pdf/reconciler@1.1.2':
+    resolution: {integrity: sha512-b4uGyT7pWtXe+F2m3cvySqNd4EAAaFknee/JKr00N/9QkNpL1s977oT5qtNPcnUmagsO0I0iH9zFAOcxHFyUNA==}
 
   '@react-pdf/render@4.0.1':
     resolution: {integrity: sha512-WkOjFh6e3lBxRJRiKobUzu9lmxoN5Ihn993cRj47Cy3SOTZmoumRGyjzZq9zMxekbLVvhhyGdanEI2LZoHvIaw==}
 
-  '@react-pdf/renderer@4.1.3':
-    resolution: {integrity: sha512-/76rKS8+oCs2hBno1pju9n99x80Sio/UFApLjL1NHeEqiVichhhOrVJPcaMzErdGwWc9l+Of13D7ZBIA9g6BWQ==}
+  '@react-pdf/renderer@4.1.4':
+    resolution: {integrity: sha512-bJZ+dVWO+nZ028PCA8K7jKuSb03NKz+Kbj+Oc3iDAA3cdsROXgdIce659SIGjOsOD6rV51sqP0YA9PURCBbVbw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -6442,7 +6442,7 @@ snapshots:
 
   '@react-pdf/primitives@4.0.0': {}
 
-  '@react-pdf/reconciler@1.1.1': {}
+  '@react-pdf/reconciler@1.1.2': {}
 
   '@react-pdf/render@4.0.1':
     dependencies:
@@ -6457,14 +6457,14 @@ snapshots:
       parse-svg-path: 0.1.2
       svg-arc-to-cubic-bezier: 3.2.0
 
-  '@react-pdf/renderer@4.1.3(react@18.3.1)':
+  '@react-pdf/renderer@4.1.4(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.4
       '@react-pdf/font': 3.0.1
       '@react-pdf/layout': 4.1.2
       '@react-pdf/pdfkit': 4.0.0
       '@react-pdf/primitives': 4.0.0
-      '@react-pdf/reconciler': 1.1.1
+      '@react-pdf/reconciler': 1.1.2
       '@react-pdf/render': 4.0.1
       '@react-pdf/types': 2.7.0
       events: 3.3.0
