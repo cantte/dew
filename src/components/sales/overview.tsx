@@ -19,7 +19,7 @@ type Props = RouterOutputs['sale']['overview']
 export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
   return (
     <TooltipProvider>
-      <div className="grid w-full grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <OverviewCard
             icon={<ShoppingCart className="size-3.5 text-muted-foreground" />}

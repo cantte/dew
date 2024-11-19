@@ -1,4 +1,12 @@
-import { differenceInDays, startOfMonth, subDays } from 'date-fns'
+import {
+  differenceInDays,
+  endOfDay,
+  endOfMonth,
+  startOfDay,
+  startOfMonth,
+  subDays,
+  subMonths,
+} from 'date-fns'
 import { and, between, eq, sum } from 'drizzle-orm'
 import type { TypeOf } from 'zod'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
@@ -65,12 +73,12 @@ const genenrateSalesOverview = async ({ ctx, input }: Options) => {
   }
 
   const dateDiff = differenceInDays(input.to, input.from)
-  let newFrom = subDays(input.from, dateDiff)
-  let newTo = subDays(input.to, dateDiff)
+  let newFrom = startOfDay(subDays(input.from, dateDiff))
+  let newTo = endOfDay(subDays(input.to, dateDiff))
 
-  if (dateDiff === 30) {
-    newFrom = startOfMonth(newFrom)
-    newTo = startOfMonth(newTo)
+  if (dateDiff >= 28) {
+    newFrom = startOfMonth(subMonths(input.from, 1))
+    newTo = endOfMonth(subMonths(input.to, 1))
   }
 
   const [previousSummary] = await ctx.db
