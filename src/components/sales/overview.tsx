@@ -7,14 +7,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/ui/tooltip'
-import { formatToCurrency, formatToNumber } from '~/text/format'
+import {
+  formatToCurrency,
+  formatToNumber,
+  formatToPercent,
+} from '~/text/format'
+import type { RouterOutputs } from '~/trpc/shared'
 
-type Props = {
-  sales: number
-  products: number
-  amount: number
-  profit: number
-}
+type Props = RouterOutputs['sale']['overview']
 
 export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
   return (
@@ -24,8 +24,8 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
           <OverviewCard
             icon={<ShoppingCart className="size-3.5 text-muted-foreground" />}
             title="Ventas totales"
-            value={formatToNumber('es-CO', sales)}
-            variationRate={10}
+            value={formatToNumber('es-CO', sales.value)}
+            variationRate={sales.variationRate}
           />
         </div>
 
@@ -33,8 +33,8 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
           <OverviewCard
             icon={<Tag className="size-3.5 text-muted-foreground" />}
             title="Productos vendidos"
-            value={formatToNumber('es-CO', products)}
-            variationRate={-10}
+            value={formatToNumber('es-CO', products.value)}
+            variationRate={products.variationRate}
           />
         </div>
 
@@ -44,7 +44,8 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
               <CircleDollarSign className="size-3.5 text-muted-foreground" />
             }
             title="Ingresos generados"
-            value={formatToCurrency('es-CO', amount)}
+            value={formatToCurrency('es-CO', amount.value)}
+            variationRate={amount.variationRate}
           />
         </div>
 
@@ -54,7 +55,8 @@ export const SalesOverview = ({ sales, products, amount, profit }: Props) => {
               <CircleDollarSign className="size-3.5 text-muted-foreground" />
             }
             title="Ganancias generadas"
-            value={formatToCurrency('es-CO', profit)}
+            value={formatToCurrency('es-CO', profit.value)}
+            variationRate={profit.variationRate}
           />
         </div>
       </div>
@@ -90,8 +92,7 @@ const OverviewCard = ({
         {variationRate && (
           <div className="flex items-center space-x-2">
             <Badge variant={variationRate > 0 ? 'success' : 'destructive'}>
-              {variationRate > 0 ? '+' : ''}
-              {variationRate}%
+              {formatToPercent('es-CO', variationRate)}
             </Badge>
 
             <Tooltip>
