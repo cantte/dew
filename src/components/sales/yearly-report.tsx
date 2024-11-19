@@ -29,15 +29,11 @@ export const YearlySalesReport = async ({ year }: Props) => {
     return null
   }
 
-  console.log('received report', report)
-
   const data = report.map((row) => ({
     month: formatToMonthName('es-CO', row.date),
     amount: row.amount,
     profit: row.profit,
   }))
-
-  console.log('builded data', data)
 
   return (
     <div className="grid w-full rounded border p-2">

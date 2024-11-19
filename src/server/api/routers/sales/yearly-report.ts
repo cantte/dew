@@ -41,14 +41,10 @@ export const generateYearlySalesReport = async ({ ctx, input }: Options) => {
     )
     .groupBy(sql`EXTRACT(MONTH FROM ${saleSummary.createdAt})`)
 
-  console.log('data from db', data)
-
   const report = data.map((row) => ({
     ...row,
     date: new Date(yearDate.getFullYear(), row.month - 1, 1),
   }))
-
-  console.log('report', report)
 
   return report
 }
