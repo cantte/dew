@@ -21,13 +21,12 @@ export const DailySalesOverview = async () => {
     storeId: store.id,
   })
 
-  return (
-    <SalesOverview
-      sales={overview.sales}
-      products={overview.products}
-      amount={overview.amount}
-      profit={overview.profit}
-    />
+  return (<SalesOverview
+    sales={overview.sales}
+    products={overview.products}
+    amount={overview.amount}
+    profit={overview.profit}
+  />
   )
 }
 
