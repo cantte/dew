@@ -101,12 +101,9 @@ const OverviewCard = ({
               </TooltipTrigger>
 
               <TooltipContent>
-                <div className="grid gap-1">
-                  <span>
-                    Representa la variación con respecto al periodo anterior.
-                  </span>
-                  <span>[ESTA FUNCIONALIDAD SE ENCUENTRA EN DESARROLLO]</span>
-                </div>
+                <span>
+                  Representa la variación con respecto al periodo anterior.
+                </span>
               </TooltipContent>
             </Tooltip>
           </div>

@@ -41,13 +41,11 @@ export const formatToShortMonth = (locale: string, date: Date) => {
   return Intl.DateTimeFormat(locale, {
     month: 'short',
     day: 'numeric',
-    timeZone: 'America/Bogota',
   }).format(date)
 }
 
 export const formatToMonthName = (locale: string, date: Date) => {
   return Intl.DateTimeFormat(locale, {
     month: 'long',
-    timeZone: 'America/Bogota',
   }).format(date)
 }
