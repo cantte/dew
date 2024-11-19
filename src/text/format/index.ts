@@ -9,6 +9,14 @@ export const formatToNumber = (locale: string, value: number) => {
   return Intl.NumberFormat(locale).format(value)
 }
 
+export const formatToPercent = (locale: string, value: number) => {
+  return Intl.NumberFormat(locale, {
+    style: 'percent',
+    maximumFractionDigits: 2,
+    signDisplay: 'always',
+  }).format(value)
+}
+
 export const formatToDateWithTime = (locale: string, date: Date) => {
   return Intl.DateTimeFormat(locale, {
     day: 'numeric',
