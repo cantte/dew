@@ -45,8 +45,6 @@ const BLANK_RETURN_VALUE: ReturnValue = {
 }
 
 const genenrateSalesOverview = async ({ ctx, input }: Options) => {
-  console.log('genenrateSalesOverview', input)
-
   const [summary] = await ctx.db
     .select({
       amount: sum(saleSummary.amount).mapWith(Number),
