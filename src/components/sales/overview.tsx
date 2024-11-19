@@ -89,9 +89,9 @@ const OverviewCard = ({
           {value}
         </p>
 
-        {variationRate && (
+        {variationRate !== undefined && variationRate !== 0 && (
           <div className="flex items-center space-x-2">
-            <Badge variant={variationRate > 0 ? 'success' : 'destructive'}>
+            <Badge variant={variationRate >= 0 ? 'success' : 'destructive'}>
               {formatToPercent('es-CO', variationRate)}
             </Badge>
 
