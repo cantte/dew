@@ -22,12 +22,19 @@ export const DailySalesOverview = async () => {
   })
 
   return (
-    <SalesOverview
-      sales={overview.sales}
-      products={overview.products}
-      amount={overview.amount}
-      profit={overview.profit}
-    />
+    <>
+      <span>
+        Render dayly sales overview with today = {today.toString()} from = {from.toString()} to = {to.toString()},
+        ISO from = {from.toISOString()} to = {to.toISOString()}
+      </span>
+
+      <SalesOverview
+        sales={overview.sales}
+        products={overview.products}
+        amount={overview.amount}
+        profit={overview.profit}
+      />
+    </>
   )
 }
 
