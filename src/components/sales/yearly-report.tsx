@@ -31,30 +31,11 @@ export const YearlySalesReport = async ({ year }: Props) => {
 
   console.log('received report', report)
 
-  const amountReport = report.map((row) => ({
-    total: row.amount,
-    month: row.date.getMonth(),
-    monthName: formatToMonthName('es-CO', row.date),
+  const data = report.map((row) => ({
+    month: formatToMonthName('es-CO', row.date),
+    amount: row.amount,
+    profit: row.profit,
   }))
-
-  const profitReport = report.map((row) => ({
-    total: row.profit,
-    month: row.date.getMonth(),
-    monthName: formatToMonthName('es-CO', row.date),
-  }))
-
-  // Group by month and build and array of objects with the total amount and profit for each month of the year
-  const data = Array.from({ length: 12 }, (_, i) => {
-    const month = i
-    const amount = amountReport.find((row) => row.month === month)?.total ?? 0
-    const profit = profitReport.find((row) => row.month === month)?.total ?? 0
-
-    return {
-      month: formatToMonthName('es-CO', new Date(2021, month)),
-      amount,
-      profit,
-    }
-  })
 
   console.log('builded data', data)
 
