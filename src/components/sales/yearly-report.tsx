@@ -29,6 +29,8 @@ export const YearlySalesReport = async ({ year }: Props) => {
     return null
   }
 
+  console.log('received report', report)
+
   const amountReport = report.map((row) => ({
     total: row.amount,
     month: row.date.getMonth(),
@@ -53,6 +55,8 @@ export const YearlySalesReport = async ({ year }: Props) => {
       profit,
     }
   })
+
+  console.log('builded data', data)
 
   return (
     <div className="grid w-full rounded border p-2">
