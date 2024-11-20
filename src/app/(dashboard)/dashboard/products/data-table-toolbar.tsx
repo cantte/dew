@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import ImportProductsDialog from '~/app/(dashboard)/dashboard/products/import-dialog'
+import { DataTableViewOptions } from '~/components/data-table-view-options'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Toggle } from '~/components/ui/toggle'
@@ -129,6 +130,8 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
           <FileDown />
           Exportar
         </Button>
+
+        <DataTableViewOptions table={table} />
       </div>
     </div>
   )

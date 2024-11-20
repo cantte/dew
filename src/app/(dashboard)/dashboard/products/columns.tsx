@@ -10,10 +10,14 @@ export type Product = RouterOutputs['product']['list'][number]
 
 export const columns: ColumnDef<Product>[] = [
   {
+    id: 'Código',
     accessorKey: 'code',
     header: 'Código',
+    enableSorting: false,
+    enableHiding: false,
   },
   {
+    id: 'Nombre',
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nombre" />
@@ -30,6 +34,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Precio de compra',
     accessorKey: 'purchasePrice',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Precio de compra" />
@@ -46,6 +51,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Precio de venta',
     accessorKey: 'salePrice',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Precio de venta" />
@@ -62,6 +68,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Stock',
     accessorKey: 'stock',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Stock" />
@@ -73,6 +80,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Cantidad',
     accessorKey: 'quantity',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Cantidad" />
@@ -92,5 +100,7 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: 'isLowStock',
     accessorKey: 'isLowStock',
+    enableSorting: false,
+    enableHiding: false,
   },
 ]
