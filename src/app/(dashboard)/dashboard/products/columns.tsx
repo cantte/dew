@@ -12,7 +12,13 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: 'Código',
     accessorKey: 'code',
-    header: 'Código',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Código"
+        className="text-xs"
+      />
+    ),
     enableSorting: false,
     enableHiding: false,
   },
