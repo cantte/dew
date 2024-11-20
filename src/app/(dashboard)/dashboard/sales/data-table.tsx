@@ -3,6 +3,7 @@
 import {
   type ColumnDef,
   type ColumnFiltersState,
+  type VisibilityState,
   getCoreRowModel,
   getFacetedRowModel,
   getFacetedUniqueValues,
@@ -26,6 +27,7 @@ type Props<TValue> = {
 
 const SalesDataTable = <TValue,>({ columns, data, storeId }: Props<TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 
   const { data: sales } = api.sale.list.useQuery(
     { storeId: storeId },
@@ -39,18 +41,20 @@ const SalesDataTable = <TValue,>({ columns, data, storeId }: Props<TValue>) => {
     columns,
     state: {
       columnFilters,
+      columnVisibility,
     },
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-2">
       <SalesDataTableToolbar table={table} />
       <DataTable table={table} />
       <DataTablePagination table={table} />

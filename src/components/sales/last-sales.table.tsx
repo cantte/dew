@@ -28,7 +28,7 @@ export const LastSales = async () => {
 
       <div>
         {lastSales.length > 0 ? (
-          <div className="rounded-md border p-4">
+          <div className="rounded-md border bg-card p-4">
             <Table>
               <TableHeader>
                 <TableRow>

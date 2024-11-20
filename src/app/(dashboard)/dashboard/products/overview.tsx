@@ -1,5 +1,4 @@
 import { CircleDollarSign, Tag } from 'lucide-react'
-import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
 import { formatToCurrency, formatToNumber } from '~/text/format'
 import { api } from '~/trpc/server'
@@ -14,67 +13,60 @@ export const ProductsOverview = async ({ storeId }: Props) => {
   })
 
   return (
-    <div className="grid w-full grid-cols-1 gap-1 rounded border bg-card md:grid-cols-2 lg:grid-cols-4">
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <Tag className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Productos
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            {formatToNumber('es-CO', overview.products)}
-          </p>
-        </div>
-
-        <Separator orientation="vertical" className="hidden md:flex" />
+    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <OverviewCard
+          icon={<Tag className="size-3.5 text-muted-foreground" />}
+          title="Productos"
+          value={formatToNumber('es-CO', overview.products)}
+        />
       </div>
 
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Valor total
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            {formatToCurrency('es-CO', overview.value)}
-          </p>
-        </div>
-
-        <Separator orientation="vertical" className="hidden lg:flex" />
+      <div>
+        <OverviewCard
+          icon={<CircleDollarSign className="size-3.5 text-muted-foreground" />}
+          title="Valor total"
+          value={formatToCurrency('es-CO', overview.value)}
+        />
       </div>
 
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Costo total
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            {formatToCurrency('es-CO', overview.cost)}
-          </p>
-        </div>
-
-        <Separator orientation="vertical" className="hidden md:flex" />
+      <div>
+        <OverviewCard
+          icon={<CircleDollarSign className="size-3.5 text-muted-foreground" />}
+          title="Costo total"
+          value={formatToCurrency('es-CO', overview.cost)}
+        />
       </div>
 
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Utilidad
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            {formatToCurrency('es-CO', overview.value - overview.cost)}
-          </p>
-        </div>
+      <div>
+        <OverviewCard
+          icon={<CircleDollarSign className="size-3.5 text-muted-foreground" />}
+          title="Utilidad"
+          value={formatToCurrency('es-CO', overview.value - overview.cost)}
+        />
+      </div>
+    </div>
+  )
+}
+
+type OverviewCardProps = {
+  icon: React.ReactNode
+  title: string
+  value: string
+}
+
+const OverviewCard = ({ icon, title, value }: OverviewCardProps) => {
+  return (
+    <div className="flex flex-col space-y-2 rounded-md border bg-card p-4">
+      <div className="flex items-center space-x-2">
+        {icon}
+        <p className="font-medium text-muted-foreground text-sm">{title}</p>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <p className="font-semibold text-xl leading-none tracking-tight md:text-2xl">
+          {value}
+        </p>
       </div>
     </div>
   )
@@ -82,67 +74,21 @@ export const ProductsOverview = async ({ storeId }: Props) => {
 
 export const ProductsOverviewFallback = () => {
   return (
-    <div className="grid w-full grid-cols-1 gap-1 rounded border md:grid-cols-2 lg:grid-cols-4">
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <Tag className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Productos
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            <Skeleton className="h-6 w-16" />
-          </p>
-        </div>
-
-        <Separator orientation="vertical" className="hidden md:flex" />
+    <div className="grid w-full grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <Skeleton className="h-20" />
       </div>
 
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Valor total
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            <Skeleton className="h-6 w-16" />
-          </p>
-        </div>
-
-        <Separator orientation="vertical" className="hidden lg:flex" />
+      <div>
+        <Skeleton className="h-20" />
       </div>
 
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Costo total
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            <Skeleton className="h-6 w-16" />
-          </p>
-        </div>
-
-        <Separator orientation="vertical" className="hidden md:flex" />
+      <div>
+        <Skeleton className="h-20" />
       </div>
 
-      <div className="flex justify-between p-2">
-        <div className="p-2">
-          <div className="flex items-center space-x-2">
-            <CircleDollarSign className="size-3.5 text-muted-foreground" />
-            <p className="font-medium text-muted-foreground text-sm">
-              Utilidad
-            </p>
-          </div>
-          <p className="font-semibold text-lg">
-            <Skeleton className="h-6 w-16" />
-          </p>
-        </div>
+      <div>
+        <Skeleton className="h-20" />
       </div>
     </div>
   )

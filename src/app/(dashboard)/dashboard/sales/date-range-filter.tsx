@@ -15,16 +15,18 @@ import { cn } from '~/lib/utils'
 
 type DateRangeFilterProps<TData> = HTMLAttributes<HTMLDivElement> & {
   table: Table<TData>
+  columnId: string
 }
 
 const DateRangeFilter = <TData,>({
   table,
+  columnId,
   className,
 }: DateRangeFilterProps<TData>) => {
-  const date = table.getColumn('createdAt')?.getFilterValue() as DateRange
+  const date = table.getColumn(columnId)?.getFilterValue() as DateRange
 
   const setDate = (date: DateRange | undefined) => {
-    table.getColumn('createdAt')?.setFilterValue(date)
+    table.getColumn(columnId)?.setFilterValue(date)
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: not needed
@@ -37,7 +39,7 @@ const DateRangeFilter = <TData,>({
       return
     }
 
-    table.getColumn('createdAt')?.setFilterValue(date)
+    table.getColumn(columnId)?.setFilterValue(date)
   }, [date])
 
   return (
@@ -47,8 +49,9 @@ const DateRangeFilter = <TData,>({
           <Button
             id="date"
             variant="outline"
+            size="sm"
             className={cn(
-              'justify-start text-left font-normal',
+              'w-56 justify-start text-left font-normal sm:w-60',
               !date && 'text-muted-foreground',
               className,
             )}

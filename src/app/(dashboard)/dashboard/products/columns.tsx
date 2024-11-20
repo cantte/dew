@@ -2,6 +2,7 @@
 
 import type { ColumnDef } from '@tanstack/react-table'
 import DataTableRowActions from '~/app/(dashboard)/dashboard/products/data-table-row-actions'
+import { DataTableColumnHeader } from '~/components/data-table-column-header'
 import { Badge } from '~/components/ui/badge'
 import type { RouterOutputs } from '~/trpc/shared'
 
@@ -9,12 +10,24 @@ export type Product = RouterOutputs['product']['list'][number]
 
 export const columns: ColumnDef<Product>[] = [
   {
+    id: 'Código',
     accessorKey: 'code',
-    header: 'Código',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Código"
+        className="text-xs"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
+    id: 'Nombre',
     accessorKey: 'name',
-    header: 'Nombre',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Nombre" />
+    ),
     cell: ({ row }) => {
       return (
         <div className="flex items-center space-x-2">
@@ -27,8 +40,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Precio de compra',
     accessorKey: 'purchasePrice',
-    header: 'Precio de compra',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Precio de compra" />
+    ),
     cell: ({ row }) => {
       return (
         <span>
@@ -41,8 +57,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Precio de venta',
     accessorKey: 'salePrice',
-    header: 'Precio de venta',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Precio de venta" />
+    ),
     cell: ({ row }) => {
       return (
         <span>
@@ -55,8 +74,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Stock',
     accessorKey: 'stock',
-    header: 'Stock',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Stock" />
+    ),
     cell: ({ row }) => {
       return (
         <span>{Intl.NumberFormat('es-CO').format(row.original.stock)}</span>
@@ -64,8 +86,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    id: 'Cantidad',
     accessorKey: 'quantity',
-    header: 'Cantidad',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Cantidad" />
+    ),
     cell: ({ row }) => {
       return (
         <span>{Intl.NumberFormat('es-CO').format(row.original.quantity)}</span>
@@ -81,5 +106,7 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: 'isLowStock',
     accessorKey: 'isLowStock',
+    enableSorting: false,
+    enableHiding: false,
   },
 ]

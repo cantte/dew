@@ -12,6 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
+import { useHasMounted } from '~/hooks/use-has-mounted'
 
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()
@@ -26,33 +27,39 @@ export const ThemeToggle = () => {
     return <Monitor />
   }, [theme])
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-7 w-7">
-          {icon}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-56">
-        <DropdownMenuLabel className="text-muted-foreground text-xs">
-          Cambiar tema
-        </DropdownMenuLabel>
+  const hasMounted = useHasMounted()
 
-        <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => setTheme('light')}>
-            <Sun />
-            Claro
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme('dark')}>
-            <Moon />
-            Oscuro
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme('system')}>
-            <Monitor />
-            Sistema
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+  return (
+    <>
+      {hasMounted && (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-7 w-7">
+              {icon}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="min-w-56">
+            <DropdownMenuLabel className="text-muted-foreground text-xs">
+              Cambiar tema
+            </DropdownMenuLabel>
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => setTheme('light')}>
+                <Sun />
+                Claro
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('dark')}>
+                <Moon />
+                Oscuro
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('system')}>
+                <Monitor />
+                Sistema
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+    </>
   )
 }
