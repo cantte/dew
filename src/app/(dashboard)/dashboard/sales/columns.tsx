@@ -1,8 +1,10 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
+import { ArrowLeftRightIcon, BanknoteIcon, CreditCardIcon } from 'lucide-react'
 import type { DateRange } from 'react-day-picker'
 import { SaleRowActions } from '~/app/(dashboard)/dashboard/sales/row-actions'
+import { DataTableColumnHeader } from '~/components/data-table-column-header'
 import { Badge } from '~/components/ui/badge'
 import { paymentMethods, saleStatuses } from '~/constants'
 import type { RouterOutputs } from '~/trpc/shared'
@@ -11,8 +13,11 @@ export type Sale = RouterOutputs['sale']['list'][number]
 
 export const columns: ColumnDef<Sale>[] = [
   {
-    id: 'customer',
-    header: 'Cliente',
+    id: 'Cliente',
+    accessorKey: 'customer',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Cliente" />
+    ),
     cell: ({ row }) => {
       return <span>{row.original.customer}</span>
     },
@@ -23,8 +28,11 @@ export const columns: ColumnDef<Sale>[] = [
     },
   },
   {
+    id: 'Total',
     accessorKey: 'amount',
-    header: 'Total',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Total" />
+    ),
     cell: ({ row }) => {
       return (
         <span>
@@ -37,8 +45,15 @@ export const columns: ColumnDef<Sale>[] = [
     },
   },
   {
+    id: 'Estado',
     accessorKey: 'status',
-    header: 'Estado',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Estado"
+        className="text-xs"
+      />
+    ),
     cell: ({ row }) => {
       return (
         <Badge
@@ -58,26 +73,51 @@ export const columns: ColumnDef<Sale>[] = [
     filterFn: (row, id, value: string) => {
       return value.includes(row.getValue(id))
     },
+    enableSorting: false,
   },
   {
+    id: 'Método de pago',
     accessorKey: 'paymentMethod',
-    header: 'Método de pago',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Método de pago"
+        className="text-xs"
+      />
+    ),
     cell: ({ row }) => {
+      let icon = <CreditCardIcon className="size-4 text-muted-foreground" />
+
+      if (row.original.paymentMethod === 'cash') {
+        icon = <BanknoteIcon className="size-4 text-muted-foreground" />
+      }
+
+      if (row.original.paymentMethod === 'transfer') {
+        icon = <ArrowLeftRightIcon className="size-4 text-muted-foreground" />
+      }
+
       return (
-        <span>
-          {paymentMethods.find(
-            (method) => method.id === row.original.paymentMethod,
-          )?.label ?? 'Desconocido'}
-        </span>
+        <div className="flex items-center space-x-2">
+          {icon}
+          <span>
+            {paymentMethods.find(
+              (method) => method.id === row.original.paymentMethod,
+            )?.label ?? 'Desconocido'}
+          </span>
+        </div>
       )
     },
     filterFn: (row, id, value: string) => {
       return value.includes(row.getValue(id))
     },
+    enableSorting: false,
   },
   {
+    id: 'Fecha',
     accessorKey: 'createdAt',
-    header: 'Fecha',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Fecha" />
+    ),
     cell: ({ row }) => {
       return (
         <span>
