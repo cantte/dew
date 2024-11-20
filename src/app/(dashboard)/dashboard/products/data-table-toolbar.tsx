@@ -2,7 +2,13 @@
 
 import type { Table } from '@tanstack/react-table'
 import { mkConfig } from 'export-to-csv'
-import { FileDown, Filter, FilterX, Search } from 'lucide-react'
+import {
+  CircleXIcon,
+  FileDown,
+  Filter,
+  FilterX,
+  SearchIcon,
+} from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import ImportProductsDialog from '~/app/(dashboard)/dashboard/products/import-dialog'
 import { Button } from '~/components/ui/button'
@@ -70,19 +76,30 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
           <div className="relative">
             <Input
               id="search-product"
-              className="peer pr-9 pl-9"
+              className="peer h-8 ps-9 pe-9 pr-9 pl-9"
               placeholder="Buscar un producto"
               value={table.getState().globalFilter}
               onChange={(event) => table.setGlobalFilter(event.target.value)}
             />
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 text-muted-foreground/80 peer-disabled:opacity-50">
-              <Search
+
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
+              <SearchIcon
                 size={16}
                 strokeWidth={2}
                 aria-hidden="true"
                 role="presentation"
               />
             </div>
+
+            {table.getState().globalFilter && (
+              <button
+                className="fade-in zoom-in-75 absolute inset-y-0 end-0 flex h-full w-9 animate-in items-center justify-center rounded-e-lg border border-transparent text-muted-foreground/80 ring-offset-background transition-shadow hover:text-foreground focus-visible:border-ring focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Clear input"
+                onClick={() => table.setGlobalFilter('')}
+              >
+                <CircleXIcon size={16} strokeWidth={2} aria-hidden="true" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -98,13 +115,9 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
         </Toggle>
 
         {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={resetFilters}
-            className="h-8 px-2 lg:px-3"
-          >
+          <Button variant="ghost" onClick={resetFilters} size="sm">
+            <FilterX />
             Limpiar filtros
-            <FilterX className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>
@@ -112,7 +125,7 @@ const ProductsDataTableToolbar = <TData extends ExportableToCsv>({
       <div className="flex items-center justify-end space-x-2">
         <ImportProductsDialog store={store} />
 
-        <Button variant="outline" onClick={exportData}>
+        <Button variant="outline" size="sm" onClick={exportData}>
           <FileDown />
           Exportar
         </Button>
