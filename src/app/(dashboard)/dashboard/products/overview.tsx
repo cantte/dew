@@ -64,7 +64,9 @@ const OverviewCard = ({ icon, title, value }: OverviewCardProps) => {
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="font-semibold text-xl leading-none tracking-tight md:text-2xl">{value}</p>
+        <p className="font-semibold text-xl leading-none tracking-tight md:text-2xl">
+          {value}
+        </p>
       </div>
     </div>
   )
