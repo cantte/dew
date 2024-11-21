@@ -2,11 +2,18 @@
 
 import {
   type ColumnDef,
+  type ColumnFiltersState,
+  type VisibilityState,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useState } from 'react'
 import type { Employee } from '~/app/(dashboard)/dashboard/employees/columns'
+import { EmployeesDataTableToolbar } from '~/app/(dashboard)/dashboard/employees/data-table-toolbar'
 import DataTable from '~/components/data-table'
 import DataTablePagination from '~/components/data-table-pagination'
 import { api } from '~/trpc/react'
@@ -31,15 +38,28 @@ const EmployeeDataTable = <TValue,>({
     },
   )
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+
   const table = useReactTable<Employee>({
     data: employees,
     columns,
+    state: {
+      columnFilters,
+      columnVisibility,
+    },
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
   })
 
   return (
     <div className="grid grid-cols-1 gap-2">
+      <EmployeesDataTableToolbar table={table} />
       <DataTable table={table} />
       <DataTablePagination table={table} />
     </div>
