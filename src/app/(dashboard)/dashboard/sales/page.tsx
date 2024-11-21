@@ -7,7 +7,7 @@ import { api } from '~/trpc/server'
 const SalesPage = async () => {
   const store = await api.store.findCurrent()
 
-  if (store === undefined) {
+  if (!store) {
     return <NotFoundStoreAlert />
   }
 
