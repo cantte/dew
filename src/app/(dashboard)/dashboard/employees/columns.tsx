@@ -3,6 +3,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import { SquarePen } from 'lucide-react'
 import Link from 'next/link'
+import { DataTableColumnHeader } from '~/components/data-table-column-header'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import type { RouterOutputs } from '~/trpc/shared'
@@ -11,8 +12,23 @@ export type Employee = RouterOutputs['employee']['byStore'][number]
 
 export const columns: ColumnDef<Employee>[] = [
   {
+    id: 'Identificación',
+    accessorKey: 'code',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Identificación"
+        className="text-xs"
+      />
+    ),
+    enableSorting: false,
+  },
+  {
+    id: 'Nombre',
     accessorKey: 'name',
-    header: 'Nombre',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Nombre" />
+    ),
     cell: ({ row }) => {
       return (
         <div className="flex items-center space-x-2">
@@ -27,12 +43,18 @@ export const columns: ColumnDef<Employee>[] = [
     },
   },
   {
+    id: 'Correo',
     accessorKey: 'email',
-    header: 'Correo',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Correo" />
+    ),
   },
   {
+    id: 'Teléfono',
     accessorKey: 'phone',
-    header: 'Teléfono',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Teléfono" />
+    ),
   },
   {
     id: 'actions',
