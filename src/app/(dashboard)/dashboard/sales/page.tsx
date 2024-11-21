@@ -1,10 +1,7 @@
-import { Suspense } from 'react'
 import { columns } from '~/app/(dashboard)/dashboard/sales/columns'
-import CreateSaleButton from '~/app/(dashboard)/dashboard/sales/create-button'
 import SalesDataTable from '~/app/(dashboard)/dashboard/sales/data-table'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
-import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
 const SalesPage = async () => {
@@ -27,13 +24,7 @@ const SalesPage = async () => {
   })
 
   return (
-    <div className="grid gap-4">
-      <div>
-        <Suspense fallback={<Skeleton className="h-9 min-w-32" />}>
-          <CreateSaleButton />
-        </Suspense>
-      </div>
-
+    <div className="grid gap-4 py-3">
       <SalesDataTable columns={columns} data={sales} storeId={store.id} />
     </div>
   )
