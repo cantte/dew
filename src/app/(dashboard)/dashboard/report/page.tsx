@@ -26,10 +26,11 @@ import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { api } from '~/trpc/server'
 
 type Props = {
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default async function ReportPage({ searchParams }: Readonly<Props>) {
+export default async function ReportPage(props: Readonly<Props>) {
+  const searchParams = await props.searchParams
   const store = await api.store.findCurrent()
 
   if (!store) {

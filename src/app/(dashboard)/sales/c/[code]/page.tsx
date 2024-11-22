@@ -3,12 +3,13 @@ import { SaleDetail } from '~/components/sale-detail'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     code: string
-  }
+  }>
 }
 
-const CustomerSaleDetailPage = async ({ params }: Props) => {
+const CustomerSaleDetailPage = async (props: Props) => {
+  const params = await props.params
   const sale = await api.sale.findPublic({ code: params.code })
 
   if (!sale) {

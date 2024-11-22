@@ -7,12 +7,13 @@ import NotFoundStoreAlert from '~/components/stores/not-found.alert'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function EditEmployeePage({ params }: Readonly<Props>) {
+export default async function EditEmployeePage(props: Readonly<Props>) {
+  const params = await props.params
   noStore()
 
   const store = await api.store.findCurrent()

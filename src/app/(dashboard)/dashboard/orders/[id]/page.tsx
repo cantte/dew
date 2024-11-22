@@ -5,14 +5,15 @@ import OrderDetail from '~/components/orders/detail'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export const dynamic = 'force-dynamic'
 
-const OrderDetailPage = async ({ params }: Props) => {
+const OrderDetailPage = async (props: Props) => {
+  const params = await props.params
   const hasPermissions = await api.rbac.checkPermissions({
     permissions: ['order:view'],
   })

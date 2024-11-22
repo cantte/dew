@@ -3,12 +3,13 @@ import OrderDetail from '~/components/orders/detail'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function OrderDetailPage({ params }: Readonly<Props>) {
+export default async function OrderDetailPage(props: Readonly<Props>) {
+  const params = await props.params
   const order = await api.order.findPublic({ id: params.id })
 
   if (!order) {

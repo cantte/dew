@@ -9,14 +9,15 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export const dynamic = 'force-dynamic'
 
-const ProductDetailPage = async ({ params }: Props) => {
+const ProductDetailPage = async (props: Props) => {
+  const params = await props.params
   const hasPermissions = await api.rbac.checkPermissions({
     permissions: ['product:view'],
   })
