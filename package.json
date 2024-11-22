@@ -40,7 +40,7 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "@react-email/components": "0.0.28",
     "@react-pdf/renderer": "^4.1.4",
-    "@sentry/nextjs": "8.39.0",
+    "@sentry/nextjs": "8.40.0",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-query": "^5.61.0",
     "@tanstack/react-query-devtools": "^5.61.0",
