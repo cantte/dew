@@ -69,7 +69,7 @@
     "next-themes": "^0.4.3",
     "papaparse": "^5.4.1",
     "postgres": "^3.4.5",
-    "posthog-js": "^1.187.2",
+    "posthog-js": "^1.188.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-66855b96-20241106",
