@@ -1,14 +1,14 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import {
-  type DefaultSession,
-  type NextAuthOptions,
-  getServerSession,
-} from 'next-auth'
-import type { Adapter } from 'next-auth/adapters'
-import GoogleProvider from 'next-auth/providers/google'
+import type { DefaultSession, NextAuthConfig } from 'next-auth'
+import Google from 'next-auth/providers/google'
 
-import { env } from '~/env'
 import { db } from '~/server/db'
+import {
+  accounts,
+  sessions,
+  users,
+  verificationTokens,
+} from '~/server/db/schema'
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -29,7 +29,14 @@ declare module 'next-auth' {
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const authOptions: NextAuthOptions = {
+export const authConfig = {
+  providers: [Google],
+  adapter: DrizzleAdapter(db, {
+    usersTable: users,
+    accountsTable: accounts,
+    sessionsTable: sessions,
+    verificationTokensTable: verificationTokens,
+  }),
   pages: {
     signIn: '/signin',
   },
@@ -42,18 +49,4 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db) as Adapter,
-  providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
-  ],
-}
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = () => getServerSession(authOptions)
+} satisfies NextAuthConfig

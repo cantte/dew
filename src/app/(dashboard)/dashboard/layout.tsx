@@ -12,7 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '~/components/ui/sidebar'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { api } from '~/trpc/server'
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 }
 
 const DashboardLayout = async ({ children }: Props) => {
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   if (!session) {
     return redirect('/api/auth/signin')

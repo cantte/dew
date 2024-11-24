@@ -2,10 +2,10 @@ import { LayoutDashboard } from 'lucide-react'
 import Link from 'next/link'
 import SignInButton from '~/components/signin-button'
 import { Button } from '~/components/ui/button'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 
 export const NavButton = async () => {
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   return (
     <ul className="flex gap-2">

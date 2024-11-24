@@ -1,9 +1,8 @@
-import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { GoogleSignInButton } from '~/components/auth/google-signin'
 import DefaultLayout from '~/components/default-layout'
-import { authOptions } from '~/server/auth'
+import { auth } from '~/server/auth'
 
 export const metadata = {
   title: 'dew | iniciar sesión',
@@ -12,7 +11,7 @@ export const metadata = {
 }
 
 const SignInPage = async () => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   if (session) {
     return redirect('/dashboard')

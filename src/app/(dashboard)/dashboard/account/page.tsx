@@ -14,14 +14,14 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import { subscriptionStatuses } from '~/constants'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { formatToDateShort } from '~/text/format'
 import { api } from '~/trpc/server'
 
 export default async function AccountPage() {
   noStore()
 
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   if (!session) {
     return redirect('/api/auth/signin?callbackUrl=/dashboard/account')

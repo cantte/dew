@@ -1,15 +1,14 @@
 'use client'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { type QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
-import { type ReactNode, useState } from 'react'
+import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { useState } from 'react'
 import SuperJSON from 'superjson'
 
 import type { AppRouter } from '~/server/api/root'
-
-const createQueryClient = () => new QueryClient()
+import { createQueryClient } from './query-client'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
@@ -18,16 +17,26 @@ const getQueryClient = () => {
     return createQueryClient()
   }
   // Browser: use singleton pattern to keep the same query client
-  if (!clientQueryClientSingleton) {
-    clientQueryClientSingleton = createQueryClient()
-  }
-
-  return clientQueryClientSingleton
+  return (clientQueryClientSingleton ??= createQueryClient())
 }
 
 export const api = createTRPCReact<AppRouter>()
 
-export function TRPCReactProvider(props: Readonly<{ children: ReactNode }>) {
+/**
+ * Inference helper for inputs.
+ *
+ * @example type HelloInput = RouterInputs['example']['hello']
+ */
+export type RouterInputs = inferRouterInputs<AppRouter>
+
+/**
+ * Inference helper for outputs.
+ *
+ * @example type HelloOutput = RouterOutputs['example']['hello']
+ */
+export type RouterOutputs = inferRouterOutputs<AppRouter>
+
+export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient()
 
   const [trpcClient] = useState(() =>
@@ -56,7 +65,6 @@ export function TRPCReactProvider(props: Readonly<{ children: ReactNode }>) {
       <api.Provider client={trpcClient} queryClient={queryClient}>
         {props.children}
       </api.Provider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }

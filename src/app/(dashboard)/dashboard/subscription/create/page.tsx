@@ -2,11 +2,11 @@ import { redirect } from 'next/navigation'
 import { CreateSubscriptionForm } from '~/app/(dashboard)/dashboard/subscription/create/form'
 import BackButton from '~/components/back-button'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { api } from '~/trpc/server'
 
 export default async function CreateSubscriptionPage() {
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   if (!session) {
     return redirect('/api/auth/signin')
