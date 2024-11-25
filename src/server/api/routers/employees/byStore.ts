@@ -21,6 +21,7 @@ const findEmployeesByStore = async ({ ctx, input }: Options) => {
       isCurrentEmployee: eq(employees.userId, ctx.session.user.id).mapWith(
         Boolean,
       ),
+      storeId: stores.id,
     })
     .from(employees)
     .innerJoin(employeeStore, eq(employees.id, employeeStore.employeeId))
