@@ -1,12 +1,14 @@
 import authedProcedure from '~/server/api/procedures/authed'
 import createStore from '~/server/api/routers/stores/create'
 import { deleteStore } from '~/server/api/routers/stores/delete'
+import { deleteEmployeeStore } from '~/server/api/routers/stores/delete-employee'
 import findStore from '~/server/api/routers/stores/find'
 import { findCurrentStore } from '~/server/api/routers/stores/find-current'
 import listStores from '~/server/api/routers/stores/list'
 import updateStore from '~/server/api/routers/stores/update'
 import {
   createStoreInput,
+  deleteEmployeeStoreInput,
   findStoreInput,
   updateStoreInput,
 } from '~/server/api/schemas/stores'
@@ -36,6 +38,11 @@ const storesRouter = router({
     .input(findStoreInput)
     .mutation(async ({ ctx, input }) => {
       await deleteStore({ ctx, input })
+    }),
+  deleteEmployee: authedProcedure
+    .input(deleteEmployeeStoreInput)
+    .mutation(async ({ ctx, input }) => {
+      await deleteEmployeeStore({ ctx, input })
     }),
 })
 
