@@ -1,11 +1,9 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { SquarePen } from 'lucide-react'
-import Link from 'next/link'
+import { EmployeeDataTableRowActions } from '~/app/(dashboard)/dashboard/employees/data-table-row-actions'
 import { DataTableColumnHeader } from '~/components/data-table-column-header'
 import { Badge } from '~/components/ui/badge'
-import { Button } from '~/components/ui/button'
 import type { RouterOutputs } from '~/trpc/shared'
 
 export type Employee = RouterOutputs['employee']['byStore'][number]
@@ -59,13 +57,7 @@ export const columns: ColumnDef<Employee>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      return (
-        <Button variant="secondary" size="icon" asChild>
-          <Link href={`/dashboard/employees/${row.original.id}/edit`}>
-            <SquarePen className="h-4 w-4" />
-          </Link>
-        </Button>
-      )
+      return <EmployeeDataTableRowActions row={row} />
     },
   },
 ]
