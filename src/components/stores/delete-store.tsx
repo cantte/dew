@@ -1,3 +1,5 @@
+'use client'
+
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
 import { Button } from '~/components/ui/button'
