@@ -47,7 +47,7 @@
     "@tanstack/react-table": "^8.20.5",
     "@trpc/client": "11.0.0-rc.645",
     "@trpc/next": "11.0.0-rc.645",
-    "@trpc/react-query": "11.0.0-rc.645",
+    "@trpc/react-query": "11.0.0-rc.648",
     "@trpc/server": "11.0.0-rc.645",
     "@uidotdev/usehooks": "^2.4.1",
     "@upstash/ratelimit": "^2.0.4",
