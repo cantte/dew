@@ -74,7 +74,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",
-    "react-email": "3.0.2",
+    "react-email": "3.0.3",
     "react-hook-form": "^7.53.2",
     "recharts": "^2.13.3",
     "resend": "^4.0.1",
