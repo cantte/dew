@@ -76,7 +76,7 @@
     "react-dropzone": "^14.3.5",
     "react-email": "3.0.3",
     "react-hook-form": "^7.54.0",
-    "recharts": "^2.13.3",
+    "recharts": "^2.14.1",
     "resend": "^4.0.1",
     "server-only": "^0.0.1",
     "superjson": "^2.2.2",
