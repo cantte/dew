@@ -121,6 +121,14 @@ export default async function AccountPage() {
                   </Button>
                 )}
 
+                {hasSubscription && subscription.status === 'inactive' && (
+                  <Button asChild>
+                    <Link href="/dashboard/subscription/create">
+                      <span>Reactivar subscripción</span>
+                    </Link>
+                  </Button>
+                )}
+
                 {hasSubscription && subscription.status === 'active' && (
                   <CancelSubscriptionDialog subscription={subscription} />
                 )}
