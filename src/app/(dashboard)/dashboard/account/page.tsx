@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import BackButton from '~/components/back-button'
 import { CancelSubscriptionDialog } from '~/components/cancel-subscription.dialog'
+import { DeleteStore } from '~/components/stores/delete-store'
 import { UpdateStoreForm } from '~/components/stores/update-store.form'
-import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import {
   Card,
@@ -14,14 +14,14 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 import { subscriptionStatuses } from '~/constants'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { formatToDateShort } from '~/text/format'
 import { api } from '~/trpc/server'
 
 export default async function AccountPage() {
   noStore()
 
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   if (!session) {
     return redirect('/api/auth/signin?callbackUrl=/dashboard/account')
@@ -145,32 +145,7 @@ export default async function AccountPage() {
               </CardContent>
             </Card>
 
-            {hasDeleteStorePermission && (
-              <Card className="border-destructive">
-                <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <CardTitle className="text-destructive text-xl">
-                      Eliminar tienda
-                    </CardTitle>
-
-                    <Badge variant="destructive">Próximamente</Badge>
-                  </div>
-                </CardHeader>
-
-                <CardContent>
-                  <p className="text-destructive/80">
-                    Si deseas eliminar tu tienda, puedes hacerlo aquí. Ten en
-                    cuenta que esta acción no se puede deshacer.
-                  </p>
-                </CardContent>
-
-                <CardFooter>
-                  <Button variant="destructive" disabled>
-                    Deseo eliminar mi tienda
-                  </Button>
-                </CardFooter>
-              </Card>
-            )}
+            {hasDeleteStorePermission && <DeleteStore store={store} />}
           </div>
         </div>
       </div>

@@ -5,12 +5,13 @@ import { SaleDetail } from '~/components/sale-detail'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     code: string
-  }
+  }>
 }
 
-const SaleDetailPage = async ({ params }: Props) => {
+const SaleDetailPage = async (props: Props) => {
+  const params = await props.params
   const hasPermissions = await api.rbac.checkPermissions({
     permissions: ['sale:view'],
   })

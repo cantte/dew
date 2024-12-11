@@ -4,16 +4,17 @@ import { redirect } from 'next/navigation'
 import { AcceptInvitationButton } from '~/components/invite/accept-invitation-button'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import { Button } from '~/components/ui/button'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     token: string
-  }
+  }>
 }
-export default async function StoreInvitationPage({ params }: Props) {
-  const session = await getServerAuthSession()
+export default async function StoreInvitationPage(props: Props) {
+  const params = await props.params
+  const session = await auth()
 
   if (!session) {
     return redirect(

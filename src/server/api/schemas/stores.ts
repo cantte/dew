@@ -14,3 +14,8 @@ export const findStoreInput = z.object({
 export const updateStoreInput = createStoreInput.extend({
   id: z.string().min(1).max(36),
 })
+
+export const deleteEmployeeStoreInput = z.object({
+  storeId: z.string().min(1).max(36),
+  employeeId: z.string().min(1).max(36),
+})

@@ -16,11 +16,11 @@ import {
   SidebarMenuItem,
 } from '~/components/ui/sidebar'
 import { Skeleton } from '~/components/ui/skeleton'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import SignOutButton from './signout-button'
 
 export const AccountNav = async () => {
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   if (!session) {
     return null

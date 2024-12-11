@@ -6,12 +6,13 @@ import NotEnoughPermissions from '~/components/not-enough-permissions'
 import { api } from '~/trpc/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function EditProductPage({ params }: Readonly<Props>) {
+export default async function EditProductPage(props: Readonly<Props>) {
+  const params = await props.params
   noStore()
 
   const hasPermissions = await api.rbac.checkPermissions({

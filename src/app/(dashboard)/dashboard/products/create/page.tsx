@@ -3,11 +3,11 @@ import { CreateProductForm } from '~/app/(dashboard)/dashboard/products/create/f
 import BackButton from '~/components/back-button'
 import NotEnoughPermissions from '~/components/not-enough-permissions'
 import NotFoundStoreAlert from '~/components/stores/not-found.alert'
-import { getServerAuthSession } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { api } from '~/trpc/server'
 
 const CreateProductPage = async () => {
-  const session = await getServerAuthSession()
+  const session = await auth()
 
   if (!session) {
     return redirect('/api/auth/signin')
