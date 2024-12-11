@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
+import ConfirmDialog from '~/components/confirm-dialog'
 import { Button } from '~/components/ui/button'
 import {
   Card,
@@ -12,7 +13,6 @@ import {
 } from '~/components/ui/card'
 import { api } from '~/trpc/react'
 import type { RouterOutputs } from '~/trpc/shared'
-import ConfirmDialog from '../confirm-dialog'
 
 type Props = {
   store: NonNullable<RouterOutputs['store']['findCurrent']>

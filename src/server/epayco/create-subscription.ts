@@ -11,6 +11,10 @@ export const ePaycoCreateSubscription = async (
   const loginResponse = await ePaycoLogin()
 
   if (!loginResponse.status) {
+    console.error(
+      `[ERROR]: Failed to fetching ePayCo login: ${JSON.stringify(loginResponse)}`,
+    )
+
     throw new Error('Error fetching ePayCo login')
   }
 
@@ -27,7 +31,12 @@ export const ePaycoCreateSubscription = async (
   )
 
   if (!subscriptionResponse.ok) {
-    throw new Error('Error fetching ePayCo subscription')
+    console.error(
+      `[ERROR]: Failed to creating ePayCo subscription: ${JSON.stringify(
+        subscriptionResponse,
+      )}`,
+    )
+    throw new Error('Error creating ePayCo subscription')
   }
 
   return (await subscriptionResponse.json()) as EpaycoCreateSubscriptionResponse

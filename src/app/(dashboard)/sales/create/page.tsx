@@ -15,13 +15,20 @@ const CreateSalePage = async () => {
   const trial = await api.subscription.trial()
   const subscription = await api.subscription.find()
 
-  const hasSubscription = subscription !== undefined
-
-  if (!hasSubscription && !trial.isActive) {
+  if (!subscription && !trial.isActive) {
     return <NotActiveSubscription />
   }
 
-  if (subscription?.status === 'past_due') {
+  if (!subscription) {
+    return <NotActiveSubscription />
+  }
+
+  if (subscription.status === 'past_due') {
+    return <NotActiveSubscription />
+  }
+
+  const today = new Date()
+  if (subscription.status === 'inactive' && subscription.periodEnd < today) {
     return <NotActiveSubscription />
   }
 

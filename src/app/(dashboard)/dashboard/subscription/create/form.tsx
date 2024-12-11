@@ -1,11 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { RotateCw } from 'lucide-react'
+import { CreditCardIcon, RotateCw } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { usePaymentInputs } from 'react-payment-inputs'
+import images, { type CardImages } from 'react-payment-inputs/images'
 import type { TypeOf } from 'zod'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
@@ -75,6 +77,14 @@ export const CreateSubscriptionForm = ({ store, email }: Props) => {
 
   const isYearly = form.watch('planId') === 'dew_anual'
 
+  const {
+    meta,
+    getCardNumberProps,
+    getExpiryDateProps,
+    getCVCProps,
+    getCardImageProps,
+  } = usePaymentInputs()
+
   return (
     <div className="flex min-h-[calc(100vh-20rem)] w-full flex-col space-y-4">
       <Form {...form}>
@@ -86,31 +96,47 @@ export const CreateSubscriptionForm = ({ store, email }: Props) => {
                   <p className="font-bold text-lg">Datos de pago</p>
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="card.number"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Número de tarjeta</FormLabel>
-                      <FormControl>
-                        <Input type="text" autoFocus {...field} />
-                      </FormControl>
+                <div className="space-y-2">
+                  <legend className="font-medium text-foreground text-sm">
+                    Información de la tarjeta
+                  </legend>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <div>
-                  <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
+                  <div className="rounded-lg shadow-black/5 shadow-sm">
                     <FormField
                       control={form.control}
-                      name="card.expMonth"
+                      name="card.number"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Mes de expiración</FormLabel>
                           <FormControl>
-                            <Input type="text" {...field} />
+                            <div className="relative focus-within:z-10">
+                              <Input
+                                autoFocus
+                                className="peer rounded-b-none pe-9 shadow-none [direction:inherit]"
+                                {...getCardNumberProps({
+                                  onBlur: field.onBlur,
+                                  onChange: field.onChange,
+                                })}
+                                placeholder="Número de tarjeta"
+                              />
+
+                              <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
+                                {meta.cardType ? (
+                                  <svg
+                                    className="overflow-hidden rounded-sm"
+                                    {...getCardImageProps({
+                                      images: images as unknown as CardImages,
+                                    })}
+                                    width={20}
+                                  />
+                                ) : (
+                                  <CreditCardIcon
+                                    size={16}
+                                    strokeWidth={2}
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </div>
+                            </div>
                           </FormControl>
 
                           <FormMessage />
@@ -118,35 +144,46 @@ export const CreateSubscriptionForm = ({ store, email }: Props) => {
                       )}
                     />
 
-                    <FormField
-                      control={form.control}
-                      name="card.expYear"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Año de expiración</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="card.cvc"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Código de seguridad</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="-mt-px flex">
+                      <div className="min-w-0 flex-1 focus-within:z-10">
+                        <FormField
+                          control={form.control}
+                          name="card.expiryDate"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  className="rounded-e-none rounded-t-none shadow-none [direction:inherit]"
+                                  {...getExpiryDateProps({
+                                    onBlur: field.onBlur,
+                                    onChange: field.onChange,
+                                  })}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="-ms-px min-w-0 flex-1 focus-within:z-10">
+                        <FormField
+                          control={form.control}
+                          name="card.cvc"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  className="rounded-s-none rounded-t-none shadow-none [direction:inherit]"
+                                  {...getCVCProps({
+                                    onBlur: field.onBlur,
+                                    onChange: field.onChange,
+                                  })}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
