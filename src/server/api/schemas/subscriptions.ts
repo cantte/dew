@@ -4,8 +4,7 @@ export const createSubscriptionInput = z.object({
   planId: z.enum(['dew_mensual', 'dew_anual']),
   card: z.object({
     number: z.string(),
-    expMonth: z.string(),
-    expYear: z.string(),
+    expiryDate: z.string(),
     cvc: z.string(),
   }),
   customer: z.object({

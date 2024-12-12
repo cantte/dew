@@ -1,6 +1,6 @@
 {
   "name": "dew",
-  "version": "0.9.7-beta",
+  "version": "0.9.8-beta",
   "private": true,
   "type": "module",
   "scripts": {
@@ -76,6 +76,7 @@
     "react-dropzone": "^14.3.5",
     "react-email": "3.0.4",
     "react-hook-form": "^7.54.0",
+    "react-payment-inputs": "^1.2.0",
     "recharts": "^2.14.1",
     "resend": "^4.0.1",
     "server-only": "^0.0.1",
@@ -94,6 +95,7 @@
     "@types/papaparse": "^5.3.15",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0",
+    "@types/react-payment-inputs": "^1.1.4",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
     "dotenv-cli": "^7.4.4",

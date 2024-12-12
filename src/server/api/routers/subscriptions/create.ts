@@ -25,6 +25,10 @@ export const createSubscription = async ({ ctx, input }: Options) => {
   }
 
   if (!userPayment.customerId || !userPayment.cardToken) {
+    console.error(
+      `[ERROR] Failed to create user payment info for user ${userId}`,
+    )
+
     throw new Error('Failed to create user payment info')
   }
 
@@ -40,6 +44,8 @@ export const createSubscription = async ({ ctx, input }: Options) => {
   })
 
   if (!createSubscriptionResponse.success) {
+    console.error(`[ERROR] Failed to create subscription for user ${userId}`)
+
     throw new Error('Failed to create subscription')
   }
 
@@ -53,6 +59,8 @@ export const createSubscription = async ({ ctx, input }: Options) => {
   })
 
   if (!chargeSubscriptionResponse.success) {
+    console.error(`[ERROR] Failed to charge subscription for user ${userId}`)
+
     throw new Error('Failed to charge subscription')
   }
 

@@ -1,3 +1,4 @@
+import assert from 'assert'
 import type { TypeOf } from 'zod'
 import uuid from '~/lib/uuid'
 import type { TRPCAuthedContext } from '~/server/api/procedures/authed'
@@ -12,14 +13,24 @@ type Options = {
 }
 
 export const createUserPaymentInfo = async ({ ctx, input }: Options) => {
+  const [expMonth, expYear] = input.card.expiryDate.split('/')
+  const sanitizedCardNumber = input.card.number.replaceAll(' ', '')
+
+  assert(expMonth !== undefined, 'Invalid expiry month')
+  assert(expYear !== undefined, 'Invalid expiry year')
+
   const createCardResponse = await ePaycoCreateCardToken({
-    cardNumber: input.card.number,
+    cardNumber: sanitizedCardNumber,
     cardCvc: input.card.cvc,
-    cardExpMonth: input.card.expMonth,
-    cardExpYear: input.card.expYear,
+    cardExpMonth: expMonth.trim(),
+    cardExpYear: `20${expYear.trim()}`,
   })
 
   if (!createCardResponse.success) {
+    console.error(
+      `[ERROR]: Failed to create card token: ${JSON.stringify(createCardResponse)}`,
+    )
+
     throw new Error('Failed to create card token')
   }
 
@@ -37,6 +48,10 @@ export const createUserPaymentInfo = async ({ ctx, input }: Options) => {
   })
 
   if (!createCustomerResponse.success) {
+    console.error(
+      `[ERROR]: Failed to create customer: ${JSON.stringify(createCustomerResponse)}`,
+    )
+
     throw new Error('Failed to create customer')
   }
 
