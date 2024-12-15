@@ -40,6 +40,7 @@ export const generateYearlySalesReport = async ({ ctx, input }: Options) => {
       ),
     )
     .groupBy(sql`EXTRACT(MONTH FROM ${saleSummary.createdAt})`)
+    .orderBy(sql`EXTRACT(MONTH FROM ${saleSummary.createdAt})`)
 
   const report = data.map((row) => ({
     ...row,

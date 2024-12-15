@@ -57,27 +57,42 @@ export default async function ReportPage(props: Readonly<Props>) {
     <div className="space-y-4">
       <SelectYear selectableYears={selectableYears} />
 
-      <Suspense key={store.id} fallback={<YearlySalesOverviewFallback />}>
+      <Suspense
+        key={`yearly-overview-${store.id}`}
+        fallback={<YearlySalesOverviewFallback />}
+      >
         <YearlySalesOverview year={currentYear} />
       </Suspense>
 
       <div className="grid grid-cols-1 gap-2">
-        <Suspense key={store.id} fallback={<YearlySalesReportFallback />}>
+        <Suspense
+          key={`yearly-report-${store.id}`}
+          fallback={<YearlySalesReportFallback />}
+        >
           <YearlySalesReport year={currentYear} />
         </Suspense>
       </div>
 
       <SelectMonth selectableMonths={selectableMonths} />
 
-      <Suspense key={store.id} fallback={<MonthlySalesOverviewFallback />}>
+      <Suspense
+        key={`monthly-overview-${store.id}`}
+        fallback={<MonthlySalesOverviewFallback />}
+      >
         <MonthlySalesOverview month={currentMonth} year={currentYear} />
       </Suspense>
 
-      <Suspense key={store.id} fallback={<MonthlySalesReportFallback />}>
+      <Suspense
+        key={`monthly-report-${store.id}`}
+        fallback={<MonthlySalesReportFallback />}
+      >
         <MonthlySalesReport month={currentMonth} year={currentYear} />
       </Suspense>
 
-      <Suspense key={store.id} fallback={<MostSoldProductsFallback />}>
+      <Suspense
+        key={`most-sold-${store.id}`}
+        fallback={<MostSoldProductsFallback />}
+      >
         <MostSoldProducts />
       </Suspense>
     </div>
