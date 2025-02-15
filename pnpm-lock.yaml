@@ -169,8 +169,8 @@ importers:
         specifier: ^3.4.5
         version: 3.4.5
       posthog-js:
-        specifier: ^1.202.5
-        version: 1.202.5
+        specifier: ^1.218.2
+        version: 1.218.2
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -3962,8 +3962,8 @@ packages:
     resolution: {integrity: sha512-cDWgoah1Gez9rN3H4165peY9qfpEo+SA61oQv65O3cRUE1pOEoJWwddwcqKE8XZYjbblOJlYDlLV4h67HrEVDg==}
     engines: {node: '>=12'}
 
-  posthog-js@1.202.5:
-    resolution: {integrity: sha512-ZkUPkdO35Di2croJByHvBVp/sACq5KJEIaYRchUrr5lRK/57B/s6d5Y5PV374pbWpKhJdXRkUXd3ZUKJ8bOmfw==}
+  posthog-js@1.218.2:
+    resolution: {integrity: sha512-C3IRqrdeYdFPiUmj2wI+k+Skr56Co9vhXufv3LirNQC6kAc5FVq//VQVK1i4Xf8PlZYsaqREl0QI5M/CihU3wA==}
 
   preact-render-to-string@5.2.3:
     resolution: {integrity: sha512-aPDxUn5o3GhWdtJtW0svRC2SS/l8D9MAgo2+AWml+BhDImb27ALf04Q2d+AHqUUOc6RdSXFIBVa2gxzgMKgtZA==}
@@ -8206,7 +8206,7 @@ snapshots:
 
   postgres@3.4.5: {}
 
-  posthog-js@1.202.5:
+  posthog-js@1.218.2:
     dependencies:
       core-js: 3.38.1
       fflate: 0.4.8
