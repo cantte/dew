@@ -77,7 +77,7 @@
     "react-email": "3.0.4",
     "react-hook-form": "^7.54.2",
     "react-payment-inputs": "^1.2.0",
-    "recharts": "^2.15.0",
+    "recharts": "^2.15.1",
     "resend": "^4.0.1",
     "server-only": "^0.0.1",
     "superjson": "^2.2.2",
