@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RotateCw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
@@ -115,6 +116,7 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
   }, [items])
 
   const { toast } = useToast()
+  const router = useRouter()
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: don't needed
   useEffect(() => {
@@ -134,6 +136,8 @@ const CreateSaleForm = ({ store, products, suggestions, employees }: Props) => {
         payment: 0,
         employeeId: ownerId ?? '',
       })
+
+      router.refresh()
     }
   }, [createSale.isSuccess])
 
