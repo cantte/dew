@@ -37,7 +37,7 @@ export const SaleRowActions = ({ row }: Props) => {
           </Link>
         </DropdownMenuItem>
 
-        {row.original.status !== 'cancelled' && (
+        {row.original.cancelable && (
           <ConfirmCancelSaleDialog sale={row.original} />
         )}
       </DropdownMenuContent>

@@ -17,6 +17,7 @@ const listSales = async ({ ctx, input }: Options) => {
       status: sales.status,
       amount: sales.amount,
       paymentMethod: sales.paymentMethod,
+      cancelable: sql<boolean>`(${sales.status} = 'pending' OR ${sales.status} = 'paid') AND ${sales.createdAt} > NOW() - INTERVAL '1 day'`,
       createdAt: sales.createdAt,
     })
     .from(sales)
