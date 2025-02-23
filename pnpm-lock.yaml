@@ -196,8 +196,8 @@ importers:
         specifier: ^2.15.1
         version: 2.15.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       resend:
-        specifier: ^4.0.1
-        version: 4.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^4.1.2
+        version: 4.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -4305,8 +4305,8 @@ packages:
     resolution: {integrity: sha512-nQFEv9gRw6SJAwWD2LrL0NmQvAcO7FBwJbwmr2ttPAacfy0xuiOjE5zt+zM4xDyuyvUaxBi/9gb2SoCyNEVJcw==}
     engines: {node: '>=8.6.0'}
 
-  resend@4.0.1:
-    resolution: {integrity: sha512-EkCRfzKw9JX7N75L+0BC8oXohDBLhlhl4w7AgrkEW2TAsOMBsVcbQHPe8cRWP6Ea7KDhD158TsNjbCBcohed5A==}
+  resend@4.1.2:
+    resolution: {integrity: sha512-km0btrAj/BqIaRlS+SoLNMaCAUUWEgcEvZpycfVvoXEwAHCxU+vp/ikxPgKRkyKyiR2iDcdUq5uIBTDK9oSSSQ==}
     engines: {node: '>=18'}
 
   resolve-pkg-maps@1.0.0:
@@ -8663,7 +8663,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  resend@4.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  resend@4.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@react-email/render': 1.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
