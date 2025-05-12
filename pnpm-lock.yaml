@@ -85,8 +85,8 @@ importers:
         specifier: 8.55.0
         version: 8.55.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(next@15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(webpack@5.90.1(esbuild@0.19.11))
       '@t3-oss/env-nextjs':
-        specifier: ^0.11.1
-        version: 0.11.1(typescript@5.7.3)(zod@3.24.2)
+        specifier: ^0.12.0
+        version: 0.12.0(typescript@5.7.3)(zod@3.24.2)
       '@tanstack/react-query':
         specifier: ^5.66.9
         version: 5.66.9(react@19.0.0)
@@ -94,8 +94,8 @@ importers:
         specifier: ^5.66.9
         version: 5.66.9(@tanstack/react-query@5.66.9(react@19.0.0))(react@19.0.0)
       '@tanstack/react-table':
-        specifier: ^8.20.6
-        version: 8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^8.21.2
+        version: 8.21.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: 11.0.0-rc.802
         version: 11.0.0-rc.802(@trpc/server@11.0.0-rc.802(typescript@5.7.3))(typescript@5.7.3)
@@ -121,8 +121,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(next@15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@vercel/speed-insights':
-        specifier: ^1.1.0
-        version: 1.1.0(next@15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: ^1.2.0
+        version: 1.2.0(next@15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -163,8 +163,8 @@ importers:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       papaparse:
-        specifier: ^5.4.1
-        version: 5.4.1
+        specifier: ^5.5.2
+        version: 5.5.2
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
@@ -2485,22 +2485,32 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@t3-oss/env-core@0.11.1':
-    resolution: {integrity: sha512-MaxOwEoG1ntCFoKJsS7nqwgcxLW1SJw238AJwfJeaz3P/8GtkxXZsPPolsz1AdYvUTbe3XvqZ/VCdfjt+3zmKw==}
+  '@t3-oss/env-core@0.12.0':
+    resolution: {integrity: sha512-lOPj8d9nJJTt81mMuN9GMk8x5veOt7q9m11OSnCBJhwp1QrL/qR+M8Y467ULBSm9SunosryWNbmQQbgoiMgcdw==}
     peerDependencies:
       typescript: '>=5.0.0'
-      zod: ^3.0.0
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0
     peerDependenciesMeta:
       typescript:
         optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
 
-  '@t3-oss/env-nextjs@0.11.1':
-    resolution: {integrity: sha512-rx2XL9+v6wtOqLNJbD5eD8OezKlQD1BtC0WvvtHwBgK66jnF5+wGqtgkKK4Ygie1LVmoDClths2T4tdFmRvGrQ==}
+  '@t3-oss/env-nextjs@0.12.0':
+    resolution: {integrity: sha512-rFnvYk1049RnNVUPvY8iQ55AuQh1Rr+qZzQBh3t++RttCGK4COpXGNxS4+45afuQq02lu+QAOy/5955aU8hRKw==}
     peerDependencies:
       typescript: '>=5.0.0'
-      zod: ^3.0.0
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0
     peerDependenciesMeta:
       typescript:
+        optional: true
+      valibot:
+        optional: true
+      zod:
         optional: true
 
   '@tanstack/query-core@5.66.4':
@@ -2520,15 +2530,15 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@tanstack/react-table@8.20.6':
-    resolution: {integrity: sha512-w0jluT718MrOKthRcr2xsjqzx+oEM7B7s/XXyfs19ll++hlId3fjTm+B2zrR3ijpANpkzBAr15j1XGVOMxpggQ==}
+  '@tanstack/react-table@8.21.2':
+    resolution: {integrity: sha512-11tNlEDTdIhMJba2RBH+ecJ9l1zgS2kjmexDPAraulc8jeNA4xocSNeyzextT0XJyASil4XsCYlJmf5jEWAtYg==}
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  '@tanstack/table-core@8.20.5':
-    resolution: {integrity: sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==}
+  '@tanstack/table-core@8.21.2':
+    resolution: {integrity: sha512-uvXk/U4cBiFMxt+p9/G7yUWI/UbHYbyghLCjlpWZ3mLeIZiUBSKcUnw9UnKkdRz7Z/N4UBuFLWQdJCjUe7HjvA==}
     engines: {node: '>=12'}
 
   '@trpc/client@11.0.0-rc.802':
@@ -2698,8 +2708,8 @@ packages:
       vue-router:
         optional: true
 
-  '@vercel/speed-insights@1.1.0':
-    resolution: {integrity: sha512-rAXxuhhO4mlRGC9noa5F7HLMtGg8YF1zAN6Pjd1Ny4pII4cerhtwSG4vympbCl+pWkH7nBS9kVXRD4FAn54dlg==}
+  '@vercel/speed-insights@1.2.0':
+    resolution: {integrity: sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==}
     peerDependencies:
       '@sveltejs/kit': ^1 || ^2
       next: '>= 13'
@@ -3954,8 +3964,8 @@ packages:
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
 
-  papaparse@5.4.1:
-    resolution: {integrity: sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==}
+  papaparse@5.5.2:
+    resolution: {integrity: sha512-PZXg8UuAc4PcVwLosEEDYjPyfWnTEhOrUfdv+3Bx+NuAb+5NhDmXzg5fHWmdCh1mP5p7JAZfFr3IMQfcntNAdA==}
 
   parse-svg-path@0.1.2:
     resolution: {integrity: sha512-JyPSBnkTJ0AI8GGJLfMXvKq42cj5c006fnLz6fXy6zfoVjJizi8BNTpu8on8ziI1cKy9d9DGNuY17Ce7wuejpQ==}
@@ -6937,18 +6947,17 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.11.1(typescript@5.7.3)(zod@3.24.2)':
-    dependencies:
-      zod: 3.24.2
+  '@t3-oss/env-core@0.12.0(typescript@5.7.3)(zod@3.24.2)':
     optionalDependencies:
       typescript: 5.7.3
+      zod: 3.24.2
 
-  '@t3-oss/env-nextjs@0.11.1(typescript@5.7.3)(zod@3.24.2)':
+  '@t3-oss/env-nextjs@0.12.0(typescript@5.7.3)(zod@3.24.2)':
     dependencies:
-      '@t3-oss/env-core': 0.11.1(typescript@5.7.3)(zod@3.24.2)
-      zod: 3.24.2
+      '@t3-oss/env-core': 0.12.0(typescript@5.7.3)(zod@3.24.2)
     optionalDependencies:
       typescript: 5.7.3
+      zod: 3.24.2
 
   '@tanstack/query-core@5.66.4': {}
 
@@ -6965,13 +6974,13 @@ snapshots:
       '@tanstack/query-core': 5.66.4
       react: 19.0.0
 
-  '@tanstack/react-table@8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@tanstack/react-table@8.21.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@tanstack/table-core': 8.20.5
+      '@tanstack/table-core': 8.21.2
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@tanstack/table-core@8.20.5': {}
+  '@tanstack/table-core@8.21.2': {}
 
   '@trpc/client@11.0.0-rc.802(@trpc/server@11.0.0-rc.802(typescript@5.7.3))(typescript@5.7.3)':
     dependencies:
@@ -7114,7 +7123,7 @@ snapshots:
       next: 15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
 
-  '@vercel/speed-insights@1.1.0(next@15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+  '@vercel/speed-insights@1.2.0(next@15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
     optionalDependencies:
       next: 15.1.7(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
@@ -8317,7 +8326,7 @@ snapshots:
 
   pako@1.0.11: {}
 
-  papaparse@5.4.1: {}
+  papaparse@5.5.2: {}
 
   parse-svg-path@0.1.2: {}
 
